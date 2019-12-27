@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
 const { buildSchema } = require('graphql');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -55,9 +56,26 @@ app.use('/graphql', graphqlHttp({
   graphiql: true
 }));
 
+const {
+  MONGO_HOST,
+  MONGO_PORT,
+  MONGO_DB
+} = process.env;
+
+mongoose.connect(
+  `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}`
+).then(() => {
+  console.log('Connected to database');
+
+  app.listen(3000);
+  console.log('Listening on port 3000');
+}).catch(err => {
+  console.error(err);
+});
+
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.listen(3000);
-console.log('Listening on port 3000');
+
+
