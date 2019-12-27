@@ -12,6 +12,35 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const events = eventIds => {
+  return Event.find({ _id: { $in: eventIds } })
+    .then(events => {
+      return events.map(event => {
+        return {
+          ...event._doc,
+          creator: user.bind(this, event.creator)
+        }
+      })
+    })
+    .catch(err => {
+      throw err
+    })
+};
+
+const user = userId => {
+  return User.findById(userId)
+    .then(user => {
+      return {
+        ...user._doc,
+        password: null,
+        createdEvents: events.bind(this, user._doc.createdEvents)
+      }
+    })
+    .catch(err => {
+      throw err
+    })
+};
+
 app.use('/graphql', graphqlHttp({
   schema: buildSchema(`
     type Event {
@@ -20,12 +49,14 @@ app.use('/graphql', graphqlHttp({
       description: String!
       price: Float!
       date: String!
+      creator: User!
     }
     
     type User {
       _id: ID!
       email: String!
       password: String
+      createdEvents: [Event!]
     }
      
     input EventInput {
@@ -56,14 +87,18 @@ app.use('/graphql', graphqlHttp({
   `),
   rootValue: {
     events: () => {
-      return Event.find().then(events => {
-        return events.map(event => {
-          return { ...event._doc }
-        })
-      }).catch(err => {
-        console.log(err);
-        return err;
-      });
+      return Event.find()
+        .then(events => {
+          return events.map(event => {
+            return {
+              ...event._doc,
+              creator: user.bind(this, event._doc.creator)
+            }
+          })
+        }).catch(err => {
+          console.log(err);
+          return err;
+        });
     },
     createEvent: (args) => {
       const event = new Event({
@@ -77,7 +112,10 @@ app.use('/graphql', graphqlHttp({
       return event
         .save()
         .then(result => {
-          createdEvent = {...result._doc };
+          createdEvent = {
+            ...result._doc,
+            creator: user.bind(this, result._doc.creator)
+          };
           return User.findById('5e0670f870a212013f2d52cb')
         })
         .then(user => {
