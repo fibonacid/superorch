@@ -1,0 +1,7 @@
+{
+  "env": {
+    "MONGO_HOST": "database",
+    "MONGO_PORT": "27017",
+    "MONGO_DB": "superorch-dev"
+  }
+}
