@@ -7,9 +7,11 @@
   "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "prestart": "if [ ! -d node_modules ]; then yarn; fi",
     "start": "nodemon src/app.js"
   },
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",

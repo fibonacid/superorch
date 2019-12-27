@@ -1,15 +1,16 @@
-FROM node:alpine
+FROM node:8-alpine
 
-# Create home directory
+# Create home directory.
 WORKDIR /usr/src/app
 
-# Install app dependencies
-COPY package.json package-lock.json ./
+# Install yarn and other dependencies via apk.
+RUN apk update && apk add yarn python g++ make && rm -rf /var/cache/apk/*
 
-# Install dependencies
-RUN npm install
+# Install node dependencies.
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
-# Bundle app source
+# Bundle app source.
 COPY . .
 
 EXPOSE 3000
