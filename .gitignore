@@ -1,9 +1,11 @@
-# dependencies
+# node
 node_modules
-
-# misc
-.DS_Store
 npm-debug.log
+.yarn_cache/*
+!.yarn_cache/.gitkeep
+
+# macOS
+.DS_Store
 
 # jetbrains
 .idea

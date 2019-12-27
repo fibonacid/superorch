@@ -4,11 +4,11 @@ services:
   web:
     container_name: app
     restart: always
-    build: ./app
+    build: .
     volumes:
-      - ./app:/usr/src/app
+      - .:/usr/src/app
     ports:
-      - 3000:80
+      - 3000:3000
     links:
       - database
     depends_on:
@@ -17,7 +17,9 @@ services:
   database:
     image: mongo
     container_name: mongo
-    volumes:
-      - ./data:/data/db
+    restart: always
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
