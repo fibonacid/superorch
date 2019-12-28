@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { dateToString } = require("../../helpers/date");
 
 const Event = require("../../models/events");
 const User = require("../../models/users");
@@ -6,7 +7,7 @@ const Booking = require("../../models/booking");
 
 const transformEvent = event => ({
   ...event._doc,
-  date: new Date(event._doc.date).toISOString(),
+  date: dateToString(event._doc.date),
   creator: user.bind(this, event.creator)
 });
 
@@ -61,8 +62,8 @@ module.exports = {
           ...booking._doc,
           user: user.bind(this, booking._doc.user),
           event: singleEvent.bind(this, booking._doc.event),
-          createdAt: new Date(booking._doc.createdAt).toISOString(),
-          updatedAt: new Date(booking._doc.updatedAt).toISOString()
+          createdAt: dateToString(booking._doc.createdAt),
+          updatedAt: dateToString(booking._doc.updatedAt)
         };
       });
     } catch (err) {
@@ -75,7 +76,7 @@ module.exports = {
       title: args.eventInput.title,
       description: args.eventInput.description,
       price: args.eventInput.price,
-      date: new Date(args.eventInput.date),
+      date: dateToString(args.eventInput.date),
       creator: "5e0670f870a212013f2d52cb"
     });
     let createdEvent;
@@ -134,8 +135,8 @@ module.exports = {
         ...result._doc,
         user: user.bind(this, result._doc.user),
         event: singleEvent.bind(this, result._doc.event),
-        createdAt: new Date(result._doc.createdAt).toISOString(),
-        updatedAt: new Date(result._doc.updatedAt).toISOString()
+        createdAt: dateToString(result._doc.createdAt),
+        updatedAt: dateToString(result._doc.updatedAt)
       };
     } catch (err) {
       throw err;
