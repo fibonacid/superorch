@@ -9,8 +9,8 @@ import Header from './components/Header';
 //
 // Views
 //
-import Home from "./views/home";
-import Auth from "./views/auth";
+import HomeView from "./views/home";
+import AuthView from "./views/auth";
 
 const { ipcRenderer: ipc } = window.require("electron");
 
@@ -19,8 +19,8 @@ function App() {
     <HashRouter>
       <div>
         <Header />
-        <Route path="/" exact component={Home} />
-        <Route path="/login" exact component={Auth} />
+        <Route path="/" exact component={HomeView} />
+        <Route path="/login" exact component={AuthView} />
       </div>
     </HashRouter>
   );
