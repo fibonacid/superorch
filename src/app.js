@@ -22,7 +22,10 @@ app.use(
 const { MONGO_HOST, MONGO_PORT, MONGO_DB } = process.env;
 
 mongoose
-  .connect(`mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}`)
+  .connect(`mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("Connected to database");
 
