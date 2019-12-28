@@ -5,7 +5,16 @@
   "version": "0.1.0",
   "main": "public/electron.js",
   "build": {
-    "appId": "lorenzorivosecchi.superorch-app"
+    "appId": "lorenzorivosecchi.superorch-app",
+    "mac": {
+      "icon": "assets/favicon.icns"
+    },
+    "win": {
+      "icon": "assets/favicon.ico"
+    },
+    "linux": {
+      "icon": "assets/favicon.png"
+    }
   },
   "homepage": "./",
   "dependencies": {
