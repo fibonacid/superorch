@@ -6,6 +6,25 @@ const isDev = require("electron-is-dev");
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
+//
+// Installs debugging extensions.
+//
+async function installExtensions() {
+  const installer = require("electron-devtools-installer");
+  const extensions = ["REACT_DEVELOPER_TOOLS"];
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  for (const name of extensions) {
+    try {
+      await installer.default(installer[name], forceDownload);
+    } catch (e) {
+      console.log(`Error installing ${name} extension: ${e.message}`);
+    }
+  }
+}
+
+//
+//  Creates a new window
+//
 async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
@@ -23,10 +42,6 @@ async function createWindow() {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
-  //win.webContents.on("did-finish-load", () => {
-  //win.webContents.send('ping');
-  //});
-
   // Open the DevTools.
   //win.webContents.openDevTools()
 
@@ -42,7 +57,12 @@ async function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", async () => {
+  if (isDev) {
+    await installExtensions();
+  }
+  createWindow();
+});
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
