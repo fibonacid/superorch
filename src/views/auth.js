@@ -1,7 +1,7 @@
 import React from "react";
 
-function Login(props) {
+function Auth(props) {
   return <div>Login Page</div>
 }
 
-export default Login;
+export default Auth;
