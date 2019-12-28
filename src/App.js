@@ -1,6 +1,5 @@
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
-const { ipcRenderer: ipc } = window.require("electron");
 
 //
 // Components
@@ -12,6 +11,8 @@ import Header from './components/Header';
 //
 import Home from "./views/home";
 import Login from "./views/login";
+
+const { ipcRenderer: ipc } = window.require("electron");
 
 function App() {
   return (
