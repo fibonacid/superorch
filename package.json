@@ -1,7 +1,13 @@
 {
   "name": "superorch-app",
+  "description": "An electron application that connects to a superorch-server",
+  "author": "Lorenzo Rivosecchi",
   "version": "0.1.0",
   "main": "public/electron.js",
+  "build": {
+    "appId": "lorenzorivosecchi.superorch-app"
+  },
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
