@@ -11,6 +11,14 @@ const transformEvent = event => ({
   creator: user.bind(this, event.creator)
 });
 
+const transformBooking = booking => ({
+  ...booking._doc,
+  user: user.bind(this, booking._doc.user),
+  event: singleEvent.bind(this, booking._doc.event),
+  createdAt: dateToString(booking._doc.createdAt),
+  updatedAt: dateToString(booking._doc.updatedAt)
+});
+
 const events = async eventIds => {
   try {
     const events = await Event.find({ _id: { $in: eventIds } });
@@ -56,16 +64,7 @@ module.exports = {
   bookings: async () => {
     try {
       const bookings = await Booking.find();
-      return bookings.map(booking => {
-        console.log(booking._doc);
-        return {
-          ...booking._doc,
-          user: user.bind(this, booking._doc.user),
-          event: singleEvent.bind(this, booking._doc.event),
-          createdAt: dateToString(booking._doc.createdAt),
-          updatedAt: dateToString(booking._doc.updatedAt)
-        };
-      });
+      return bookings.map(booking => transformBooking(booking));
     } catch (err) {
       throw err;
     }
@@ -130,14 +129,7 @@ module.exports = {
         event: fetchedEvent
       });
       const result = await booking.save();
-      console.log(result._doc);
-      return {
-        ...result._doc,
-        user: user.bind(this, result._doc.user),
-        event: singleEvent.bind(this, result._doc.event),
-        createdAt: dateToString(result._doc.createdAt),
-        updatedAt: dateToString(result._doc.updatedAt)
-      };
+      return transformBooking(result);
     } catch (err) {
       throw err;
     }
