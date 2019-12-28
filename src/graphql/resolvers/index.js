@@ -7,14 +7,13 @@ const Booking = require("../../models/booking");
 const events = async eventIds => {
   try {
     const events = await Event.find({ _id: { $in: eventIds } });
-    events.map(event => {
+    return events.map(event => {
       return {
         ...event._doc,
         date: new Date(event._doc.date).toISOString(),
         creator: user.bind(this, event.creator)
       };
     });
-    return events;
   } catch (err) {
     throw err;
   }
