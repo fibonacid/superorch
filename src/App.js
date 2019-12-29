@@ -31,8 +31,9 @@ function App() {
   };
 
   useEffect(() => {
-    console.log({token, userId, tokenExpiration});
-  }, [token, userId, tokenExpiration]);
+    token ? console.log('Logged in: ', token)
+      : console.log('Logged out')
+  }, [token]);
 
   return (
     <>
