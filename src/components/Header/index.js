@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
 
 const StyledWrap = styled.header`
-  background: lightblue;
+  background: #454d4d;
 `;
 
 const StyledList = styled.ul`
@@ -16,7 +16,7 @@ const StyledList = styled.ul`
 const StyledItem = styled.li`
   list-style-type: none;
   & a {
-    color: black;
+    color: #b6c717;
     text-decoration: none;
   }
 `;
