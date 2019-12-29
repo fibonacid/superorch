@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/auth-context";
 
 function Header(props) {
+
+  const context = useContext(AuthContext);
+
   return (
     <div>
       <ul>
         <li>
           <Link to={"/"}>Home</Link>
         </li>
-        <li>
-          <Link to={"/login"} >Login</Link>
-        </li>
+        {!context.token && <li>
+          <Link to={"/auth"} >Login</Link>
+        </li>}
       </ul>
     </div>
   )
