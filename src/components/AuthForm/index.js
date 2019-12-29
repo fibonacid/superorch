@@ -1,10 +1,13 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import Api from '../../data/api';
+import AuthContext from "../../context/auth-context";
 
 function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+
+  const authContext = useContext(AuthContext);
 
   const handleChange = useCallback(event => {
     //
@@ -41,7 +44,17 @@ function AuthForm() {
           throw new Error('Request failed')
         }
 
-        const data = await res.json();
+        const { data } = await res.json();
+
+        if(isLogin) {
+          authContext.login(
+            data.login.token,
+            data.login.userId,
+            data.login.tokenExpiration,
+          );
+        } else {
+
+        }
         console.log(data);
 
       } catch(err) {
