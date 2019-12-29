@@ -1,7 +1,12 @@
-import React, { useCallback, useState, useContext } from "react";
-import styled from 'styled-components';
-import Api from '../../data/api';
+import React, { useState, useContext } from "react";
+import styled from "styled-components";
+import Api from "../../data/api";
 import AuthContext from "../../context/auth-context";
+import useFormValidation from "../../hooks/useFormValidation";
+
+//
+//  Styles
+//
 
 const StyledWrap = styled.div`
   padding: 10px;
@@ -23,86 +28,93 @@ const StyledInput = styled.input`
   margin-top: 5px;
 `;
 
-const StyledBtnWrap = styled.div`
+const StyledButton = styled.button`
   margin-top: 10px;
-  display: flex;
-  & button {
-    flex: 1;
-  }
+  width: 100%;
 `;
+
+const StyledError = styled.p`
+  margin-top: 5px;
+  color: red;
+`;
+
+// Initial form values
+const INITIAL_STATE = {
+  email: "",
+  password: ""
+};
 
 //
 // Authenticate user on the server.
 //
 function AuthForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
 
-  const authContext = useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-  const handleChange = useCallback(event => {
-    //
-    // Update state values
-    //
-    switch (event.target.name) {
-      case "email":
-        return setEmail(event.target.value);
-      case "password":
-        return setPassword(event.target.value);
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    isSubmitting
+  } = useFormValidation(INITIAL_STATE, validateAuth, authenticateUser);
+
+  const [backendError, setBackendError] = useState(null);
+
+  //
+  // send login request and save
+  // token, userId and tokenExpiration
+  // into the context.
+  //
+  async function authenticateUser() {
+    const { email, password } = values;
+    try {
+      const res = await Api.signIn(email, password);
+
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+      const { data } = await res.json();
+
+      // Save authentication data
+      context.login(
+        data.login.token,
+        data.login.userId,
+        data.login.tokenExpiration,
+      );
+
+    } catch(err) {
+      setBackendError(err.message);
     }
-  }, []);
+  }
 
-  const handleSubmit = useCallback(
-    async event => {
-      //
-      // If credentials are valid
-      // send a request to the server.
-      //
-      event.preventDefault();
+  //
+  // Rules for input validation
+  //
+  function validateAuth(values) {
+    const errors = {};
+    // Password errors
+    if (!values.email) {
+      errors.email = 'Required Email';
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+    ) {
+      errors.email = 'Invalid email address';
+    }
+    // Password errors
+    if (!values.password) {
+      errors.password = 'Required Password'
+    } else if (values.password.length < 4) {
+      errors.password = 'Password must be at least 4 characters'
+    }
+    return errors;
+  }
 
-      // If email or password are empty do nothing.
-      if (email.trim().length === 0 || password.trim().length === 0) {
-        return;
-      }
-      console.log(email, password);
-
-      try {
-        const res = isLogin
-          ? await Api.signIn(email, password)
-          : await Api.signUp(email, password);
-
-        if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Request failed')
-        }
-
-        const { data } = await res.json();
-
-        if(isLogin) {
-          authContext.login(
-            data.login.token,
-            data.login.userId,
-            data.login.tokenExpiration,
-          );
-        } else {
-
-        }
-        console.log(data);
-
-      } catch(err) {
-        console.log(err);
-      }
-    },
-    [email, password, isLogin]
-  );
-
-  const handleSwitchMode = useCallback(() => {
-    setIsLogin(!isLogin);
-  }, [isLogin]);
 
   return (
     <StyledWrap>
-      <StyledTitle>{isLogin ? "Sign in" : "Sign up"}</StyledTitle>
+      <StyledTitle>Sign in</StyledTitle>
       <form onSubmit={handleSubmit}>
         <StyledField>
           <label htmlFor="email">Email</label>
@@ -110,8 +122,10 @@ function AuthForm() {
             type="text"
             name="email"
             onChange={handleChange}
-            value={email}
+            onBlur={handleBlur}
+            value={values.email}
           />
+          {errors.email && <StyledError>{errors.email}</StyledError>}
         </StyledField>
         <StyledField>
           <label htmlFor="password">Password</label>
@@ -119,18 +133,15 @@ function AuthForm() {
             type="password"
             name="password"
             onChange={handleChange}
-            value={password}
+            onBlur={handleBlur}
+            value={values.password}
           />
+          {errors.password && <StyledError>{errors.password}</StyledError>}
         </StyledField>
-        <StyledBtnWrap>
-          <button
-            type="button"
-            onClick={handleSwitchMode}
-          >
-            Switch to {isLogin ? "Sign up" : "Log in"}
-          </button>
-          <button type="submit">Submit</button>
-        </StyledBtnWrap>
+        {backendError && <StyledError>{backendError}</StyledError>}
+        <StyledButton disabled={isSubmitting} type="submit">
+          Submit
+        </StyledButton>
       </form>
     </StyledWrap>
   );
