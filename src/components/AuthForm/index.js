@@ -48,7 +48,7 @@ function AuthForm() {
         console.log(err);
       }
     },
-    [email, password]
+    [email, password, isLogin]
   );
 
   const handleSwitchMode = useCallback(() => {
