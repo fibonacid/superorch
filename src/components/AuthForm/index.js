@@ -1,10 +1,14 @@
 import React, { useCallback, useState } from "react";
+import Api from '../../data/api';
 
 function AuthForm(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleChange = useCallback(event => {
+    //
+    // Update state values
+    //
     switch (event.target.name) {
       case "email":
         return setEmail(event.target.value);
@@ -14,39 +18,59 @@ function AuthForm(props) {
   }, []);
 
   const handleSubmit = useCallback(
-    event => {
+    async event => {
+      //
+      // If credentials are valid
+      // send a request to the server.
+      //
       event.preventDefault();
+
+      // If email or password are empty do nothing.
+      if (email.trim().length === 0 || password.trim().length === 0) {
+        return;
+      }
       console.log(email, password);
+
+      try {
+        const res = await Api.signUp(email, password);
+
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Request failed')
+        }
+
+        const data = await res.json();
+        console.log(data);
+
+      } catch(err) {
+        console.log(err);
+      }
     },
     [email, password]
   );
 
   return (
-    <div>
-      <h1>Login Page</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            name="email"
-            onChange={handleChange}
-            value={email}
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={password}
-          />
-        </div>
-        <div>
-          <button type="button">Switch to Sign up</button>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input
+          type="text"
+          name="email"
+          onChange={handleChange}
+          value={email}
+        />
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          onChange={handleChange}
+          value={password}
+        />
+      </div>
+      <div>
+        <button type="button">Switch to Sign up</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
   );
 }
 
