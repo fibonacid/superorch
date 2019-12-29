@@ -1,15 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HashRouter, Route } from "react-router-dom";
 import AuthContext from "./context/auth-context";
 
-//
 // Components
-//
 import Header from './components/Header';
 
-//
 // Views
-//
 import HomeView from "./views/home";
 import AuthView from "./views/auth";
 
@@ -26,11 +22,16 @@ function App() {
     setUserId(userId);
     setTokenExpiration(tokenExpiration);
   };
+
   const logout = () => {
     setToken(null);
     setUserId(null);
     setTokenExpiration(null);
   };
+
+  useEffect(() => {
+    console.log({token, userId, tokenExpiration});
+  }, [token, userId, tokenExpiration]);
 
   return (
     <HashRouter>
