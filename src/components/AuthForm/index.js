@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from "react";
 import Api from '../../data/api';
 
-function AuthForm(props) {
+function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
 
   const handleChange = useCallback(event => {
     //
@@ -32,7 +33,9 @@ function AuthForm(props) {
       console.log(email, password);
 
       try {
-        const res = await Api.signUp(email, password);
+        const res = isLogin
+          ? await Api.signIn(email, password)
+          : await Api.signUp(email, password);
 
         if (res.status !== 200 && res.status !== 201) {
           throw new Error('Request failed')
@@ -48,8 +51,13 @@ function AuthForm(props) {
     [email, password]
   );
 
+  const handleSwitchMode = useCallback(() => {
+    setIsLogin(!isLogin);
+  }, [isLogin]);
+
   return (
     <form onSubmit={handleSubmit}>
+      <h2>{isLogin ? "Log in" : "Sign up"}</h2>
       <div>
         <label htmlFor="email">Email</label>
         <input
@@ -67,7 +75,12 @@ function AuthForm(props) {
         />
       </div>
       <div>
-        <button type="button">Switch to Sign up</button>
+        <button
+          type="button"
+          onClick={handleSwitchMode}
+        >
+          Switch to {isLogin ? "Sign up" : "Log in"}
+        </button>
         <button type="submit">Submit</button>
       </div>
     </form>
