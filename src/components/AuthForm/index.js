@@ -1,7 +1,39 @@
 import React, { useCallback, useState, useContext } from "react";
+import styled from 'styled-components';
 import Api from '../../data/api';
 import AuthContext from "../../context/auth-context";
 
+const StyledWrap = styled.div`
+  padding: 10px;
+`;
+
+const StyledTitle = styled.h1`
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+`;
+
+const StyledField = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledInput = styled.input`
+  margin-top: 5px;
+`;
+
+const StyledBtnWrap = styled.div`
+  margin-top: 10px;
+  display: flex;
+  & button {
+    flex: 1;
+  }
+`;
+
+//
+// Authenticate user on the server.
+//
 function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,34 +101,38 @@ function AuthForm() {
   }, [isLogin]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{isLogin ? "Log in" : "Sign up"}</h2>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          name="email"
-          onChange={handleChange}
-          value={email}
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          onChange={handleChange}
-          value={password}
-        />
-      </div>
-      <div>
-        <button
-          type="button"
-          onClick={handleSwitchMode}
-        >
-          Switch to {isLogin ? "Sign up" : "Log in"}
-        </button>
-        <button type="submit">Submit</button>
-      </div>
-    </form>
+    <StyledWrap>
+      <StyledTitle>{isLogin ? "Sign in" : "Sign up"}</StyledTitle>
+      <form onSubmit={handleSubmit}>
+        <StyledField>
+          <label htmlFor="email">Email</label>
+          <StyledInput
+            type="text"
+            name="email"
+            onChange={handleChange}
+            value={email}
+          />
+        </StyledField>
+        <StyledField>
+          <label htmlFor="password">Password</label>
+          <StyledInput
+            type="password"
+            name="password"
+            onChange={handleChange}
+            value={password}
+          />
+        </StyledField>
+        <StyledBtnWrap>
+          <button
+            type="button"
+            onClick={handleSwitchMode}
+          >
+            Switch to {isLogin ? "Sign up" : "Log in"}
+          </button>
+          <button type="submit">Submit</button>
+        </StyledBtnWrap>
+      </form>
+    </StyledWrap>
   );
 }
 
