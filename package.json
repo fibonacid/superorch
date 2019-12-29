@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "prestart": "if [ ! -d node_modules ]; then yarn; fi",
-    "start": "nodemon src/app.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
