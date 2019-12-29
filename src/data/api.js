@@ -23,6 +23,22 @@ const Api = {
         `
       }
     ))
+  },
+  signIn: (email, password) => {
+    return fetch(
+      API_ENDPOINT,
+      request({
+          query: `
+            query {
+              login(email: "${email}", password: "${password}") {
+                userId
+                token
+                tokenExpiration
+              }
+            }
+        `
+        }
+      ))
   }
 };
 
