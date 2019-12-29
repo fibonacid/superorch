@@ -1,25 +1,44 @@
-import React, {useCallback, useContext} from 'react';
+import React, { useContext } from 'react';
+import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
+
+const StyledWrap = styled.header`
+  background: lightblue;
+`;
+
+const StyledList = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+`;
+
+const StyledItem = styled.li`
+  list-style-type: none;
+  & a {
+    color: black;
+    text-decoration: none;
+  }
+`;
 
 function Header(props) {
 
   const context = useContext(AuthContext);
 
   return (
-    <div>
-      <ul>
-        <li>
+    <StyledWrap>
+      <StyledList>
+        <StyledItem>
           <Link to={"/"}>Home</Link>
-        </li>
-        {!context.token && <li>
+        </StyledItem>
+        {!context.token && <StyledItem>
           <Link to={"/auth"} >Login</Link>
-        </li>}
-        {context.token && <li>
+        </StyledItem>}
+        {context.token && <StyledItem>
           <a href="#" onClick={context.logout}>Logout</a>
-        </li>}
-      </ul>
-    </div>
+        </StyledItem>}
+      </StyledList>
+    </StyledWrap>
   )
 }
 
