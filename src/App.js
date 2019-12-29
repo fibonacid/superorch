@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter, Route } from "react-router-dom";
+import { HashRouter, Route, Redirect } from "react-router-dom";
 import AuthContext from "./context/auth-context";
 
 // Components
@@ -34,15 +34,15 @@ function App() {
   }, [token, userId, tokenExpiration]);
 
   return (
-    <HashRouter>
-      <div>
-        <AuthContext.Provider value={{token, userId, tokenExpiration, login, logout }}>
-          <Header />
-          <Route path="/" exact component={HomeView} />
-          <Route path="/login" exact component={AuthView} />
-        </AuthContext.Provider>
-      </div>
-    </HashRouter>
+    <AuthContext.Provider value={{token, userId, tokenExpiration, login, logout }}>
+      <HashRouter>
+        <Header />
+        {!token && <Redirect from="/" to="/auth" />}
+        {!token && <Route path="/auth" exact component={AuthView} />}
+        {token && <Redirect from="/auth" to="/" />}
+        <Route path="/" exact component={HomeView} />
+      </HashRouter>
+    </AuthContext.Provider>
   );
 }
 
