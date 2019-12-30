@@ -10,7 +10,13 @@ import Header from './components/Header';
 import HomeView from "./views/home";
 import AuthView from "./views/auth";
 
-const { ipcRenderer: ipc } = window.require("electron");
+let ipc;
+try {
+  const electron = window.require("electron");
+  ipc = electron.ipcRenderer;
+} catch(err) {
+  console.log(err);
+}
 
 function App() {
 
