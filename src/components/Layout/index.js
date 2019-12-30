@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledContainer = styled.section`
-  height: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  margin: 30px 10px;
 `;
 
 function Layout(props) {

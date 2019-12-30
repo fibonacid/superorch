@@ -3,8 +3,10 @@ import { HashRouter, Route, Redirect } from "react-router-dom";
 import AuthContext from "./context/auth-context";
 
 // Components
-import GlobalStyle from "./components/GlobalStyle";
+import GlobalStyle, {StyledContent} from "./components/GlobalStyle";
 import Header from './components/Header';
+import Footer from './components/Footer';
+
 
 // Views
 import HomeView from "./views/home";
@@ -42,18 +44,19 @@ function App() {
   }, [token]);
 
   return (
-    <>
+    <AuthContext.Provider value={{token, userId, tokenExpiration, login, logout }}>
       <GlobalStyle />
-      <AuthContext.Provider value={{token, userId, tokenExpiration, login, logout }}>
-        <HashRouter>
+      <HashRouter>
+        <StyledContent>
           <Header />
           {!token && <Redirect from="/" to="/auth" />}
           {!token && <Route path="/auth" exact component={AuthView} />}
           {token && <Redirect from="/auth" to="/" />}
           <Route path="/" exact component={HomeView} />
-        </HashRouter>
-      </AuthContext.Provider>
-    </>
+        </StyledContent>
+        <Footer />
+      </HashRouter>
+    </AuthContext.Provider>
   );
 }
 

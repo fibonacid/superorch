@@ -7,20 +7,18 @@ const GlobalStyle = createGlobalStyle`
   ${normalize}
   /* other styles */
   
-  html {
-    height: 100%;
-    min-height: 100vh;
-  }
-  
-  body {
+  html, body, #root {
     height: 100%;
   }
-  
+
   #root {
-    height: 100%;
     display: flex;
     flex-direction: column;
   }
 `;
 
 export default GlobalStyle;
+
+export const StyledContent = styled.div`
+  flex: 1 0 auto;
+`;
