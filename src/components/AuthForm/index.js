@@ -56,6 +56,7 @@ function AuthForm() {
   //
   async function authenticateUser() {
     const { email, password } = values;
+    console.log('Authenticate user', email, password);
     try {
       const res = await Api.signIn(email, password);
   
@@ -63,6 +64,7 @@ function AuthForm() {
         throw new Error(res.statusText);
       }
       const { data } = await res.json();
+      console.log(res.status, data);
 
       // Save authentication data and leave.
       context.login(
@@ -78,12 +80,15 @@ function AuthForm() {
 
   async function registrateUser() {
     const { email, password } = values;
+    console.log('Registrate user', email, password);
     try {
       const res = await Api.signUp(email, password);
-  
       if (!res.ok) {
         throw new Error(res.statusText);
       }
+      const { data } = await res.json();
+      console.log(res.status, data);
+
       authenticateUser();
 
     } catch(err) {
@@ -116,10 +121,12 @@ function AuthForm() {
     } else if (values.password.length < 4) {
       errors.password = 'Password must be at least 4 characters'
     }
-    if(!isLogin && values.passwordConf.trim().length === 0) {
-      errors.passwordConf = 'Confirm password'
-    } else if(values.password.trim() !== values.passwordConf.trim()) {
-      errors.passwordConf = 'Passwords are different'
+    if(!isLogin) {
+      if(values.passwordConf.trim().length === 0) {
+        errors.passwordConf = 'Confirm password'
+      } else if(values.password.trim() !== values.passwordConf.trim()) {
+        errors.passwordConf = 'Passwords are different'
+      }
     }
     return errors;
   }
