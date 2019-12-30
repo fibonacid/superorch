@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 const StyledContainer = styled.div`
+    flex: 1;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: no-wrap;
     flex-direction: ${props => 
         props.direction === 'vertical' 
         ? 'column' 
