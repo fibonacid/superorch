@@ -1,13 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Frame from '../Frame';
 import SCEditor from '../SCEditor'
 
-const StyledContainer = styled(Frame)`
+const StyledWrapper = styled(Frame)`
+   height: 100%;
+`;
+
+const StyledContainer = styled.div`
+    background: lightpink;
+    max-height: 100%;
     height: 100%;
+    overflow: auto;
 `;
 
 const StyledTitle = styled.h2`
+    flex: 0 1 auto;
     padding: 10px 5px;
     text-align: center; 
     background: whitesmoke;
@@ -16,10 +24,12 @@ const StyledTitle = styled.h2`
 
 function Playground(props) {
     return (
-        <StyledContainer direction="vertical">
+        <StyledWrapper direction="vertical">
             <StyledTitle>SuperCollider Editor</StyledTitle>
-            <SCEditor />
-        </StyledContainer>
+            <StyledContainer>
+                <SCEditor />
+            </StyledContainer>
+        </StyledWrapper>
     )
 }
 
