@@ -38,12 +38,6 @@ const StyledError = styled.p`
   color: red;
 `;
 
-// Initial form values
-const INITIAL_STATE = {
-  email: "",
-  password: ""
-};
-
 // --------------------------
 // Authentication Form
 // --------------------------
@@ -97,6 +91,12 @@ function AuthForm() {
     }
   }
 
+  const INITIAL_VALUES = {
+    email: "",
+    password: "",
+    passwordConf: ""
+  }
+
   //
   // Rules for input validation
   //
@@ -116,6 +116,11 @@ function AuthForm() {
     } else if (values.password.length < 4) {
       errors.password = 'Password must be at least 4 characters'
     }
+    if(!isLogin && values.passwordConf.trim().length === 0) {
+      errors.passwordConf = 'Confirm password'
+    } else if(values.password.trim() !== values.passwordConf.trim()) {
+      errors.passwordConf = 'Passwords are different'
+    }
     return errors;
   }
 
@@ -126,7 +131,7 @@ function AuthForm() {
     values,
     errors,
     isSubmitting
-  } = useFormValidation(INITIAL_STATE, validateAuth, isLogin ? authenticateUser : registrateUser);
+  } = useFormValidation(INITIAL_VALUES, validateAuth, isLogin ? authenticateUser : registrateUser);
 
   function handleSwitchMode() {
     setIsLogin(!isLogin);
@@ -158,6 +163,17 @@ function AuthForm() {
           />
           {errors.password && <StyledError>{errors.password}</StyledError>}
         </StyledField>
+        {!isLogin && <StyledField>
+          <label htmlFor="password">Password confirmation</label>
+          <StyledInput
+            type="password"
+            name="passwordConf"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.passwordConf}
+          />
+          {errors.passwordConf && <StyledError>{errors.passwordConf}</StyledError>}
+        </StyledField>}
         {backendError && <StyledError>{backendError}</StyledError>}
         <StyledButton disabled={isSubmitting} type="submit">
           Submit
