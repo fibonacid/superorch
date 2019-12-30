@@ -33,11 +33,6 @@ function App() {
 
   const {token, userId, tokenExpiration, login, logout} = useAuth();
 
-  useEffect(() => {
-    token ? console.log('Logged in: ', token)
-      : console.log('Logged out')
-  }, [token]);
-
   return (
     <AuthContext.Provider value={{token, userId, tokenExpiration, login, logout }}>
       <GlobalStyle />
