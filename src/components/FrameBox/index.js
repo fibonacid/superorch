@@ -1,14 +1,16 @@
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const StyledContainer = styled.div`
-	flex: 1 0 auto;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: ${props => props.basis || "100%"}
 `;
 
 function FrameBox(props) {
     return (
-        <StyledContainer>
+        <StyledContainer {...props}>
             {props.children}
         </StyledContainer>
     )

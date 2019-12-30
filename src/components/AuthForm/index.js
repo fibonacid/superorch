@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Api from "../../data/api";
 import AuthContext from "../../context/auth-context";
 import useFormValidation from "../../hooks/useFormValidation";
