@@ -16,7 +16,7 @@ function HomeView(props) {
 
   return (
     <Frame>
-      <StyledSidebar basis="200px">User List</StyledSidebar>
+      <StyledSidebar grow="0" shrink="1" basis="200px">User List</StyledSidebar>
       <StyledMainbar>Hello</StyledMainbar>
     </Frame>
   )
