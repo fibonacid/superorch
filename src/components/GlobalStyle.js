@@ -21,4 +21,6 @@ export default GlobalStyle;
 
 export const StyledContent = styled.div`
   flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
 `;
