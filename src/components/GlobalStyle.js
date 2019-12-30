@@ -1,8 +1,10 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset'
+import normalize from 'styled-normalize'
 
 const GlobalStyle = createGlobalStyle`
-  ${reset}
+  ${reset};
+  ${normalize}
   /* other styles */
   
   html {
