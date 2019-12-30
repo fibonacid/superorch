@@ -26,6 +26,9 @@ try {
   console.log(err);
 }
 
+// ---------------------------------
+// Application
+// ---------------------------------
 function App() {
 
   const {token, userId, tokenExpiration, login, logout} = useAuth();
