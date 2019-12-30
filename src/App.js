@@ -44,9 +44,8 @@ function App() {
       <HashRouter>
         <StyledContent>
           <Header />
-          {!token && <Redirect from="/" to="/auth" />}
-          {!token && <Route path="/auth" exact component={AuthView} />}
-          {token && <Redirect from="/auth" to="/" />}
+          {token && <Redirect from="/auth" to="/" /> }
+          <Route path="/auth" exact component={AuthView} />
           <Route path="/" exact component={HomeView} />
         </StyledContent>
         <Footer />
