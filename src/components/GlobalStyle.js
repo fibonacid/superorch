@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
   
   html, body, #root {
     height: 100%;
+    font-family: sans-serif;
   }
 
   #root {
