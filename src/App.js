@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import AuthContext from "./context/auth-context";
+import useAuth from "./hooks/useAuth";
 
 // Components
 import GlobalStyle, {StyledContent} from "./components/GlobalStyle";
@@ -14,6 +15,11 @@ import AuthView from "./views/auth";
 
 let ipc;
 try {
+  //
+  // This should throw an error
+  // when application is runs on
+  // a regular browser.
+  //
   const electron = window.require("electron");
   ipc = electron.ipcRenderer;
 } catch(err) {
@@ -22,21 +28,7 @@ try {
 
 function App() {
 
-  const [token, setToken] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [tokenExpiration, setTokenExpiration] = useState(null);
-
-  const login = (token, userId, tokenExpiration) => {
-    setToken(token);
-    setUserId(userId);
-    setTokenExpiration(tokenExpiration);
-  };
-
-  const logout = () => {
-    setToken(null);
-    setUserId(null);
-    setTokenExpiration(null);
-  };
+  const {token, userId, tokenExpiration, login, logout} = useAuth();
 
   useEffect(() => {
     token ? console.log('Logged in: ', token)
