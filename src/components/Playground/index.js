@@ -11,10 +11,10 @@ const StyledTitle = styled.h2`
 
 function Playground(props) {
     return (
-        <div>
-            <StyledTitle>SuperCollider Editor</StyledTitle>
-            <SCEditor />
-        </div>
+        <>
+        <StyledTitle>SuperCollider Editor</StyledTitle>
+        <SCEditor />
+        </>
     )
 }
 
