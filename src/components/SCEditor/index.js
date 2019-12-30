@@ -5,7 +5,7 @@ import {Editor, EditorState} from 'draft-js';
 
 // Editor Wrapper
 const StyledWrapper = styled.div`
-    min-height: 100%;
+    height: 100%;
     cursor: text;
     padding: 10px;
 `;

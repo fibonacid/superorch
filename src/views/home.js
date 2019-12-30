@@ -11,7 +11,9 @@ const StyledSidebar = styled(FrameBox)`
   border-right: solid 1px lightgrey;
 `;
 
-const StyledMainbar = styled(FrameBox)``;
+const StyledMainbar = styled(FrameBox)`
+  height: 100%;
+`;
 
 function HomeView(props) {
 
