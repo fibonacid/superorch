@@ -4,10 +4,10 @@ import AuthForm from "../components/AuthForm";
 import Layout from "../components/Layout";
 
 const StyledWrap = styled.div`
+  max-width: 200px;
   border: solid 1px lightgrey;
   border-radius: 10px;
-  margin: 10% auto;
-  width: 50%;
+  margin: 0 auto;
 `;
 
 function AuthView(props) {

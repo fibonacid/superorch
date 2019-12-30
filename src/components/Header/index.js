@@ -5,17 +5,15 @@ import AuthContext from "../../context/auth-context";
 
 const StyledWrap = styled.header`
   background: whitesmoke;
-  border-bottom: solid 1px lightgrey;
+  padding: 10px;
 `;
 
 const StyledList = styled.ul`
   display: flex;
   justify-content: space-between;
-  padding: 10px;
 `;
 
 const StyledItem = styled.li`
-  list-style-type: none;
   & a {
     color: black;
     text-decoration: none;
