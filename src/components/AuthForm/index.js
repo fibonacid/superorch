@@ -44,22 +44,15 @@ const INITIAL_STATE = {
   password: ""
 };
 
-//
-// Authenticate user on the server.
-//
+// --------------------------
+// Authentication Form
+// --------------------------
+
 function AuthForm() {
 
   const context = useContext(AuthContext);
 
-  const {
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    errors,
-    isSubmitting
-  } = useFormValidation(INITIAL_STATE, validateAuth, authenticateUser);
-
+  const [isLogin, setIsLogin] = useState(true);
   const [backendError, setBackendError] = useState(null);
 
   //
@@ -71,18 +64,33 @@ function AuthForm() {
     const { email, password } = values;
     try {
       const res = await Api.signIn(email, password);
-
+  
       if (!res.ok) {
         throw new Error(res.statusText);
       }
       const { data } = await res.json();
 
-      // Save authentication data
+      // Save authentication data and leave.
       context.login(
         data.login.token,
         data.login.userId,
         data.login.tokenExpiration,
       );
+
+    } catch(err) {
+      setBackendError(err.message);
+    }
+  }
+
+  async function registrateUser() {
+    const { email, password } = values;
+    try {
+      const res = await Api.signUp(email, password);
+  
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+      authenticateUser();
 
     } catch(err) {
       setBackendError(err.message);
@@ -111,10 +119,22 @@ function AuthForm() {
     return errors;
   }
 
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    isSubmitting
+  } = useFormValidation(INITIAL_STATE, validateAuth, isLogin ? authenticateUser : registrateUser);
+
+  function handleSwitchMode() {
+    setIsLogin(!isLogin);
+  }
 
   return (
     <StyledWrap>
-      <StyledTitle>Sign in</StyledTitle>
+      <StyledTitle>{isLogin ? "Sign in" : "Sign up"}</StyledTitle>
       <form onSubmit={handleSubmit}>
         <StyledField>
           <label htmlFor="email">Email</label>
@@ -141,6 +161,9 @@ function AuthForm() {
         {backendError && <StyledError>{backendError}</StyledError>}
         <StyledButton disabled={isSubmitting} type="submit">
           Submit
+        </StyledButton>
+        <StyledButton onClick={handleSwitchMode}>
+          switch to {isLogin ? 'sign up' : 'sign in' }
         </StyledButton>
       </form>
     </StyledWrap>
