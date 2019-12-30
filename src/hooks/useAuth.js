@@ -1,13 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function todayPlusHours(h) {
-  const today = new Date();
-  today.setHours(today.getHours() + h);
-  return today;
-}
-
 function useAuth() {
-
     const [token, setToken] = useState(null);
     const [userId, setUserId] = useState(null);
     const [tokenExpiration, setTokenExpiration] = useState(null);
