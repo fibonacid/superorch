@@ -4,8 +4,10 @@ import Frame from "../components/Frame";
 import FrameBox from "../components/FrameBox";
 import styled from "styled-components";
 import UserList from "../components/UserList";
+import Playground from "../components/Playground";
 
 const StyledSidebar = styled(FrameBox)`
+  background: whitesmoke;
   border-right: solid 1px lightgrey;
 `;
 
@@ -20,7 +22,9 @@ function HomeView(props) {
       <StyledSidebar grow="0" shrink="1" basis="200px">
         {token ? <UserList /> : null }
       </StyledSidebar>
-      <StyledMainbar>Hello</StyledMainbar>
+      <StyledMainbar>
+        <Playground />
+      </StyledMainbar>
     </Frame>
   )
 }

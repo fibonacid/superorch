@@ -5,6 +5,7 @@ const StyledContainer = styled.footer`
     flex-shrink: 0;
     background: whitesmoke;
     padding: 5px; 10px;
+    border-top: solid 1px lightgrey;
 `;
 
 function Footer() {

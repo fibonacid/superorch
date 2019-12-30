@@ -6,6 +6,7 @@ import AuthContext from "../../context/auth-context";
 const StyledWrap = styled.header`
   background: whitesmoke;
   padding: 10px;
+  border-bottom: solid 1px lightgrey;
 `;
 
 const StyledList = styled.ul`
