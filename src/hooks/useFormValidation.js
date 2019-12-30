@@ -12,6 +12,7 @@ function useFormValidation(initialState, validate, authenticate) {
         authenticate();
         setSubmitting(false);
       } else {
+        console.log('Validation error', errors);
         setSubmitting(false);
       }
     }
