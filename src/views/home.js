@@ -6,28 +6,32 @@ import styled from "styled-components";
 import UserList from "../components/UserList";
 import Playground from "../components/Playground";
 
+const StyledContainer = styled(Frame)`
+  max-height: 100%;
+  height: 100%;
+  overflow: auto;
+`;
+
 const StyledSidebar = styled(FrameBox)`
   background: whitesmoke;
   border-right: solid 1px lightgrey;
 `;
 
-const StyledMainbar = styled(FrameBox)`
-  height: 100%;
-`;
+const StyledMainbar = styled(FrameBox)``;
 
 function HomeView(props) {
 
   const { token, userId } = useContext(authContext); 
 
   return (
-    <Frame>
+    <StyledContainer>
       <StyledSidebar grow="0" shrink="1" basis="200px">
         {token ? <UserList /> : null }
       </StyledSidebar>
       <StyledMainbar>
         <Playground />
       </StyledMainbar>
-    </Frame>
+    </StyledContainer>
   )
 }
 
