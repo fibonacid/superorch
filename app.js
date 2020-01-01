@@ -1,23 +1,35 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { ApolloServer } = require('apollo-server-express');
+const { createServer } = require('http');
+const { execute, subscribe } = require('graphql');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
 const cors = require("./middleware/cors");
 const isAuth = require("./middleware/is-auth");
-
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
 
 const app = express();
-const path = '/graphql';
+const graphqlPath = '/graphql';
 
-const server = new ApolloServer({ 
+const PORT = 3000;
+
+const apollo = new ApolloServer({ 
   typeDefs: graphQlSchema, 
-  resolvers: grapgQlResolvers 
+  resolvers: grapgQlResolvers,
+  playground: {
+    endpointURL: graphqlPath,
+    subscriptionsEndpoint: `ws://localhost:${PORT}${graphqlPath}`
+  }
 });
-server.applyMiddleware({ app, path });
+apollo.applyMiddleware({ app, path: graphqlPath });
 
 app.use(cors);
 app.use('/graphql', isAuth);
+
+const httpServer = createServer(app)
+
+apollo.installSubscriptionHandlers(httpServer);
 
 //
 // Connect to Database
@@ -32,14 +44,20 @@ mongoose
   .then(() => {
     console.log("Connected to database");
 
-    app.listen({ port: 3000 }, () =>
-      console.log(`🚀 Server ready at http://localhost:3000${server.graphqlPath}`)
+    httpServer.listen({ port: PORT }, () => {
+        new SubscriptionServer({
+          execute,
+          subscribe,
+          schema: graphQlSchema,
+        }, {
+          server: httpServer,
+          path: graphqlPath,
+        });
+        console.log(`🚀 Server ready at http://localhost:${PORT}${apollo.graphqlPath}`);
+        console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${apollo.subscriptionsPath}`)
+      }
     )
   })
   .catch(err => {
     console.error(err);
   });
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
