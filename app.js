@@ -10,7 +10,7 @@ const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
 
 const app = express();
-const graphqlPath = '/graphql';
+const path = '/graphql';
 
 const PORT = 3000;
 
@@ -18,17 +18,24 @@ const apollo = new ApolloServer({
   typeDefs: graphQlSchema, 
   resolvers: grapgQlResolvers,
   playground: {
-    endpointURL: graphqlPath,
-    subscriptionsEndpoint: `ws://localhost:${PORT}${graphqlPath}`
-  }
+    endpointURL: path,
+    subscriptionEndpoint: `ws://localhost:${PORT}${path}`
+  },
+  subscriptions: {
+    onConnect: (connectionParams, webSocket, context) => {
+      console.log('websocket client connected')
+    },
+    onDisconnect: (webSocket, context) => {
+      console.log('websocket client disconnected')
+    }
 });
-apollo.applyMiddleware({ app, path: graphqlPath });
 
 app.use(cors);
-app.use('/graphql', isAuth);
+app.use(path, isAuth);
+
+apollo.applyMiddleware({ app, path });
 
 const httpServer = createServer(app)
-
 apollo.installSubscriptionHandlers(httpServer);
 
 //
@@ -51,7 +58,7 @@ mongoose
           schema: graphQlSchema,
         }, {
           server: httpServer,
-          path: graphqlPath,
+          path: path,
         });
         console.log(`🚀 Server ready at http://localhost:${PORT}${apollo.graphqlPath}`);
         console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${apollo.subscriptionsPath}`)
