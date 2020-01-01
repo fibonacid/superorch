@@ -1,15 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const graphqlHttp = require("express-graphql");
+const { graphqlExpress, graphiqlExpress } = require("graphql-server-express");
 const isAuth = require("./middleware/is-auth");
 
 const graphQlSchema = require("./graphql/schema");
 const graphQlResolvers = require("./graphql/resolvers");
 
 const app = express();
-
-app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -23,12 +21,18 @@ app.use(function(req, res, next) {
 
 app.use(isAuth);
 
-app.use(
+server.use(
   "/graphql",
-  graphqlHttp({
-    schema: graphQlSchema,
-    rootValue: graphQlResolvers,
-    graphiql: true
+  bodyParser.json(),
+  graphqlExpress({
+    schema
+  })
+);
+
+server.use(
+  "/graphiql",
+  graphiqlExpress({
+    endpointURL: "/graphql"
   })
 );
 
