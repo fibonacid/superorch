@@ -1,45 +1,22 @@
-export const API_ENDPOINT = `http://localhost:5000/graphql`;
+import { gql } from 'apollo-boost';
 
-const request = (body) => ({
-  method: 'POST',
-  body: JSON.stringify(body),
-  headers: {
-    'Content-Type': 'application/json',
+// 
+// GraphQL Queries
+//
+export const LOGIN = gql`
+  query login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      userId
+      tokenExpiration 
+    }
   }
-});
+`;
 
-const Api = {
-  signUp: (email, password) => {
-    return fetch(
-      API_ENDPOINT,
-      request({
-        query: `
-          mutation {
-            createUser(userInput: {email: "${email}", password: "${password}"}) {
-              _id
-              email
-            }
-          }
-        `
-      }
-    ))
-  },
-  signIn: (email, password) => {
-    return fetch(
-      API_ENDPOINT,
-      request({
-          query: `
-            query {
-              login(email: "${email}", password: "${password}") {
-                userId
-                token
-                tokenExpiration
-              }
-            }
-        `
-        }
-      ))
+export const CREATE_USER = gql`
+  mutation createUser($email: String!, $password: String!) {
+    createUser(userInput: { email: $email, password: $password }) {
+      _id
+    }
   }
-};
-
-export default Api;
+`;

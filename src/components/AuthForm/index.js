@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components/macro";
-import Api from "../../data/api";
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import AuthContext from "../../context/auth-context";
 import useFormValidation from "../../hooks/useFormValidation";
+import {LOGIN, CREATE_USER} from "../../data/api";
 
 //
 //  Styles
@@ -38,6 +39,12 @@ const StyledError = styled.p`
   color: red;
 `;
 
+const INITIAL_VALUES = {
+  email: "",
+  password: "",
+  passwordConf: ""
+}
+
 // --------------------------
 // Authentication Form
 // --------------------------
@@ -48,59 +55,6 @@ function AuthForm() {
 
   const [isLogin, setIsLogin] = useState(true);
   const [backendError, setBackendError] = useState(null);
-
-  //
-  // send login request and save
-  // token, userId and tokenExpiration
-  // into the context.
-  //
-  async function authenticateUser() {
-    const { email, password } = values;
-    console.log('Authenticate user', email, password);
-    try {
-      const res = await Api.signIn(email, password);
-  
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-      const { data } = await res.json();
-      console.log(res.status, data);
-
-      // Save authentication data and leave.
-      context.login(
-        data.login.token,
-        data.login.userId,
-        data.login.tokenExpiration,
-      );
-
-    } catch(err) {
-      setBackendError(err.message);
-    }
-  }
-
-  async function registrateUser() {
-    const { email, password } = values;
-    console.log('Registrate user', email, password);
-    try {
-      const res = await Api.signUp(email, password);
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-      const { data } = await res.json();
-      console.log(res.status, data);
-
-      authenticateUser();
-
-    } catch(err) {
-      setBackendError(err.message);
-    }
-  }
-
-  const INITIAL_VALUES = {
-    email: "",
-    password: "",
-    passwordConf: ""
-  }
 
   //
   // Rules for input validation
@@ -129,6 +83,47 @@ function AuthForm() {
       }
     }
     return errors;
+  }
+  
+  const [login, {}] = useLazyQuery(
+    LOGIN, 
+    {
+      onCompleted: ({ login }) => {
+        console.log('Success', login);
+        // Save authentication data and leave.
+        context.login(
+          login.token,
+          login.userId,
+          login.tokenExpiration,
+        );
+      },
+      onError: (error) => {
+        setBackendError(error.message)
+      }
+    }
+  );
+
+  const [createUser, {}] = useMutation(
+    CREATE_USER, 
+    {
+      onCompleted: (data) => {
+        console.log('Success', data);
+        authenticateUser();
+      },
+      onError: (error) => {
+        setBackendError(error.message)
+      }
+    }
+  );
+
+  function authenticateUser() {
+    const { email, password } = values;
+    login({ variables: { email, password } })
+  }
+
+  function registrateUser() {
+    const { email, password } = values;
+    createUser({ variables: { email, password } })
   }
 
   const {
