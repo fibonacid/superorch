@@ -46,6 +46,11 @@ const typeDefs = gql`
      createEvent(eventInput: EventInput): Event
      createUser(userInput: UserInput): User
   }
+
+  # The subscription root type, used to define all subscriptions.
+  type Subscription {
+    userJoined: User!
+  }
 `;
 
 module.exports = typeDefs;

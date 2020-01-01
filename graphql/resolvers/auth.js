@@ -1,7 +1,12 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const { PubSub } = require('apollo-server-express');
+const { user } = require('./merge');
 const User = require("../../models/users");
+
+const pubsub = new PubSub();
+
+const USER_JOINED = 'userJoined';
 
 module.exports = {
   createUser: async (_, args) => {
@@ -20,6 +25,8 @@ module.exports = {
 
       const result = await newUser.save();
       console.log(result);
+
+      pubsub.publish(USER_JOINED, { [USER_JOINED]: newUser._doc })
 
       return { ...result._doc, password: null };
     } catch (err) {
@@ -49,5 +56,11 @@ module.exports = {
       token,
       tokenExpiration: 1
     };
+  },
+
+  userJoined: {
+    subscribe: () => {
+      pubsub.asyncIterator(USER_JOINED)
+    }
   }
 };
