@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { PubSub } = require('apollo-server-express');
-const { user } = require('./merge');
+const { transformUser } = require('./merge');
 const User = require("../../models/users");
 
 const pubsub = new PubSub();
@@ -44,7 +44,7 @@ module.exports = {
     }
 
     // Send a USER_JOINED message
-    pubsub.publish(USER_JOINED, { [USER_JOINED]: user._doc })
+    pubsub.publish(USER_JOINED, { [USER_JOINED]: transformUser(user) })
 
     const token = await jwt.sign(
       { userId: user.id, email: user.email },
