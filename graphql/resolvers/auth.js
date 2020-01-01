@@ -60,7 +60,7 @@ module.exports = {
 
   userJoined: {
     subscribe: () => {
-      pubsub.asyncIterator(USER_JOINED)
+      return pubsub.asyncIterator(USER_JOINED)
     }
   }
 };
