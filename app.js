@@ -2,6 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const { graphqlExpress, graphiqlExpress } = require("graphql-server-express");
+const { createServer } = require('http');
+//const { execute, subscribe } = require('graphql');
+const graphqlHttp = require("express-graphql");
 const isAuth = require("./middleware/is-auth");
 
 const graphQlSchema = require("./graphql/schema");
