@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/users");
 
 module.exports = {
-  createUser: async args => {
+  createUser: async (_, args) => {
     try {
       const existingUser = await User.findOne({ email: args.userInput.email });
 
@@ -28,7 +28,7 @@ module.exports = {
     }
   },
 
-  login: async ({ email, password }) => {
+  login: async (_, { email, password }) => {
     const user = await User.findOne({ email });
     if (!user) {
       throw new Error("User doesn't exist");

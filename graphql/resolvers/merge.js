@@ -48,13 +48,4 @@ const transformEvent = event => ({
   creator: user.bind(this, event.creator)
 });
 
-const transformBooking = booking => ({
-  ...booking._doc,
-  user: user.bind(this, booking._doc.user),
-  event: singleEvent.bind(this, booking._doc.event),
-  createdAt: dateToString(booking._doc.createdAt),
-  updatedAt: dateToString(booking._doc.updatedAt)
-});
-
 exports.transformEvent = transformEvent;
-exports.transformBooking = transformBooking;

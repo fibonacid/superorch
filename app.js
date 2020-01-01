@@ -1,44 +1,27 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const { graphqlExpress, graphiqlExpress } = require("graphql-server-express");
-const { createServer } = require('http');
-//const { execute, subscribe } = require('graphql');
-const graphqlHttp = require("express-graphql");
+const { ApolloServer } = require('apollo-server-express');
+const cors = require("./middleware/cors");
 const isAuth = require("./middleware/is-auth");
 
 const graphQlSchema = require("./graphql/schema");
-const graphQlResolvers = require("./graphql/resolvers");
+const grapgQlResolvers = require("./graphql/resolvers");
 
 const app = express();
+const path = '/graphql';
 
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
+const server = new ApolloServer({ 
+  typeDefs: graphQlSchema, 
+  resolvers: grapgQlResolvers 
 });
+server.applyMiddleware({ app, path });
 
-app.use(isAuth);
+app.use(cors);
+app.use('/graphql', isAuth);
 
-server.use(
-  "/graphql",
-  bodyParser.json(),
-  graphqlExpress({
-    schema
-  })
-);
-
-server.use(
-  "/graphiql",
-  graphiqlExpress({
-    endpointURL: "/graphql"
-  })
-);
-
+//
+// Connect to Database
+//
 const { MONGO_HOST, MONGO_PORT, MONGO_DB } = process.env;
 
 mongoose
@@ -49,8 +32,9 @@ mongoose
   .then(() => {
     console.log("Connected to database");
 
-    app.listen(3000);
-    console.log("Listening on port 3000");
+    app.listen({ port: 3000 }, () =>
+      console.log(`🚀 Server ready at http://localhost:3000${server.graphqlPath}`)
+    )
   })
   .catch(err => {
     console.error(err);
