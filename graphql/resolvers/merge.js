@@ -29,7 +29,7 @@ const userLoader = new DataLoader(userIds => {
   return User.find({ _id: { $in: userIds } });
 });
 
-const user = async userId => {
+const singleUser = async userId => {
   try {
     const user = await userLoader.load(userId.toString());
     return {
@@ -45,7 +45,12 @@ const user = async userId => {
 const transformEvent = event => ({
   ...event._doc,
   date: dateToString(event._doc.date),
-  creator: user.bind(this, event.creator)
+  creator: singleUser.bind(this, event.creator)
 });
 
+const transformUser = async user => {
+  return await singleUser(user.id)
+};
+
 exports.transformEvent = transformEvent;
+exports.transformUser = transformUser;
