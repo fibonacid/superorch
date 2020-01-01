@@ -1,16 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { ApolloServer } = require('apollo-server-express');
-const { createServer } = require('http');
-const { execute, subscribe } = require('graphql');
-const { SubscriptionServer } = require('subscriptions-transport-ws');
-const cors = require("./middleware/cors");
-const isAuth = require("./middleware/is-auth");
+const { ApolloServer } = require('apollo-server');
+// const cors = require("./middleware/cors");
+// const isAuth = require("./middleware/is-auth");
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
 
 const app = express();
 const path = '/graphql';
+const subscriptionPath = '/subscriptions'
 
 const PORT = 3000;
 
@@ -19,24 +17,18 @@ const apollo = new ApolloServer({
   resolvers: grapgQlResolvers,
   playground: {
     endpointURL: path,
-    subscriptionEndpoint: `ws://localhost:${PORT}${path}`
+    subscriptionEndpoint: `ws://localhost:5000${subscriptionPath}`
   },
   subscriptions: {
+    path: subscriptionPath,
     onConnect: (connectionParams, webSocket, context) => {
       console.log('websocket client connected')
     },
     onDisconnect: (webSocket, context) => {
       console.log('websocket client disconnected')
     }
+  }
 });
-
-app.use(cors);
-app.use(path, isAuth);
-
-apollo.applyMiddleware({ app, path });
-
-const httpServer = createServer(app)
-apollo.installSubscriptionHandlers(httpServer);
 
 //
 // Connect to Database
@@ -51,19 +43,10 @@ mongoose
   .then(() => {
     console.log("Connected to database");
 
-    httpServer.listen({ port: PORT }, () => {
-        new SubscriptionServer({
-          execute,
-          subscribe,
-          schema: graphQlSchema,
-        }, {
-          server: httpServer,
-          path: path,
-        });
-        console.log(`🚀 Server ready at http://localhost:${PORT}${apollo.graphqlPath}`);
-        console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${apollo.subscriptionsPath}`)
-      }
-    )
+    apollo.listen({ port: PORT })
+      .then(({ url }) => {
+        console.log(`🚀 Server ready at at ${url}`)
+      });
   })
   .catch(err => {
     console.error(err);
