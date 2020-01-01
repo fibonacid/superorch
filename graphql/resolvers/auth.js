@@ -26,8 +26,6 @@ module.exports = {
       const result = await newUser.save();
       console.log(result);
 
-      pubsub.publish(USER_JOINED, { [USER_JOINED]: newUser._doc })
-
       return { ...result._doc, password: null };
     } catch (err) {
       console.log(err);
@@ -44,6 +42,10 @@ module.exports = {
     if (!isEqual) {
       throw new Error("Password is incorrect");
     }
+
+    // Send a USER_JOINED message
+    pubsub.publish(USER_JOINED, { [USER_JOINED]: user._doc })
+
     const token = await jwt.sign(
       { userId: user.id, email: user.email },
       "somesupersecretkey",
@@ -51,6 +53,7 @@ module.exports = {
         expiresIn: "1h"
       }
     );
+     
     return {
       userId: user.id,
       token,
