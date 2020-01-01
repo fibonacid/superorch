@@ -8,7 +8,6 @@ const StyledWrapper = styled(Frame)`
 `;
 
 const StyledContainer = styled.div`
-    background: lightpink;
     max-height: 100%;
     height: 100%;
     overflow: auto;
