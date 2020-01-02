@@ -31,18 +31,26 @@ const server = new ApolloServer({
     return err;
   },
   subscriptions: {
-    onConnect: ({authToken}, webSocket, context) => {
+    onConnect: (connectionParams, webSocket, context) => {
       console.log('websocket client connected');
 
-      if (authToken) {
-        try {
-          return validateToken(authToken);
-        } catch(err) {
-          throw new Error('Invalid auth token!');
+      // Check authToken
+      if (connectionParams.authToken) {
+        const decodedToken = validateToken(connectionParams.authToken);
+        console.log(decodedToken);
+
+        if (!decodedToken) {
+          context.isAuth = false;
+          throw new Error('Invalid auth token');
         }
+
+        context.isAuth = true;
+        context.userId = decodedToken.userId;
+        return;
       }
 
-      throw new Error('Missing auth token!');
+      context.isAuth = false;
+      throw new Error('Missing auth token');
     },
     onDisconnect: (webSocket, context) => {
       console.log('websocket client disconnected')
