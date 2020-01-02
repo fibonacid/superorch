@@ -14,6 +14,7 @@ const typeDefs = gql`
     _id: ID!
     email: String!
     password: String!
+    nickname: String
     createdEvents: [Event!]
   }
 
@@ -33,6 +34,7 @@ const typeDefs = gql`
   input UserInput {
     email: String!
     password: String!
+    nickname: String
   }
 
   # This type specifies the entry points into our API. 
