@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const { validateToken } = require('../helpers/auth');
 
 module.exports = (req, res, next) => {
   console.log('Authenticating ...');
@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
   }
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, "somesupersecretkey");
+    decodedToken = validateToken(token);
   } catch (err) {
     console.log(err);
     req.isAuth = false;
