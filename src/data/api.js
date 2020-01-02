@@ -13,6 +13,15 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
+export const USERS_QUERY = gql`
+  query {
+    users {
+      _id
+      email
+    }
+  }
+`;
+
 //
 // Mutations
 //
