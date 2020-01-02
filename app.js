@@ -61,6 +61,13 @@ server.applyMiddleware({ app, cors: true })
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
+
+// Setup mongoose
+
+// Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
+// by default, you need to set it to false.
+mongoose.set('useFindAndModify', false);
+
 //
 // Connect to Database
 //
