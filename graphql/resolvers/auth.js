@@ -6,7 +6,7 @@ const User = require("../../models/users");
 
 const pubsub = new PubSub();
 
-const USER_JOINED = 'userJoined';
+const USER_JOINED = 'USER_JOINED';
 
 module.exports = {
   users: async (_, __) => {
@@ -41,32 +41,42 @@ module.exports = {
     }
   },
 
-  login: async (_, { email, password }) => {
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw new Error("User doesn't exist");
-    }
-    const isEqual = await bcrypt.compare(password, user.password);
-    if (!isEqual) {
-      throw new Error("Password is incorrect");
-    }
+  login: async (_, { email, password }, context) => {
 
-    // Send a USER_JOINED message
-    pubsub.publish(USER_JOINED, { [USER_JOINED]: transformUser(user) })
+    console.log({
+      isAuth: context.isAuth,
+      userId: context.userId
+    });
 
-    const token = await jwt.sign(
-      { userId: user.id, email: user.email },
-      "somesupersecretkey",
-      {
-        expiresIn: "1h"
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new Error("User doesn't exist");
       }
-    );
-     
-    return {
-      userId: user.id,
-      token,
-      tokenExpiration: 1
-    };
+      const isEqual = await bcrypt.compare(password, user.password);
+      if (!isEqual) {
+        throw new Error("Password is incorrect");
+      }
+  
+      // Send a USER_JOINED message
+      pubsub.publish(USER_JOINED, { [USER_JOINED]: transformUser(user) })
+  
+      const token = await jwt.sign(
+        { userId: user.id, email: user.email },
+        "somesupersecretkey",
+        {
+          expiresIn: "1h"
+        }
+      );
+       
+      return {
+        userId: user.id,
+        token,
+        tokenExpiration: 1
+      };
+    } catch(err) {
+      throw err;
+    }
   },
 
   updateUser: async (_, { userUpdateInput }, { isAuth, userId } ) => {
@@ -83,8 +93,6 @@ module.exports = {
   },
 
   userJoined: {
-    subscribe: () => {
-      return pubsub.asyncIterator(USER_JOINED)
-    }
+    subscribe: () => pubsub.asyncIterator(USER_JOINED)
   }
 };
