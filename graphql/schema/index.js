@@ -37,6 +37,7 @@ const typeDefs = gql`
 
   # This type specifies the entry points into our API. 
   type Query {
+     users: [User!]!
      events: [Event!]!
      login(email: String! password: String!): AuthData!
   }

@@ -5,6 +5,7 @@ const rootResolver = {
   Query: {
     login: authResolver.login,
     events: eventsResolver.events,
+    users: authResolver.users
   },
   Mutation: {
     createUser: authResolver.createUser,

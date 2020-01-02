@@ -9,6 +9,16 @@ const pubsub = new PubSub();
 const USER_JOINED = 'userJoined';
 
 module.exports = {
+  users: async (_, __) => {
+    try {
+      const users = await User.find();
+      return users.map(user => transformUser(user));
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  },
+
   createUser: async (_, args) => {
     try {
       const existingUser = await User.findOne({ email: args.userInput.email });
