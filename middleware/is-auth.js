@@ -2,6 +2,7 @@ const { validateToken } = require('../helpers/auth');
 
 module.exports = (req, res, next) => {
   console.log('Authenticating ...');
+  
   const authHeader = req.get("Authorization");
   if (!authHeader) {
     req.isAuth = false;
@@ -24,6 +25,8 @@ module.exports = (req, res, next) => {
     req.isAuth = false;
     return next();
   }
+  console.log('Authenticated !');
+
   req.isAuth = true;
   req.userId = decodedToken.userId;
   next();
