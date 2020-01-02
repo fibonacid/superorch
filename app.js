@@ -13,9 +13,10 @@ const app = express();
 const server = new ApolloServer({ 
   typeDefs: graphQlSchema, 
   resolvers: grapgQlResolvers,
-  context: ({req}) => ({
-    userId: req.userId,
-    isAuth: req.isAuth
+
+  context: ({ res }) => ({
+    isAuth: res.locals.isAuth,
+    userId: res.locals.userId
   }),
   formatError: (err) => {
     // Don't give the specific errors to the client.
