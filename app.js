@@ -6,6 +6,7 @@ const isAuth = require('./middleware/is-auth');
 const mongoose = require("mongoose");
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
+const { validateToken } = require('./helpers/auth');
 
 const PORT = 3000;
 const app = express();
@@ -19,8 +20,18 @@ const server = new ApolloServer({
     subscriptionEndpoint: `ws://localhost:5000/graphql`
   },
   subscriptions: {
-    onConnect: (connectionParams, webSocket, context) => {
+    onConnect: ({authToken}, webSocket, context) => {
       console.log('websocket client connected');
+
+      if (authToken) {
+        try {
+          return validateToken(authToken);
+        } catch(err) {
+          throw new Error('Invalid auth token!');
+        }
+      }
+
+      throw new Error('Missing auth token!');
     },
     onDisconnect: (webSocket, context) => {
       console.log('websocket client disconnected')
