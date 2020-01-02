@@ -40,7 +40,7 @@ function useUsers() {
       if(usersData) {
         console.log('Success', usersData);
         setUsers(usersData.users.map(user => ({
-          nickname: user.nickname, 
+          name: user.email, 
           status: "online" 
         })))
       }
@@ -54,7 +54,7 @@ function useUsers() {
             [ 
               ...users,
               { 
-                nickname: userJoinedData.userJoined.nickname, 
+                name: userJoinedData.userJoined.email, 
                 status: "online" 
               }
             ]

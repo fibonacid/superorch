@@ -17,7 +17,6 @@ export const USERS_QUERY = gql`
   query {
     users {
       _id
-      nickname
       email
     }
   }
@@ -42,7 +41,6 @@ export const USER_JOINED_SUBSCRIPTION = gql`
     userJoined {
       _id
       email
-      nickname
     }
   }
 `;
