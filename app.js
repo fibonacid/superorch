@@ -17,7 +17,7 @@ const server = new ApolloServer({
     endpoint: `http://localhost:5000/graphql`,
     subscriptionEndpoint: `ws://localhost:5000/graphql`
   },
-  subscription: {
+  subscriptions: {
     onConnect: (connectionParams, webSocket, context) => {
       console.log('websocket client connected')
     },
@@ -28,9 +28,6 @@ const server = new ApolloServer({
 });
 
 server.applyMiddleware({ app, cors: true })
-
-// Enable CORS for all routes
-//app.use(cors());
 
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
