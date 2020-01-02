@@ -1,10 +1,16 @@
 import React, { useEffect } from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
-import AuthContext from "./context/auth-context";
 import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
+
+// Context
+import AuthContext from "./context/auth-context";
+import UsersContext from "./context/users-context";
+
+// Hooks
 import useAuth from "./hooks/useAuth";
+import useUsers from "./hooks/useUsers";
 
 // Components
 import GlobalStyle, {StyledContent} from "./components/GlobalStyle";
