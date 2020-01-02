@@ -69,8 +69,11 @@ module.exports = {
     };
   },
 
-  updateUser: async (_, { userUpdateInput }, { userId } ) => {
+  updateUser: async (_, { userUpdateInput }, { isAuth, userId } ) => {
     try {
+      if (!isAuth) {
+        throw new Error('Unauthorized');
+      }
       const user = await User.findByIdAndUpdate(userId, userUpdateInput);
       const result = await user.save();
       return transformUser(result);
