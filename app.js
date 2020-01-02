@@ -14,10 +14,18 @@ const app = express();
 const server = new ApolloServer({ 
   typeDefs: graphQlSchema, 
   resolvers: grapgQlResolvers,
-  debug: true,
-  playground: {
-    endpoint: `http://localhost:5000/graphql`,
-    subscriptionEndpoint: `ws://localhost:5000/graphql`
+  formatError: (err) => {
+    console.log('format error', err.message)
+    // Don't give the specific errors to the client.
+    if (err.message.startsWith("Database Error: ")) {
+      return new Error('Internal server error');
+    }
+    if (err.message.startsWith("Unauthenticated")) {
+      return new Error('Authentication error');
+    }
+    // Otherwise return the original error.  The error can also
+    // be manipulated in other ways, so long as it's returned.
+    return err;
   },
   subscriptions: {
     onConnect: ({authToken}, webSocket, context) => {
@@ -36,6 +44,10 @@ const server = new ApolloServer({
     onDisconnect: (webSocket, context) => {
       console.log('websocket client disconnected')
     }
+  },
+  playground: {
+    endpoint: `http://localhost:5000/graphql`,
+    subscriptionEndpoint: `ws://localhost:5000/graphql`
   }
 });
 
