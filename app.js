@@ -1,7 +1,8 @@
 const http = require('http');
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
+const isAuth = require('./middleware/is-auth');
 const mongoose = require("mongoose");
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
@@ -19,13 +20,15 @@ const server = new ApolloServer({
   },
   subscriptions: {
     onConnect: (connectionParams, webSocket, context) => {
-      console.log('websocket client connected')
+      console.log('websocket client connected');
     },
     onDisconnect: (webSocket, context) => {
       console.log('websocket client disconnected')
     }
   }
 });
+
+app.use('*', isAuth);
 
 server.applyMiddleware({ app, cors: true })
 
