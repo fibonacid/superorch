@@ -14,6 +14,7 @@ const typeDefs = gql`
     _id: ID!
     email: String!
     password: String!
+    nickname: String
     createdEvents: [Event!]
   }
 
@@ -35,6 +36,10 @@ const typeDefs = gql`
     password: String!
   }
 
+  input UserUpdateInput {
+    nickname: String
+  }
+
   # This type specifies the entry points into our API. 
   type Query {
      users: [User!]!
@@ -46,6 +51,7 @@ const typeDefs = gql`
   type Mutation {
      createEvent(eventInput: EventInput): Event
      createUser(userInput: UserInput): User
+     updateUser(userUpdateInput: UserUpdateInput): User
   }
 
   # The subscription root type, used to define all subscriptions.

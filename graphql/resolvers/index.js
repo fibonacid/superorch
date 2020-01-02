@@ -9,6 +9,7 @@ const rootResolver = {
   },
   Mutation: {
     createUser: authResolver.createUser,
+    updateUser: authResolver.updateUser, 
     createEvent: eventsResolver.createEvent,
   },
   Subscription: {

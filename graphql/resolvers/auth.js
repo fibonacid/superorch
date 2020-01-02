@@ -69,6 +69,16 @@ module.exports = {
     };
   },
 
+  updateUser: async (_, { userUpdateInput }, { userId } ) => {
+    try {
+      const user = await User.findByIdAndUpdate(userId, userUpdateInput);
+      const result = await user.save();
+      return transformUser(result);
+    } catch(err) {
+      return err;
+    }
+  },
+
   userJoined: {
     subscribe: () => {
       return pubsub.asyncIterator(USER_JOINED)
