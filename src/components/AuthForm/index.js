@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import AuthContext from "../../context/auth-context";
 import useFormValidation from "../../hooks/useFormValidation";
-import {LOGIN, CREATE_USER} from "../../data/api";
+import {LOGIN_QUERY, CREATE_USER_MUTATION} from "../../data/api";
 
 //
 //  Styles
@@ -86,7 +86,7 @@ function AuthForm() {
   }
   
   const [login, {}] = useLazyQuery(
-    LOGIN, 
+    LOGIN_QUERY, 
     {
       onCompleted: ({ login }) => {
         console.log('Success', login);
@@ -104,7 +104,7 @@ function AuthForm() {
   );
 
   const [createUser, {}] = useMutation(
-    CREATE_USER, 
+    CREATE_USER_MUTATION, 
     {
       onCompleted: (data) => {
         console.log('Success', data);
