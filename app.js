@@ -1,7 +1,6 @@
 const http = require('http');
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express');
-const cors = require('cors');
 const isAuth = require('./middleware/is-auth');
 const mongoose = require("mongoose");
 const graphQlSchema = require("./graphql/schema");
@@ -15,7 +14,6 @@ const server = new ApolloServer({
   typeDefs: graphQlSchema, 
   resolvers: grapgQlResolvers,
   formatError: (err) => {
-    console.log('format error', err.message)
     // Don't give the specific errors to the client.
     if (err.message.startsWith("Database Error: ")) {
       return new Error('Internal server error');
@@ -23,6 +21,7 @@ const server = new ApolloServer({
     if (err.message.startsWith("Unauthenticated")) {
       return new Error('Authentication error');
     }
+    console.log(err)
     // Otherwise return the original error.  The error can also
     // be manipulated in other ways, so long as it's returned.
     return err;

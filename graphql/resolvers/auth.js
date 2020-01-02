@@ -14,7 +14,6 @@ module.exports = {
       const users = await User.find();
       return users.map(user => transformUser(user));
     } catch (err) {
-      console.log(err);
       return err;
     }
   },
@@ -38,7 +37,6 @@ module.exports = {
 
       return { ...result._doc, password: null };
     } catch (err) {
-      console.log(err);
       return err;
     }
   },
