@@ -13,6 +13,10 @@ const app = express();
 const server = new ApolloServer({ 
   typeDefs: graphQlSchema, 
   resolvers: grapgQlResolvers,
+  context: ({req}) => ({
+    userId: req.userId,
+    isAuth: req.isAuth
+  }),
   formatError: (err) => {
     // Don't give the specific errors to the client.
     if (err.message.startsWith("Database Error: ")) {
