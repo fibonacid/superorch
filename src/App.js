@@ -6,7 +6,6 @@ import { HttpLink } from 'apollo-link-http';
 
 // Context
 import AuthContext from "./context/auth-context";
-import UsersContext from "./context/users-context";
 
 // Hooks
 import useAuth from "./hooks/useAuth";
