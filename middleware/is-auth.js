@@ -2,15 +2,16 @@ const { validateToken } = require('../helpers/auth');
 
 module.exports = (req, res, next) => {
   console.log('Authenticating ...');
+  res.locals = {}; 
   
   const authHeader = req.get("Authorization");
   if (!authHeader) {
-    req.isAuth = false;
+    res.locals.isAuth = false;
     return next();
   }
   const token = authHeader.split(" ")[1];
   if (!token || token === "") {
-    req.isAuth = false;
+    res.locals.isAuth = false;
     return next();
   }
   let decodedToken;
@@ -18,16 +19,16 @@ module.exports = (req, res, next) => {
     decodedToken = validateToken(token);
   } catch (err) {
     console.log(err);
-    req.isAuth = false;
+    res.locals.isAuth = false;
     return next();
   }
   if (!decodedToken) {
-    req.isAuth = false;
+    res.locals.isAuth = false;
     return next();
   }
   console.log('Authenticated !');
 
-  req.isAuth = true;
-  req.userId = decodedToken.userId;
+  res.locals.isAuth = true;
+  res.locals.userId = decodedToken.userId;
   next();
 };
