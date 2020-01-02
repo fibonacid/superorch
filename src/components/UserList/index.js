@@ -1,13 +1,14 @@
 import React from 'react';
 import User from './User';
+import useUsers from '../../hooks/useUsers';
 
 function UserList(props) {
+
+    const {users} = useUsers();
+
     return(
         <ul>
-            <User user={{name: 'Marco', status: 'online' }} />
-            <User user={{name: 'Franca', status: 'online'}} />
-            <User user={{name: 'Lorenzo', status: 'online'}} />
-            <User user={{name: 'Nicola', status: 'online'}} />
+            {users.map((user, i) => <User key={i} user={user} />)}
         </ul>
     )
 }
