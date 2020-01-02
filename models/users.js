@@ -11,11 +11,6 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  nickname: {
-    type: String,
-    required: false,
-    default: 'Anonymous'
-  },
   createdEvents: [
     {
       type: Schema.Types.ObjectID,

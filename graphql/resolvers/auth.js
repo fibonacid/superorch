@@ -18,22 +18,22 @@ module.exports = {
     }
   },
 
-  createUser: async (_, { userInput }) => {
+  createUser: async (_, args) => {
     try {
-      const existingUser = await User.findOne({ email: userInput.email });
+      const existingUser = await User.findOne({ email: args.userInput.email });
 
       if (existingUser) {
         throw new Error("User exists already");
       }
-      const hashedPassword = await bcrypt.hash(userInput.password, 12);
+      const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
 
       const newUser = new User({
-        email: userInput.email,
-        password: hashedPassword,
-        nickname: userInput.nickname
+        email: args.userInput.email,
+        password: hashedPassword
       });
 
       const result = await newUser.save();
+      console.log(result);
 
       return { ...result._doc, password: null };
     } catch (err) {
