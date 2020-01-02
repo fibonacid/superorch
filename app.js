@@ -1,22 +1,23 @@
-const { ApolloServer } = require('apollo-server');
+const http = require('http');
+const { ApolloServer } = require('apollo-server-express');
+const express = require('express');
+const cors = require('cors')
 const mongoose = require("mongoose");
-// const cors = require("./middleware/cors");
-// const isAuth = require("./middleware/is-auth");
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
 
-const path = '/graphql';
-
 const PORT = 3000;
+const app = express();
 
-const apollo = new ApolloServer({ 
+const server = new ApolloServer({ 
   typeDefs: graphQlSchema, 
   resolvers: grapgQlResolvers,
+  debug: true,
   playground: {
-    endpointURL: path,
-    subscriptionEndpoint: `ws://localhost:5000${path}`
+    endpoint: `http://localhost:5000/graphql`,
+    subscriptionEndpoint: `ws://localhost:5000/graphql`
   },
-  subscriptions: {
+  subscription: {
     onConnect: (connectionParams, webSocket, context) => {
       console.log('websocket client connected')
     },
@@ -25,6 +26,14 @@ const apollo = new ApolloServer({
     }
   }
 });
+
+server.applyMiddleware({ app, cors: true })
+
+// Enable CORS for all routes
+//app.use(cors());
+
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
 
 //
 // Connect to Database
@@ -39,10 +48,11 @@ mongoose
   .then(() => {
     console.log("Connected to database");
 
-    apollo.listen({ port: PORT })
-      .then(({ url }) => {
-        console.log(`🚀 Server ready at at ${url}`)
-      });
+    // ⚠️ Pay attention to the fact that we are calling `listen` on the http server variable, and not on `app`.
+    httpServer.listen(PORT, () => {
+      console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`)
+      console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`)
+    })
   })
   .catch(err => {
     console.error(err);
