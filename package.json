@@ -23,6 +23,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "apollo-boost": "^0.4.7",
+    "apollo-link-ws": "^1.0.19",
     "cross-env": "^6.0.3",
     "draft-js": "^0.11.3",
     "electron-is-dev": "^1.1.0",
@@ -33,7 +34,8 @@
     "react-scripts": "3.3.0",
     "styled-components": "^4.4.1",
     "styled-normalize": "^8.0.6",
-    "styled-reset": "^4.0.8"
+    "styled-reset": "^4.0.8",
+    "subscriptions-transport-ws": "^0.9.16"
   },
   "scripts": {
     "react-start": "react-scripts start",
