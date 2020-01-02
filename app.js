@@ -1,14 +1,11 @@
-const express = require("express");
-const mongoose = require("mongoose");
 const { ApolloServer } = require('apollo-server');
+const mongoose = require("mongoose");
 // const cors = require("./middleware/cors");
 // const isAuth = require("./middleware/is-auth");
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
 
-const app = express();
 const path = '/graphql';
-const subscriptionPath = '/subscriptions'
 
 const PORT = 3000;
 
@@ -17,10 +14,9 @@ const apollo = new ApolloServer({
   resolvers: grapgQlResolvers,
   playground: {
     endpointURL: path,
-    subscriptionEndpoint: `ws://localhost:5000${subscriptionPath}`
+    subscriptionEndpoint: `ws://localhost:5000${path}`
   },
   subscriptions: {
-    path: subscriptionPath,
     onConnect: (connectionParams, webSocket, context) => {
       console.log('websocket client connected')
     },
