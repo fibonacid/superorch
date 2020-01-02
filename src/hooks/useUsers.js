@@ -1,41 +1,68 @@
 import { useState, useEffect } from 'react';
-import { useSubscription } from '@apollo/react-hooks';
-import { USER_JOINED_SUBSCRIPTION } from '../data/api';
-
-const INITIAL_USERS = [
-  { name: 'Lorenzo', status: 'Online' },
-  { name: 'Marco', status: 'Online' },
-  { name: 'Franca', status: 'Online' },
-  { name: 'Nicola', status: 'Online' }
-];
+import { useQuery, useSubscription } from '@apollo/react-hooks';
+import { USER_JOINED_SUBSCRIPTION, USERS_QUERY } from '../data/api';
 
 function useUsers() {
 
-    const [users, setUsers] = useState(INITIAL_USERS);
-    const { data, loading, error } = useSubscription(USER_JOINED_SUBSCRIPTION);
+    const {
+      data: usersData, 
+      loading: usersDataLoading, 
+      error: usersDataError 
+    } = useQuery(USERS_QUERY)
 
+    const { 
+      data: userJoinedData, 
+      loading: userJoinedLoading, 
+      error: userJoinedError 
+    } = useSubscription(USER_JOINED_SUBSCRIPTION);
+
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({}); 
+    const [users, setUsers] = useState([]);
+
+    // Set Loading
     useEffect(() => {
-      if (loading) {
-        console.log('Loading');
-      } else {
-        console.log('Not loading')
+      setLoading(usersDataLoading && userJoinedLoading)
+    }, [usersDataLoading, userJoinedLoading]);
+
+    // Set errors
+    useEffect(() => {
+      if (userJoinedError) {
+        setErrors({ ...errors, userJoined: userJoinedError })
       }
-    }, [loading]);
-
-    useEffect(() => {
-      if (error) {
-        console.log(error);
+      if (usersDataError) {
+        setErrors({ ...errors, users: usersDataError })
       }
-    }, [error]);
+    }, [userJoinedError, usersDataError]);
 
+    // Replace user list
     useEffect(() => {
-        if (data) {
-          console.log('Success', data);
-          //setUsers([...users, data]);
+      if(usersData) {
+        console.log('Success', usersData);
+        setUsers(usersData.users.map(user => ({
+          name: user.email, 
+          status: "online" 
+        })))
+      }
+    }, [usersData])
+
+    // Add new user to the list
+    useEffect(() => {
+        if (userJoinedData) {
+          console.log('Success', userJoinedData);
+          setUsers(
+            [ 
+              ...users,
+              { 
+                name: userJoinedData.userJoined.email, 
+                status: "online" 
+              }
+            ]
+          );
         }
-    }, [data]);
+    }, [userJoinedData]);
 
-    return { users }
+    return { users, loading, errors }
 }
 
 export default useUsers;
