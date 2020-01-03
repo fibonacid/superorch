@@ -51,8 +51,6 @@ function LoginForm() {
     isSubmitting
   } = useFormValidation(INITIAL_VALUES, validateAuth, authenticateUser);
 
-  console.log(errors);
-
   return (
     <>
     <form onSubmit={handleSubmit}>
