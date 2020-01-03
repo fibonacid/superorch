@@ -50,7 +50,7 @@ const typeDefs = gql`
   # The mutation root type, used to define all mutations.
   type Mutation {
      createEvent(eventInput: EventInput): Event
-     createUser(userInput: UserInput): User
+     createUser(userInput: UserInput): AuthData!
      updateUser(userUpdateInput: UserUpdateInput): User
   }
 

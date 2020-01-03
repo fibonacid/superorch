@@ -34,7 +34,19 @@ module.exports = {
 
       const result = await newUser.save();
 
-      return { ...result._doc, password: null };
+      const token = await jwt.sign(
+        { userId: result._id, email: result.email },
+        "somesupersecretkey",
+        {
+          expiresIn: "1h"
+        }
+      );
+
+      return {
+        userId: result._id,
+        token,
+        tokenExpiration: 1
+      };
     } catch (err) {
       return err;
     }
