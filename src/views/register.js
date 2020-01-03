@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../components/Layout";
@@ -26,12 +26,14 @@ function RegisterView() {
 
   const [index, setIndex] = useState(0);
 
+  const oneIndexUp = useCallback(() => { setIndex(index+1) }, [index]);
+
   return (
 	 <Layout>
      {/* First part: email and password */}
      {index === 0 && <>
       <StyledForm title="Register">
-          <RegistrationForm />
+          <RegistrationForm onSuccess={oneIndexUp}/>
         </StyledForm>
         <StyledLink to="/login">Back to login</StyledLink>
      </>}
