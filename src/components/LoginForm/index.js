@@ -1,9 +1,7 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import { useLazyQuery } from '@apollo/react-hooks';
-import AuthContext from "../../context/auth-context";
 import useFormValidation from "../../hooks/useFormValidation";
-import {LOGIN_QUERY} from "../../data/api";
+import useLoginQuery from "../../hooks/useLoginQuery";
 
 //
 //  Styles
@@ -40,9 +38,7 @@ const INITIAL_VALUES = {
 
 function LoginForm() {
 
-  const context = useContext(AuthContext);
-
-  const [backendError, setBackendError] = useState(null);
+  const [login, { loading, error: backendError }] = useLoginQuery();
 
   //
   // Rules for input validation
@@ -66,23 +62,6 @@ function LoginForm() {
     return errors;
   }
   
-  const [login, {}] = useLazyQuery(
-    LOGIN_QUERY, 
-    {
-      onCompleted: ({ login }) => {
-        console.log('Success', login);
-        // Save authentication data and leave.
-        context.login(
-          login.token,
-          login.userId,
-          login.tokenExpiration,
-        );
-      },
-      onError: (error) => {
-        setBackendError(error.message)
-      }
-    }
-  );
 
    function authenticateUser() {
       const { email, password } = values;
@@ -99,6 +78,7 @@ function LoginForm() {
   } = useFormValidation(INITIAL_VALUES, validateAuth, authenticateUser);
 
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <StyledField>
         <label htmlFor="email">Email</label>
@@ -127,6 +107,8 @@ function LoginForm() {
         Submit
       </StyledButton>
     </form>
+    {loading && <span>Loading ...</span>}
+    </>
   );
 }
 
