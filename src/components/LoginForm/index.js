@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import useFormValidation from "../../hooks/useFormValidation";
 import useLoginQuery from "../../hooks/useLoginQuery";
+import { EMAIL_REGEX } from "../../helpers/regex";
 
 //
 //  Styles
@@ -49,7 +50,7 @@ function LoginForm() {
     if (!values.email) {
       errors.email = 'Required Email';
     } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+      !EMAIL_REGEX.test(values.email)
     ) {
       errors.email = 'Invalid email address';
     }
