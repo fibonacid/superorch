@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFormValidation from "../../hooks/useFormValidation";
 import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../helpers/regex";
@@ -14,9 +14,16 @@ const INITIAL_VALUES = {
 // Authentication Form
 // --------------------------
 
-function RegistrationForm() {
+function RegistrationForm(props) {
 
-  const [createUser, { loading, error: backendError }] = useCreateUserMutation();
+  const [createUser, { loading, error: backendError, data }] = useCreateUserMutation();
+
+  useEffect(() => {
+    if (data && props.onSuccess) {
+      // Call function from parent
+      props.onSuccess();
+    }
+  }, [data]);
 
   //
   // Rules for input validation
@@ -62,45 +69,48 @@ function RegistrationForm() {
   } = useFormValidation(INITIAL_VALUES, validateAuth, registrateUser);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <PrimaryForm.Field>
-        <label htmlFor="email">Email</label>
-        <PrimaryForm.Input
-          type="text"
-          name="email"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.email}
-        />
-        {errors.email && <PrimaryForm.Error>{errors.email}</PrimaryForm.Error>}
-      </PrimaryForm.Field>
-      <PrimaryForm.Field>
-        <label htmlFor="password">Password</label>
-        <PrimaryForm.Input
-          type="password"
-          name="password"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.password}
-        />
-        {errors.password && <PrimaryForm.Error>{errors.password}</PrimaryForm.Error>}
-      </PrimaryForm.Field>
-      <PrimaryForm.Field>
-        <label htmlFor="password">Password confirmation</label>
-        <PrimaryForm.Input
-          type="password"
-          name="passwordConf"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.passwordConf}
-        />
-        {errors.passwordConf && <PrimaryForm.Error>{errors.passwordConf}</PrimaryForm.Error>}
-      </PrimaryForm.Field>
-      {backendError && <PrimaryForm.Error>{backendError}</PrimaryForm.Error>}
-      <PrimaryForm.Button disabled={isSubmitting} type="submit">
-        Submit
-      </PrimaryForm.Button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <PrimaryForm.Field>
+          <label htmlFor="email">Email</label>
+          <PrimaryForm.Input
+            type="text"
+            name="email"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
+          />
+          {errors.email && <PrimaryForm.Error>{errors.email}</PrimaryForm.Error>}
+        </PrimaryForm.Field>
+        <PrimaryForm.Field>
+          <label htmlFor="password">Password</label>
+          <PrimaryForm.Input
+            type="password"
+            name="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+          />
+          {errors.password && <PrimaryForm.Error>{errors.password}</PrimaryForm.Error>}
+        </PrimaryForm.Field>
+        <PrimaryForm.Field>
+          <label htmlFor="password">Password confirmation</label>
+          <PrimaryForm.Input
+            type="password"
+            name="passwordConf"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.passwordConf}
+          />
+          {errors.passwordConf && <PrimaryForm.Error>{errors.passwordConf}</PrimaryForm.Error>}
+        </PrimaryForm.Field>
+        {backendError && <PrimaryForm.Error>{backendError}</PrimaryForm.Error>}
+        <PrimaryForm.Button disabled={isSubmitting} type="submit">
+          Submit
+        </PrimaryForm.Button>
+      </form>
+      {loading && <span>Loading ...</span>}
+    </>
   );
 }
 
