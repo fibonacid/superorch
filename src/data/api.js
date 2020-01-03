@@ -33,6 +33,14 @@ export const CREATE_USER_MUTATION = gql`
   }
 `;
 
+export const UPDATE_USER_MUTATION = gql`
+  mutation updateUser($nickname: String) {
+    updateUser(userUpdateInput: { nickname: $nickname }) {
+      nickname
+    }
+  }
+`;
+
 //
 // Subscriptions
 //
