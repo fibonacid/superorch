@@ -18,7 +18,8 @@ export default function useLoginQuery() {
             login.userId,
             login.tokenExpiration,
           );
-        }
+        },
+        onError: err => console.log(err.message) 
       }
     );
 

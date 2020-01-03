@@ -8,7 +8,7 @@ export default function useUpdateUserMutation() {
         onCompleted: ({ updateUser }) => {
           console.log('Success', updateUser);
         },
-        onError: err => console.log(err)
+        onError: err => console.log(err.message) 
       }
     );
 

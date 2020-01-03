@@ -104,7 +104,7 @@ function RegistrationForm(props) {
           />
           {errors.passwordConf && <PrimaryForm.Error>{errors.passwordConf}</PrimaryForm.Error>}
         </PrimaryForm.Field>
-        {backendError && <PrimaryForm.Error>{backendError}</PrimaryForm.Error>}
+        {backendError && <PrimaryForm.Error>{backendError.message}</PrimaryForm.Error>}
         <PrimaryForm.Button disabled={isSubmitting} type="submit">
           Submit
         </PrimaryForm.Button>

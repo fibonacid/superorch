@@ -76,7 +76,7 @@ function LoginForm() {
         />
         {errors.password && <PrimaryForm.Error>{errors.password}</PrimaryForm.Error>}
       </PrimaryForm.Field>
-      {backendError && <PrimaryForm.Error>{backendError}</PrimaryForm.Error>}
+      {backendError && <PrimaryForm.Error>{backendError.message}</PrimaryForm.Error>}
       <PrimaryForm.Button disabled={isSubmitting} type="submit">
         Submit
       </PrimaryForm.Button>

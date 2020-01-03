@@ -9,7 +9,7 @@ export default function useCreateUserMutation() {
         onCompleted: ({ createUser }) => {
           console.log('Success', createUser._id);
         },
-        onError: err => console.log(err)
+        onError: err => console.log(err.message) 
       }
     );
 
