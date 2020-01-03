@@ -17,7 +17,7 @@ export const USERS_QUERY = gql`
   query {
     users {
       _id
-      email
+      nickname
     }
   }
 `;
