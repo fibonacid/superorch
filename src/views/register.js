@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-//import AuthContext from "../context/auth-context";
 import Layout from "../components/Layout";
 import RegistrationForm from "../components/RegistrationForm";
 import FormWrapper from "../components/FormWrapper";
+import { Link } from "react-router-dom";
 
 const StyledWrap = styled.div`
   max-width: 200px;
@@ -12,10 +12,16 @@ const StyledWrap = styled.div`
   margin: 0 auto;
 `;
 
+const StyledLink = styled(Link)`
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: lightgrey;
+  text-decoration: none;
+`;
+
 function RegisterView() {
-
-  //const { token } = useContext(AuthContext);
-
   return (
 	 <Layout>
 		<StyledWrap>
@@ -23,6 +29,7 @@ function RegisterView() {
 				<RegistrationForm />
 		  </FormWrapper>
 		</StyledWrap>
+    <StyledLink to="/login">Back to login</StyledLink>
 	 </Layout>
   )
 }
