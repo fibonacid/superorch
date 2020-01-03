@@ -48,9 +48,9 @@ function App() {
           <StyledContent>
             <Header />
             {/* {token && <Redirect from="/auth" to="/" /> } */}
-            <Route path="/register" exact component={RegisterView} />
-            <Route path="/login" exact component={LoginView} />
             <Route path="/" exact component={HomeView} />
+            <Route path="/login" exact component={LoginView} />
+            <Route path="/register" exact component={RegisterView} />
           </StyledContent>
           <Footer />
         </HashRouter>
