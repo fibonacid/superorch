@@ -1,9 +1,7 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import { useMutation } from '@apollo/react-hooks';
-import AuthContext from "../../context/auth-context";
 import useFormValidation from "../../hooks/useFormValidation";
-import {CREATE_USER_MUTATION} from "../../data/api";
+import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 
 //
 //  Styles
@@ -41,9 +39,7 @@ const INITIAL_VALUES = {
 
 function RegistrationForm() {
 
-  const context = useContext(AuthContext);
-
-  const [backendError, setBackendError] = useState(null);
+  const [createUser, { loading, error: backendError }] = useCreateUserMutation();
 
   //
   // Rules for input validation
@@ -71,18 +67,6 @@ function RegistrationForm() {
    }
     return errors;
   }
-
-  const [createUser, {}] = useMutation(
-    CREATE_USER_MUTATION, 
-    {
-      onCompleted: (data) => {
-        console.log('Success', data);
-      },
-      onError: (error) => {
-        setBackendError(error.message)
-      }
-    }
-  );
 
   function registrateUser() {
     const { email, password } = values;
