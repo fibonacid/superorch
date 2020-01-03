@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../components/Layout";
 import PrimaryForm from "../components/PrimaryForm";
@@ -25,8 +25,12 @@ const StyledLink = styled(Link)`
 function RegisterView() {
 
   const [index, setIndex] = useState(0);
-
   const oneIndexUp = useCallback(() => { setIndex(index+1) }, [index]);
+
+  const history = useHistory();
+  const redirect = () => { 
+    history.push("/");
+  }
 
   return (
 	 <Layout>
@@ -40,7 +44,7 @@ function RegisterView() {
      {/* Second part: choose nickname */}
      {index === 1 && <>
       <StyledForm title="Choose a nickname">
-        <NicknameForm />
+        <NicknameForm onSuccess={redirect}/>
       </StyledForm>
       <StyledLink to="/">Skip</StyledLink>
      </>}

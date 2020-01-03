@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFormValidation from "../../hooks/useFormValidation";
 import useUpdateUserMutation from "../../hooks/useUpdateUserMutation"
 import * as PrimaryForm from "../PrimaryForm";
@@ -7,9 +7,16 @@ const INITIAL_VALUES = {
    nickname: ""
 };
 
-function NicknameForm() {
+function NicknameForm(props) {
 
-  const [updateUser, { loading, error: backendError }] = useUpdateUserMutation();
+  const [updateUser, { loading, error: backendError, data }] = useUpdateUserMutation();
+
+  useEffect(() => {
+    if (data && props.onSuccess) {
+      // Call function from parent
+      props.onSuccess();
+    }
+  }, [data]);
 
   function validate(values) {
     const errors = {};
