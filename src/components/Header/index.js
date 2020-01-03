@@ -35,9 +35,6 @@ function Header(props) {
           <StyledItem>
             <Link to={"/login"} >Login</Link>
           </StyledItem>
-          <StyledItem>
-            <Link to={"/register"}>Register</Link>
-          </StyledItem>
         </>)}
         {context.token && <StyledItem>
           <a href="#" onClick={context.logout}>Logout</a>
