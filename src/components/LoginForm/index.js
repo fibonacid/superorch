@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFormValidation from "../../hooks/useFormValidation";
 import useLoginQuery from "../../hooks/useLoginQuery";
 import { EMAIL_REGEX } from "../../helpers/regex";
@@ -13,9 +13,16 @@ const INITIAL_VALUES = {
 // Authentication Form
 // --------------------------
 
-function LoginForm() {
+function LoginForm(props) {
 
-  const [login, { loading, error: backendError }] = useLoginQuery();
+  const [login, { loading, error: backendError, data }] = useLoginQuery();
+
+  useEffect(() => {
+    if (data && props.onSuccess) {
+      // Call function from parent
+      props.onSuccess();
+    }
+  }, [data]);
 
   //
   // Rules for input validation

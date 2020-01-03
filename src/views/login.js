@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../components/Layout";
 import LoginForm from "../components/LoginForm";
 import PrimaryForm from "../components/PrimaryForm";
-import { Link } from "react-router-dom";
 
 const StyledWrap = styled.div`
   max-width: 200px;
@@ -22,11 +22,17 @@ const StyledLink = styled(Link)`
 `;
 
 function LoginView() {
+
+  const history = useHistory();
+  const redirect = () => { 
+    history.push("/");
+  }
+
   return (
     <Layout>
       <StyledWrap>
          <PrimaryForm title="Login">
-            <LoginForm />
+            <LoginForm onSuccess={redirect}/>
          </PrimaryForm>
       </StyledWrap>
       <StyledLink to="/register">Register instead</StyledLink>
