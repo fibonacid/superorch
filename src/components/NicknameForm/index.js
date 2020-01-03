@@ -1,5 +1,6 @@
 import React from "react";
 import useFormValidation from "../../hooks/useFormValidation";
+import useUpdateUserMutation from "../../hooks/useUpdateUserMutation"
 import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {
@@ -8,7 +9,7 @@ const INITIAL_VALUES = {
 
 function NicknameForm() {
 
-  //const [login, { loading, error: backendError }] = useLoginQuery();
+  const [updateUser, { loading, error: backendError }] = useUpdateUserMutation();
 
   function validate(values) {
     const errors = {};
@@ -20,7 +21,7 @@ function NicknameForm() {
   }
   
    function authenticate() {
-      //login({ variables: { nickname: values.nickname } })
+      updateUser({ variables: { nickname: values.nickname } })
    }
 
   const {
