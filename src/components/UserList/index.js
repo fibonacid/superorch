@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import User from './User';
-import useUsers from '../../hooks/useUsers';
+import useUsersData from '../../hooks/useUsersData';
 
 const StyledError = styled.span`
     color: red;
@@ -9,7 +9,7 @@ const StyledError = styled.span`
 
 function UserList(props) {
 
-    const { users, loading, errors } = useUsers();
+    const { users, loading, errors } = useUsersData();
 
     return (
         <>
