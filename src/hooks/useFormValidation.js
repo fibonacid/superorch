@@ -26,7 +26,7 @@ function useFormValidation(initialState, validate, authenticate) {
   }
 
   function handleBlur() {
-    const validationErrors = validate(values) || {};
+    const validationErrors = validate(values);
     setErrors(validationErrors);
   }
 
