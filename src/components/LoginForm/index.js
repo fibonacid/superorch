@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import useFormValidation from "../../hooks/useFormValidation";
 import useLoginQuery from "../../hooks/useLoginQuery";
-import { EMAIL_REGEX } from "../../helpers/regex";
+import { EMAIL_REGEX, PASSWORD_REGEX } from "../../helpers/regex";
 
 //
 //  Styles
@@ -57,9 +57,9 @@ function LoginForm() {
     // Password errors
     if (!values.password) {
       errors.password = 'Required Password'
-    } else if (values.password.length < 4) {
-      errors.password = 'Password must be at least 4 characters'
-    }
+    } else if (
+      !PASSWORD_REGEX.test(values.password)
+    )
     return errors;
   }
   
