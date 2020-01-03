@@ -11,7 +11,7 @@ const StyledContainer = styled.li`
 function User(props) {
     return (
         <StyledContainer>
-            <span>{props.user.name}</span>
+            <span>{props.user.nickname}</span>
             <span>{props.user.status}</span>
         </StyledContainer>
     )
