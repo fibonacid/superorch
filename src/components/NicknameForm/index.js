@@ -32,16 +32,15 @@ function NicknameForm() {
     isSubmitting
   } = useFormValidation(INITIAL_VALUES, validate, authenticate);
 
-  console.log(errors);
-
   return (
     <>
-    <form onSubmit={handleSubmit} onBlur={handleBlur} onB>
+    <form onSubmit={handleSubmit}>
       <PrimaryForm.Field>
         <PrimaryForm.Input
           type="text"
           name="nickname"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.nickname}
         />
         {errors.nickname && <PrimaryForm.Error>{errors.nickname}</PrimaryForm.Error>}
