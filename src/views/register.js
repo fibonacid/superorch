@@ -1,12 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../components/Layout";
 import RegistrationForm from "../components/RegistrationForm";
 import PrimaryForm from "../components/PrimaryForm";
-import { Link } from "react-router-dom";
 
-const StyledWrap = styled.div`
-  max-width: 200px;
+const StyledForm = styled(PrimaryForm)`
+  max-width: 300px;
   border: solid 1px lightgrey;
   border-radius: 10px;
   margin: 0 auto;
@@ -22,14 +22,13 @@ const StyledLink = styled(Link)`
 `;
 
 function RegisterView() {
+
   return (
 	 <Layout>
-		<StyledWrap>
-		  <PrimaryForm title="Register">
-				<RegistrationForm />
-		  </PrimaryForm>
-		</StyledWrap>
-    <StyledLink to="/login">Back to login</StyledLink>
+      <StyledForm title="Register">
+        <RegistrationForm />
+      </StyledForm>
+      <StyledLink to="/login">Back to login</StyledLink>
 	 </Layout>
   )
 }
