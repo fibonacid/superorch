@@ -25,9 +25,11 @@ function HomeView(props) {
 
   return (
     <StyledContainer>
-      <StyledSidebar grow="0" shrink="1" basis="200px">
-        {token ? <UserList /> : null }
-      </StyledSidebar>
+      {token &&
+        <StyledSidebar grow="0" shrink="1" basis="200px">
+          <UserList />
+        </StyledSidebar>
+      }
       <StyledMainbar>
         <Playground />
       </StyledMainbar>
