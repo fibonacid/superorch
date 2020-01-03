@@ -12,7 +12,7 @@ export default function UserList(props) {
 
     return (
         <>
-        {loading && <span>Loading ...</span>}
+        {loading.users && <span>Loading ...</span>}
         {errors && <Errors errors={errors}/>}
         {users && (
             <ul>

@@ -16,9 +16,14 @@ function useUsers() {
       error: userJoinedError
     } = useUserJoinedSubscription(users, setUsers);
 
+    console.log({usersLoading, userJoinedLoading})
+
     return { 
       users, 
-      loading: usersLoading || userJoinedLoading, 
+      loading: {
+        users: usersLoading, 
+        userJoined: userJoinedLoading
+      },
       errors: {
         users: usersError,
         userJoined: userJoinedError 
