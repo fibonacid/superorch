@@ -1,66 +1,26 @@
 import React from "react";
-import styled from "styled-components/macro";
 import useFormValidation from "../../hooks/useFormValidation";
-
-//
-//  Styles
-//
-
-const StyledField = styled.div`
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledInput = styled.input`
-  margin-top: 5px;
-`;
-
-const StyledButton = styled.button`
-  margin-top: 10px;
-  width: 100%;
-`;
-
-const StyledError = styled.p`
-  margin-top: 5px;
-  color: red;
-`;
+import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {
    nickname: ""
 };
 
-// --------------------------
-// Authentication Form
-// --------------------------
+function NicknameForm() {
 
-function LoginForm() {
+  //const [login, { loading, error: backendError }] = useLoginQuery();
 
-  const [login, { loading, error: backendError }] = useLoginQuery();
-
-  //
-  // Rules for input validation
-  //
-  function validateAuth(values) {
+  function validate(values) {
     const errors = {};
     // Password errors
-    if (!values.email) {
-      errors.email = 'Required Email';
-    } else if (
-      !EMAIL_REGEX.test(values.email)
-    ) {
-      errors.email = 'Invalid email address';
+    if (!values.nickname) {
+      errors.nickname = 'Required Nickname';
     }
-    // Password errors
-    if (!values.password) {
-      errors.password = 'Required Password'
-    } 
     return errors;
   }
   
-   function authenticateUser() {
-      const { email, password } = values;
-      login({ variables: { email, password } })
+   function authenticate() {
+      //login({ variables: { nickname: values.nickname } })
    }
 
   const {
@@ -70,41 +30,30 @@ function LoginForm() {
     values,
     errors,
     isSubmitting
-  } = useFormValidation(INITIAL_VALUES, validateAuth, authenticateUser);
+  } = useFormValidation(INITIAL_VALUES, validate, authenticate);
 
   console.log(errors);
 
   return (
     <>
     <form onSubmit={handleSubmit} onBlur={handleBlur} onB>
-      <StyledField>
-        <label htmlFor="email">Email</label>
-        <StyledInput
+      <PrimaryForm.Field>
+        <PrimaryForm.Input
           type="text"
-          name="email"
+          name="nickname"
           onChange={handleChange}
-          value={values.email}
+          value={values.nickname}
         />
-        {errors.email && <StyledError>{errors.email}</StyledError>}
-      </StyledField>
-      <StyledField>
-        <label htmlFor="password">Password</label>
-        <StyledInput
-          type="password"
-          name="password"
-          onChange={handleChange}
-          value={values.password}
-        />
-        {errors.password && <StyledError>{errors.password}</StyledError>}
-      </StyledField>
-      {backendError && <StyledError>{backendError}</StyledError>}
-      <StyledButton disabled={isSubmitting} type="submit">
+        {errors.nickname && <PrimaryForm.Error>{errors.nickname}</PrimaryForm.Error>}
+      </PrimaryForm.Field>
+      {/* {backendError && <PrimaryForm.Error>{backendError}</PrimaryForm.Error>} */}
+      <PrimaryForm.Button disabled={isSubmitting} type="submit">
         Submit
-      </StyledButton>
+      </PrimaryForm.Button>
     </form>
-    {loading && <span>Loading ...</span>}
+    {/* {loading && <span>Loading ...</span>} */}
     </>
   );
 }
 
-export default LoginForm;
+export default NicknameForm;
