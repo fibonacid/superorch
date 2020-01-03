@@ -3,14 +3,15 @@ import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USER_MUTATION } from '../data/api';
 
 export default function useCreateUserMutation() {
-   const [createUser, {data, loading, errors}] = useMutation(
+   const [createUser, {data, loading, error}] = useMutation(
       CREATE_USER_MUTATION, 
       {
         onCompleted: ({ createUser }) => {
           console.log('Success', createUser._id);
-        }
+        },
+        onError: err => console.log(err)
       }
     );
 
-    return [createUser, {data, loading, errors}]
+    return [createUser, {data, loading, error}]
 } 
