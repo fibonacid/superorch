@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import useUsersQuery from './useUsersQuery';
 import useUserJoinedSubscription from './useUserJoinedSubscription';
 
-function useUsers() {
+function useUsersData() {
 
   const [users, setUsers] = useState([]);
 
@@ -15,8 +15,6 @@ function useUsers() {
       loading: userJoinedLoading,
       error: userJoinedError
     } = useUserJoinedSubscription(users, setUsers);
-
-    console.log({usersLoading, userJoinedLoading})
 
     return { 
       users, 
@@ -31,4 +29,4 @@ function useUsers() {
     }
 }
 
-export default useUsers;
+export default useUsersData;
