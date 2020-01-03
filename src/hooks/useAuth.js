@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useApolloClient } from '@apollo/react-hooks';
 
 function useAuth() {
+
+    const client = useApolloClient();
+
     const [token, setToken] = useState(null);
     const [userId, setUserId] = useState(null);
     const [tokenExpiration, setTokenExpiration] = useState(null);
@@ -23,7 +27,10 @@ function useAuth() {
       setToken(null);
       setUserId(null);
       setTokenExpiration(null);
+      // Cleare local storage
       localStorage.clear();
+      // Reset apollo client cache
+      client.resetStore();
     };
 
     // When new auth data is retrieved:
