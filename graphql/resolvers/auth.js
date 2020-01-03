@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { PubSub } = require('apollo-server-express');
+const { PubSub, withFilter } = require('apollo-server-express');
 const { transformUser } = require('./merge');
 const User = require("../../models/users");
 
@@ -33,7 +33,6 @@ module.exports = {
       });
 
       const result = await newUser.save();
-      console.log(result);
 
       return { ...result._doc, password: null };
     } catch (err) {
@@ -42,11 +41,6 @@ module.exports = {
   },
 
   login: async (_, { email, password }, context) => {
-
-    console.log({
-      isAuth: context.isAuth,
-      userId: context.userId
-    });
 
     try {
       const user = await User.findOne({ email });
@@ -57,9 +51,9 @@ module.exports = {
       if (!isEqual) {
         throw new Error("Password is incorrect");
       }
-  
+
       // Send a USER_JOINED message
-      pubsub.publish(USER_JOINED, { [USER_JOINED]: transformUser(user) })
+      pubsub.publish(USER_JOINED, { userJoined: await transformUser(user) })
   
       const token = await jwt.sign(
         { userId: user.id, email: user.email },
@@ -93,6 +87,11 @@ module.exports = {
   },
 
   userJoined: {
-    subscribe: () => pubsub.asyncIterator(USER_JOINED)
+    resolve: (payload) => {
+      return payload.userJoined
+    },
+    subscribe: () => {
+      return pubsub.asyncIterator(USER_JOINED)
+    }
   }
 };
