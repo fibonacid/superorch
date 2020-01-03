@@ -5,7 +5,7 @@ const isAuth = require('./middleware/is-auth');
 const mongoose = require("mongoose");
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
-const { validateToken } = require('./helpers/auth');
+const validateToken = require('./helpers/auth');
 
 const PORT = 3000;
 const app = express();
@@ -14,10 +14,19 @@ const server = new ApolloServer({
   typeDefs: graphQlSchema, 
   resolvers: grapgQlResolvers,
 
-  context: ({ res }) => ({
-    isAuth: res.locals.isAuth,
-    userId: res.locals.userId
-  }),
+  context: async ({ res, connection }) => {
+    if (connection) {
+      // check connection for metadata
+      return connection.context;
+    } else {
+      // check from req
+
+      return { 
+        isAuth: res.locals.isAuth,
+        userId: res.locals.userId
+      };
+    }
+  },
   formatError: (err) => {
     // Don't give the specific errors to the client.
     if (err.message.startsWith("Database Error: ")) {
@@ -32,30 +41,24 @@ const server = new ApolloServer({
     return err;
   },
   subscriptions: {
-    onConnect: (connectionParams, webSocket, context) => {
-      console.log('websocket client connected');
-
-      // Check authToken
+    onConnect: (connectionParams) => {
+      // the returned value of this function will become
+      // available to the subscription resolvers via context.
       if (connectionParams.authToken) {
-        const decodedToken = validateToken(connectionParams.authToken);
-        console.log(decodedToken);
-
-        if (!decodedToken) {
-          context.isAuth = false;
-          throw new Error('Invalid auth token');
-        }
-
-        context.isAuth = true;
-        context.userId = decodedToken.userId;
-        return;
+        return validateToken(connectionParams.authToken)
+          .then(token => ({
+              userId: token.userId,
+              isAuth: true
+            })
+          )
       }
 
-      context.isAuth = false;
       throw new Error('Missing auth token');
     },
-    onDisconnect: (webSocket, context) => {
-      console.log('websocket client disconnected')
-    }
+    onOperation: (message, params, webSocket) => {
+      console.log({ message, params })
+      return params;
+    },
   },
   playground: {
     endpoint: `http://localhost:5000/graphql`,
@@ -63,7 +66,7 @@ const server = new ApolloServer({
   }
 });
 
-app.use('*', isAuth);
+app.use('/graphql', isAuth);
 
 server.applyMiddleware({ app, cors: true })
 
