@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 //import AuthContext from "../context/auth-context";
 import Layout from "../components/Layout";
-import AuthForm from "../components/AuthForm";
+import RegistrationForm from "../components/RegistrationForm";
 import FormWrapper from "../components/FormWrapper";
 
 const StyledWrap = styled.div`
@@ -20,7 +20,7 @@ function RegisterView() {
 	 <Layout>
 		<StyledWrap>
 		  <FormWrapper title="Register">
-				<AuthForm />
+				<RegistrationForm />
 		  </FormWrapper>
 		</StyledWrap>
 	 </Layout>

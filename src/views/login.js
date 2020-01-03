@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 //import AuthContext from "../context/auth-context";
 import Layout from "../components/Layout";
-import AuthForm from "../components/AuthForm";
+import LoginForm from "../components/LoginForm";
 import FormWrapper from "../components/FormWrapper";
 
 const StyledWrap = styled.div`
@@ -20,7 +20,7 @@ function LoginView() {
     <Layout>
       <StyledWrap>
          <FormWrapper title="Login">
-            <AuthForm />
+            <LoginForm />
          </FormWrapper>
       </StyledWrap>
     </Layout>
