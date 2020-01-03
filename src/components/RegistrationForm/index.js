@@ -1,32 +1,8 @@
 import React from "react";
-import styled from "styled-components/macro";
 import useFormValidation from "../../hooks/useFormValidation";
 import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../helpers/regex";
-
-//
-//  Styles
-//
-
-const StyledField = styled.div`
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledInput = styled.input`
-  margin-top: 5px;
-`;
-
-const StyledButton = styled.button`
-  margin-top: 10px;
-  width: 100%;
-`;
-
-const StyledError = styled.p`
-  margin-top: 5px;
-  color: red;
-`;
+import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {
   email: "",
@@ -87,43 +63,43 @@ function RegistrationForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <StyledField>
+      <PrimaryForm.Field>
         <label htmlFor="email">Email</label>
-        <StyledInput
+        <PrimaryForm.Input
           type="text"
           name="email"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.email}
         />
-        {errors.email && <StyledError>{errors.email}</StyledError>}
-      </StyledField>
-      <StyledField>
+        {errors.email && <PrimaryForm.Error>{errors.email}</PrimaryForm.Error>}
+      </PrimaryForm.Field>
+      <PrimaryForm.Field>
         <label htmlFor="password">Password</label>
-        <StyledInput
+        <PrimaryForm.Input
           type="password"
           name="password"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.password}
         />
-        {errors.password && <StyledError>{errors.password}</StyledError>}
-      </StyledField>
-      <StyledField>
+        {errors.password && <PrimaryForm.Error>{errors.password}</PrimaryForm.Error>}
+      </PrimaryForm.Field>
+      <PrimaryForm.Field>
         <label htmlFor="password">Password confirmation</label>
-        <StyledInput
+        <PrimaryForm.Input
           type="password"
           name="passwordConf"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.passwordConf}
         />
-        {errors.passwordConf && <StyledError>{errors.passwordConf}</StyledError>}
-      </StyledField>
-      {backendError && <StyledError>{backendError}</StyledError>}
-      <StyledButton disabled={isSubmitting} type="submit">
+        {errors.passwordConf && <PrimaryForm.Error>{errors.passwordConf}</PrimaryForm.Error>}
+      </PrimaryForm.Field>
+      {backendError && <PrimaryForm.Error>{backendError}</PrimaryForm.Error>}
+      <PrimaryForm.Button disabled={isSubmitting} type="submit">
         Submit
-      </StyledButton>
+      </PrimaryForm.Button>
     </form>
   );
 }

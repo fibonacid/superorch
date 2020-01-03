@@ -1,13 +1,34 @@
 import React from "react";
+import styled from "styled-components/macro";
 import useFormValidation from "../../hooks/useFormValidation";
-import useLoginQuery from "../../hooks/useLoginQuery";
-import { EMAIL_REGEX } from "../../helpers/regex";
-import * as PrimaryForm from "../PrimaryForm";
+
+//
+//  Styles
+//
+
+const StyledField = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledInput = styled.input`
+  margin-top: 5px;
+`;
+
+const StyledButton = styled.button`
+  margin-top: 10px;
+  width: 100%;
+`;
+
+const StyledError = styled.p`
+  margin-top: 5px;
+  color: red;
+`;
 
 const INITIAL_VALUES = {
-  email: "",
-  password: ""
-}
+   nickname: ""
+};
 
 // --------------------------
 // Authentication Form
@@ -55,33 +76,31 @@ function LoginForm() {
 
   return (
     <>
-    <form onSubmit={handleSubmit}>
-      <PrimaryForm.Field>
+    <form onSubmit={handleSubmit} onBlur={handleBlur} onB>
+      <StyledField>
         <label htmlFor="email">Email</label>
-        <PrimaryForm.Input
+        <StyledInput
           type="text"
           name="email"
           onChange={handleChange}
-          onBlur={handleBlur}
           value={values.email}
         />
-        {errors.email && <PrimaryForm.Error>{errors.email}</PrimaryForm.Error>}
-      </PrimaryForm.Field>
-      <PrimaryForm.Field>
+        {errors.email && <StyledError>{errors.email}</StyledError>}
+      </StyledField>
+      <StyledField>
         <label htmlFor="password">Password</label>
-        <PrimaryForm.Input
+        <StyledInput
           type="password"
           name="password"
           onChange={handleChange}
-          onBlur={handleBlur}
           value={values.password}
         />
-        {errors.password && <PrimaryForm.Error>{errors.password}</PrimaryForm.Error>}
-      </PrimaryForm.Field>
-      {backendError && <PrimaryForm.Error>{backendError}</PrimaryForm.Error>}
-      <PrimaryForm.Button disabled={isSubmitting} type="submit">
+        {errors.password && <StyledError>{errors.password}</StyledError>}
+      </StyledField>
+      {backendError && <StyledError>{backendError}</StyledError>}
+      <StyledButton disabled={isSubmitting} type="submit">
         Submit
-      </PrimaryForm.Button>
+      </StyledButton>
     </form>
     {loading && <span>Loading ...</span>}
     </>

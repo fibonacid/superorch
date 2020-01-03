@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const StyledWrap = styled.div`
   padding: 10px;
@@ -21,4 +21,28 @@ function PrimaryForm(props) {
 }
 
 export default PrimaryForm;
+
+//
+//  Export Form Styles
+//
+
+export const Field = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Input = styled.input`
+  margin-top: 5px;
+`;
+
+export const Button = styled.button`
+  margin-top: 10px;
+  width: 100%;
+`;
+
+export const Error = styled.p`
+  margin-top: 5px;
+  color: red;
+`;
 
