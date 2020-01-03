@@ -88,7 +88,11 @@ module.exports = {
 
   userJoined: {
     resolve: (payload) => {
-      return payload.userJoined
+      // Return only PublicUser fields
+      return {
+        _id: payload.userJoined._id,
+        nickname: payload.userJoined.nickname
+      }
     },
     subscribe: () => {
       return pubsub.asyncIterator(USER_JOINED)
