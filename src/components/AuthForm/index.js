@@ -9,16 +9,6 @@ import {LOGIN_QUERY, CREATE_USER_MUTATION} from "../../data/api";
 //  Styles
 //
 
-const StyledWrap = styled.div`
-  padding: 10px;
-`;
-
-const StyledTitle = styled.h1`
-  text-align: center;
-  font-size: 25px;
-  font-weight: bold;
-`;
-
 const StyledField = styled.div`
   margin-top: 10px;
   display: flex;
@@ -140,51 +130,48 @@ function AuthForm() {
   }
 
   return (
-    <StyledWrap>
-      <StyledTitle>{isLogin ? "Sign in" : "Sign up"}</StyledTitle>
-      <form onSubmit={handleSubmit}>
-        <StyledField>
-          <label htmlFor="email">Email</label>
-          <StyledInput
-            type="text"
-            name="email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-          />
-          {errors.email && <StyledError>{errors.email}</StyledError>}
-        </StyledField>
-        <StyledField>
-          <label htmlFor="password">Password</label>
-          <StyledInput
-            type="password"
-            name="password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-          />
-          {errors.password && <StyledError>{errors.password}</StyledError>}
-        </StyledField>
-        {!isLogin && <StyledField>
-          <label htmlFor="password">Password confirmation</label>
-          <StyledInput
-            type="password"
-            name="passwordConf"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.passwordConf}
-          />
-          {errors.passwordConf && <StyledError>{errors.passwordConf}</StyledError>}
-        </StyledField>}
-        {backendError && <StyledError>{backendError}</StyledError>}
-        <StyledButton disabled={isSubmitting} type="submit">
-          Submit
-        </StyledButton>
-        <StyledButton onClick={handleSwitchMode}>
-          switch to {isLogin ? 'sign up' : 'sign in' }
-        </StyledButton>
-      </form>
-    </StyledWrap>
+    <form onSubmit={handleSubmit}>
+      <StyledField>
+        <label htmlFor="email">Email</label>
+        <StyledInput
+          type="text"
+          name="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
+        />
+        {errors.email && <StyledError>{errors.email}</StyledError>}
+      </StyledField>
+      <StyledField>
+        <label htmlFor="password">Password</label>
+        <StyledInput
+          type="password"
+          name="password"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
+        />
+        {errors.password && <StyledError>{errors.password}</StyledError>}
+      </StyledField>
+      {!isLogin && <StyledField>
+        <label htmlFor="password">Password confirmation</label>
+        <StyledInput
+          type="password"
+          name="passwordConf"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.passwordConf}
+        />
+        {errors.passwordConf && <StyledError>{errors.passwordConf}</StyledError>}
+      </StyledField>}
+      {backendError && <StyledError>{backendError}</StyledError>}
+      <StyledButton disabled={isSubmitting} type="submit">
+        Submit
+      </StyledButton>
+      <StyledButton onClick={handleSwitchMode}>
+        switch to {isLogin ? 'sign up' : 'sign in' }
+      </StyledButton>
+    </form>
   );
 }
 
