@@ -11,7 +11,7 @@ const StyledTitle = styled.h1`
   font-weight: bold;
 `;
 
-function FormWrapper(props) {
+function PrimaryForm(props) {
    return (
       <StyledWrap>
          <StyledTitle>{props.title}</StyledTitle>
@@ -20,5 +20,5 @@ function FormWrapper(props) {
    )
 }
 
-export default FormWrapper;
+export default PrimaryForm;
 

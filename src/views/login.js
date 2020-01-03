@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import Layout from "../components/Layout";
 import LoginForm from "../components/LoginForm";
-import FormWrapper from "../components/FormWrapper";
+import PrimaryForm from "../components/PrimaryForm";
 import { Link } from "react-router-dom";
 
 const StyledWrap = styled.div`
@@ -25,9 +25,9 @@ function LoginView() {
   return (
     <Layout>
       <StyledWrap>
-         <FormWrapper title="Login">
+         <PrimaryForm title="Login">
             <LoginForm />
-         </FormWrapper>
+         </PrimaryForm>
       </StyledWrap>
       <StyledLink to="/register">Register instead</StyledLink>
     </Layout>
