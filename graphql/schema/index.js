@@ -18,11 +18,6 @@ const typeDefs = gql`
     createdEvents: [Event!]
   }
 
-  type PublicUser {
-    _id: ID!
-    nickname: String!
-  }
-
   type AuthData {
     userId: ID!
     token: String!
@@ -61,7 +56,7 @@ const typeDefs = gql`
 
   # The subscription root type, used to define all subscriptions.
   type Subscription {
-    userJoined: PublicUser!
+    userJoined: User!
   }
 `;
 
