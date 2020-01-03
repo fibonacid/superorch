@@ -5,15 +5,15 @@ import { USER_JOINED_SUBSCRIPTION, USERS_QUERY } from '../data/api';
 function useUsers() {
 
     const {
-      data: usersData, 
-      loading: usersDataLoading, 
-      error: usersDataError 
+      data: queryData, 
+      loading: queryDataLoading, 
+      error: queryDataError 
     } = useQuery(USERS_QUERY)
 
     const { 
-      data: userJoinedData, 
-      loading: userJoinedLoading, 
-      error: userJoinedError 
+      data: subscriptionData, 
+      loading: subscriptionDataLoading, 
+      error: subscriptionDataError 
     } = useSubscription(USER_JOINED_SUBSCRIPTION);
 
     const [loading, setLoading] = useState(false);
@@ -22,45 +22,64 @@ function useUsers() {
 
     // Set Loading
     useEffect(() => {
-      setLoading(usersDataLoading && userJoinedLoading)
-    }, [usersDataLoading, userJoinedLoading]);
+      setLoading(queryDataLoading && subscriptionDataLoading)
+    }, [queryDataLoading, subscriptionDataLoading]);
 
     // Set errors
     useEffect(() => {
-      if (userJoinedError) {
-        setErrors({ ...errors, userJoined: userJoinedError })
+      if (subscriptionDataError) {
+        setErrors({ ...errors, subscriptionData: subscriptionDataError })
       }
-      if (usersDataError) {
-        setErrors({ ...errors, users: usersDataError })
+      if (queryDataError) {
+        setErrors({ ...errors, users: queryDataError })
       }
-    }, [userJoinedError, usersDataError]);
+    }, [subscriptionDataError, queryDataError]);
+
+    //
+    // Replaces the user list
+    //
+    function replaceUserList(userList) {
+      // Filter out duplicates
+      const ids = [...new Set(userList.map(user => user._id))];
+      
+      setUsers(
+        userList
+          .filter(user => (ids.some(id => id === user._id)))
+          .map(user => ({ ...user, status: 'online' }))
+      )
+    }
 
     // Replace user list
     useEffect(() => {
-      if(usersData) {
-        console.log('Success', usersData);
-        setUsers(usersData.users.map(user => ({
-          nickname: user.nickname, 
-          status: "online" 
-        })))
+      if(queryData) {
+        replaceUserList(queryData.users)
       }
-    }, [usersData])
+    }, [queryData])
+
+    //
+    // Adds a new user to the list
+    //
+    function handleUserJoined(newUser) {
+      // Filter out duplicates
+      if (users.some(user => user._id === newUser._id)) {
+        throw new Error('User already exist')
+      }
+      setUsers([ ...users, { 
+        nickname: newUser.nickname, 
+        status: "online" 
+      }]);
+    }
 
     // Add new user to the list
     useEffect(() => {
-        if (userJoinedData) {
-          console.log('Success', userJoinedData);
-          setUsers(
-            [ 
-              ...users,
-              { 
-                nickname: userJoinedData.nickname, 
-                status: "online" 
-              }
-            ]
-          );
+      if (subscriptionData) {
+        try {
+          handleUserJoined(subscriptionData.userJoined)
+        } catch(err) {
+          console.log(err.message);
         }
-    }, [userJoinedData]);
+      }
+    }, [subscriptionData]);
 
     return { users, loading, errors }
 }
