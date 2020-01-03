@@ -13,7 +13,7 @@ const StyledTitle = styled.h1`
 
 function PrimaryForm(props) {
    return (
-      <StyledWrap>
+      <StyledWrap className={props.className}>
          <StyledTitle>{props.title}</StyledTitle>
          {props.children}
       </StyledWrap>
