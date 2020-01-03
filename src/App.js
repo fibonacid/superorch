@@ -1,13 +1,13 @@
 import React from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
 import { ApolloProvider } from '@apollo/react-hooks';
+import configureClient from './apollo';
 
 // Context
 import AuthContext from "./context/auth-context";
 
 // Hooks
 import useAuth from "./hooks/useAuth";
-import useApollo from "./hooks/useApollo";
 
 // Components
 import GlobalStyle, {StyledContent} from "./components/GlobalStyle";
@@ -32,13 +32,14 @@ try {
   console.log(err);
 }
 
+const client = configureClient();
+
 // ---------------------------------
 // Application
 // ---------------------------------
 function App() {
 
   const {token, userId, tokenExpiration, login, logout} = useAuth();
-  const { client } = useApollo(token);
 
   return (
     <ApolloProvider client={client}>
