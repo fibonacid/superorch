@@ -16,7 +16,8 @@ import Footer from './components/Footer';
 
 // Views
 import HomeView from "./views/home";
-import AuthView from "./views/auth";
+import RegisterView from "./views/register";
+import LoginView from "./views/login";
 
 let ipc;
 try {
@@ -46,8 +47,9 @@ function App() {
         <HashRouter>
           <StyledContent>
             <Header />
-            {token && <Redirect from="/auth" to="/" /> }
-            <Route path="/auth" exact component={AuthView} />
+            {/* {token && <Redirect from="/auth" to="/" /> } */}
+            <Route path="/register" exact component={RegisterView} />
+            <Route path="/login" exact component={LoginView} />
             <Route path="/" exact component={HomeView} />
           </StyledContent>
           <Footer />

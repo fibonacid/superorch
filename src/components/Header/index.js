@@ -32,7 +32,7 @@ function Header(props) {
           <Link to={"/"}>Home</Link>
         </StyledItem>
         {!context.token && <StyledItem>
-          <Link to={"/auth"} >Login</Link>
+          <Link to={"/login"} >Login</Link>
         </StyledItem>}
         {context.token && <StyledItem>
           <a href="#" onClick={context.logout}>Logout</a>
