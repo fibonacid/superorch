@@ -1,24 +1,28 @@
-import { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { USERS_QUERY } from '../data/api';
+import { USERS_QUERY, USER_JOINED_SUBSCRIPTION } from '../data/api';
 
-export default function useUsersQuery(setUsers) {
+export default function useUsersQuery() {
 
-   const { data, loading, error } = useQuery(USERS_QUERY)
+   const { subscribeToMore, data, loading, error } = useQuery(
+      USERS_QUERY,
+      { fetchPolicy: 'network-only' }
+   )
 
-   // Replace user list
-   useEffect(() => {
-      if(data) {
-         // Filter out duplicates
-         const ids = [...new Set(data.users.map(user => user._id))];
-         
-         setUsers(
-            data.users
-               .filter(user => (ids.some(id => id === user._id)))
-               .map(user => ({ ...user, status: 'online' }))
-         )
-      }
-   }, [data])
+   const subscribeToUserJoined = () => {
+      subscribeToMore(
+         {
+            document: USER_JOINED_SUBSCRIPTION,
+            updateQuery: (prev, { subscriptionData }) => {
+               if (!subscriptionData.data) return prev;
+               const newUser = subscriptionData.data.userJoined;
 
-   return { data, loading, error }
+               return Object.assign({}, prev, {
+                  users: [newUser, ...prev.data.users]
+               });
+            }
+         }
+      );
+   }
+
+   return { subscribeToUserJoined, data, loading, error }
 }
