@@ -19,26 +19,11 @@ const server = new ApolloServer({
       // check connection for metadata
       return connection.context;
     } else {
-      // check from req
-
       return { 
         isAuth: res.locals.isAuth,
         userId: res.locals.userId
       };
     }
-  },
-  formatError: (err) => {
-    // Don't give the specific errors to the client.
-    if (err.message.startsWith("Database Error: ")) {
-      return new Error('Internal server error');
-    }
-    if (err.message.startsWith("Unauthenticated")) {
-      return new Error('Authentication error');
-    }
-    console.log(err)
-    // Otherwise return the original error.  The error can also
-    // be manipulated in other ways, so long as it's returned.
-    return err;
   },
   subscriptions: {
     onConnect: (connectionParams) => {
@@ -55,10 +40,19 @@ const server = new ApolloServer({
 
       throw new Error('Missing auth token');
     },
-    onOperation: (message, params, webSocket) => {
-      console.log({ message, params })
-      return params;
-    },
+  },
+  formatError: (err) => {
+    // Don't give the specific errors to the client.
+    if (err.message.startsWith("Database Error: ")) {
+      return new Error('Internal server error');
+    }
+    if (err.message.startsWith("Unauthenticated")) {
+      return new Error('Authentication error');
+    }
+    console.log(err)
+    // Otherwise return the original error.  The error can also
+    // be manipulated in other ways, so long as it's returned.
+    return err;
   },
   playground: {
     endpoint: `http://localhost:5000/graphql`,
