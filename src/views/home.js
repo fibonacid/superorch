@@ -7,9 +7,7 @@ import UserList from "../components/UserList";
 import Playground from "../components/Playground";
 
 const StyledContainer = styled(Frame)`
-  max-height: 100%;
   height: 100%;
-  overflow: auto;
 `;
 
 const StyledSidebar = styled(FrameBox)`
