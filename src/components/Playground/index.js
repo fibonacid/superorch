@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import Frame from '../Frame';
 import SCEditor from '../SCEditor'
+
+const StyledContainer = styled.div`
+    flex: 1;
+`;
 
 const StyledTitle = styled.h2`
     padding: 10px 5px;
@@ -12,10 +15,10 @@ const StyledTitle = styled.h2`
 
 function Playground(props) {
     return (
-        <div>
+        <StyledContainer>
             <StyledTitle>SuperCollider Editor</StyledTitle>
             <SCEditor />
-        </div>
+        </StyledContainer>
     )
 }
 

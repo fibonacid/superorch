@@ -1,36 +1,28 @@
 import React, { useContext } from "react";
 import styled from "styled-components/macro";
 import authContext from "../context/auth-context";
-import Frame from "../components/Frame";
-import FrameBox from "../components/FrameBox";
 import UserList from "../components/UserList";
 import Playground from "../components/Playground";
 
-const StyledContainer = styled(Frame)`
-  height: 100%;
+const StyledContainer = styled.div`
+  flex: 1;
+  display: flex;
 `;
 
-const StyledSidebar = styled(FrameBox)`
+const StyledSidebar = styled.div`
   background: whitesmoke;
   border-right: solid 1px lightgrey;
+  flex: 0 1 200px;
 `;
-
-const StyledMainbar = styled(FrameBox)``;
 
 function HomeView(props) {
 
-  const { token, userId } = useContext(authContext); 
-
   return (
     <StyledContainer>
-      {token &&
-        <StyledSidebar grow="0" shrink="1" basis="200px">
-          <UserList />
+        <StyledSidebar>
+          <UserList />  
         </StyledSidebar>
-      }
-      <StyledMainbar>
-        <Playground />
-      </StyledMainbar>
+       <Playground />
     </StyledContainer>
   )
 }
