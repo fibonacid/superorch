@@ -1,12 +1,12 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { PubSub, withFilter } = require('apollo-server-express');
-const { transformUser } = require('./merge');
+const { PubSub, withFilter } = require("apollo-server-express");
+const { transformUser } = require("./merge");
 const User = require("../../models/users");
 
 const pubsub = new PubSub();
 
-const USER_JOINED = 'USER_JOINED';
+const USER_JOINED = "USER_JOINED";
 
 module.exports = {
   users: async (_, __) => {
@@ -18,17 +18,17 @@ module.exports = {
     }
   },
 
-  createUser: async (_, args) => {
+  createUser: async (_, { email, password }) => {
     try {
-      const existingUser = await User.findOne({ email: args.userInput.email });
+      const existingUser = await User.findOne({ email });
 
       if (existingUser) {
         throw new Error("User exists already");
       }
-      const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
+      const hashedPassword = await bcrypt.hash(password, 12);
 
       const newUser = new User({
-        email: args.userInput.email,
+        email,
         password: hashedPassword
       });
 
@@ -52,8 +52,7 @@ module.exports = {
     }
   },
 
-  login: async (_, { email, password }, context) => {
-
+  login: async (_, { email, password }) => {
     try {
       const user = await User.findOne({ email });
       if (!user) {
@@ -65,8 +64,8 @@ module.exports = {
       }
 
       // Send a USER_JOINED message
-      pubsub.publish(USER_JOINED, { userJoined: await transformUser(user) })
-  
+      pubsub.publish(USER_JOINED, { userJoined: await transformUser(user) });
+
       const token = await jwt.sign(
         { userId: user.id, email: user.email },
         "somesupersecretkey",
@@ -74,36 +73,36 @@ module.exports = {
           expiresIn: "1h"
         }
       );
-       
+
       return {
         userId: user.id,
         token,
         tokenExpiration: 1
       };
-    } catch(err) {
+    } catch (err) {
       throw err;
     }
   },
 
-  updateUser: async (_, { userUpdateInput }, { isAuth, userId } ) => {
+  updateUser: async (_, { userInput }, { isAuth, userId }) => {
     try {
       if (!isAuth) {
-        throw new Error('Unauthorized');
+        throw new Error("Unauthorized");
       }
-      const user = await User.findByIdAndUpdate(userId, userUpdateInput);
+      const user = await User.findByIdAndUpdate(userId, userInput);
       const result = await user.save();
       return transformUser(result);
-    } catch(err) {
+    } catch (err) {
       return err;
     }
   },
 
   userJoined: {
-    resolve: (payload) => {
-      return payload.userJoined
+    resolve: payload => {
+      return payload.userJoined;
     },
     subscribe: () => {
-      return pubsub.asyncIterator(USER_JOINED)
+      return pubsub.asyncIterator(USER_JOINED);
     }
   }
 };

@@ -22,11 +22,8 @@ const typeDefs = gql`
   }
 
   input UserInput {
-    email: String!
-    password: String!
-  }
-
-  input UserUpdateInput {
+    email: String
+    password: String
     nickname: String
   }
 
@@ -39,9 +36,9 @@ const typeDefs = gql`
 
   # The mutation root type, used to define all mutations.
   type Mutation {
-    createUser(userInput: UserInput): AuthData!
+    createUser(email: String!, password: String!): AuthData!
     createOrchestra(name: String!): Orchestra!
-    updateUser(userUpdateInput: UserUpdateInput): User
+    updateUser(userInput: UserInput!): User
   }
 
   # The subscription root type, used to define all subscriptions.
