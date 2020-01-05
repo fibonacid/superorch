@@ -4,6 +4,8 @@ import SCEditor from '../SCEditor'
 
 const StyledContainer = styled.div`
     flex: 1;
+    display: flex;
+    flex-direction: column;
 `;
 
 const StyledTitle = styled.h2`

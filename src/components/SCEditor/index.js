@@ -5,9 +5,9 @@ import {Editor, EditorState} from 'draft-js';
 
 // Editor Wrapper
 const StyledWrapper = styled.div`
-    height: 100%;
     cursor: text;
     padding: 10px;
+    flex: 1;
 `;
 
 // -----------------------------------
