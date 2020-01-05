@@ -9,7 +9,7 @@ const memberSchema = new Schema({
   },
   active: {
     type: Boolean,
-    required: true
+    deafult: true
   }
 });
 
