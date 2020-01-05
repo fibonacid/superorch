@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
-import styled from "styled-components";
-import Layout from "../components/Layout";
+import Layout from "./partials/layout";
 
 import PrimaryForm from "../components/PrimaryForm";
 import RegistrationForm from "../components/RegistrationForm";

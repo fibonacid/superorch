@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Layout from "../components/Layout";
+import Layout from "./partials/layout";
 import LoginForm from "../components/LoginForm";
 import PrimaryForm from "../components/PrimaryForm";
 
@@ -9,11 +9,6 @@ const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
   border: solid 1px lightgrey;
   border-radius: 10px;
-  margin: auto;
-`;
-
-const StyledWrap = styled.div`
-  max-width: 200px;
   margin: auto;
 `;
 
