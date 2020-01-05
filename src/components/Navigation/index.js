@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
+import MyOrchestras from './MyOrchestras'
 
 const StyledWrap = styled.header`
   flex: 0 0 60px;
@@ -10,7 +11,7 @@ const StyledWrap = styled.header`
   border-bottom: solid 1px lightgrey;
   display: flex;
   justify-content: space-between;
-  flex-direction: column-reverse;
+  flex-direction: column;
 `;
 
 const StyledButton = styled.button`
@@ -29,7 +30,10 @@ function Navigation() {
 
   return (
     <StyledWrap>
-      {token && <StyledButton onClick={handleLogout}>Logout</StyledButton>}
+      {token && <>
+        <MyOrchestras />
+        <StyledButton onClick={handleLogout}>Logout</StyledButton>
+      </>}
     </StyledWrap>
   )
 }
