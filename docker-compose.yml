@@ -4,9 +4,9 @@ services:
   api:
     container_name: api
     restart: always
-    build: api
+    build: .
     volumes:
-      - ./api:/usr/src/app
+      - .:/usr/src/app
     ports:
       - 5000:3000
     links:
