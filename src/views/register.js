@@ -10,7 +10,7 @@ const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
   border: solid 1px lightgrey;
   border-radius: 10px;
-  margin: 0 auto;
+  margin: auto;
 `;
 
 const StyledLink = styled(Link)`

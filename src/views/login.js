@@ -5,11 +5,16 @@ import Layout from "../components/Layout";
 import LoginForm from "../components/LoginForm";
 import PrimaryForm from "../components/PrimaryForm";
 
-const StyledWrap = styled.div`
-  max-width: 200px;
+const StyledForm = styled(PrimaryForm)`
+  max-width: 300px;
   border: solid 1px lightgrey;
   border-radius: 10px;
-  margin: 0 auto;
+  margin: auto;
+`;
+
+const StyledWrap = styled.div`
+  max-width: 200px;
+  margin: auto;
 `;
 
 const StyledLink = styled(Link)`
@@ -30,11 +35,9 @@ function LoginView() {
 
   return (
     <Layout>
-      <StyledWrap>
-         <PrimaryForm title="Login">
-            <LoginForm onSuccess={redirect}/>
-         </PrimaryForm>
-      </StyledWrap>
+      <StyledForm title="Login">
+        <LoginForm onSuccess={redirect}/>
+      </StyledForm>
       <StyledLink to="/register">Register instead</StyledLink>
     </Layout>
   )
