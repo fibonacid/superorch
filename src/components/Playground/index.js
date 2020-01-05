@@ -12,10 +12,10 @@ const StyledTitle = styled.h2`
 
 function Playground(props) {
     return (
-        <Frame direction="vertical">
+        <div>
             <StyledTitle>SuperCollider Editor</StyledTitle>
             <SCEditor />
-        </Frame>
+        </div>
     )
 }
 
