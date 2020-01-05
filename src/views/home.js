@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
+import styled from "styled-components/macro";
 import authContext from "../context/auth-context";
 import Frame from "../components/Frame";
 import FrameBox from "../components/FrameBox";
-import styled from "styled-components";
 import UserList from "../components/UserList";
 import Playground from "../components/Playground";
 
