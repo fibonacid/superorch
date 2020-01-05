@@ -17,7 +17,8 @@ const rootResolver = {
     acceptInvite: inviteResolver.acceptInvite
   },
   Subscription: {
-    userJoined: authResolver.userJoined
+    userJoined: authResolver.userJoined,
+    newInvite: inviteResolver.newInvite
   }
 };
 

@@ -1,6 +1,11 @@
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
+const { PubSub, withFilter } = require("apollo-server-express");
+
+const pubsub = new PubSub();
+
+const NEW_INVITE = "NEW_INVITE";
 
 module.exports = {
   invites: async (_, __, req) => {
@@ -30,10 +35,20 @@ module.exports = {
     });
 
     const result = await invite.save();
+
+    // Send a NEW_INVITE message
+    pubsub.publish(NEW_INVITE, { newInvite: result._doc });
+
     // todo: use result id as email token
     return result._doc;
   },
+
   acceptInvite: async (_, args) => {
     throw new Error("Not implemented yet");
+  },
+
+  newInvite: {
+    resolve: payload => payload.newInvite,
+    subscribe: () => pubsub.asyncIterator(NEW_INVITE)
   }
 };

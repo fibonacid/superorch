@@ -17,7 +17,7 @@ const typeDefs = gql`
     _id: ID!
     orchestraId: ID!
     userId: ID!
-    sentAt: String!
+    sentAt: String
   }
 
   type User {
@@ -26,7 +26,7 @@ const typeDefs = gql`
     password: String
     nickname: String
     createdOrchestras: [Orchestra!]
-    pendingInvites: [Invite!]!
+    pendingInvites: [Invite!]
   }
 
   type AuthData {
@@ -62,6 +62,7 @@ const typeDefs = gql`
   # The subscription root type, used to define all subscriptions.
   type Subscription {
     userJoined: User!
+    newInvite: Invite!
   }
 `;
 
