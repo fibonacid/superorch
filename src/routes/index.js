@@ -5,7 +5,7 @@ import HomeView from '../views/home';
 import LoginView from "../views/login";
 import RegisterView from "../views/register"
 
-export default function Routing() {
+export default function Routes() {
    return (
       <AuthContext.Consumer>{({ token }) => <>
          {token && <Redirect from="/login" to="/" /> }
