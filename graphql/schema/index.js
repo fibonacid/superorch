@@ -45,6 +45,7 @@ const typeDefs = gql`
   type Query {
     users: [User!]!
     orchestras: [Orchestra!]!
+    invites: [Invite!]!
     members(orchestraId: ID!): [Member!]!
     login(email: String!, password: String!): AuthData!
   }

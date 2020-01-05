@@ -6,7 +6,8 @@ const rootResolver = {
   Query: {
     login: authResolver.login,
     orchestras: orchestraResolver.orchestras,
-    users: authResolver.users
+    users: authResolver.users,
+    invites: inviteResolver.invites
   },
   Mutation: {
     createUser: authResolver.createUser,
