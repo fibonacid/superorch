@@ -14,12 +14,12 @@ const userSchema = new Schema({
   nickname: {
     type: String,
     required: false,
-    default: 'anonymous'
+    default: "anonymous"
   },
-  createdEvents: [
+  createdOrchestras: [
     {
       type: Schema.Types.ObjectID,
-      ref: "Event"
+      ref: "Orchestra"
     }
   ]
 });

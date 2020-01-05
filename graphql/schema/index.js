@@ -1,34 +1,24 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-   type Event {
-     _id: ID!
-     title: String!
-     description: String!
-     price: Float!
-     date: String!
-     creator: User!
-   }
+  type Orchestra {
+    _id: ID!
+    name: String!
+    owner: User!
+  }
 
   type User {
     _id: ID!
     email: String
     password: String
     nickname: String
-    createdEvents: [Event!]
+    createdOrchestras: [Orchestra!]
   }
 
   type AuthData {
     userId: ID!
     token: String!
     tokenExpiration: Int!
-  }
-   
-  input EventInput {
-    title: String!
-    description: String!
-    price: Float!
-    date: String!
   }
 
   input UserInput {
@@ -40,18 +30,18 @@ const typeDefs = gql`
     nickname: String
   }
 
-  # This type specifies the entry points into our API. 
+  # This type specifies the entry points into our API.
   type Query {
-     users: [User!]!
-     events: [Event!]!
-     login(email: String! password: String!): AuthData!
+    users: [User!]!
+    orchestras: [Orchestra!]!
+    login(email: String!, password: String!): AuthData!
   }
 
   # The mutation root type, used to define all mutations.
   type Mutation {
-     createEvent(eventInput: EventInput): Event
-     createUser(userInput: UserInput): AuthData!
-     updateUser(userUpdateInput: UserUpdateInput): User
+    createUser(userInput: UserInput): AuthData!
+    createOrchestra(name: String!): Orchestra!
+    updateUser(userUpdateInput: UserUpdateInput): User
   }
 
   # The subscription root type, used to define all subscriptions.

@@ -1,19 +1,19 @@
 const authResolver = require("./auth");
-const eventsResolver = require("./events");
+const orchestraResolver = require("./orchestras");
 
 const rootResolver = {
   Query: {
     login: authResolver.login,
-    events: eventsResolver.events,
+    orchestras: orchestraResolver.orchestras,
     users: authResolver.users
   },
   Mutation: {
     createUser: authResolver.createUser,
-    updateUser: authResolver.updateUser, 
-    createEvent: eventsResolver.createEvent,
+    updateUser: authResolver.updateUser,
+    createOrchestra: orchestraResolver.createOrchestra
   },
   Subscription: {
-    userJoined: authResolver.userJoined,
+    userJoined: authResolver.userJoined
   }
 };
 

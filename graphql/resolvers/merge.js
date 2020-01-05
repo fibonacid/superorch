@@ -1,25 +1,25 @@
-const { dateToString } = require("../../helpers/date");
 const DataLoader = require("dataloader");
 
 const User = require("../../models/users");
-const Event = require("../../models/events");
+const Orchestra = require("../../models/orchestras");
 
-const eventLoader = new DataLoader(eventIds => {
-  return events(eventIds);
+const orchestraLoader = new DataLoader(orchestraIds => {
+  return orchestras(orchestraIds);
 });
 
-const events = async eventIds => {
+const orchestras = async orchestraIds => {
   try {
-    const events = await Event.find({ _id: { $in: eventIds } });
-    return events.map(event => transformEvent(event));
+    const orchestras = await Orchestra.find({ _id: { $in: orchestraIds } });
+    console.log({ orchestras });
+    return orchestras.map(orchestra => transformOrchestra(orchestra));
   } catch (err) {
     throw err;
   }
 };
 
-const singleEvent = async eventId => {
+const singleOrchestra = async orchestraId => {
   try {
-    return await eventLoader.load(eventId.toString());
+    return await orchestraLoader.load(orchestraId.toString());
   } catch (err) {
     throw err;
   }
@@ -35,22 +35,24 @@ const singleUser = async userId => {
     return {
       ...user._doc,
       password: null,
-      createdEvents: eventLoader.load.bind(this, user._doc.createdEvents)
+      createdOrchestras: orchestraLoader.load.bind(
+        this,
+        user._doc.createdOrchestras
+      )
     };
   } catch (err) {
     throw err;
   }
 };
 
-const transformEvent = event => ({
-  ...event._doc,
-  date: dateToString(event._doc.date),
-  creator: singleUser.bind(this, event.creator)
+const transformOrchestra = orchestra => ({
+  ...orchestra._doc,
+  owner: singleUser.bind(this, orchestra.owner)
 });
 
 const transformUser = async user => {
-  return await singleUser(user.id)
+  return await singleUser(user.id);
 };
 
-exports.transformEvent = transformEvent;
+exports.transformOrchestra = transformOrchestra;
 exports.transformUser = transformUser;
