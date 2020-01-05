@@ -1,5 +1,6 @@
 const authResolver = require("./auth");
 const orchestraResolver = require("./orchestras");
+const inviteResolver = require("./invites");
 
 const rootResolver = {
   Query: {
@@ -10,7 +11,9 @@ const rootResolver = {
   Mutation: {
     createUser: authResolver.createUser,
     updateUser: authResolver.updateUser,
-    createOrchestra: orchestraResolver.createOrchestra
+    createOrchestra: orchestraResolver.createOrchestra,
+    sendInvite: inviteResolver.sendInvite,
+    acceptInvite: inviteResolver.acceptInvite
   },
   Subscription: {
     userJoined: authResolver.userJoined

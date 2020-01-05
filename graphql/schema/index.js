@@ -1,10 +1,19 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  
   type Orchestra {
     _id: ID!
     name: String!
     owner: User!
+  }
+
+
+  type Invite {
+    _id: ID!
+    orchestraId: ID!
+    userId: ID!
+    sentAt: String!
   }
 
   type User {
@@ -13,6 +22,7 @@ const typeDefs = gql`
     password: String
     nickname: String
     createdOrchestras: [Orchestra!]
+    pendingInvites: [Invite!]!
   }
 
   type AuthData {
@@ -37,8 +47,10 @@ const typeDefs = gql`
   # The mutation root type, used to define all mutations.
   type Mutation {
     createUser(email: String!, password: String!): AuthData!
-    createOrchestra(name: String!): Orchestra!
     updateUser(userInput: UserInput!): User
+    createOrchestra(name: String!): Orchestra!
+    sendInvite(orchestraId: ID! email: String!): Invite!
+    acceptInvite(inviteId: ID!): Orchestra!
   }
 
   # The subscription root type, used to define all subscriptions.
