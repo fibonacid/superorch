@@ -2,7 +2,7 @@ version: "3"
 
 services:
   api:
-    container_name: api
+    container_name: superorch-api
     restart: always
     build: .
     volumes:
@@ -16,7 +16,7 @@ services:
 
   database:
     image: mongo
-    container_name: mongo
+    container_name: superorch-db
     restart: always
     ports:
       - "27018:27017"
