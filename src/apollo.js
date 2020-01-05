@@ -73,7 +73,7 @@ const subscriptionMiddleware = {
    },
 };
 
-wsLink.subscriptionClient.use([subscriptionMiddleware]);
+//wsLink.subscriptionClient.use([subscriptionMiddleware]);
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
