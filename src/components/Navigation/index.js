@@ -17,7 +17,7 @@ const StyledButton = styled.button`
   font-size: 15px;
 `;
 
-function Header() {
+function Navigation() {
 
   const history = useHistory();
   const { token, logout } = useContext(AuthContext);
@@ -34,4 +34,4 @@ function Header() {
   )
 }
 
-export default Header;
+export default Navigation;

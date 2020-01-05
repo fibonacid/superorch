@@ -6,7 +6,7 @@ import configureClient from './apollo';
 // Components
 import GlobalStyle, {StyledContent} from "./components/GlobalStyle";
 import Authentication from './components/Authentication';
-import Header from './components/Header';
+import Navigation from './components/Navigation';
 import Routes from "./routes/index";
 
 let ipc;
@@ -34,7 +34,7 @@ function App() {
           <GlobalStyle />
           <HashRouter>
             <StyledContent>
-              <Header />
+              <Navigation />
               <Routes />
             </StyledContent>
           </HashRouter>
