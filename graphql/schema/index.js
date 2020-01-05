@@ -54,8 +54,8 @@ const typeDefs = gql`
     createUser(email: String!, password: String!): AuthData!
     updateUser(userInput: UserInput!): User
     createOrchestra(name: String!): Orchestra!
-    sendInvite(orchestraId: ID!, email: String!): Invite!
-    acceptInvite(inviteId: ID!): Orchestra!
+    sendInvite(orchestraId: String!, email: String!): Invite!
+    acceptInvite(inviteId: String!): Orchestra!
   }
 
   # The subscription root type, used to define all subscriptions.
