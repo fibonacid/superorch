@@ -10,7 +10,13 @@ const orchestraSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectID,
     ref: "User"
-  }
+  },
+  members: [
+    {
+      type: Schema.Types.ObjectID,
+      ref: "User"
+    }
+  ]
 });
 
 module.exports = mongoose.model("Orchestra", orchestraSchema);

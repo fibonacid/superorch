@@ -5,6 +5,7 @@ const typeDefs = gql`
     _id: ID!
     name: String!
     owner: User!
+    members: [Member!]!
   }
 
   type Member {
