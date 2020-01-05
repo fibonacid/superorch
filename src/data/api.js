@@ -27,7 +27,7 @@ export const USERS_QUERY = gql`
 //
 export const CREATE_USER_MUTATION = gql`
   mutation createUser($email: String!, $password: String!) {
-    createUser(userInput: { email: $email, password: $password }) {
+    createUser(email: $email, password: $password) {
       token
       userId
       tokenExpiration 
@@ -37,7 +37,7 @@ export const CREATE_USER_MUTATION = gql`
 
 export const UPDATE_USER_MUTATION = gql`
   mutation updateUser($nickname: String) {
-    updateUser(userUpdateInput: { nickname: $nickname }) {
+    updateUser(userInput: { nickname: $nickname }) {
       nickname
     }
   }
