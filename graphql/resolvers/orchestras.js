@@ -1,8 +1,8 @@
-const { dateToString } = require("../../helpers/date");
 const { transformOrchestra } = require("./merge");
 
 const Orchestra = require("../../models/orchestras");
 const User = require("../../models/users");
+const Member = require("../../models/members");
 
 module.exports = {
   orchestras: async () => {
@@ -19,27 +19,29 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error("Unauthenticated");
     }
-    const orchestra = new Orchestra({
+
+    const orchestra = await Orchestra.create({
       name: args.name,
       owner: req.userId
     });
-    let createdOrchestra;
-    try {
-      const result = await orchestra.save();
-      createdOrchestra = transformOrchestra(result);
 
-      const owner = await User.findById(req.userId);
+    const owner = await User.findById(req.userId);
 
-      if (!owner) {
-        throw new Error("User doesn't exist");
-      }
-      owner.createdOrchestras.push(orchestra);
-      await owner.save();
-
-      return createdOrchestra;
-    } catch (err) {
-      console.log(err);
-      return err;
+    if (!owner) {
+      throw new Error("User doesn't exist");
     }
+    owner.createdOrchestras.push(orchestra);
+    await owner.save();
+
+    // Add user as member of the orchestra
+    const member = await Member.create({
+      userId: owner.id,
+      orchestraId: orchestra.id
+    });
+
+    orchestra.members.push(member);
+    const result = await orchestra.save();
+
+    return transformOrchestra(result);
   }
 };
