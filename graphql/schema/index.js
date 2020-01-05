@@ -1,13 +1,17 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  
   type Orchestra {
     _id: ID!
     name: String!
     owner: User!
   }
 
+  type Member {
+    _id: ID!
+    owner: Orchestra!
+    user: User!
+  }
 
   type Invite {
     _id: ID!
@@ -41,6 +45,7 @@ const typeDefs = gql`
   type Query {
     users: [User!]!
     orchestras: [Orchestra!]!
+    members(orchestraId: ID!): [Member!]!
     login(email: String!, password: String!): AuthData!
   }
 
@@ -49,7 +54,7 @@ const typeDefs = gql`
     createUser(email: String!, password: String!): AuthData!
     updateUser(userInput: UserInput!): User
     createOrchestra(name: String!): Orchestra!
-    sendInvite(orchestraId: ID! email: String!): Invite!
+    sendInvite(orchestraId: ID!, email: String!): Invite!
     acceptInvite(inviteId: ID!): Orchestra!
   }
 
