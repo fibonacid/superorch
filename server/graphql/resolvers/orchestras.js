@@ -8,24 +8,26 @@ module.exports = {
   orchestras: async () => {
     try {
       const orchestras = await Orchestra.find();
-      return orchestras.map(orchestra => transformOrchestra(orchestra));
+      return orchestras.map(orchestra =>
+        transformOrchestra(orchestra, context)
+      );
     } catch (err) {
       console.log(err);
       return err;
     }
   },
 
-  createOrchestra: async (_, args, req) => {
-    if (!req.isAuth) {
+  createOrchestra: async (_, args, { isAuth, userId, orchestraLoader }) => {
+    if (!isAuth) {
       throw new Error("Unauthenticated");
     }
 
     const orchestra = await Orchestra.create({
       name: args.name,
-      owner: req.userId
+      owner: userId
     });
 
-    const owner = await User.findById(req.userId);
+    const owner = await User.findById(userId);
 
     if (!owner) {
       throw new Error("User doesn't exist");
@@ -42,6 +44,6 @@ module.exports = {
     orchestra.members.push(member);
     const result = await orchestra.save();
 
-    return transformOrchestra(result);
+    return orchestraLoader.load(result.id);
   }
 };
