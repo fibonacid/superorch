@@ -2,15 +2,13 @@ const Orchestra = require("../../models/orchestras");
 const User = require("../../models/users");
 const Member = require("../../models/members");
 
-const transformOrchestra = require("../../transforms/orchestra");
+const { transformOrchestra } = require("../../loaders/orchestraLoader");
 
 module.exports = {
-  orchestras: async (_, __, context) => {
+  orchestras: async () => {
     try {
       const orchestras = await Orchestra.find();
-      return orchestras.map(orchestra =>
-        transformOrchestra(orchestra, context)
-      );
+      return orchestras.map(orchestra => transformOrchestra(orchestra));
     } catch (err) {
       console.log(err);
       return err;

@@ -6,8 +6,6 @@ const mongoose = require("mongoose");
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
 const validateToken = require("./helpers/auth");
-const userLoader = require("./loaders/userLoader");
-const orchestraLoader = require("./loaders/orchestraLoader");
 
 const PORT = 3000;
 const app = express();
@@ -23,9 +21,7 @@ const server = new ApolloServer({
     } else {
       return {
         isAuth: res.locals.isAuth,
-        userId: res.locals.userId,
-        userLoader: userLoader(),
-        orchestraLoader: orchestraLoader()
+        userId: res.locals.userId
       };
     }
   },

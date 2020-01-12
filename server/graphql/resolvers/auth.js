@@ -2,17 +2,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { PubSub } = require("apollo-server-express");
 const User = require("../../models/users");
-const transformUser = require("../../transforms/users");
+const { transformUser } = require("../../loaders/userLoader");
 
 const pubsub = new PubSub();
 
 const USER_JOINED = "USER_JOINED";
 
 module.exports = {
-  users: async (_, __, context) => {
+  users: async () => {
     try {
       const users = await User.find();
-      return users.map(user => transformUser(user, context));
+      return users.map(user => transformUser(user.id));
     } catch (err) {
       return err;
     }
@@ -52,7 +52,7 @@ module.exports = {
     }
   },
 
-  login: async (_, { email, password }, context) => {
+  login: async (_, { email, password }) => {
     try {
       const user = await User.findOne({ email });
       if (!user) {
@@ -65,7 +65,7 @@ module.exports = {
 
       // Send a USER_JOINED message
       pubsub.publish(USER_JOINED, {
-        userJoined: await transformUser(user, context)
+        userJoined: await transformUser(user.id)
       });
 
       const token = await jwt.sign(
