@@ -2,7 +2,6 @@ const DataLoader = require("dataloader");
 const User = require("../models/users");
 
 const batchUsers = async ids => {
-  console.log(ids);
   const users = await User.find({ _id: { $in: ids } });
 
   const userMap = {};
