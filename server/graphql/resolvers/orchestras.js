@@ -5,7 +5,7 @@ const User = require("../../models/users");
 const Member = require("../../models/members");
 
 module.exports = {
-  orchestras: async () => {
+  orchestras: async (_, __, context) => {
     try {
       const orchestras = await Orchestra.find();
       return orchestras.map(orchestra =>
