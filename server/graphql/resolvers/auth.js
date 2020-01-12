@@ -9,10 +9,10 @@ const pubsub = new PubSub();
 const USER_JOINED = "USER_JOINED";
 
 module.exports = {
-  users: async (_, __) => {
+  users: async (_, __, { userLoader }) => {
     try {
       const users = await User.find();
-      return users.map(user => transformUser(user));
+      return users.map(user => userLoader.load(user._id));
     } catch (err) {
       return err;
     }
@@ -84,14 +84,16 @@ module.exports = {
     }
   },
 
-  updateUser: async (_, { userInput }, { isAuth, userId }) => {
+  updateUser: async (_, { userInput }, { isAuth, userId, userLoader }) => {
     try {
       if (!isAuth) {
         throw new Error("Unauthorized");
       }
       const user = await User.findByIdAndUpdate(userId, userInput);
-      const result = await user.save();
-      return transformUser(result);
+
+      await user.save();
+
+      return userLoader.load(userId);
     } catch (err) {
       return err;
     }
