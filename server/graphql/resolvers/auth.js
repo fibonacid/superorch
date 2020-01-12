@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { PubSub, withFilter } = require("apollo-server-express");
-const { transformUser } = require("./merge");
+const { PubSub } = require("apollo-server-express");
 const User = require("../../models/users");
+const transformUser = require("../../transforms/users");
 
 const pubsub = new PubSub();
 
