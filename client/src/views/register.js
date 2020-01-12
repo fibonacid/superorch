@@ -25,7 +25,7 @@ const StyledLink = styled(Link)`
 
 function RegisterView() {
   const [index, setIndex] = useState(0);
-  const oneIndexUp = useCallback(() => {
+  const nextForm = useCallback(() => {
     setIndex(index + 1);
   }, [index]);
 
@@ -40,7 +40,7 @@ function RegisterView() {
       {index === 0 && (
         <>
           <StyledForm title="Register">
-            <RegistrationForm onSuccess={oneIndexUp} />
+            <RegistrationForm onSuccess={nextForm} />
           </StyledForm>
           <StyledLink to="/login">Back to login</StyledLink>
         </>
