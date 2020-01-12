@@ -1,5 +1,5 @@
 {
-  "name": "superorch-api",
+  "name": "superorch-server",
   "description": "graphql api for superorch applications",
   "version": "0.1.0",
   "main": "app.js",
@@ -25,10 +25,5 @@
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }
