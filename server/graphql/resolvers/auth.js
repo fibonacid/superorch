@@ -9,10 +9,10 @@ const pubsub = new PubSub();
 const USER_JOINED = "USER_JOINED";
 
 module.exports = {
-  users: async (_, __, { userLoader }) => {
+  users: async (_, __, context) => {
     try {
       const users = await User.find();
-      return users.map(user => userLoader.load(user._id));
+      return users.map(user => transformUser(user, context));
     } catch (err) {
       return err;
     }
@@ -52,7 +52,7 @@ module.exports = {
     }
   },
 
-  login: async (_, { email, password }) => {
+  login: async (_, { email, password }, context) => {
     try {
       const user = await User.findOne({ email });
       if (!user) {
@@ -64,7 +64,9 @@ module.exports = {
       }
 
       // Send a USER_JOINED message
-      pubsub.publish(USER_JOINED, { userJoined: await transformUser(user) });
+      pubsub.publish(USER_JOINED, {
+        userJoined: await transformUser(user, context)
+      });
 
       const token = await jwt.sign(
         { userId: user.id, email: user.email },
