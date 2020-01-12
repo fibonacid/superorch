@@ -1,0 +1,17 @@
+{
+  "name": "superorch",
+  "version": "0.1.0",
+  "repository": "git@bitbucket.org:lorenzorivosecchi/superorch-server.git",
+  "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^4.0.7",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
