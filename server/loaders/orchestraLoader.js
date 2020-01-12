@@ -1,8 +1,8 @@
-import DataLoader from "dataloader";
-import { find } from "../models/orchestras";
+const DataLoader = require("dataloader");
+const Orchestra = require("../models/orchestras");
 
 const batchOrchestras = async ids => {
-  const orchestras = await find({ _id: { $in: ids } });
+  const orchestras = await Orchestra.find({ _id: { $in: ids } });
 
   const orchestraMap = {};
   orchestras.forEach(o => {
@@ -12,4 +12,4 @@ const batchOrchestras = async ids => {
   return ids.map(id => orchestraMap[id] || new Error(`No result for ${id}`));
 };
 
-export default orchestraLoader = () => new DataLoader(batchOrchestras);
+module.exports = orchestraLoader = () => new DataLoader(batchOrchestras);

@@ -7,4 +7,4 @@ const transformUser = async (user, context) => {
   };
 };
 
-export default transformUser;
+module.exports = transformUser;

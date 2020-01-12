@@ -1,4 +1,4 @@
-import transformUser from "./users";
+const transformUser = require("./users");
 
 const transformOrchestra = async (orchestra, context) => {
   const result = await context.orchestraLoader.load(orchestra.id.toString());
@@ -9,4 +9,4 @@ const transformOrchestra = async (orchestra, context) => {
   };
 };
 
-export default transformOrchestra;
+module.exports = transformOrchestra;
