@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import MemberList from "../components/Sidebar/MemberList";
+import OrchestraManager from "../components/OrchestraManager";
 import Playground from "../components/Playground";
 
 const StyledContainer = styled.div`
@@ -18,7 +18,7 @@ function HomeView() {
   return (
     <StyledContainer>
       <StyledSidebar>
-        <MemberList />
+        <OrchestraManager />
       </StyledSidebar>
       <Playground />
     </StyledContainer>

@@ -5,6 +5,10 @@ import ListItem from "./ListItem";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
+const StyledContainer = styled.div`
+  margin: 30px 5px 5px 5px;
+`;
+
 const QUERY = gql`
   query($orchestraId: String!) {
     singleOrchestra(orchestraId: $orchestraId) {
@@ -30,7 +34,7 @@ export default function UserList() {
   });
 
   return (
-    <>
+    <StyledContainer>
       {loading && <span>Loading ...</span>}
       {error && <Error message={error.message} />}
       <ul>
@@ -39,7 +43,7 @@ export default function UserList() {
             <ListItem key={i} member={member} />
           ))}
       </ul>
-    </>
+    </StyledContainer>
   );
 }
 
