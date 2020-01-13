@@ -29,7 +29,7 @@ const StyledLetter = styled.span`
 
 function ItemIcon(props) {
   return (
-    <StyledSquare className={props.className}>
+    <StyledSquare onClick={props.onClick} className={props.className}>
       <StyledLetter>{props.letter}</StyledLetter>
     </StyledSquare>
   );
