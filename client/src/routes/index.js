@@ -10,9 +10,10 @@ export default function Routes() {
     <AuthContext.Consumer>
       {({ token }) => (
         <>
+          {token && <Redirect from="/login" to="/" />}
+          {!token && <Redirect from="/" to="/login" />}
           <Route path="/login" exact component={LoginView} />
           <Route path="/register" exact component={RegisterView} />
-          {!token && <Redirect from="/" to="/login" />}
           <Route path="/" exact component={HomeView} />
         </>
       )}
