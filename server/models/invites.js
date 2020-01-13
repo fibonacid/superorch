@@ -4,15 +4,29 @@ const Schema = mongoose.Schema;
 
 const inviteSchema = new Schema(
   {
-    orchestraId: {
+    email: {
+      type: Schema.Types.String,
+      required: true
+    },
+    subject: {
       type: Schema.Types.ObjectID,
       ref: "Orchestra",
       required: true
     },
-    userId: {
+    from: {
       type: Schema.Types.ObjectID,
       ref: "User",
       required: true
+    },
+    to: {
+      type: Schema.Types.ObjectID,
+      ref: "User",
+      required: false
+    },
+    pending: {
+      type: Schema.Types.Boolean,
+      required: true,
+      default: true
     }
   },
   { timestamps: true }

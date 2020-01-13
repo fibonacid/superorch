@@ -16,9 +16,12 @@ const typeDefs = gql`
 
   type Invite {
     _id: ID!
-    orchestraId: ID!
-    userId: ID!
-    sentAt: String
+    email: String!
+    subject: Orchestra!
+    from: User!
+    to: User
+    createdAt: String!
+    pending: Boolean!
   }
 
   type User {
