@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import authContext from "../context/auth-context";
-import UserList from "../components/UserList";
+import MemberList from "../components/Sidebar/MemberList";
 import Playground from "../components/Playground";
 
 const StyledContainer = styled.div`
@@ -15,11 +14,11 @@ const StyledSidebar = styled.div`
   flex: 0 1 200px;
 `;
 
-function HomeView(props) {
+function HomeView() {
   return (
     <StyledContainer>
       <StyledSidebar>
-        <UserList />
+        <MemberList />
       </StyledSidebar>
       <Playground />
     </StyledContainer>
