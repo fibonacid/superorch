@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { PubSub } = require("apollo-server-express");
 const User = require("../../models/users");
-const { transformUser } = require("../../loaders/userLoader");
+const { transformUser } = require("./merge");
 
 const pubsub = new PubSub();
 
@@ -12,7 +12,7 @@ module.exports = {
   users: async () => {
     try {
       const users = await User.find();
-      return users.map(user => transformUser(user.id));
+      return users.map(user => transformUser(user));
     } catch (err) {
       return err;
     }
@@ -63,17 +63,17 @@ module.exports = {
         throw new Error("Password is incorrect");
       }
 
-      // Send a USER_JOINED message
+      //Send a USER_JOINED message
       pubsub.publish(USER_JOINED, {
-        userJoined: await transformUser(user.id)
+        userJoined: await transformUser(user)
       });
 
-      const token = await jwt.sign(
+      console.log(user.id);
+
+      const token = jwt.sign(
         { userId: user.id, email: user.email },
         "somesupersecretkey",
-        {
-          expiresIn: "1h"
-        }
+        { expiresIn: "1h" }
       );
 
       return {

@@ -2,7 +2,7 @@ const Orchestra = require("../../models/orchestras");
 const User = require("../../models/users");
 const Member = require("../../models/members");
 
-const { transformOrchestra } = require("../../loaders/orchestraLoader");
+const { transformOrchestra } = require("./merge");
 
 module.exports = {
   orchestras: async () => {
