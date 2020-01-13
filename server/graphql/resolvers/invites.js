@@ -1,49 +1,65 @@
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
-const { PubSub, withFilter } = require("apollo-server-express");
+const { PubSub } = require("apollo-server-express");
+const { transformInvite } = require("./transforms");
 
 const pubsub = new PubSub();
 
 const NEW_INVITE = "NEW_INVITE";
 
 module.exports = {
-  invites: async (_, __, req) => {
-    if (!req.isAuth) {
+  invites: async (_, __, { isAuth, userId, loaders }) => {
+    if (!isAuth) {
       throw new Error("Unauthenticated");
     }
-    const invites = await Invite.find({ userId: req.userId });
-    return invites.map(invite => invite._doc);
+
+    const invites = await Invite.find({ to: userId });
+
+    return invites.map(invite => transformInvite(invite.id, loaders));
   },
-  sendInvite: async (_, { orchestraId, email }, req) => {
-    if (!req.isAuth) {
+
+  sendInvite: async (
+    _,
+    { orchestraId, email },
+    { isAuth, userId, loaders }
+  ) => {
+    if (!isAuth) {
       throw new Error("Unauthenticated");
     }
-    // Fetch orchestra to check that it actually exist
-    await Orchestra.findOne({
+
+    //Check that orchestra exists and that is owner by the user
+    const orchestra = await Orchestra.findOne({
       _id: orchestraId,
-      owner: req.userId
+      owner: userId
     });
+
+    if (!orchestra) {
+      throw new Error("Invalid request");
+    }
 
     const user = await User.findOne({ email });
 
     // Create a new invite
     const invite = await Invite.create({
-      orchestraId,
-      email,
-      userId: user.id || null
+      subject: orchestraId,
+      from: userId,
+      to: user.id || null,
+      email
     });
 
     const result = await invite.save();
 
     // Send a NEW_INVITE message
-    pubsub.publish(NEW_INVITE, { newInvite: result._doc });
+    pubsub.publish(NEW_INVITE, {
+      newInvite: transformInvite(result.id, loaders)
+    });
 
     // todo: use result id as email token
-    return result._doc;
+    return transformInvite(result.id, loaders);
   },
 
-  acceptInvite: async (_, args) => {
+  acceptInvite: async () => {
     throw new Error("Not implemented yet");
   },
 

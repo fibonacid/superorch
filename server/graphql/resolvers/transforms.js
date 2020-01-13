@@ -1,3 +1,6 @@
+//
+// Transform User
+//
 async function transformUser(userId, { userLoader, orchestraLoader }) {
   const user = await userLoader.load(userId.toString());
 
@@ -9,6 +12,9 @@ async function transformUser(userId, { userLoader, orchestraLoader }) {
   };
 }
 
+//
+// Transform Orchestra
+//
 async function transformOrchestra(
   orchestraId,
   { userLoader, orchestraLoader, memberLoader }
@@ -24,6 +30,9 @@ async function transformOrchestra(
   };
 }
 
+//
+// Transform Member
+//
 async function transformMember(
   memberId,
   { userLoader, orchestraLoader, memberLoader }
@@ -37,8 +46,26 @@ async function transformMember(
   };
 }
 
+//
+// Transform Invite
+//
+async function transformInvite(
+  inviteId,
+  { inviteLoader, userLoader, orchestraLoader }
+) {
+  const invite = await inviteLoader.load(inviteId.toString());
+
+  return {
+    ...invite._doc,
+    subject: orchestraLoader.load(invite._doc.subject.toString()),
+    from: userLoader.load(invite._doc.from.toString()),
+    to: userLoader.load(invite._doc.to.toString())
+  };
+}
+
 module.exports = {
   transformUser,
   transformOrchestra,
-  transformMember
+  transformMember,
+  transformInvite
 };
