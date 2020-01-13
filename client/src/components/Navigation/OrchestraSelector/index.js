@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
@@ -10,12 +11,12 @@ const StyledContainer = styled.div`
   align-items: center;
 `;
 
-const StyledButton = styled.button`
+const StyledLink = styled(Link)`
   margin-top: 10px;
   border: none;
   font-size: 25px;
-  width: 40px;
-  border-radius: 10px;
+  color: white;
+  text-decoration: none;
 `;
 
 const QUERY = gql`
@@ -36,7 +37,7 @@ function OrchestraSelector() {
         {data &&
           data.orchestras.map((o, i) => <SelectorItem key={i} orchestra={o} />)}
       </ul>
-      <StyledButton>+</StyledButton>
+      <StyledLink to="/orchestras/create">+</StyledLink>
     </StyledContainer>
   );
 }
