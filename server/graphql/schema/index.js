@@ -50,7 +50,7 @@ const typeDefs = gql`
   type Query {
     users: [User!]!
     orchestras: [Orchestra!]!
-    singleOrchestra(orchestraId: ID!): Orchestra!
+    singleOrchestra(orchestraId: String!): Orchestra!
     invites: [Invite!]!
     members(orchestraId: ID!): [Member!]!
     login(email: String!, password: String!): AuthData!
