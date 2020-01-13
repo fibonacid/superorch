@@ -1,8 +1,10 @@
+const { PubSub } = require("apollo-server-express");
+
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
-const { PubSub } = require("apollo-server-express");
-const { transformInvite } = require("./transforms");
+const Member = require("../../models/members");
+const { transformInvite, transformMember } = require("./transforms");
 
 const pubsub = new PubSub();
 
@@ -59,8 +61,36 @@ module.exports = {
     return transformInvite(result.id, loaders);
   },
 
-  acceptInvite: async () => {
-    throw new Error("Not implemented yet");
+  acceptInvite: async (_, { inviteId }, { isAuth, userId, loaders }) => {
+    if (!isAuth) {
+      throw new Error("Unauthenticated");
+    }
+
+    const invite = await Invite.findOne({
+      _id: inviteId,
+      to: userId
+    });
+
+    if (!invite) {
+      throw new Error("Invalid request");
+    }
+
+    // Update invite pending status
+    invite.pending = false;
+    await invite.save();
+
+    // Create new orchestra member
+    const member = await Member.create({
+      user: userId,
+      orchestra: invite.subject
+    });
+
+    // Add member to orchestra
+    const orchestra = await Orchestra.findById(invite.subject);
+    orchestra.members.push(member);
+    await orchestra.save();
+
+    return transformMember(member.id, loaders);
   },
 
   newInvite: {
