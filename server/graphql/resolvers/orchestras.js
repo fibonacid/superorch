@@ -5,16 +5,16 @@ const Member = require("../../models/members");
 const { transformOrchestra } = require("./transforms");
 
 module.exports = {
-  orchestras: async (_, __, { loaders }) => {
-    try {
-      const orchestras = await Orchestra.find();
-      return orchestras.map(orchestra =>
-        transformOrchestra(orchestra.id, loaders)
-      );
-    } catch (err) {
-      console.log(err);
-      return err;
+  orchestras: async (_, __, { isAuth, loaders }) => {
+    if (!isAuth) {
+      throw new Error("Unauthenticated");
     }
+
+    const orchestras = await Orchestra.find();
+
+    return orchestras.map(orchestra =>
+      transformOrchestra(orchestra.id, loaders)
+    );
   },
 
   createOrchestra: async (_, args, { isAuth, userId, loaders }) => {
@@ -37,8 +37,8 @@ module.exports = {
 
     // Add user as member of the orchestra
     const member = await Member.create({
-      userId: owner.id,
-      orchestraId: orchestra.id
+      user: owner.id,
+      orchestra: orchestra.id
     });
 
     orchestra.members.push(member);
