@@ -1,6 +1,6 @@
 import React from "react";
-import useAuth from "../../hooks/useAuth";
-import AuthContext from "../../context/auth-context";
+import useAuth from "../../../hooks/useAuth";
+import AuthContext from "../../../context/auth-context";
 
 export default function Authentication(props) {
   const { token, userId, tokenExpiration, login, logout } = useAuth();

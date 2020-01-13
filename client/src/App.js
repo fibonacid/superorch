@@ -5,7 +5,7 @@ import configureClient from "./apollo";
 
 // Components
 import GlobalStyle, { StyledContent } from "./components/GlobalStyle";
-import Authentication from "./components/Authentication";
+import Store from "./components/Store";
 import Navigation from "./components/Navigation";
 import Routes from "./routes/index";
 
@@ -30,7 +30,7 @@ const client = configureClient();
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Authentication>
+      <Store>
         <GlobalStyle />
         <HashRouter>
           <StyledContent>
@@ -38,7 +38,7 @@ function App() {
             <Routes />
           </StyledContent>
         </HashRouter>
-      </Authentication>
+      </Store>
     </ApolloProvider>
   );
 }
