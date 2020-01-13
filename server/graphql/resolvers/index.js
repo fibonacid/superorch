@@ -1,5 +1,6 @@
 const authResolver = require("./auth");
 const orchestraResolver = require("./orchestras");
+const memberResolver = require("./members");
 const inviteResolver = require("./invites");
 
 const rootResolver = {
@@ -7,6 +8,7 @@ const rootResolver = {
     login: authResolver.login,
     orchestras: orchestraResolver.orchestras,
     users: authResolver.users,
+    members: memberResolver.members,
     invites: inviteResolver.invites
   },
   Mutation: {
