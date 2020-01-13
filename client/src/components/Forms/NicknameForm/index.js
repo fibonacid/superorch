@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import useFormValidation from "../../hooks/useFormValidation";
-import useUpdateUserMutation from "../../hooks/useUpdateUserMutation";
+import useFormValidation from "../../../hooks/useFormValidation";
+import useUpdateUserMutation from "../../../hooks/useUpdateUserMutation";
 import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {

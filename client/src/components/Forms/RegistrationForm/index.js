@@ -1,20 +1,24 @@
 import React, { useEffect } from "react";
-import useFormValidation from "../../hooks/useFormValidation";
-import useLoginQuery from "../../hooks/useLoginQuery";
-import { EMAIL_REGEX } from "../../helpers/regex";
+import useFormValidation from "../../../hooks/useFormValidation";
+import useCreateUserMutation from "../../../hooks/useCreateUserMutation";
+import { EMAIL_REGEX, PASSWORD_REGEX } from "../../../helpers/regex";
 import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {
   email: "",
-  password: ""
+  password: "",
+  passwordConf: ""
 };
 
 // --------------------------
 // Authentication Form
 // --------------------------
 
-function LoginForm(props) {
-  const [login, { loading, error: backendError, data }] = useLoginQuery();
+function RegistrationForm(props) {
+  const [
+    createUser,
+    { loading, error: backendError, data }
+  ] = useCreateUserMutation();
 
   useEffect(() => {
     if (data && props.onSuccess) {
@@ -37,13 +41,20 @@ function LoginForm(props) {
     // Password errors
     if (!values.password) {
       errors.password = "Required Password";
+    } else if (!PASSWORD_REGEX.test(values.password)) {
+      errors.password = "Password must be at least 4 characters";
+    }
+    if (values.passwordConf.trim().length === 0) {
+      errors.passwordConf = "Confirm password";
+    } else if (values.password.trim() !== values.passwordConf.trim()) {
+      errors.passwordConf = "Passwords are different";
     }
     return errors;
   }
 
-  function authenticateUser() {
+  function registrateUser() {
     const { email, password } = values;
-    login({ variables: { email, password } });
+    createUser({ variables: { email, password } });
   }
 
   const {
@@ -53,7 +64,7 @@ function LoginForm(props) {
     values,
     errors,
     isSubmitting
-  } = useFormValidation(INITIAL_VALUES, validateAuth, authenticateUser);
+  } = useFormValidation(INITIAL_VALUES, validateAuth, registrateUser);
 
   return (
     <>
@@ -84,6 +95,19 @@ function LoginForm(props) {
             <PrimaryForm.Error>{errors.password}</PrimaryForm.Error>
           )}
         </PrimaryForm.Field>
+        <PrimaryForm.Field>
+          <label htmlFor="password">Password confirmation</label>
+          <PrimaryForm.Input
+            type="password"
+            name="passwordConf"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.passwordConf}
+          />
+          {errors.passwordConf && (
+            <PrimaryForm.Error>{errors.passwordConf}</PrimaryForm.Error>
+          )}
+        </PrimaryForm.Field>
         {backendError && (
           <PrimaryForm.Error>{backendError.message}</PrimaryForm.Error>
         )}
@@ -96,4 +120,4 @@ function LoginForm(props) {
   );
 }
 
-export default LoginForm;
+export default RegistrationForm;
