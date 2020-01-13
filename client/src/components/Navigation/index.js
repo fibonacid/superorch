@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
-import MyOrchestras from "./MyOrchestras";
+import OrchestraSelector from "./OrchestraSelector";
 
 const StyledWrap = styled.header`
   flex: 0 0 60px;
@@ -31,7 +31,7 @@ function Navigation() {
     <StyledWrap>
       {token && (
         <>
-          <MyOrchestras />
+          <OrchestraSelector />
           <StyledButton onClick={handleLogout}>Logout</StyledButton>
         </>
       )}
