@@ -8,11 +8,10 @@ const StyledContainer = styled.li`
   border-bottom: solid 1px lightgrey;
 `;
 
-function ListItem(props) {
+function ListItem({ member }) {
   return (
     <StyledContainer>
-      <span>{props.user.nickname}</span>
-      <span>{props.user.status}</span>
+      <span>{member._id}</span>
     </StyledContainer>
   );
 }
