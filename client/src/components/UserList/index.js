@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/";
-import User from "./User";
+import ListItem from "./ListItem";
 import useUsersQuery from "../../hooks/useUsersQuery";
 
 //
@@ -19,7 +19,7 @@ export default function UserList() {
       {data && (
         <ul>
           {data.users.map((user, i) => (
-            <User key={i} user={user} />
+            <ListItem key={i} user={user} />
           ))}
         </ul>
       )}

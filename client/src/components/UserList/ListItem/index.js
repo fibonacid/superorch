@@ -8,7 +8,7 @@ const StyledContainer = styled.li`
   border-bottom: solid 1px lightgrey;
 `;
 
-function User(props) {
+function ListItem(props) {
   return (
     <StyledContainer>
       <span>{props.user.nickname}</span>
@@ -17,4 +17,4 @@ function User(props) {
   );
 }
 
-export default User;
+export default ListItem;
