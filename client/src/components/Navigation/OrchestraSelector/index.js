@@ -18,7 +18,7 @@ const StyledButton = styled.button`
   border-radius: 10px;
 `;
 
-const ORCHESTRAS_QUERY = gql`
+const QUERY = gql`
   query {
     orchestras {
       _id
@@ -28,7 +28,7 @@ const ORCHESTRAS_QUERY = gql`
 `;
 
 function OrchestraSelector() {
-  const { data } = useQuery(ORCHESTRAS_QUERY);
+  const { data } = useQuery(QUERY);
 
   return (
     <StyledContainer>
