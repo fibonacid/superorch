@@ -9,7 +9,7 @@ const StyledContainer = styled.ul`
 //
 // Displays a list of users
 //
-export default function UserList({ members }) {
+export default function MemberList({ members }) {
   return (
     <StyledContainer>
       {members.map((member, i) => (
