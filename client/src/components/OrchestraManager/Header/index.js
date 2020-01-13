@@ -7,8 +7,8 @@ const StyledTitle = styled.h2`
   font-size: 20px;
 `;
 
-function Header(props) {
-  return <StyledTitle>Orchestra Manager</StyledTitle>;
+function Header({ title }) {
+  return <StyledTitle>{title}</StyledTitle>;
 }
 
 export default Header;
