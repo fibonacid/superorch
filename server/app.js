@@ -8,6 +8,7 @@ const grapgQlResolvers = require("./graphql/resolvers");
 const validateToken = require("./helpers/auth");
 const userLoader = require("./loaders/userLoader");
 const orchestraLoader = require("./loaders/orchestraLoader");
+const memberLoader = require("./loaders/memberLoader");
 
 const PORT = 3000;
 const app = express();
@@ -26,7 +27,8 @@ const server = new ApolloServer({
         userId: res.locals.userId,
         loaders: {
           userLoader: userLoader(),
-          orchestraLoader: orchestraLoader()
+          orchestraLoader: orchestraLoader(),
+          memberLoader: memberLoader()
         }
       };
     }
