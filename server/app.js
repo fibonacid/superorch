@@ -9,6 +9,7 @@ const validateToken = require("./helpers/auth");
 const userLoader = require("./loaders/userLoader");
 const orchestraLoader = require("./loaders/orchestraLoader");
 const memberLoader = require("./loaders/memberLoader");
+const inviteLoader = require("./loaders/inviteLoader");
 
 const PORT = 3000;
 const app = express();
@@ -28,7 +29,8 @@ const server = new ApolloServer({
         loaders: {
           userLoader: userLoader(),
           orchestraLoader: orchestraLoader(),
-          memberLoader: memberLoader()
+          memberLoader: memberLoader(),
+          inviteLoader: inviteLoader()
         }
       };
     }
