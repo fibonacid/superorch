@@ -2,20 +2,22 @@ const Orchestra = require("../../models/orchestras");
 const User = require("../../models/users");
 const Member = require("../../models/members");
 
-const { transformOrchestra } = require("./merge");
+const { transformOrchestra } = require("./transforms");
 
 module.exports = {
-  orchestras: async () => {
+  orchestras: async (_, __, { loaders }) => {
     try {
       const orchestras = await Orchestra.find();
-      return orchestras.map(orchestra => transformOrchestra(orchestra));
+      return orchestras.map(orchestra =>
+        transformOrchestra(orchestra.id, loaders)
+      );
     } catch (err) {
       console.log(err);
       return err;
     }
   },
 
-  createOrchestra: async (_, args, { isAuth, userId, orchestraLoader }) => {
+  createOrchestra: async (_, args, { isAuth, userId, loaders }) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");
     }
@@ -42,6 +44,6 @@ module.exports = {
     orchestra.members.push(member);
     const result = await orchestra.save();
 
-    return orchestraLoader.load(result.id);
+    return transformOrchestra(result.id, loaders);
   }
 };

@@ -2,20 +2,16 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { PubSub } = require("apollo-server-express");
 const User = require("../../models/users");
-const { transformUser } = require("./merge");
+const { transformUser } = require("./transforms");
 
 const pubsub = new PubSub();
 
 const USER_JOINED = "USER_JOINED";
 
 module.exports = {
-  users: async () => {
-    try {
-      const users = await User.find();
-      return users.map(user => transformUser(user));
-    } catch (err) {
-      return err;
-    }
+  users: async (_, __, { loaders }) => {
+    const users = await User.find();
+    return users.map(user => transformUser(user.id, loaders));
   },
 
   createUser: async (_, { email, password }) => {
@@ -52,7 +48,7 @@ module.exports = {
     }
   },
 
-  login: async (_, { email, password }) => {
+  login: async (_, { email, password }, { loaders }) => {
     try {
       const user = await User.findOne({ email });
       if (!user) {
@@ -65,10 +61,8 @@ module.exports = {
 
       //Send a USER_JOINED message
       pubsub.publish(USER_JOINED, {
-        userJoined: await transformUser(user)
+        userJoined: transformUser(user.id, loaders)
       });
-
-      console.log(user.id);
 
       const token = jwt.sign(
         { userId: user.id, email: user.email },
@@ -86,7 +80,7 @@ module.exports = {
     }
   },
 
-  updateUser: async (_, { userInput }, { isAuth, userId, userLoader }) => {
+  updateUser: async (_, { userInput }, { isAuth, userId, loaders }) => {
     try {
       if (!isAuth) {
         throw new Error("Unauthorized");
@@ -95,7 +89,7 @@ module.exports = {
 
       await user.save();
 
-      return userLoader.load(userId);
+      return transformUser(user.id, loaders);
     } catch (err) {
       return err;
     }
