@@ -10,7 +10,7 @@ const typeDefs = gql`
 
   type Member {
     _id: ID!
-    owner: Orchestra!
+    orchestra: Orchestra!
     user: User!
   }
 
