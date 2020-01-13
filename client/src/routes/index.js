@@ -4,7 +4,7 @@ import AuthContext from "../context/auth-context";
 import HomeView from "../views/home";
 import LoginView from "../views/login";
 import RegisterView from "../views/register";
-import createOrchestraView from "../views/orchestras/create";
+import CreateOrchestraView from "../views/orchestras/create";
 
 export default function Routes() {
   return (
@@ -18,7 +18,7 @@ export default function Routes() {
           <Route
             path="/orchestras/create"
             exact
-            component={createOrchestraView}
+            component={CreateOrchestraView}
           />
           <Route path="/" exact component={HomeView} />
         </>
