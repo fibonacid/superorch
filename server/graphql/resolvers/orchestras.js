@@ -17,6 +17,16 @@ module.exports = {
     );
   },
 
+  singleOrchestra: async (_, { orchestraId }, { isAuth, loaders }) => {
+    if (!isAuth) {
+      throw new Error("Unauthenticated");
+    }
+
+    const orchestra = await Orchestra.findById(orchestraId);
+
+    return transformOrchestra(orchestra.id, loaders);
+  },
+
   createOrchestra: async (_, args, { isAuth, userId, loaders }) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");

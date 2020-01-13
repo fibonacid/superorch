@@ -7,6 +7,7 @@ const rootResolver = {
   Query: {
     login: authResolver.login,
     orchestras: orchestraResolver.orchestras,
+    singleOrchestra: orchestraResolver.singleOrchestra,
     users: authResolver.users,
     members: memberResolver.members,
     invites: inviteResolver.invites
