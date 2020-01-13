@@ -22,6 +22,32 @@ export const USERS_QUERY = gql`
   }
 `;
 
+export const ORCHESTRAS_QUERY = gql`
+  query {
+    orchestras {
+      _id
+      name
+      members {
+        _id
+      }
+    }
+  }
+`;
+
+export const SINGLE_ORCHESTRA_QUERY = gql`
+  query($orchestraId: String!) {
+    singleOrchestra(orchestraId: $orchestraId) {
+      name
+      members {
+        _id
+        user {
+          _id
+        }
+      }
+    }
+  }
+`;
+
 //
 // Mutations
 //
@@ -39,6 +65,14 @@ export const UPDATE_USER_MUTATION = gql`
   mutation updateUser($nickname: String) {
     updateUser(userInput: { nickname: $nickname }) {
       nickname
+    }
+  }
+`;
+
+export const CREATE_ORCHESTRA_MUTATION = gql`
+  mutation createOrchestra($name: String!) {
+    createOrchestra(name: $name) {
+      _id
     }
   }
 `;

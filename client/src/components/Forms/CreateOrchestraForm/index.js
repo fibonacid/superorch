@@ -1,16 +1,8 @@
 import React, { useEffect } from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
 import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import { CREATE_ORCHESTRA_MUTATION, ORCHESTRAS_QUERY } from "../../../data/api";
 import * as PrimaryForm from "../PrimaryForm";
-
-const MUTATION = gql`
-  mutation createOrchestra($name: String!) {
-    createOrchestra(name: $name) {
-      _id
-    }
-  }
-`;
 
 const INITIAL_VALUES = {
   name: ""
@@ -18,7 +10,7 @@ const INITIAL_VALUES = {
 
 function CreateOrchestraForm(props) {
   const [createOrchestra, { data, loading, error: backendError }] = useMutation(
-    MUTATION
+    CREATE_ORCHESTRA_MUTATION
   );
 
   useEffect(() => {
@@ -38,7 +30,10 @@ function CreateOrchestraForm(props) {
   }
 
   function authenticate() {
-    createOrchestra({ variables: { name: values.name } });
+    createOrchestra({
+      variables: { name: values.name },
+      refetchQueries: [{ query: ORCHESTRAS_QUERY }]
+    });
   }
 
   const {

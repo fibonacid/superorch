@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
-import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
+import { ORCHESTRAS_QUERY } from "../../../data/api";
 import SelectorItem from "./SelectorItem";
 
 const StyledContainer = styled.div`
@@ -19,17 +19,8 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
-const QUERY = gql`
-  query {
-    orchestras {
-      _id
-      name
-    }
-  }
-`;
-
 function OrchestraSelector() {
-  const { data } = useQuery(QUERY);
+  const { data } = useQuery(ORCHESTRAS_QUERY);
 
   return (
     <StyledContainer>

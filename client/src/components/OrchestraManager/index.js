@@ -1,29 +1,15 @@
 import React, { useContext } from "react";
 import styled from "styled-components/macro";
 import ActivityContext from "../../context/activity-context";
-import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
+import { SINGLE_ORCHESTRA_QUERY } from "../../data/api";
 import Header from "./Header";
 import MemberList from "./MemberList";
-
-const QUERY = gql`
-  query($orchestraId: String!) {
-    singleOrchestra(orchestraId: $orchestraId) {
-      name
-      members {
-        _id
-        user {
-          _id
-        }
-      }
-    }
-  }
-`;
 
 function OrchestraManager() {
   const { orchestra } = useContext(ActivityContext);
 
-  const { loading, data, error } = useQuery(QUERY, {
+  const { loading, data, error } = useQuery(SINGLE_ORCHESTRA_QUERY, {
     variables: { orchestraId: orchestra }
   });
 
