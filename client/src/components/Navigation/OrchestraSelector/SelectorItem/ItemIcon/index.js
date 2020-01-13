@@ -7,16 +7,16 @@ const StyledSquare = styled.div`
   margin: 0 auto;
   position: relative;
   border: solid 1px white;
+  background: ${props => (props.active ? "grey" : "black")};
   border-radius: 8px;
   color: white;
-  background: rgba(255, 255, 255, 0);
   transition: background 0.1s;
   cursor: pointer;
   &:not(:first-of-type) {
     margin-top: 10px;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: grey;
   }
 `;
 
@@ -29,7 +29,11 @@ const StyledLetter = styled.span`
 
 function ItemIcon(props) {
   return (
-    <StyledSquare onClick={props.onClick} className={props.className}>
+    <StyledSquare
+      onClick={props.onClick}
+      className={props.className}
+      active={props.active}
+    >
       <StyledLetter>{props.letter}</StyledLetter>
     </StyledSquare>
   );
