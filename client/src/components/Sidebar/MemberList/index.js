@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
-import styled from "styled-components/";
+import React, { useContext } from "react";
+import styled from "styled-components/macro";
+import ActivityContext from "../../../context/activity-context";
 import ListItem from "./ListItem";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
@@ -22,8 +23,10 @@ const QUERY = gql`
 // Displays a list of users
 //
 export default function UserList() {
+  const { orchestra: id } = useContext(ActivityContext);
+
   const { data, loading, error } = useQuery(QUERY, {
-    variables: { orchestraId: "5e1c9c834a14b807e8e746fd" }
+    variables: { orchestraId: id }
   });
 
   return (
