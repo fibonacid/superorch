@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { createUserDocument } from "../data/documents";
 import AuthContext from "../context/auth-context";
 
-export default function useCreateUserMutation() {
+export default function useRegister() {
   const context = useContext(AuthContext);
 
   const [createUser, { data, loading, error }] = useMutation(

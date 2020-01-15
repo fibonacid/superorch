@@ -3,7 +3,7 @@ import { useLazyQuery } from "@apollo/react-hooks";
 import { loginDocument } from "../data/documents";
 import AuthContext from "../context/auth-context";
 
-export default function useLoginQuery() {
+export default function useLogin() {
   const context = useContext(AuthContext);
 
   const [login, { loading, data, error }] = useLazyQuery(loginDocument, {

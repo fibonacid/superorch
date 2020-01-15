@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
-import useCreateUserMutation from "../../../hooks/useCreateUserMutation";
+import useRegister from "../../../hooks/useRegister";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../../helpers/regex";
 import * as PrimaryForm from "../PrimaryForm";
 
@@ -15,10 +15,7 @@ const INITIAL_VALUES = {
 // --------------------------
 
 function RegistrationForm(props) {
-  const [
-    createUser,
-    { loading, error: backendError, data }
-  ] = useCreateUserMutation();
+  const [createUser, { loading, error: backendError, data }] = useRegister();
 
   useEffect(() => {
     if (data && props.onSuccess) {

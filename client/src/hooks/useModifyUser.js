@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/react-hooks";
 import { updateUserDocument } from "../data/documents";
 
-export default function useUpdateUserMutation() {
+export default function useModifyUser() {
   const [updateUser, { data, loading, error }] = useMutation(
     updateUserDocument,
     {

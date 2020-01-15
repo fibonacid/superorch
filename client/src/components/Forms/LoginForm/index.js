@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
-import useLoginQuery from "../../../hooks/useLoginQuery";
+import useLogin from "../../../hooks/useLogin";
 import { EMAIL_REGEX } from "../../../helpers/regex";
 import * as PrimaryForm from "../PrimaryForm";
 
@@ -14,7 +14,7 @@ const INITIAL_VALUES = {
 // --------------------------
 
 function LoginForm(props) {
-  const [login, { loading, error: backendError, data }] = useLoginQuery();
+  const [login, { loading, error: backendError, data }] = useLogin();
 
   useEffect(() => {
     if (data && props.onSuccess) {
