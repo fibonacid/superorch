@@ -43,6 +43,7 @@ module.exports = {
       throw new Error("User doesn't exist");
     }
     owner.createdOrchestras.push(orchestra);
+    owner.memberOf.push(orchestra);
     await owner.save();
 
     // Add user as member of the orchestra
