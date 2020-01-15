@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
-import { UPDATE_USER_MUTATION } from "../data/api";
+import { updateUserDocument } from "../data/documents";
 
 export default function useUpdateUserMutation() {
   const [updateUser, { data, loading, error }] = useMutation(
-    UPDATE_USER_MUTATION,
+    updateUserDocument,
     {
       onCompleted: ({ updateUser }) => {
         console.log("Success", updateUser);

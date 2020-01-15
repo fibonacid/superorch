@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import styled from "styled-components/macro";
 import ActivityContext from "../../context/activity-context";
 import { useQuery } from "@apollo/react-hooks";
-import { SINGLE_ORCHESTRA_QUERY } from "../../data/api";
+import { orchestraDocument } from "../../data/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
 
 function OrchestraManager() {
   const { orchestra } = useContext(ActivityContext);
 
-  const { loading, data, error } = useQuery(SINGLE_ORCHESTRA_QUERY, {
+  const { loading, data, error } = useQuery(orchestraDocument, {
     variables: { orchestraId: orchestra }
   });
 

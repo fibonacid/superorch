@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
-import { ORCHESTRAS_QUERY } from "../../../data/api";
+import { orchestraListDocument } from "../../../data/documents";
 import SelectorItem from "./SelectorItem";
 
 const StyledContainer = styled.div`
@@ -20,7 +20,7 @@ const StyledLink = styled(Link)`
 `;
 
 function OrchestraSelector() {
-  const { data } = useQuery(ORCHESTRAS_QUERY);
+  const { data } = useQuery(orchestraListDocument);
 
   return (
     <StyledContainer>

@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { CREATE_USER_MUTATION } from "../data/api";
+import { createUserDocument } from "../data/documents";
 import AuthContext from "../context/auth-context";
 
 export default function useCreateUserMutation() {
   const context = useContext(AuthContext);
 
   const [createUser, { data, loading, error }] = useMutation(
-    CREATE_USER_MUTATION,
+    createUserDocument,
     {
       onCompleted: ({ createUser }) => {
         console.log("Success", createUser.token);

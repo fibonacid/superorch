@@ -3,7 +3,7 @@ import { gql } from "apollo-boost";
 //
 // Queries
 //
-export const LOGIN_QUERY = gql`
+export const loginDocument = gql`
   query login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
@@ -13,7 +13,7 @@ export const LOGIN_QUERY = gql`
   }
 `;
 
-export const USERS_QUERY = gql`
+export const userListDocument = gql`
   query {
     users {
       _id
@@ -22,7 +22,7 @@ export const USERS_QUERY = gql`
   }
 `;
 
-export const ORCHESTRAS_QUERY = gql`
+export const orchestraListDocument = gql`
   query {
     orchestras {
       _id
@@ -34,7 +34,7 @@ export const ORCHESTRAS_QUERY = gql`
   }
 `;
 
-export const SINGLE_ORCHESTRA_QUERY = gql`
+export const orchestraDocument = gql`
   query($orchestraId: String!) {
     singleOrchestra(orchestraId: $orchestraId) {
       name
@@ -51,7 +51,7 @@ export const SINGLE_ORCHESTRA_QUERY = gql`
 //
 // Mutations
 //
-export const CREATE_USER_MUTATION = gql`
+export const createUserDocument = gql`
   mutation createUser($email: String!, $password: String!) {
     createUser(email: $email, password: $password) {
       token
@@ -61,7 +61,7 @@ export const CREATE_USER_MUTATION = gql`
   }
 `;
 
-export const UPDATE_USER_MUTATION = gql`
+export const updateUserDocument = gql`
   mutation updateUser($nickname: String) {
     updateUser(userInput: { nickname: $nickname }) {
       nickname
@@ -69,7 +69,7 @@ export const UPDATE_USER_MUTATION = gql`
   }
 `;
 
-export const CREATE_ORCHESTRA_MUTATION = gql`
+export const createOrchestraDocument = gql`
   mutation createOrchestra($name: String!) {
     createOrchestra(name: $name) {
       _id
@@ -80,7 +80,7 @@ export const CREATE_ORCHESTRA_MUTATION = gql`
 //
 // Subscriptions
 //
-export const USER_JOINED_SUBSCRIPTION = gql`
+export const userJoinedDocument = gql`
   subscription {
     userJoined {
       _id
