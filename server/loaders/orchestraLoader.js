@@ -9,8 +9,6 @@ const batchOrchestras = async ids => {
     orchestraMap[o.id] = o;
   });
 
-  console.log({ orchestraMap });
-
   return ids.map(id => orchestraMap[id] || new Error(`No result for ${id}`));
 };
 
