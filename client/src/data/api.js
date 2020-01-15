@@ -39,9 +39,9 @@ export const SINGLE_ORCHESTRA_QUERY = gql`
     singleOrchestra(orchestraId: $orchestraId) {
       name
       members {
-        _id
         user {
           _id
+          nickname
         }
       }
     }

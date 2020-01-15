@@ -9,9 +9,11 @@ const StyledContainer = styled.li`
 `;
 
 function ListItem({ member }) {
+  const { user } = member;
+
   return (
     <StyledContainer>
-      <span>{member._id}</span>
+      <span>{user.nickname}</span>
     </StyledContainer>
   );
 }
