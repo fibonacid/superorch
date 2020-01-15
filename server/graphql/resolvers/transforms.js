@@ -21,12 +21,19 @@ async function transformOrchestra(
 ) {
   const orchestra = await orchestraLoader.load(orchestraId.toString());
 
+  const members = await memberLoader.loadMany(
+    orchestra._doc.members.map(id => id.toString())
+  );
+
+  console.log(members);
+
   return {
     ...orchestra._doc,
     owner: userLoader.load(orchestra._doc.owner.toString()),
-    members: memberLoader.loadMany(
-      orchestra._doc.members.map(id => id.toString())
-    )
+    members: members.map(member => ({
+      ...member._doc,
+      user: userLoader.load(member._doc.user.toString())
+    }))
   };
 }
 
