@@ -3,9 +3,9 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 import Layout from "./partials/layout";
 
-import PrimaryForm from "../components/PrimaryForm";
-import RegistrationForm from "../components/RegistrationForm";
-import NicknameForm from "../components/NicknameForm";
+import PrimaryForm from "../components/Forms/PrimaryForm";
+import RegistrationForm from "../components/Forms/RegistrationForm";
+import NicknameForm from "../components/Forms/NicknameForm";
 
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;

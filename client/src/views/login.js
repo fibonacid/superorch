@@ -2,8 +2,8 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "./partials/layout";
-import LoginForm from "../components/LoginForm";
-import PrimaryForm from "../components/PrimaryForm";
+import LoginForm from "../components/Forms/LoginForm";
+import PrimaryForm from "../components/Forms/PrimaryForm";
 
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
