@@ -1,14 +1,34 @@
 //
 // Transform User
 //
-async function transformUser(userId, { userLoader, orchestraLoader }) {
+async function transformUser(
+  userId,
+  { userLoader, orchestraLoader, memberLoader }
+) {
   const user = await userLoader.load(userId.toString());
+
+  const createdOrchestras = await orchestraLoader.loadMany(
+    user._doc.createdOrchestras.map(id => id.toString())
+  );
+
+  const memberOf = await orchestraLoader.loadMany(
+    user._doc.createdOrchestras.map(id => id.toString())
+  );
 
   return {
     ...user._doc,
-    createdOrchestras: orchestraLoader.loadMany(
-      user._doc.createdOrchestras.map(id => id.toString())
-    )
+    createdOrchestras: createdOrchestras.map(orchestra => ({
+      ...orchestra._doc,
+      members: memberLoader.loadMany(
+        orchestra._doc.members.map(id => id.toString())
+      )
+    })),
+    memberOf: memberOf.map(orchestra => ({
+      ...orchestra._doc,
+      members: memberLoader.loadMany(
+        orchestra._doc.members.map(id => id.toString())
+      )
+    }))
   };
 }
 
@@ -24,8 +44,6 @@ async function transformOrchestra(
   const members = await memberLoader.loadMany(
     orchestra._doc.members.map(id => id.toString())
   );
-
-  console.log(members);
 
   return {
     ...orchestra._doc,
