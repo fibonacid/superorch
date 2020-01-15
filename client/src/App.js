@@ -7,7 +7,7 @@ import configureClient from "./apollo";
 import GlobalStyle, { StyledContent } from "./components/GlobalStyle";
 import Store from "./components/Store";
 import Navigation from "./components/Navigation";
-import Routes from "./routes/index";
+import Routes from "./routes";
 
 let ipc;
 try {
