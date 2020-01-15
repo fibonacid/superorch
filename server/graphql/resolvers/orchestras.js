@@ -5,12 +5,17 @@ const Member = require("../../models/members");
 const { transformOrchestra } = require("./transforms");
 
 module.exports = {
-  orchestras: async (_, __, { isAuth, loaders }) => {
+  orchestras: async (_, __, { isAuth, userId, loaders }) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");
     }
+    const user = await User.findById(userId);
 
-    const orchestras = await Orchestra.find();
+    if (!user) {
+      throw new Error("User doesn't exist");
+    }
+
+    const orchestras = await Orchestra.find({ _id: { $in: user.memberOf } });
 
     return orchestras.map(orchestra =>
       transformOrchestra(orchestra.id, loaders)
