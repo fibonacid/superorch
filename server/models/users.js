@@ -21,6 +21,12 @@ const userSchema = new Schema({
       type: Schema.Types.ObjectID,
       ref: "Orchestra"
     }
+  ],
+  memberOf: [
+    {
+      type: Schema.Types.ObjectID,
+      ref: "Orchestra"
+    }
   ]
 });
 

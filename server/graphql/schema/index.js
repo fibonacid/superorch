@@ -30,6 +30,7 @@ const typeDefs = gql`
     password: String
     nickname: String
     createdOrchestras: [Orchestra!]
+    memberOf: [Orchestra!]
     sentInvites: [Invite!]
     receivedInvites: [Invite!]
   }
