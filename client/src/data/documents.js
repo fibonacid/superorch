@@ -37,6 +37,7 @@ export const orchestraListDocument = gql`
 export const orchestraDocument = gql`
   query($orchestraId: String!) {
     singleOrchestra(orchestraId: $orchestraId) {
+      _id
       name
       members {
         user {
