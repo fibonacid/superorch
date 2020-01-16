@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import OrchestraContext from "../../../context/orchestra-context";
+import React from "react";
 import styled from "styled-components/macro";
 import ListItem from "./ListItem";
 
@@ -10,14 +9,13 @@ const StyledContainer = styled.ul`
 //
 // Displays a list of users
 //
-export default function MemberList() {
-  const { orchestra } = useContext(OrchestraContext);
-
+function MemberList({ members }) {
   return (
     <StyledContainer>
-      {orchestra.members.map((member, i) => (
-        <ListItem key={i} member={member} />
-      ))}
+      {members &&
+        members.map((member, i) => <ListItem key={i} member={member} />)}
     </StyledContainer>
   );
 }
+
+export default MemberList;

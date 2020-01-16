@@ -1,14 +1,14 @@
-import React from "react";
-import useSelectOrchestra from "../../../../hooks/useSelectOrchestra";
+import React, { useContext } from "react";
+import SelectionContext from "../../../../context/selection-context";
 import { useHistory } from "react-router-dom";
 import ItemIcon from "./ItemIcon";
 
-function SelectorIcon({ orchestra, currentId }) {
-  const selectOrchestra = useSelectOrchestra(orchestra._id);
+function SelectorIcon({ orchestra }) {
+  const { orchestra: selection } = useContext(SelectionContext);
 
   const history = useHistory();
   function handleClick() {
-    selectOrchestra();
+    selection.select(orchestra._id);
 
     history.push("/");
   }
@@ -19,7 +19,7 @@ function SelectorIcon({ orchestra, currentId }) {
     <ItemIcon
       onClick={handleClick}
       letter={letter}
-      active={orchestra._id === currentId}
+      active={orchestra._id === selection.id}
     />
   );
 }

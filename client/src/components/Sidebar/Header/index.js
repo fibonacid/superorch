@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import OrchestraContext from "../../../context/orchestra-context";
+import React from "react";
 import styled from "styled-components/macro";
 
 const StyledTitle = styled.h2`
@@ -8,9 +7,8 @@ const StyledTitle = styled.h2`
   font-size: 20px;
 `;
 
-function Header() {
-  const { orchestra } = useContext(OrchestraContext);
-  return <StyledTitle>{orchestra.name}</StyledTitle>;
+function Header({ name }) {
+  return <StyledTitle>{name}</StyledTitle>;
 }
 
 export default Header;

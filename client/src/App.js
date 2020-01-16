@@ -8,7 +8,7 @@ import GlobalStyle, { StyledContent } from "./components/GlobalStyle";
 import AuthProvider from "./components/Providers/AuthProvider";
 import Navigation from "./components/Navigation";
 import Routes from "./routes";
-import OrchestraProvider from "./components/Providers/OrchestraProvider";
+import SelectionProvider from "./components/Providers/SelectionProvider";
 
 let ipc;
 try {
@@ -33,14 +33,14 @@ function App() {
     <ApolloProvider client={client}>
       <GlobalStyle />
       <AuthProvider>
-        <OrchestraProvider>
+        <SelectionProvider>
           <HashRouter>
             <StyledContent>
               <Navigation />
               <Routes />
             </StyledContent>
           </HashRouter>
-        </OrchestraProvider>
+        </SelectionProvider>
       </AuthProvider>
     </ApolloProvider>
   );

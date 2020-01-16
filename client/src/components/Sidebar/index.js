@@ -1,5 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components/macro";
+import SelectionContext from "../../context/selection-context";
+import { useLazyQuery } from "@apollo/react-hooks";
+import { orchestraDocument } from "../../data/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
 
@@ -10,10 +13,27 @@ const StyledContainer = styled.div`
 `;
 
 export default function Sidebar() {
+  const { orchestra: selection } = useContext(SelectionContext);
+  const [fetchOrchestra, { data }] = useLazyQuery(orchestraDocument);
+
+  const orchestraId = selection.id;
+
+  useEffect(
+    function() {
+      // Fetch selected orchestra
+      fetchOrchestra({ variables: { orchestraId } });
+    },
+    [orchestraId]
+  );
+
   return (
     <StyledContainer>
-      <Header />
-      <MemberList />
+      {data && (
+        <>
+          <Header name={data.singleOrchestra.name} />
+          <MemberList members={data.singleOrchestra.members} />
+        </>
+      )}
     </StyledContainer>
   );
 }
