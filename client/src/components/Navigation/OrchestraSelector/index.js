@@ -21,7 +21,7 @@ const StyledLink = styled(Link)`
 `;
 
 function OrchestraSelector() {
-  const { id: currentId } = useContext(OrchestraContext);
+  const { orchestra: current } = useContext(OrchestraContext);
   const { data } = useQuery(orchestraListDocument);
 
   return (
@@ -29,7 +29,7 @@ function OrchestraSelector() {
       <ul>
         {data &&
           data.orchestras.map((o, i) => (
-            <SelectorItem key={i} orchestra={o} currentId={currentId} />
+            <SelectorItem key={i} orchestra={o} currentId={current._id} />
           ))}
       </ul>
       <StyledLink to="/orchestras/create">+</StyledLink>
