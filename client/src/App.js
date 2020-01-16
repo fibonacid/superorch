@@ -3,12 +3,14 @@ import { HashRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
 import configureClient from "./apollo";
 
+// Providers
+import AuthProvider from "./components/_providers/AuthProvider";
+import SelectionProvider from "./components/_providers/SelectionProvider";
+
 // Components
 import GlobalStyle, { StyledContent } from "./components/GlobalStyle";
-import AuthProvider from "./components/Providers/AuthProvider";
 import Navigation from "./components/Navigation";
 import Routes from "./routes";
-import SelectionProvider from "./components/Providers/SelectionProvider";
 
 let ipc;
 try {

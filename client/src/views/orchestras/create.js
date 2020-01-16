@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
 import Layout from "../partials/layout";
-import PrimaryForm from "../../components/Forms/PrimaryForm";
-import CreateOrchestraForm from "../../components/Forms/CreateOrchestraForm";
+import PrimaryForm from "../../components/_forms/PrimaryForm";
+import CreateOrchestraForm from "../../components/_forms/CreateOrchestraForm";
 
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
