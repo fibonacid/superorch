@@ -9,6 +9,7 @@ const rootResolver = {
     orchestras: orchestraResolver.orchestras,
     singleOrchestra: orchestraResolver.singleOrchestra,
     users: authResolver.users,
+    user: authResolver.user,
     members: memberResolver.members,
     invites: inviteResolver.invites
   },

@@ -50,6 +50,7 @@ const typeDefs = gql`
   # This type specifies the entry points into our API.
   type Query {
     users: [User!]!
+    user: User!
     orchestras: [Orchestra!]!
     singleOrchestra(orchestraId: String!): Orchestra!
     invites: [Invite!]!

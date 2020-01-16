@@ -14,6 +14,20 @@ module.exports = {
     return users.map(user => transformUser(user.id, loaders));
   },
 
+  user: async (_, __, { loaders, userId, isAuth }) => {
+    if (!isAuth) {
+      return new Error("Unauthenticated");
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return new Error("User doesn't exist");
+    }
+
+    return transformUser(user.id, loaders);
+  },
+
   createUser: async (_, { email, password }) => {
     try {
       const existingUser = await User.findOne({ email });
