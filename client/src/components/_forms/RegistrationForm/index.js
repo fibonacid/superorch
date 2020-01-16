@@ -15,7 +15,7 @@ const INITIAL_VALUES = {
 // --------------------------
 
 function RegistrationForm(props) {
-  const [createUser, { loading, error: backendError, data }] = useRegister();
+  const [register, { loading, error: backendError, data }] = useRegister();
 
   useEffect(() => {
     if (data && props.onSuccess) {
@@ -27,7 +27,7 @@ function RegistrationForm(props) {
   //
   // Rules for input validation
   //
-  function validateAuth(values) {
+  function validate(values) {
     const errors = {};
     // Password errors
     if (!values.email) {
@@ -49,9 +49,9 @@ function RegistrationForm(props) {
     return errors;
   }
 
-  function registrateUser() {
+  function authenticate() {
     const { email, password } = values;
-    createUser({ variables: { email, password } });
+    register({ variables: { email, password } });
   }
 
   const {
@@ -61,7 +61,7 @@ function RegistrationForm(props) {
     values,
     errors,
     isSubmitting
-  } = useFormValidation(INITIAL_VALUES, validateAuth, registrateUser);
+  } = useFormValidation(INITIAL_VALUES, validate, authenticate);
 
   return (
     <>
