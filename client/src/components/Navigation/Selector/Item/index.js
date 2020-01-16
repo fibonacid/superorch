@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import SelectionContext from "../../../../context/selection-context";
 import { useHistory } from "react-router-dom";
-import ItemIcon from "./ItemIcon";
+import Icon from "./Icon";
 
 function SelectorIcon({ orchestra }) {
   const { orchestra: selection } = useContext(SelectionContext);
@@ -16,7 +16,7 @@ function SelectorIcon({ orchestra }) {
   const letter = orchestra.name.charAt(0);
 
   return (
-    <ItemIcon
+    <Icon
       onClick={handleClick}
       letter={letter}
       active={orchestra._id === selection.id}

@@ -27,7 +27,7 @@ const StyledLetter = styled.span`
   transform: translate(-50%, -50%);
 `;
 
-function ItemIcon(props) {
+function Icon(props) {
   return (
     <StyledSquare
       onClick={props.onClick}
@@ -39,4 +39,4 @@ function ItemIcon(props) {
   );
 }
 
-export default ItemIcon;
+export default Icon;

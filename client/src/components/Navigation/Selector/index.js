@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { orchestraListDocument } from "../../../data/documents";
-import SelectorItem from "./SelectorItem";
+import Item from "./Item";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ function OrchestraSelector() {
       <ul>
         {data &&
           data.orchestras.map((orchestra, i) => (
-            <SelectorItem key={i} orchestra={orchestra} />
+            <Item key={i} orchestra={orchestra} />
           ))}
       </ul>
       <StyledLink to="/orchestras/create">+</StyledLink>
