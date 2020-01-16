@@ -43,6 +43,7 @@ function UserProfileForm(props) {
     <>
       <form onSubmit={handleSubmit}>
         <PrimaryForm.Field>
+          <label htmlFor="nickname">Nickname</label>
           <PrimaryForm.Input
             type="text"
             name="nickname"
