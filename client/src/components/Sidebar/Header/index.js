@@ -1,14 +1,30 @@
 import React from "react";
 import styled from "styled-components/macro";
+import { useQuery } from "@apollo/react-hooks";
+import { userDocument } from "../../../data/documents";
 
-const StyledTitle = styled.h2`
-  text-align: center;
-  padding: 15px 5px 5px 5px;
+const StyledContainer = styled.h2`
+  padding: 15px 10px 10px 10px;
   font-size: 20px;
 `;
 
-function Header({ name }) {
-  return <StyledTitle>{name}</StyledTitle>;
+const StyledTitle = styled.h2`
+  font-size: 24px;
+`;
+
+const StyledSubtitle = styled.p`
+  font-size: 18px;
+`;
+
+function Header(orchestra) {
+  const { data } = useQuery(userDocument);
+
+  return (
+    <StyledContainer>
+      {data && <StyledSubtitle>{data.user.nickname}</StyledSubtitle>}
+      <StyledTitle>{orchestra.name}</StyledTitle>
+    </StyledContainer>
+  );
 }
 
 export default Header;
