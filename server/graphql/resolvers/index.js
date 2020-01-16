@@ -19,8 +19,7 @@ const rootResolver = {
     ...invites.sendInvite
   },
   Subscription: {
-    ...users.Subscription,
-    ...invites.newInvite
+    ...invites.Subscription
   }
 };
 
