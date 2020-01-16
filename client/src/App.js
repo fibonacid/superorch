@@ -5,9 +5,10 @@ import configureClient from "./apollo";
 
 // Components
 import GlobalStyle, { StyledContent } from "./components/GlobalStyle";
-import Store from "./components/Store";
+import AuthProvider from "./components/Providers/AuthProvider";
 import Navigation from "./components/Navigation";
 import Routes from "./routes";
+import OrchestraProvider from "./components/Providers/OrchestraProvider";
 
 let ipc;
 try {
@@ -30,15 +31,17 @@ const client = configureClient();
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Store>
-        <GlobalStyle />
-        <HashRouter>
-          <StyledContent>
-            <Navigation />
-            <Routes />
-          </StyledContent>
-        </HashRouter>
-      </Store>
+      <GlobalStyle />
+      <AuthProvider>
+        <OrchestraProvider>
+          <HashRouter>
+            <StyledContent>
+              <Navigation />
+              <Routes />
+            </StyledContent>
+          </HashRouter>
+        </OrchestraProvider>
+      </AuthProvider>
     </ApolloProvider>
   );
 }
