@@ -14,7 +14,7 @@ const rootResolver = {
     invites: inviteResolver.invites
   },
   Mutation: {
-    createUser: authResolver.createUser,
+    register: authResolver.register,
     updateUser: authResolver.updateUser,
     createOrchestra: orchestraResolver.createOrchestra,
     sendInvite: inviteResolver.sendInvite,

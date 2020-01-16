@@ -62,9 +62,9 @@ export const orchestraDocument = gql`
 //
 // Mutations
 //
-export const createUserDocument = gql`
-  mutation createUser($email: String!, $password: String!) {
-    createUser(email: $email, password: $password) {
+export const registerDocument = gql`
+  mutation register($email: String!, $password: String!) {
+    register(email: $email, password: $password) {
       token
       userId
       tokenExpiration

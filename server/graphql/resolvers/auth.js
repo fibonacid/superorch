@@ -28,7 +28,7 @@ module.exports = {
     return transformUser(user.id, loaders);
   },
 
-  createUser: async (_, { email, password }) => {
+  register: async (_, { email, password }) => {
     try {
       const existingUser = await User.findOne({ email });
 
