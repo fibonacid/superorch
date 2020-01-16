@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from "react";
 import styled from "styled-components/macro";
 import { Editor, EditorState } from "draft-js";
 
@@ -14,7 +13,7 @@ const StyledWrapper = styled.div`
 // SuperCollider Editor
 // -----------------------------------
 
-class SCEditor extends React.Component {
+export default class CodeEditor extends Component {
   constructor(props) {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
@@ -39,5 +38,3 @@ class SCEditor extends React.Component {
     );
   }
 }
-
-export default SCEditor;
