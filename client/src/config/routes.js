@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import AuthContext from "./context/auth-context";
-import HomeView from "./views/home";
-import LoginView from "./views/login";
-import RegisterView from "./views/register";
-import CreateOrchestraView from "./views/orchestras/create";
+import AuthContext from "../context/auth-context";
+import HomeView from "../views/home";
+import LoginView from "../views/login";
+import RegisterView from "../views/register";
+import CreateOrchestraView from "../views/orchestras/create";
 
 export default function Routes() {
   const { token } = useContext(AuthContext);

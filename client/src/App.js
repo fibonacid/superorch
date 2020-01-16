@@ -1,7 +1,8 @@
 import React from "react";
 import { HashRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
-import configureClient from "./apollo";
+import configureClient from "./config/apollo";
+import Routes from "./config/routes";
 
 // Providers
 import AuthProvider from "./components/_providers/AuthProvider";
@@ -10,7 +11,6 @@ import SelectionProvider from "./components/_providers/SelectionProvider";
 // Components
 import GlobalStyle, { StyledContent } from "./components/GlobalStyle";
 import Navigation from "./components/Navigation";
-import Routes from "./routes";
 
 let ipc;
 try {
