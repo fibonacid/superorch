@@ -1,26 +1,18 @@
 import React, { useState } from "react";
 import OrchestraContext from "../../../context/orchestra-context";
 
-const fakeOrchestra = {
-  _id: "5e1f9a55e323790bc9b40211",
-  name: "Fake Orchestra",
+const INITIAL_STATE = {
+  _id: null,
+  name: null,
   owner: {
-    nickname: "Fake Steve",
-    _id: "5e1f9a24e323790bc9b40210"
+    _id: null,
+    nickname: null
   },
-  members: [
-    {
-      _id: "5e1f9a55e323790bc9b40214",
-      user: {
-        _id: "5e1f9a24e323790bc9b40210",
-        nickname: "Fake Ryan"
-      }
-    }
-  ]
+  members: []
 };
 
 export default function OrchestraProvider(props) {
-  const [orchestra, setOrchestra] = useState(fakeOrchestra);
+  const [orchestra, setOrchestra] = useState(INITIAL_STATE);
 
   return (
     <OrchestraContext.Provider
