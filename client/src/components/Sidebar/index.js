@@ -30,8 +30,8 @@ export default function Sidebar() {
     <StyledContainer>
       {data && (
         <>
-          <Header name={data.singleOrchestra.name} />
-          <MemberList members={data.singleOrchestra.members} />
+          <Header name={data.orchestraById.name} />
+          <MemberList members={data.orchestraById.members} />
         </>
       )}
     </StyledContainer>

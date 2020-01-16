@@ -28,7 +28,7 @@ module.exports = {
     //
     // Single Orchestra
     //
-    singleOrchestra: async (_, { orchestraId }, { isAuth, loaders }) => {
+    orchestraById: async (_, { orchestraId }, { isAuth, loaders }) => {
       if (!isAuth) {
         throw new Error("Unauthenticated");
       }
