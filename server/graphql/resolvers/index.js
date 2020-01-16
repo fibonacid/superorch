@@ -1,28 +1,26 @@
-const authResolver = require("./auth");
-const orchestraResolver = require("./orchestras");
-const memberResolver = require("./members");
-const inviteResolver = require("./invites");
+const auth = require("./auth");
+const users = require("./users");
+const orchestras = require("./orchestras");
+const members = require("./members");
+const invites = require("./invites");
 
 const rootResolver = {
   Query: {
-    login: authResolver.login,
-    orchestras: orchestraResolver.orchestras,
-    singleOrchestra: orchestraResolver.singleOrchestra,
-    users: authResolver.users,
-    user: authResolver.user,
-    members: memberResolver.members,
-    invites: inviteResolver.invites
+    ...auth.Query,
+    ...users.Query,
+    ...orchestras.Query,
+    ...invites.Query,
+    ...members.Query
   },
   Mutation: {
-    register: authResolver.register,
-    updateUser: authResolver.updateUser,
-    createOrchestra: orchestraResolver.createOrchestra,
-    sendInvite: inviteResolver.sendInvite,
-    acceptInvite: inviteResolver.acceptInvite
+    ...auth.Mutation,
+    ...users.Mutation,
+    ...orchestras.Mutation,
+    ...invites.sendInvite
   },
   Subscription: {
-    userJoined: authResolver.userJoined,
-    newInvite: inviteResolver.newInvite
+    ...users.Subscription,
+    ...invites.newInvite
   }
 };
 

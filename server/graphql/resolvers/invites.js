@@ -1,16 +1,18 @@
-const { PubSub } = require("apollo-server-express");
-
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
 const Member = require("../../models/members");
 const { transformInvite, transformMember } = require("./transforms");
+const { PubSub } = require("apollo-server-express");
 
 const pubsub = new PubSub();
 
 const NEW_INVITE = "NEW_INVITE";
 
-module.exports = {
+exports.Query = {
+  //
+  // Invites
+  //
   invites: async (_, __, { isAuth, userId, loaders }) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");
@@ -19,8 +21,13 @@ module.exports = {
     const invites = await Invite.find({ to: userId });
 
     return invites.map(invite => transformInvite(invite.id, loaders));
-  },
+  }
+};
 
+exports.Mutation = {
+  //
+  // Send Invite
+  //
   sendInvite: async (
     _,
     { orchestraId, email },
@@ -91,8 +98,13 @@ module.exports = {
     await orchestra.save();
 
     return transformMember(member.id, loaders);
-  },
+  }
+};
 
+exports.Subscription = {
+  //
+  // New Invite
+  //
   newInvite: {
     resolve: payload => payload.newInvite,
     subscribe: () => pubsub.asyncIterator(NEW_INVITE)

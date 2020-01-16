@@ -1,7 +1,10 @@
 const Member = require("../../models/members");
 const { transformMember } = require("./transforms");
 
-module.exports = {
+exports.Query = {
+  //
+  // Members
+  //
   members: async (_, { orchestraId }, { isAuth, loaders }) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");
