@@ -92,6 +92,6 @@ export default function configureClient() {
   return new ApolloClient({
     link,
     cache: new InMemoryCache(),
-    fetchPolicy: "network-only"
+    connectToDevTools: process.env.NODE_ENV !== "production"
   });
 }

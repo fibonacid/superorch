@@ -11,7 +11,7 @@ let win;
 //
 async function installExtensions() {
   const installer = require("electron-devtools-installer");
-  const extensions = ["REACT_DEVELOPER_TOOLS"];
+  const extensions = ["REACT_DEVELOPER_TOOLS", "APOLLO_DEVELOPER_TOOLS"];
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   for (const name of extensions) {
     try {
