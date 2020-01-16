@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { useHistory } from "react-router-dom";
-import Layout from "../partials/layout";
+import PrimaryLayout from "../../components/_layouts/PrimaryLayout";
 import PrimaryForm from "../../components/_forms/PrimaryForm";
 import CreateOrchestraForm from "../../components/_forms/CreateOrchestraForm";
 
@@ -19,11 +19,11 @@ function CreateOrchestraView() {
   };
 
   return (
-    <Layout>
+    <PrimaryLayout>
       <StyledForm title="Create Orchestra">
         <CreateOrchestraForm onSuccess={redirect} />
       </StyledForm>
-    </Layout>
+    </PrimaryLayout>
   );
 }
 

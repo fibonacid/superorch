@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Layout from "./partials/layout";
-import LoginForm from "../components/_forms/LoginForm";
+import PrimaryLayout from "../components/_layouts/PrimaryLayout";
 import PrimaryForm from "../components/_forms/PrimaryForm";
+import LoginForm from "../components/_forms/LoginForm";
 
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
@@ -28,12 +28,12 @@ function LoginView() {
   };
 
   return (
-    <Layout>
+    <PrimaryLayout>
       <StyledForm title="Login">
         <LoginForm onSuccess={redirect} />
       </StyledForm>
       <StyledLink to="/register">Register instead</StyledLink>
-    </Layout>
+    </PrimaryLayout>
   );
 }
 

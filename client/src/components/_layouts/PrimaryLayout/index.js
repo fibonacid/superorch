@@ -8,8 +8,8 @@ const StyledContainer = styled.section`
   flex-direction: column;
 `;
 
-function Layout(props) {
+function PrimaryLayout(props) {
   return <StyledContainer>{props.children}</StyledContainer>;
 }
 
-export default Layout;
+export default PrimaryLayout;
