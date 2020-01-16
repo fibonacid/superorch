@@ -69,7 +69,6 @@ const typeDefs = gql`
 
   # The subscription root type, used to define all subscriptions.
   type Subscription {
-    userJoined: User!
     newInvite: Invite!
   }
 `;
