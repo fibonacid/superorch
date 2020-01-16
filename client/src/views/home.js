@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import OrchestraManager from "../components/OrchestraManager";
+import Sidebar from "../components/Sidebar";
 import Playground from "../components/Playground";
 
 const StyledContainer = styled.div`
@@ -8,18 +8,10 @@ const StyledContainer = styled.div`
   display: flex;
 `;
 
-const StyledSidebar = styled.div`
-  background: whitesmoke;
-  border-right: solid 1px lightgrey;
-  flex: 0 1 200px;
-`;
-
 function HomeView() {
   return (
     <StyledContainer>
-      <StyledSidebar>
-        <OrchestraManager />
-      </StyledSidebar>
+      <Sidebar />
       <Playground />
     </StyledContainer>
   );
