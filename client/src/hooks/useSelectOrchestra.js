@@ -5,9 +5,8 @@ import OrchestraContext from "../context/orchestra-context";
 
 export default function useSelectOrchestra(orchestraId) {
   const context = useContext(OrchestraContext);
-  console.log(context);
 
-  const [setOrchestra] = useLazyQuery(orchestraDocument, {
+  const [fetchOrchestra] = useLazyQuery(orchestraDocument, {
     variables: {
       orchestraId
     },
@@ -18,5 +17,5 @@ export default function useSelectOrchestra(orchestraId) {
     onError: err => console.log(err.message)
   });
 
-  return setOrchestra;
+  return fetchOrchestra;
 }
