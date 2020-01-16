@@ -22,6 +22,16 @@ export const userListDocument = gql`
   }
 `;
 
+export const userDocument = gql`
+  query {
+    user {
+      _id
+      nickname
+      email
+    }
+  }
+`;
+
 export const orchestraListDocument = gql`
   query {
     orchestras {
