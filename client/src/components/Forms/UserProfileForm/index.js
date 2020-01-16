@@ -7,7 +7,7 @@ const INITIAL_VALUES = {
   nickname: ""
 };
 
-function NicknameForm(props) {
+function UserProfileForm(props) {
   const [updateUser, { loading, error: backendError, data }] = useModifyUser();
 
   useEffect(() => {
@@ -66,4 +66,4 @@ function NicknameForm(props) {
   );
 }
 
-export default NicknameForm;
+export default UserProfileForm;

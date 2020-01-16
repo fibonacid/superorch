@@ -5,7 +5,7 @@ import Layout from "./partials/layout";
 
 import PrimaryForm from "../components/Forms/PrimaryForm";
 import RegistrationForm from "../components/Forms/RegistrationForm";
-import NicknameForm from "../components/Forms/NicknameForm";
+import UserProfileForm from "../components/Forms/UserProfileForm";
 
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
@@ -48,8 +48,8 @@ function RegisterView() {
       {/* Second part: choose nickname */}
       {index === 1 && (
         <>
-          <StyledForm title="Choose a nickname">
-            <NicknameForm onSuccess={redirect} />
+          <StyledForm title="User Info">
+            <UserProfileForm onSuccess={redirect} />
           </StyledForm>
           <StyledLink to="/">Skip</StyledLink>
         </>
