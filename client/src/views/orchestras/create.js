@@ -32,6 +32,8 @@ function CreateOrchestraView(props) {
   const history = useHistory();
   useEffect(() => {
     if (data && props.onSuccess) {
+      console.log(data);
+
       history.push("/");
     }
   }, [data]);

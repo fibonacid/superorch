@@ -11,7 +11,7 @@ const StyledLink = styled(Link)`
 
 function Bottom(props) {
   return (
-    <StyledLink to={`/orchestras/edit?id=${props.orchestraId}`}>
+    <StyledLink to={`/orchestras/edit/${props.orchestraId}`}>
       Settings
     </StyledLink>
   );

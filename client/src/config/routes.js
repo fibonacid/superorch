@@ -26,7 +26,7 @@ export default function Routes() {
       <Route exact path="/orchestras/create">
         <CreateOrchestraView />
       </Route>
-      <Route exact path="/orchestras/edit">
+      <Route exact path="/orchestras/edit/:id">
         <EditOrchestraView />
       </Route>
       <Route exact path="/">
