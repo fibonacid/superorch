@@ -88,10 +88,14 @@ export const createOrchestraDocument = gql`
   }
 `;
 
-export const editOrchestraDocument = gql`
-  mutation editOrchestra($orchestraId: String!, $name: String) {
-    editOrchestra(orchestraId: $orchestraId, name: $name) {
+export const updateOrchestraDocument = gql`
+  mutation updateOrchestra($orchestraId: String!, $name: String) {
+    updateOrchestra(
+      orchestraId: $orchestraId
+      orchestraInput: { name: $name }
+    ) {
       _id
+      name
     }
   }
 `;

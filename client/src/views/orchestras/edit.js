@@ -3,8 +3,9 @@ import styled from "styled-components/macro";
 import { useHistory, useParams } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import {
-  editOrchestraDocument,
-  orchestraListDocument
+  updateOrchestraDocument,
+  orchestraListDocument,
+  orchestraDocument
 } from "../../data/documents";
 import PrimaryLayout from "../../components/_layouts/PrimaryLayout";
 import PrimaryForm from "../../components/_forms/PrimaryForm";
@@ -19,15 +20,17 @@ const StyledForm = styled(PrimaryForm)`
 
 function EditOrchestraView(props) {
   const history = useHistory();
-  const { orchestraId } = useParams();
-  const [editOrchestra, { data, loading, error }] = useMutation(
-    editOrchestraDocument
+  const params = useParams();
+  const [updateOrchestra, { data, loading, error }] = useMutation(
+    updateOrchestraDocument
   );
 
+  console.log(params);
+
   function authenticate(values) {
-    editOrchestra({
-      variables: { orchestraId, name: values.name },
-      refetchQueries: [{ query: orchestraListDocument }]
+    updateOrchestra({
+      variables: { orchestraId: params.id, name: values.name },
+      refetchQueries: [{ query: orchestraListDocument, orchestraDocument }]
     });
   }
 
