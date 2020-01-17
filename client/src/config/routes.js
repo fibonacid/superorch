@@ -5,6 +5,7 @@ import HomeView from "../views/home";
 import LoginView from "../views/login";
 import RegisterView from "../views/register";
 import CreateOrchestraView from "../views/orchestras/create";
+import EditOrchestraView from "../views/orchestras/edit";
 
 export default function Routes() {
   const { token } = useContext(AuthContext);
@@ -24,6 +25,9 @@ export default function Routes() {
 
       <Route exact path="/orchestras/create">
         <CreateOrchestraView />
+      </Route>
+      <Route exact path="/orchestras/edit">
+        <EditOrchestraView />
       </Route>
       <Route exact path="/">
         <HomeView />
