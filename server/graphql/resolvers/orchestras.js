@@ -82,31 +82,42 @@ module.exports = {
       { orchestraId, orchestraInput },
       { isAuth, userId, loaders }
     ) => {
-      if (!isAuth) {
-        throw new Error("Unauthorized");
+      try {
+        if (!isAuth) {
+          throw new Error("Unauthorized");
+        }
+        const orchestra = await Orchestra.findById(orchestraId);
+        console.log("1.", orchestra.id, orchestra._doc.name);
+
+        console.log();
+        console.log(orchestraInput);
+        console.log();
+
+        if (!orchestra) {
+          throw new Error("Orchestra doesn't exist");
+        }
+
+        // Check if user is a member of the orchestra
+        const member = await Member.findOne({
+          user: userId,
+          orchestra: orchestraId
+        });
+        if (!member) {
+          throw new Error("Unauthorized");
+        }
+
+        const result = await Orchestra.findOneAndUpdate(
+          { _id: orchestraId },
+          orchestraInput,
+          { new: true }
+        );
+        console.log("2.", result.id, result._doc.name);
+
+        return transformOrchestra(result.id, loaders);
+      } catch (err) {
+        console.log(err);
+        return err;
       }
-      const orchestra = await Orchestra.findById(orchestraId);
-
-      if (!orchestra) {
-        throw new Error("Orchestra doesn't exist");
-      }
-
-      // Check if user is a member of the orchestra
-      const member = await Member.findOne({
-        user: userId,
-        orchestra: orchestraId
-      });
-      if (!member) {
-        throw new Error("Unauthorized");
-      }
-
-      const result = await Orchestra.findOneAndUpdate(
-        orchestraId,
-        orchestraInput
-      );
-      await result.save();
-
-      return transformOrchestra(result.id, loaders);
     }
   }
 };
