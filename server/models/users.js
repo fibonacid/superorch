@@ -15,6 +15,22 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  firstName: {
+    type: String,
+    required: false
+  },
+  lastName: {
+    type: String,
+    required: false
+  },
+  city: {
+    type: String,
+    required: false
+  },
+  birthdate: {
+    type: Date,
+    required: false
+  },
   createdOrchestras: [
     {
       type: Schema.Types.ObjectID,
