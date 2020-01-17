@@ -73,8 +73,8 @@ export const registerDocument = gql`
 `;
 
 export const updateUserDocument = gql`
-  mutation updateUser($name: String) {
-    updateUser(userInput: { name: $name }) {
+  mutation updateUser($userInput: UserInput!) {
+    updateUser(userInput: $userInput) {
       name
     }
   }
