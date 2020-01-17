@@ -13,7 +13,7 @@ function ListItem({ member }) {
 
   return (
     <StyledContainer>
-      <span>{user.nickname}</span>
+      <span>{user.name}</span>
     </StyledContainer>
   );
 }

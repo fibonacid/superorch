@@ -35,8 +35,8 @@ module.exports = {
     //
     // Register
     //
-    register: async (_, { email, password }) => {
-      const existingUser = await User.findOne({ email });
+    register: async (_, { name, email, password }) => {
+      const existingUser = await User.findOne({ name, email });
 
       if (existingUser) {
         throw new Error("User exists already");
@@ -44,6 +44,7 @@ module.exports = {
       const hashedPassword = await bcrypt.hash(password, 12);
 
       const newUser = new User({
+        name,
         email,
         password: hashedPassword
       });

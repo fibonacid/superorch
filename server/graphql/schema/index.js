@@ -26,9 +26,9 @@ const typeDefs = gql`
 
   type User {
     _id: ID!
+    name: String
     email: String
     password: String
-    nickname: String
     createdOrchestras: [Orchestra!]
     memberOf: [Orchestra!]
     sentInvites: [Invite!]
@@ -42,9 +42,9 @@ const typeDefs = gql`
   }
 
   input UserInput {
+    name: String
     email: String
     password: String
-    nickname: String
   }
 
   input OrchestraInput {

@@ -21,7 +21,7 @@ function Header(orchestra) {
 
   return (
     <StyledContainer>
-      {data && <StyledSubtitle>{data.user.nickname}</StyledSubtitle>}
+      {data && <StyledSubtitle>{data.user.name}</StyledSubtitle>}
       <StyledTitle>{orchestra.name}</StyledTitle>
     </StyledContainer>
   );

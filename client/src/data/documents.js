@@ -17,7 +17,7 @@ export const userListDocument = gql`
   query {
     users {
       _id
-      nickname
+      name
     }
   }
 `;
@@ -26,7 +26,7 @@ export const userDocument = gql`
   query {
     user {
       _id
-      nickname
+      name
       email
     }
   }
@@ -52,7 +52,7 @@ export const orchestraDocument = gql`
       members {
         user {
           _id
-          nickname
+          name
         }
       }
     }
@@ -63,8 +63,8 @@ export const orchestraDocument = gql`
 // Mutations
 //
 export const registerDocument = gql`
-  mutation register($email: String!, $password: String!) {
-    register(email: $email, password: $password) {
+  mutation register($name: String!, $email: String!, $password: String!) {
+    register(name: $name, email: $email, password: $password) {
       token
       userId
       tokenExpiration
@@ -73,9 +73,9 @@ export const registerDocument = gql`
 `;
 
 export const updateUserDocument = gql`
-  mutation updateUser($nickname: String) {
-    updateUser(userInput: { nickname: $nickname }) {
-      nickname
+  mutation updateUser($name: String) {
+    updateUser(userInput: { name: $name }) {
+      name
     }
   }
 `;
