@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import { useHistory, useParams } from "react-router-dom";
-import { useMutation } from "@apollo/react-hooks";
+import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   updateOrchestraDocument,
   orchestraListDocument,
@@ -19,14 +19,20 @@ const StyledForm = styled(PrimaryForm)`
 `;
 
 function EditOrchestraView(props) {
-  const history = useHistory();
   const params = useParams();
+
+  // Get previous orchestra data to populate fields
+  const { data: prevData } = useQuery(orchestraDocument, {
+    variables: { orchestraId: params.id },
+    skip: !params.id
+  });
+
+  // Get function to update orchestra
   const [updateOrchestra, { data, loading, error }] = useMutation(
     updateOrchestraDocument
   );
 
-  console.log(params);
-
+  // Form submit callback
   function authenticate(values) {
     updateOrchestra({
       variables: { orchestraId: params.id, name: values.name },
@@ -34,17 +40,17 @@ function EditOrchestraView(props) {
     });
   }
 
-  useEffect(() => {
-    if (data && props.onSuccess) {
-      history.push("/");
-    }
-  }, [data]);
-
   return (
     <PrimaryLayout>
-      <StyledForm title="Edit Orchestra">
-        <OrchestraForm authenticate={authenticate} />
-      </StyledForm>
+      {data && <div>Success</div>}
+      {prevData && (
+        <StyledForm title={prevData.orchestraById.name}>
+          <OrchestraForm
+            authenticate={authenticate}
+            cachedValues={prevData.orchestraById}
+          />
+        </StyledForm>
+      )}
       {loading && <span>Loading ...</span>}
       {error && <span>{error.message}</span>}
     </PrimaryLayout>

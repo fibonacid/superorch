@@ -2,11 +2,12 @@ import React from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
 import * as PrimaryForm from "../PrimaryForm";
 
-const INITIAL_VALUES = {
-  name: ""
-};
+function OrchestraForm({ cachedValues = {}, authenticate }) {
+  const initialValues = {
+    name: "",
+    ...cachedValues
+  };
 
-function OrchestraForm(props) {
   function validate(values) {
     const errors = {};
     // Password errors
@@ -23,7 +24,7 @@ function OrchestraForm(props) {
     values,
     errors,
     isSubmitting
-  } = useFormValidation(INITIAL_VALUES, validate, props.authenticate);
+  } = useFormValidation(initialValues, validate, authenticate);
 
   return (
     <form onSubmit={handleSubmit}>
