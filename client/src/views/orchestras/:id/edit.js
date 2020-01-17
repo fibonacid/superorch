@@ -37,12 +37,11 @@ const StyledLink = styled(Link)`
 
 function EditOrchestraView(props) {
   const params = useParams();
+  const orchestraId = params.id;
 
   const queryOptions = {
-    variables: {
-      orchestraId: params.id
-    },
-    skip: !params.id
+    variables: { orchestraId },
+    skip: !orchestraId
   };
 
   // Get previous orchestra data to populate fields
@@ -56,7 +55,7 @@ function EditOrchestraView(props) {
   // Form submit callback
   function authenticate(values) {
     updateOrchestra({
-      variables: { orchestraId: params.id, name: values.name },
+      variables: { orchestraId, name: values.name },
       refetchQueries: [
         { query: orchestraListDocument },
         { query: orchestraDocument, ...queryOptions }
@@ -81,7 +80,7 @@ function EditOrchestraView(props) {
           {error && <span>{error.message}</span>}
         </StyledStatus>
       </StyledWrapper>
-      <StyledLink to="/">Go back</StyledLink>
+      <StyledLink to={`/orchestras/${orchestraId}`}>Go back</StyledLink>
     </PrimaryLayout>
   );
 }
