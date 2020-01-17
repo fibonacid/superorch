@@ -5,6 +5,7 @@ import { EMAIL_REGEX, PASSWORD_REGEX } from "../../../helpers/regex";
 import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {
+  name: "",
   email: "",
   password: "",
   passwordConf: ""
@@ -29,6 +30,10 @@ function RegistrationForm(props) {
   //
   function validate(values) {
     const errors = {};
+    if (!values.name) {
+      errors.name = "Required username";
+      // todo: add username regex check
+    }
     // Password errors
     if (!values.email) {
       errors.email = "Required Email";
@@ -50,8 +55,8 @@ function RegistrationForm(props) {
   }
 
   function authenticate() {
-    const { email, password } = values;
-    register({ variables: { email, password } });
+    const { name, email, password } = values;
+    register({ variables: { name, email, password } });
   }
 
   const {
@@ -66,6 +71,17 @@ function RegistrationForm(props) {
   return (
     <>
       <form onSubmit={handleSubmit}>
+        <PrimaryForm.Field>
+          <label htmlFor="name">Username</label>
+          <PrimaryForm.Input
+            type="text"
+            name="name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
+          />
+          {errors.email && <PrimaryForm.Error>{errors.name}</PrimaryForm.Error>}
+        </PrimaryForm.Field>
         <PrimaryForm.Field>
           <label htmlFor="email">Email</label>
           <PrimaryForm.Input
