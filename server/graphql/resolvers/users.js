@@ -34,9 +34,9 @@ module.exports = {
       if (!isAuth) {
         throw new Error("Unauthorized");
       }
-      const user = await User.findByIdAndUpdate(userId, userInput);
-
-      await user.save();
+      const user = await User.findByIdAndUpdate({ _id: userId }, userInput, {
+        new: true
+      });
 
       return transformUser(user.id, loaders);
     }
