@@ -63,7 +63,7 @@ const typeDefs = gql`
 
   # The mutation root type, used to define all mutations.
   type Mutation {
-    register(email: String!, password: String!): AuthData!
+    register(name: String!, email: String!, password: String!): AuthData!
     updateUser(userInput: UserInput!): User
     createOrchestra(name: String!): Orchestra!
     updateOrchestra(
