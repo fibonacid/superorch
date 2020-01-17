@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components/macro";
 import SelectionContext from "../../context/selection-context";
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import { orchestraDocument } from "../../data/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
@@ -19,17 +19,12 @@ const StyledContainer = styled.div`
 
 export default function Sidebar() {
   const { orchestra: selection } = useContext(SelectionContext);
-  const [fetchOrchestra, { data }] = useLazyQuery(orchestraDocument);
-
   const orchestraId = selection.id;
 
-  useEffect(
-    function() {
-      // Fetch selected orchestra
-      fetchOrchestra({ variables: { orchestraId } });
-    },
-    [orchestraId]
-  );
+  const { data, loading, error } = useQuery(orchestraDocument, {
+    variables: { orchestraId },
+    skip: !orchestraId
+  });
 
   return (
     <StyledContainer>
@@ -42,6 +37,8 @@ export default function Sidebar() {
           <Bottom orchestraId={data.orchestraById._id} />
         </>
       )}
+      {loading && <span>Loading ...</span>}
+      {error && <span>{error.message}</span>}
     </StyledContainer>
   );
 }
