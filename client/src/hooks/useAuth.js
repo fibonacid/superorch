@@ -20,6 +20,16 @@ function useAuth() {
     setToken(token);
     setUserId(userId);
     setTokenExpiration(tokenExpiration);
+
+    // Reset apollo client cache
+    // --------------------------
+    // This should be delayed a bit to prevent
+    // an unhandled promise rejection caused
+    // by the token not being set a the time of
+    // the refetches
+    setTimeout(() => {
+      client.resetStore();
+    }, 100);
   };
 
   const logout = () => {
