@@ -6,7 +6,6 @@ import Routes from "./config/routes";
 
 // Providers
 import AuthProvider from "./components/_providers/AuthProvider";
-import SelectionProvider from "./components/_providers/SelectionProvider";
 
 // Components
 import GlobalStyle, { StyledContent } from "./components/GlobalStyle";
@@ -35,14 +34,12 @@ function App() {
     <ApolloProvider client={client}>
       <GlobalStyle />
       <AuthProvider>
-        <SelectionProvider>
-          <HashRouter>
-            <StyledContent>
-              <Navigation />
-              <Routes />
-            </StyledContent>
-          </HashRouter>
-        </SelectionProvider>
+        <HashRouter>
+          <StyledContent>
+            <Navigation />
+            <Routes />
+          </StyledContent>
+        </HashRouter>
       </AuthProvider>
     </ApolloProvider>
   );

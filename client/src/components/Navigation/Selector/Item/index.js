@@ -1,27 +1,19 @@
-import React, { useContext } from "react";
-import SelectionContext from "../../../../context/selection-context";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import Icon from "./Icon";
 
-function SelectorIcon({ orchestra }) {
-  const { orchestra: selection } = useContext(SelectionContext);
-
+function SelectorIcon(props) {
   const history = useHistory();
-  function handleClick() {
-    selection.select(orchestra._id);
 
-    history.push("/");
+  function handleClick() {
+    history.push(`/orchestras/${props.orchestra._id}`);
+
+    props.onClick();
   }
 
-  const letter = orchestra.name.charAt(0);
+  const letter = props.orchestra.name.charAt(0).toUpperCase();
 
-  return (
-    <Icon
-      onClick={handleClick}
-      letter={letter}
-      active={orchestra._id === selection.id}
-    />
-  );
+  return <Icon onClick={handleClick} letter={letter} active={props.active} />;
 }
 
 export default SelectorIcon;

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import SelectionContext from "../../context/selection-context";
 import { useQuery } from "@apollo/react-hooks";
+import { useParams } from "react-router-dom";
 import { orchestraDocument } from "../../data/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
@@ -18,8 +18,7 @@ const StyledContainer = styled.div`
 `;
 
 export default function Sidebar() {
-  const { orchestra: selection } = useContext(SelectionContext);
-  const orchestraId = selection.id;
+  const { id: orchestraId } = useParams();
 
   const { data, loading, error } = useQuery(orchestraDocument, {
     variables: { orchestraId },
