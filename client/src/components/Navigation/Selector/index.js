@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
@@ -20,6 +20,7 @@ const StyledLink = styled(Link)`
 `;
 
 function OrchestraSelector() {
+  const [index, setIndex] = useState(null);
   const { data } = useQuery(orchestraListDocument);
 
   return (
@@ -27,7 +28,12 @@ function OrchestraSelector() {
       <ul>
         {data &&
           data.orchestras.map((orchestra, i) => (
-            <Item key={i} orchestra={orchestra} />
+            <Item
+              key={i}
+              orchestra={orchestra}
+              onClick={setIndex.bind(null, i)}
+              active={i === index}
+            />
           ))}
       </ul>
       <StyledLink to="/orchestras/create">+</StyledLink>
