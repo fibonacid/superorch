@@ -11,11 +11,19 @@ import PrimaryLayout from "../../components/_layouts/PrimaryLayout";
 import PrimaryForm from "../../components/_forms/PrimaryForm";
 import OrchestraForm from "../../components/_forms/OrchestraForm";
 
+const StyledWrapper = styled.div`
+  margin: auto;
+`;
+
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
   border: solid 1px lightgrey;
   border-radius: 10px;
-  margin: auto;
+`;
+
+const StyledStatus = styled.div`
+  margin-top: 20px;
+  text-align: center;
 `;
 
 function EditOrchestraView(props) {
@@ -49,17 +57,21 @@ function EditOrchestraView(props) {
 
   return (
     <PrimaryLayout>
-      {data && <div>Success</div>}
-      {prevData && (
-        <StyledForm title={prevData.orchestraById.name}>
-          <OrchestraForm
-            authenticate={authenticate}
-            cachedValues={prevData.orchestraById}
-          />
-        </StyledForm>
-      )}
-      {loading && <span>Loading ...</span>}
-      {error && <span>{error.message}</span>}
+      <StyledWrapper>
+        {prevData && (
+          <StyledForm title={prevData.orchestraById.name}>
+            <OrchestraForm
+              authenticate={authenticate}
+              cachedValues={prevData.orchestraById}
+            />
+          </StyledForm>
+        )}
+        <StyledStatus>
+          {loading && <span>Loading ...</span>}
+          {data && <div>Success</div>}
+          {error && <span>{error.message}</span>}
+        </StyledStatus>
+      </StyledWrapper>
     </PrimaryLayout>
   );
 }
