@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 import ListItem from "./ListItem";
 
 const StyledContainer = styled.ul`
-  margin: 30px 5px 5px 5px;
+  margin: 30px 0 5px 0;
 `;
 
 //

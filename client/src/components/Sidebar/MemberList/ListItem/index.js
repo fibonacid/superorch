@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 
 const StyledContainer = styled.li`
-  padding: 5px 10px;
+  padding: 5px 0;
   display: flex;
   justify-content: space-between;
   border-bottom: solid 1px lightgrey;

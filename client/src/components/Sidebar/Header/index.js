@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { userDocument } from "../../../data/documents";
 
 const StyledContainer = styled.h2`
-  padding: 15px 10px 10px 10px;
+  padding: 15px 0 10px 0;
   font-size: 20px;
 `;
 
