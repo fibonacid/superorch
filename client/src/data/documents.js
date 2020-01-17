@@ -88,6 +88,14 @@ export const createOrchestraDocument = gql`
   }
 `;
 
+export const editOrchestraDocument = gql`
+  mutation editOrchestra($orchestraId: String!, $name: String) {
+    editOrchestra(name: $name) {
+      _id
+    }
+  }
+`;
+
 //
 // Subscriptions
 //
