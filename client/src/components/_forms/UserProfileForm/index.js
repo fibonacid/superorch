@@ -4,7 +4,11 @@ import useModifyUser from "../../../hooks/useModifyUser";
 import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {
-  nickname: ""
+  firstName: "",
+  lastName: "",
+  city: "",
+  birthdate: "",
+  bio: ""
 };
 
 function UserProfileForm(props) {
@@ -17,17 +21,13 @@ function UserProfileForm(props) {
     }
   }, [data]);
 
-  function validate(values) {
+  function validate(_) {
     const errors = {};
-    // Password errors
-    if (!values.nickname) {
-      errors.nickname = "Required Nickname";
-    }
     return errors;
   }
 
   function authenticate() {
-    updateUser({ variables: { nickname: values.nickname } });
+    updateUser({ variables: {} });
   }
 
   const {
@@ -42,19 +42,79 @@ function UserProfileForm(props) {
   return (
     <>
       <form onSubmit={handleSubmit}>
+        {/* -------- first name -------- */}
         <PrimaryForm.Field>
-          <label htmlFor="nickname">Nickname</label>
+          <label htmlFor="firstName">First Name</label>
           <PrimaryForm.Input
             type="text"
-            name="nickname"
+            name="firstName"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.nickname}
+            value={values.firstName}
           />
-          {errors.nickname && (
-            <PrimaryForm.Error>{errors.nickname}</PrimaryForm.Error>
+          {errors.firstName && (
+            <PrimaryForm.Error>{errors.firstName}</PrimaryForm.Error>
           )}
         </PrimaryForm.Field>
+
+        {/* -------- last name -------- */}
+        <PrimaryForm.Field>
+          <label htmlFor="lastName">Last Name</label>
+          <PrimaryForm.Input
+            type="text"
+            name="lastName"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.lastName}
+          />
+          {errors.lastName && (
+            <PrimaryForm.Error>{errors.lastName}</PrimaryForm.Error>
+          )}
+        </PrimaryForm.Field>
+
+        {/* -------- city -------- */}
+        <PrimaryForm.Field>
+          <label htmlFor="city">City</label>
+          <PrimaryForm.Input
+            type="text"
+            name="city"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.city}
+          />
+          {errors.city && <PrimaryForm.Error>{errors.city}</PrimaryForm.Error>}
+        </PrimaryForm.Field>
+
+        {/* -------- birth date -------- */}
+        <PrimaryForm.Field>
+          <label htmlFor="birthdate">Birth date</label>
+          <PrimaryForm.Input
+            type="date"
+            name="birthdate"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.birthdate}
+          />
+          {errors.birthdate && (
+            <PrimaryForm.Error>{errors.birthdate}</PrimaryForm.Error>
+          )}
+        </PrimaryForm.Field>
+
+        {/* -------- bio -------- */}
+        <PrimaryForm.Field>
+          <label htmlFor="bio">Short Biography</label>
+          <PrimaryForm.Textarea
+            type="textarea"
+            name="bio"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.bio}
+          />
+          {errors.birthdate && (
+            <PrimaryForm.Error>{errors.bio}</PrimaryForm.Error>
+          )}
+        </PrimaryForm.Field>
+
         {backendError && (
           <PrimaryForm.Error>{backendError.message}</PrimaryForm.Error>
         )}
