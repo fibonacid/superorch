@@ -21,11 +21,15 @@ const StyledForm = styled(PrimaryForm)`
 function EditOrchestraView(props) {
   const params = useParams();
 
-  // Get previous orchestra data to populate fields
-  const { data: prevData } = useQuery(orchestraDocument, {
-    variables: { orchestraId: params.id },
+  const queryOptions = {
+    variables: {
+      orchestraId: params.id
+    },
     skip: !params.id
-  });
+  };
+
+  // Get previous orchestra data to populate fields
+  const { data: prevData } = useQuery(orchestraDocument, queryOptions);
 
   // Get function to update orchestra
   const [updateOrchestra, { data, loading, error }] = useMutation(
@@ -36,7 +40,10 @@ function EditOrchestraView(props) {
   function authenticate(values) {
     updateOrchestra({
       variables: { orchestraId: params.id, name: values.name },
-      refetchQueries: [{ query: orchestraListDocument, orchestraDocument }]
+      refetchQueries: [
+        { query: orchestraListDocument },
+        { query: orchestraDocument, ...queryOptions }
+      ]
     });
   }
 
