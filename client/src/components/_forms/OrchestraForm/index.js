@@ -1,28 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
-import { useMutation } from "@apollo/react-hooks";
-import {
-  createOrchestraDocument,
-  orchestraListDocument
-} from "../../../data/documents";
 import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {
   name: ""
 };
 
-function CreateOrchestraForm(props) {
-  const [createOrchestra, { data, loading, error: backendError }] = useMutation(
-    createOrchestraDocument
-  );
-
-  useEffect(() => {
-    if (data && props.onSuccess) {
-      // Call function from parent
-      props.onSuccess();
-    }
-  }, [data]);
-
+function OrchestraForm(props) {
   function validate(values) {
     const errors = {};
     // Password errors
@@ -32,13 +16,6 @@ function CreateOrchestraForm(props) {
     return errors;
   }
 
-  function authenticate() {
-    createOrchestra({
-      variables: { name: values.name },
-      refetchQueries: [{ query: orchestraListDocument }]
-    });
-  }
-
   const {
     handleSubmit,
     handleChange,
@@ -46,7 +23,7 @@ function CreateOrchestraForm(props) {
     values,
     errors,
     isSubmitting
-  } = useFormValidation(INITIAL_VALUES, validate, authenticate);
+  } = useFormValidation(INITIAL_VALUES, validate, props.authenticate);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -61,15 +38,11 @@ function CreateOrchestraForm(props) {
         />
         {errors.name && <PrimaryForm.Error>{errors.name}</PrimaryForm.Error>}
       </PrimaryForm.Field>
-      {backendError && (
-        <PrimaryForm.Error>{backendError.message}</PrimaryForm.Error>
-      )}
       <PrimaryForm.Button disabled={isSubmitting} type="submit">
         Submit
       </PrimaryForm.Button>
-      {loading && <span>Loading ...</span>}
     </form>
   );
 }
 
-export default CreateOrchestraForm;
+export default OrchestraForm;
