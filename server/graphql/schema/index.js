@@ -29,6 +29,10 @@ const typeDefs = gql`
     name: String
     email: String
     password: String
+    firstName: String
+    lastName: String
+    city: String
+    birthdate: String
     createdOrchestras: [Orchestra!]
     memberOf: [Orchestra!]
     sentInvites: [Invite!]
@@ -42,9 +46,11 @@ const typeDefs = gql`
   }
 
   input UserInput {
-    name: String
-    email: String
-    password: String
+    firstName: String
+    lastName: String
+    city: String
+    birthdate: String
+    bio: String
   }
 
   input OrchestraInput {
