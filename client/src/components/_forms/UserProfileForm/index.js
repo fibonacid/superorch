@@ -26,8 +26,18 @@ function UserProfileForm(props) {
     return errors;
   }
 
-  function authenticate() {
-    updateUser({ variables: {} });
+  function authenticate(values) {
+    const keys = Object.keys(values);
+
+    // Filter out empty fields
+    let fields = {};
+    keys.forEach(k => {
+      if (values[k]) {
+        fields[k] = values[k];
+      }
+    });
+
+    updateUser({ variables: { userInput: fields } });
   }
 
   const {
