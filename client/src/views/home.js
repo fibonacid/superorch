@@ -9,12 +9,7 @@ const StyledContainer = styled.div`
 `;
 
 function HomeView() {
-  return (
-    <StyledContainer>
-      <Sidebar />
-      <Playground />
-    </StyledContainer>
-  );
+  return <StyledContainer>Welcome to Superorch</StyledContainer>;
 }
 
 export default HomeView;

@@ -6,10 +6,10 @@ import {
   updateOrchestraDocument,
   orchestraListDocument,
   orchestraDocument
-} from "../../data/documents";
-import PrimaryLayout from "../../components/_layouts/PrimaryLayout";
-import PrimaryForm from "../../components/_forms/PrimaryForm";
-import OrchestraForm from "../../components/_forms/OrchestraForm";
+} from "../../../data/documents";
+import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
+import PrimaryForm from "../../../components/_forms/PrimaryForm";
+import OrchestraForm from "../../../components/_forms/OrchestraForm";
 
 const StyledWrapper = styled.div`
   margin: auto;
