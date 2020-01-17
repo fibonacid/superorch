@@ -17,7 +17,7 @@ const StyledForm = styled(PrimaryForm)`
   margin: auto;
 `;
 
-function CreateOrchestraView(props) {
+function CreateOrchestraView() {
   const [createOrchestra, { data, loading, error }] = useMutation(
     createOrchestraDocument
   );
@@ -31,12 +31,10 @@ function CreateOrchestraView(props) {
 
   const history = useHistory();
   useEffect(() => {
-    if (data && props.onSuccess) {
-      console.log(data);
-
+    if (data) {
       history.push("/");
     }
-  }, [data]);
+  }, [data, history]);
 
   return (
     <PrimaryLayout>
