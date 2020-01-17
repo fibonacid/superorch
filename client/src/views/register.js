@@ -47,7 +47,7 @@ function RegisterView() {
       {/* Second part: choose nickname */}
       {index === 1 && (
         <>
-          <StyledForm title="User Info">
+          <StyledForm title="User Profile">
             <UserProfileForm onSuccess={redirect} />
           </StyledForm>
           <StyledLink to="/">Skip</StyledLink>
