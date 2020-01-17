@@ -5,11 +5,16 @@ import { useLazyQuery } from "@apollo/react-hooks";
 import { orchestraDocument } from "../../data/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
+import Bottom from "./Bottom";
 
 const StyledContainer = styled.div`
   background: whitesmoke;
   border-right: solid 1px lightgrey;
   flex: 0 1 200px;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export default function Sidebar() {
@@ -30,8 +35,11 @@ export default function Sidebar() {
     <StyledContainer>
       {data && (
         <>
-          <Header name={data.orchestraById.name} />
-          <MemberList members={data.orchestraById.members} />
+          <div>
+            <Header name={data.orchestraById.name} />
+            <MemberList members={data.orchestraById.members} />
+          </div>
+          <Bottom orchestraId={data.orchestraById._id} />
         </>
       )}
     </StyledContainer>
