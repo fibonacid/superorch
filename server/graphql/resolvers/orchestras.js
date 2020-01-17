@@ -72,6 +72,34 @@ module.exports = {
       const result = await orchestra.save();
 
       return transformOrchestra(result.id, loaders);
+    },
+
+    //
+    // Update Orchestra
+    //
+    updateOrchestra: async (
+      _,
+      { orchestraId, orchestraInput },
+      { isAuth, userId, loaders }
+    ) => {
+      if (!isAuth) {
+        throw new Error("Unauthorized");
+      }
+      const orchestra = await Orchestra.findById(orchestraId);
+
+      if (!orchestra) {
+        throw new Error("Orchestra doesn't exist");
+      }
+      // Check if user is a member of the orchestra
+      // todo: orchestra._doc.members.find() ...
+
+      const result = await Orchestra.findOneAndUpdate(
+        orchestraId,
+        orchestraInput
+      );
+      await result.save();
+
+      return transformOrchestra(result.id, loaders);
     }
   }
 };

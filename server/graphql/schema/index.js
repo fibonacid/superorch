@@ -47,6 +47,10 @@ const typeDefs = gql`
     nickname: String
   }
 
+  input OrchestraInput {
+    name: String
+  }
+
   # This type specifies the entry points into our API.
   type Query {
     user: User!
@@ -62,6 +66,10 @@ const typeDefs = gql`
     register(email: String!, password: String!): AuthData!
     updateUser(userInput: UserInput!): User
     createOrchestra(name: String!): Orchestra!
+    updateOrchestra(
+      orchestraId: String!
+      orchestraInput: OrchestraInput!
+    ): Orchestra!
     sendInvite(orchestraId: String!, email: String!): Invite!
     acceptInvite(inviteId: String!): Member!
   }
