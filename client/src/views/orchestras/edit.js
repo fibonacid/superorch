@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   updateOrchestraDocument,
@@ -24,6 +24,15 @@ const StyledForm = styled(PrimaryForm)`
 const StyledStatus = styled.div`
   margin-top: 20px;
   text-align: center;
+`;
+
+const StyledLink = styled(Link)`
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: lightgrey;
+  text-decoration: none;
 `;
 
 function EditOrchestraView(props) {
@@ -72,6 +81,7 @@ function EditOrchestraView(props) {
           {error && <span>{error.message}</span>}
         </StyledStatus>
       </StyledWrapper>
+      <StyledLink to="/">Go back</StyledLink>
     </PrimaryLayout>
   );
 }
