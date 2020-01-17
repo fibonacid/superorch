@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import AuthContext from "../context/auth-context";
 import HomeView from "../views/home";
 import LoginView from "../views/login";
@@ -10,6 +10,11 @@ import OrchestraView from "../views/orchestras/:id";
 
 export default function Routes() {
   const { token } = useContext(AuthContext);
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("pageview", location.pathname);
+  }, [location]);
 
   return (
     <Switch>
