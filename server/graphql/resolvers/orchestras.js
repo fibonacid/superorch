@@ -90,8 +90,15 @@ module.exports = {
       if (!orchestra) {
         throw new Error("Orchestra doesn't exist");
       }
+
       // Check if user is a member of the orchestra
-      // todo: orchestra._doc.members.find() ...
+      const member = await Member.findOne({
+        user: userId,
+        orchestra: orchestraId
+      });
+      if (!member) {
+        throw new Error("Unauthorized");
+      }
 
       const result = await Orchestra.findOneAndUpdate(
         orchestraId,
