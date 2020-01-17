@@ -90,7 +90,7 @@ export const createOrchestraDocument = gql`
 
 export const editOrchestraDocument = gql`
   mutation editOrchestra($orchestraId: String!, $name: String) {
-    editOrchestra(name: $name) {
+    editOrchestra(orchestraId: $orchestraId, name: $name) {
       _id
     }
   }
