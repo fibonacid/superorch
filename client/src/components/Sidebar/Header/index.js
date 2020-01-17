@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { userDocument } from "../../../data/documents";
 
-const StyledContainer = styled.h2`
+const StyledContainer = styled.div`
   padding: 15px 0 10px 0;
   font-size: 20px;
 `;
