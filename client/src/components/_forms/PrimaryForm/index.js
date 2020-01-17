@@ -45,3 +45,8 @@ export const Error = styled.p`
   margin-top: 5px;
   color: red;
 `;
+
+export const Textarea = styled.textarea`
+  margin-top: 5px;
+  min-height: 50px;
+`;
