@@ -3,7 +3,6 @@ import styled from "styled-components/macro";
 import AuthContext from "../../context/auth-context";
 import Selector from "./Selector";
 import Menu from "./Menu";
-import Bottom from "./Bottom";
 
 const StyledWrap = styled.header`
   flex: 0 0 60px;
@@ -24,7 +23,6 @@ function Navigation() {
         <>
           <Selector />
           <Menu />
-          <Bottom />
         </>
       )}
     </StyledWrap>
