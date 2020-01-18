@@ -7,40 +7,58 @@ import RegisterView from "../views/register";
 import CreateOrchestraView from "../views/orchestras/create";
 import EditOrchestraView from "../views/orchestras/:id/edit";
 import OrchestraView from "../views/orchestras/:id";
+import InvitesView from "../views/invites";
 
 export default function Routes() {
   const { token } = useContext(AuthContext);
   const location = useLocation();
+
+  // This piece of state is set when one of the
+  // menu links is clicked. The `background` state
+  // is the location that we were at when one of
+  // the menu links was clicked. If it's there,
+  // use it as the location for the <Switch> so
+  // we show the overlay in the background, behind
+  // the modal.
+  let background = location.state && location.state.background;
 
   useEffect(() => {
     console.log("pageview", location.pathname);
   }, [location]);
 
   return (
-    <Switch>
-      <Route exact path="/login">
-        {!token ? <LoginView /> : <Redirect to="/" />}
-      </Route>
-      <Route exact path="/register">
-        <RegisterView />
-      </Route>
+    <>
+      <Switch location={background || location}>
+        <Route
+          exact
+          path="/login"
+          children={!token ? <LoginView /> : <Redirect to="/" />}
+        />
+        <Route
+          exact
+          path="/register"
+          children={!token ? <RegisterView /> : <Redirect to="/" />}
+        />
+        {!token && <Redirect to="/login" />}
 
-      {!token && <Redirect to="/login" />}
+        {/* ----- Only logged in pages ----- */}
 
-      {/* ----- Only logged in pages ----- */}
+        <Route
+          exact
+          path="/orchestras/create"
+          children={<CreateOrchestraView />}
+        />
+        <Route
+          exact
+          path="/orchestras/:id/edit"
+          children={<EditOrchestraView />}
+        />
+        <Route exact path="/orchestras/:id" children={<OrchestraView />} />
+        <Route exact path="/" children={<HomeView />} />
+      </Switch>
 
-      <Route exact path="/orchestras/create">
-        <CreateOrchestraView />
-      </Route>
-      <Route exact path="/orchestras/:id/edit">
-        <EditOrchestraView />
-      </Route>
-      <Route exact path="/orchestras/:id">
-        <OrchestraView />
-      </Route>
-      <Route exact path="/">
-        <HomeView />
-      </Route>
-    </Switch>
+      {/* Show the modal when a background page is set */}
+      {background && <Route path="/invites" children={<InvitesView />} />}
+    </>
   );
 }

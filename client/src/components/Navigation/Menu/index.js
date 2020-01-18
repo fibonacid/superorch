@@ -1,15 +1,19 @@
 import React, { useContext } from "react";
 import styled from "styled-components/macro";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import AuthContext from "../../../context/auth-context";
 
-const StyledLink = styled.a`
-  color: white;
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-  display: block;
-  margin-top: 10px;
+const StyledContainer = styled.div`
+  &,
+  span,
+  a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+  }
 `;
 
 function Menu() {
@@ -22,11 +26,28 @@ function Menu() {
   }
 
   return (
-    <div>
-      <StyledLink>Invites</StyledLink>
-      <StyledLink onClick={handleLogout}>Logout</StyledLink>
-    </div>
+    <StyledContainer>
+      <BackgroundLink to="/invites">Invites</BackgroundLink>
+      <span onClick={handleLogout}>Logout</span>
+    </StyledContainer>
   );
 }
 
 export default Menu;
+
+function BackgroundLink(props) {
+  const location = useLocation();
+
+  return (
+    <Link
+      to={{
+        pathname: props.to,
+        // This is the trick! This link sets
+        // the `background` in location state.
+        state: { background: location }
+      }}
+    >
+      {props.children}
+    </Link>
+  );
+}
