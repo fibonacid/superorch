@@ -1,6 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
+import useGoBack from "../../../hooks/useGoBack";
 
 const StyledWrapper = styled.div`
   background: red;
@@ -16,21 +16,16 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-const StyledClose = styled.span`
-  position: absolute;
-  top: 15px;
-  right: 15px;
+const StyledClose = styled.p`
+  text-align: right;
+  display: block;
   color: white;
+  padding: 15px 10px;
   cursor: pointer;
 `;
 
-function Overlay(props) {
-  const history = useHistory();
-
-  let back = e => {
-    e.stopPropagation();
-    history.goBack();
-  };
+function FullScreenOverlay(props) {
+  const back = useGoBack();
 
   return (
     <StyledWrapper>
@@ -40,4 +35,4 @@ function Overlay(props) {
   );
 }
 
-export default Overlay;
+export default FullScreenOverlay;
