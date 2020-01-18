@@ -6,17 +6,18 @@ const StyledWrapper = styled.div`
   position: absolute;
   top: 10px;
   left: 80px;
-  bottom: 10px;
-  max-width: 200px;
+  width: 300px;
   display: flex;
 `;
 
 const StyledContainer = styled.div`
-  background: white;
+  background: whitesmoke;
+  opacity: 0.97;
   border: solid 1px lightgrey;
   border-radius: 10px;
   padding: 10px;
   font-size: 14px;
+  flex: 1;
 `;
 
 const StyledClose = styled.p`
