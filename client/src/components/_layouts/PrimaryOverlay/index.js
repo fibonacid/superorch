@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import useQuery from "../../hooks/useQuery";
 
 const StyledWrapper = styled.div`
   background: red;
@@ -17,26 +16,26 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-const StyledClose = styled(Link)`
+const StyledClose = styled.span`
   position: absolute;
   top: 15px;
   right: 15px;
   color: white;
-  text-decoration: none;
+  cursor: pointer;
 `;
 
-//const StyledContainer = styled.div``;
+function Overlay(props) {
+  const history = useHistory();
 
-function Overlay() {
-  const { display } = useQuery();
-
-  if (!display || display === "none") {
-    return null;
-  }
+  let back = e => {
+    e.stopPropagation();
+    history.goBack();
+  };
 
   return (
     <StyledWrapper>
-      <StyledClose to="?overlay=none">close</StyledClose>
+      <StyledClose onClick={back}>close</StyledClose>
+      {props.children}
     </StyledWrapper>
   );
 }
