@@ -9,6 +9,7 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 0 1 50%;
 `;
 
 const StyledLink = styled(Link)`
