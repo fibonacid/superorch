@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import styled from "styled-components/macro";
-import { useHistory } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
 import Selector from "./Selector";
+import Menu from "./Menu";
 
 const StyledWrap = styled.header`
   flex: 0 0 60px;
@@ -14,28 +14,15 @@ const StyledWrap = styled.header`
   flex-direction: column;
 `;
 
-const StyledLink = styled.a`
-  color: white;
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-`;
-
 function Navigation() {
-  const history = useHistory();
-  const { token, logout } = useContext(AuthContext);
-
-  function handleLogout() {
-    logout();
-    history.push("/login");
-  }
+  const { token } = useContext(AuthContext);
 
   return (
     <StyledWrap>
       {token && (
         <>
           <Selector />
-          <StyledLink onClick={handleLogout}>Logout</StyledLink>
+          <Menu />
         </>
       )}
     </StyledWrap>
