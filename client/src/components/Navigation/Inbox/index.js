@@ -4,15 +4,15 @@ import Widget from "../../_ui/Widget";
 function Inbox(props) {
   const [visible, setVisible] = useState(false);
 
-  const close = () => {
+  const toggle = () => {
     setVisible(!visible);
   };
 
   return (
     <div>
-      <button onClick={click}>inbox</button>
+      <button onClick={toggle}>inbox</button>
       {visible && (
-        <Widget close={close}>
+        <Widget close={toggle}>
           <h1>Notifications</h1>
           <ul>
             <li>John invited you to this</li>

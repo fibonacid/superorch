@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import SideOverlay from "../components/_overlays/SideOverlay";
+import SideOverlay from "../components/_ui/Widget";
 
 const StyledTitle = styled.h3`
   font-size: 18px;
