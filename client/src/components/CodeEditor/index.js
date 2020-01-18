@@ -7,6 +7,8 @@ const StyledWrapper = styled.div`
   cursor: text;
   padding: 10px;
   flex: 1;
+  font-size: 13px;
+  font-family: monospace;
 `;
 
 // -----------------------------------
