@@ -7,7 +7,7 @@ import Selector from "./Selector";
 const StyledWrap = styled.header`
   flex: 0 0 60px;
   background: black;
-  padding: 10px;
+  padding: 15px 5px;
   border-bottom: solid 1px lightgrey;
   display: flex;
   justify-content: space-between;
