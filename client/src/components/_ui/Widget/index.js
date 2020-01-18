@@ -1,16 +1,11 @@
 import React from "react";
 import styled from "styled-components/macro";
-import useGoBack from "../../../hooks/useGoBack";
 
-const StyledWrapper = styled.div`
+const StyledContainer = styled.div`
   position: absolute;
   top: 10px;
   left: 80px;
-  width: 300px;
-  display: flex;
-`;
-
-const StyledContainer = styled.div`
+  min-width: 200px;
   background: whitesmoke;
   color: black;
   opacity: 0.97;
@@ -18,23 +13,27 @@ const StyledContainer = styled.div`
   border-radius: 10px;
   padding: 10px;
   font-size: 14px;
-  flex: 1;
 `;
 
-const StyledClose = styled.p`
-  text-align: right;
-  display: block;
+const StyledHeader = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
+const StyledClose = styled.span`
   margin: 5px 10px;
   cursor: pointer;
+  text-align: end;
 `;
 
 function Widget(props) {
   return (
-    <StyledWrapper>
-      <StyledContainer>{props.children}</StyledContainer>
-      <StyledClose onClick={props.close}>close</StyledClose>
+    <StyledContainer>
+      <StyledHeader>
+        <StyledClose onClick={props.close}>close</StyledClose>
+      </StyledHeader>
       {props.children}
-    </StyledWrapper>
+    </StyledContainer>
   );
 }
 
