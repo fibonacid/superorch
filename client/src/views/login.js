@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import PrimaryLayout from "../components/_layouts/PrimaryLayout";
+import SecondaryLayout from "../components/_layouts/SecondaryLayout";
 import PrimaryForm from "../components/_forms/PrimaryForm";
 import LoginForm from "../components/_forms/LoginForm";
 
@@ -28,12 +28,12 @@ function LoginView() {
   };
 
   return (
-    <PrimaryLayout>
+    <SecondaryLayout>
       <StyledForm title="Login">
         <LoginForm onSuccess={redirect} />
       </StyledForm>
       <StyledLink to="/register">Register instead</StyledLink>
-    </PrimaryLayout>
+    </SecondaryLayout>
   );
 }
 

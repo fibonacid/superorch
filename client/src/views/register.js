@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
-import PrimaryLayout from "../components/_layouts/PrimaryLayout";
+import SecondaryLayout from "../components/_layouts/SecondaryLayout";
 import PrimaryForm from "../components/_forms/PrimaryForm";
 import RegistrationForm from "../components/_forms/RegistrationForm";
 import UserProfileForm from "../components/_forms/UserProfileForm";
@@ -34,7 +34,7 @@ function RegisterView() {
   };
 
   return (
-    <PrimaryLayout>
+    <SecondaryLayout>
       {/* First part: email and password */}
       {index === 0 && (
         <>
@@ -53,7 +53,7 @@ function RegisterView() {
           <StyledLink to="/">Skip</StyledLink>
         </>
       )}
-    </PrimaryLayout>
+    </SecondaryLayout>
   );
 }
 
