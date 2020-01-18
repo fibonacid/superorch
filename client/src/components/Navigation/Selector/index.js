@@ -3,6 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { orchestraListDocument } from "../../../data/documents";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Item from "./Item";
 
 const StyledContainer = styled.div`
@@ -22,20 +24,13 @@ const StyledLink = styled(Link)`
 `;
 
 function OrchestraSelector() {
-  //const history = useHistory();
+  const history = useHistory();
   const [index, setIndex] = useState(null);
   const { data } = useQuery(orchestraListDocument);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     // Redirect to first orchestra available
-  //     const [orchestra] = data.orchestras;
-
-  //     if (orchestra) {
-  //       history.push(`/orchestras/${orchestra._id}`);
-  //     }
-  //   }
-  // }, [data, history])
+  const redirect = () => {
+    history.push("/orchestras/create");
+  };
 
   return (
     <StyledContainer>
@@ -50,7 +45,12 @@ function OrchestraSelector() {
             />
           ))}
       </ul>
-      <StyledLink to="/orchestras/create">+</StyledLink>
+      <FontAwesomeIcon
+        onClick={redirect}
+        icon={faPlus}
+        size="1x"
+        style={{ marginTop: "15px", cursor: "pointer" }}
+      />
     </StyledContainer>
   );
 }

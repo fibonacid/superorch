@@ -4,6 +4,8 @@ import AuthContext from "../../context/auth-context";
 import useLogout from "../../hooks/useLogout";
 import Inbox from "./Inbox";
 import Selector from "./Selector";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 const StyledWrap = styled.header`
   flex: 0 0 60px;
@@ -30,7 +32,14 @@ function Navigation() {
             <Inbox />
             <Selector />
           </div>
-          <span onClick={logout}>Logout</span>
+          <div>
+            <FontAwesomeIcon
+              onClick={logout}
+              icon={faSignOutAlt}
+              size="2x"
+              style={{ cursor: "pointer" }}
+            />
+          </div>
         </>
       )}
     </StyledWrap>

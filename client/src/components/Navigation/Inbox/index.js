@@ -12,7 +12,12 @@ function Inbox(props) {
 
   return (
     <div>
-      <FontAwesomeIcon onClick={toggle} icon={faBell} size="lg" />
+      <FontAwesomeIcon
+        onClick={toggle}
+        icon={faBell}
+        size="2x"
+        style={{ cursor: "pointer" }}
+      />
       {visible && (
         <Widget close={toggle}>
           <h1>Notifications</h1>
