@@ -13,6 +13,7 @@ const StyledContainer = styled.div`
     text-align: center;
     display: block;
     margin-top: 10px;
+    font-size: 14px;
   }
 `;
 
