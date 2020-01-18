@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import { useHistory } from "react-router-dom";
-import AuthContext from "../../../context/auth-context";
 
 const StyledLink = styled.a`
   color: white;
@@ -13,18 +11,9 @@ const StyledLink = styled.a`
 `;
 
 function Menu() {
-  const history = useHistory();
-  const { logout } = useContext(AuthContext);
-
-  function handleLogout() {
-    logout();
-    history.push("/login");
-  }
-
   return (
     <div>
       <StyledLink>Invites</StyledLink>
-      <StyledLink onClick={handleLogout}>Logout</StyledLink>
     </div>
   );
 }
