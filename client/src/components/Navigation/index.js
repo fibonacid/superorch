@@ -19,12 +19,12 @@ function Navigation() {
 
   return (
     <StyledWrap>
-      {token && (
-        <>
+      {token && <>
+        <div>
           <Selector />
-          <Menu />
-        </>
-      )}
+        </div>
+        <span onClick={logout}>Logout</span>
+      </>}
     </StyledWrap>
   );
 }
