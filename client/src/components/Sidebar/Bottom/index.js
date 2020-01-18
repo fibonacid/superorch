@@ -7,6 +7,7 @@ const StyledLink = styled(Link)`
   font-size: 14px;
   margin-top: 10px;
   padding: 15px 0;
+  text-decoration: none;
 `;
 
 function Bottom(props) {
