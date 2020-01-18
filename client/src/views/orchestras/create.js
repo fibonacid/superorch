@@ -6,7 +6,7 @@ import {
   createOrchestraDocument,
   orchestraListDocument
 } from "../../data/documents";
-import PrimaryLayout from "../../components/_layouts/PrimaryLayout";
+import SecondaryLayout from "../../components/_layouts/SecondaryLayout";
 import PrimaryForm from "../../components/_forms/PrimaryForm";
 import OrchestraForm from "../../components/_forms/OrchestraForm";
 
@@ -37,13 +37,13 @@ function CreateOrchestraView() {
   }, [data, history]);
 
   return (
-    <PrimaryLayout>
+    <SecondaryLayout>
       <StyledForm title="Create Orchestra">
         <OrchestraForm authenticate={authenticate} />
       </StyledForm>
       {loading && <span>Loading ...</span>}
       {error && <span>{error.message}</span>}
-    </PrimaryLayout>
+    </SecondaryLayout>
   );
 }
 
