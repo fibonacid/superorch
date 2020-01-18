@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Widget from "../../_ui/Widget";
 
 function Inbox(props) {
@@ -10,7 +12,7 @@ function Inbox(props) {
 
   return (
     <div>
-      <button onClick={toggle}>inbox</button>
+      <FontAwesomeIcon onClick={toggle} icon={faBell} size="lg" />
       {visible && (
         <Widget close={toggle}>
           <h1>Notifications</h1>
