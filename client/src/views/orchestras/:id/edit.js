@@ -38,7 +38,7 @@ const StyledLink = styled(Link)`
   margin-top: 10px;
   font-size: 14px;
   text-align: center;
-  color: lightgrey;
+  color: grey;
   text-decoration: none;
 `;
 
