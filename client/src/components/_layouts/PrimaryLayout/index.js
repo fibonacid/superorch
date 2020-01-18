@@ -1,15 +1,26 @@
 import React from "react";
 import styled from "styled-components/macro";
+import Sidebar from "../../Sidebar";
+
+const StyledWrapper = styled.div`
+  display: flex;
+  flex: 1;
+`;
 
 const StyledContainer = styled.section`
-  margin: 30px 10px;
+  margin: 15px 10px;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
 `;
 
 function PrimaryLayout(props) {
-  return <StyledContainer>{props.children}</StyledContainer>;
+  return (
+    <StyledWrapper>
+      <Sidebar />
+      <StyledContainer>{props.children}</StyledContainer>
+    </StyledWrapper>
+  );
 }
 
 export default PrimaryLayout;

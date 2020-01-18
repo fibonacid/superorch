@@ -29,7 +29,7 @@ const StyledStatus = styled.div`
 const StyledLink = styled(Link)`
   display: block;
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
   color: lightgrey;
   text-decoration: none;
@@ -67,7 +67,7 @@ function EditOrchestraView(props) {
     <PrimaryLayout>
       <StyledWrapper>
         {prevData && (
-          <StyledForm title={prevData.orchestraById.name}>
+          <StyledForm title="Edit Orchestra">
             <OrchestraForm
               authenticate={authenticate}
               cachedValues={prevData.orchestraById}
@@ -80,7 +80,7 @@ function EditOrchestraView(props) {
           {error && <span>{error.message}</span>}
         </StyledStatus>
       </StyledWrapper>
-      <StyledLink to={`/orchestras/${orchestraId}`}>Go back</StyledLink>
+      <StyledLink to={`/orchestras/${orchestraId}`}>{"<< Go Back"}</StyledLink>
     </PrimaryLayout>
   );
 }
