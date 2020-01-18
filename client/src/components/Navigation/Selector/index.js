@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { orchestraListDocument } from "../../../data/documents";
@@ -20,8 +20,20 @@ const StyledLink = styled(Link)`
 `;
 
 function OrchestraSelector() {
+  //const history = useHistory();
   const [index, setIndex] = useState(null);
   const { data } = useQuery(orchestraListDocument);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     // Redirect to first orchestra available
+  //     const [orchestra] = data.orchestras;
+
+  //     if (orchestra) {
+  //       history.push(`/orchestras/${orchestra._id}`);
+  //     }
+  //   }
+  // }, [data, history])
 
   return (
     <StyledContainer>
