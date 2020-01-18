@@ -11,6 +11,13 @@ import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
 import PrimaryForm from "../../../components/_forms/PrimaryForm";
 import OrchestraForm from "../../../components/_forms/OrchestraForm";
 
+const StyledContainer = styled.div`
+  margin: 15px 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
 const StyledWrapper = styled.div`
   margin: auto;
 `;
@@ -65,22 +72,26 @@ function EditOrchestraView(props) {
 
   return (
     <PrimaryLayout>
-      <StyledWrapper>
-        {prevData && (
-          <StyledForm title="Edit Orchestra">
-            <OrchestraForm
-              authenticate={authenticate}
-              cachedValues={prevData.orchestraById}
-            />
-          </StyledForm>
-        )}
-        <StyledStatus>
-          {loading && <span>Loading ...</span>}
-          {data && <div>Success</div>}
-          {error && <span>{error.message}</span>}
-        </StyledStatus>
-      </StyledWrapper>
-      <StyledLink to={`/orchestras/${orchestraId}`}>{"<< Go Back"}</StyledLink>
+      <StyledContainer>
+        <StyledWrapper>
+          {prevData && (
+            <StyledForm title="Edit Orchestra">
+              <OrchestraForm
+                authenticate={authenticate}
+                cachedValues={prevData.orchestraById}
+              />
+            </StyledForm>
+          )}
+          <StyledStatus>
+            {loading && <span>Loading ...</span>}
+            {data && <div>Success</div>}
+            {error && <span>{error.message}</span>}
+          </StyledStatus>
+        </StyledWrapper>
+        <StyledLink to={`/orchestras/${orchestraId}`}>
+          {"<< Go Back"}
+        </StyledLink>
+      </StyledContainer>
     </PrimaryLayout>
   );
 }

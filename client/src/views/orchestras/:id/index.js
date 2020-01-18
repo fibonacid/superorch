@@ -1,19 +1,12 @@
 import React from "react";
-import styled from "styled-components/macro";
-import Sidebar from "../../../components/Sidebar";
 import Playground from "../../../components/Playground";
-
-const StyledContainer = styled.div`
-  flex: 1;
-  display: flex;
-`;
+import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
 
 function OrchestraIndexView() {
   return (
-    <StyledContainer>
-      <Sidebar />
+    <PrimaryLayout>
       <Playground />
-    </StyledContainer>
+    </PrimaryLayout>
   );
 }
 
