@@ -12,6 +12,7 @@ const StyledWrapper = styled.div`
 
 const StyledContainer = styled.div`
   background: whitesmoke;
+  color: black;
   opacity: 0.97;
   border: solid 1px lightgrey;
   border-radius: 10px;
