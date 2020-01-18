@@ -7,16 +7,17 @@ const StyledSquare = styled.div`
   margin: 0 auto;
   position: relative;
   border: solid 1px white;
-  background: ${props => (props.active ? "grey" : "black")};
-  border-radius: 8px;
+  background: ${props =>
+    props.active ? "rgba(245,245,245,0.8)" : "transparent"};
   color: white;
+  border-radius: 8px;
   transition: background 0.1s;
   cursor: pointer;
   &:not(:first-of-type) {
     margin-top: 10px;
   }
   &:hover {
-    background: grey;
+    background: rgba(245, 245, 245, 0.8);
   }
 `;
 
