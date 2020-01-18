@@ -1,15 +1,25 @@
 import React from "react";
 import styled from "styled-components/macro";
-import Sidebar from "../components/Sidebar";
-import Playground from "../components/Playground";
 
-const StyledContainer = styled.div`
+const StyledWrapper = styled.div`
   flex: 1;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const StyledTitle = styled.h1`
+  text-align: center;
 `;
 
 function HomeView() {
-  return <StyledContainer>Welcome to Superorch</StyledContainer>;
+  return (
+    <StyledWrapper>
+      <div>
+        <StyledTitle>Welcome</StyledTitle>
+      </div>
+    </StyledWrapper>
+  );
 }
 
 export default HomeView;
