@@ -14,8 +14,11 @@ const StyledWrap = styled.header`
   flex-direction: column;
 `;
 
-const StyledButton = styled.button`
-  font-size: 15px;
+const StyledLink = styled.a`
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
 `;
 
 function Navigation() {
@@ -32,7 +35,7 @@ function Navigation() {
       {token && (
         <>
           <Selector />
-          <StyledButton onClick={handleLogout}>Logout</StyledButton>
+          <StyledLink onClick={handleLogout}>Logout</StyledLink>
         </>
       )}
     </StyledWrap>
