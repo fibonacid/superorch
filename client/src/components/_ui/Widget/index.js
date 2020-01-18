@@ -28,15 +28,14 @@ const StyledClose = styled.p`
   cursor: pointer;
 `;
 
-function SideOverlay(props) {
-  const back = useGoBack();
-
+function Widget(props) {
   return (
     <StyledWrapper>
       <StyledContainer>{props.children}</StyledContainer>
-      <StyledClose onClick={back}>close</StyledClose>
+      <StyledClose onClick={props.close}>close</StyledClose>
+      {props.children}
     </StyledWrapper>
   );
 }
 
-export default SideOverlay;
+export default Widget;
