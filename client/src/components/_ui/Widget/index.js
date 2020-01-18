@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
+import Draggable from "react-draggable";
 
 const StyledContainer = styled.div`
   position: absolute;
@@ -28,12 +29,14 @@ const StyledClose = styled.span`
 
 function Widget(props) {
   return (
-    <StyledContainer>
-      <StyledHeader>
-        <StyledClose onClick={props.close}>close</StyledClose>
-      </StyledHeader>
-      {props.children}
-    </StyledContainer>
+    <Draggable>
+      <StyledContainer>
+        <StyledHeader>
+          <StyledClose onClick={props.close}>close</StyledClose>
+        </StyledHeader>
+        {props.children}
+      </StyledContainer>
+    </Draggable>
   );
 }
 
