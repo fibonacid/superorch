@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { orchestraDocument } from "../../data/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
-import Bottom from "./Bottom";
 
 const StyledContainer = styled.div`
   background: whitesmoke;
