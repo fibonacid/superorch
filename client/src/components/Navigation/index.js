@@ -20,6 +20,10 @@ const StyledWrap = styled.header`
   text-align: center;
 `;
 
+const StyledIcon = styled(FontAwesomeIcon)`
+  cursor: pointer;
+`;
+
 function Navigation() {
   const { token } = useContext(AuthContext);
   const logout = useLogout();
@@ -33,11 +37,7 @@ function Navigation() {
             <Selector />
           </div>
           <div>
-            <FontAwesomeIcon
-              onClick={logout}
-              icon={faSignOutAlt}
-              style={{ cursor: "pointer" }}
-            />
+            <StyledIcon onClick={logout} icon={faSignOutAlt} />
           </div>
         </>
       )}
