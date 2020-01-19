@@ -60,8 +60,16 @@ exports.Mutation = {
         to: user.id || null,
         email
       });
-
       const result = await invite.save();
+
+      // Add new sent invite to the current user
+      const sender = await User.findById(userId);
+      sender.sentInvites.push(invite);
+      await sender.save();
+
+      // Add new receiuved invite to the other user
+      user.receivedInvites.push(invite);
+      await user.save();
 
       // Send a NEW_INVITE message
       pubsub.publish(NEW_INVITE, {
