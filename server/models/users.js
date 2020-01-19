@@ -42,6 +42,18 @@ const userSchema = new Schema({
       type: Schema.Types.ObjectID,
       ref: "Orchestra"
     }
+  ],
+  sentInvites: [
+    {
+      type: Schema.Types.ObjectID,
+      ref: "Invite"
+    }
+  ],
+  receivedInvites: [
+    {
+      type: Schema.Types.ObjectID,
+      ref: "Invite"
+    }
   ]
 });
 
