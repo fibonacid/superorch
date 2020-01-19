@@ -12,8 +12,8 @@ const StyledLink = styled(Link)`
 
 function Bottom(props) {
   return (
-    <StyledLink to={`/orchestras/${props.orchestraId}/edit`}>
-      Settings
+    <StyledLink to={`/orchestras/${props.orchestraId}/invites`}>
+      Invite new member
     </StyledLink>
   );
 }
