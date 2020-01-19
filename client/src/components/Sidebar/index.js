@@ -30,7 +30,7 @@ export default function Sidebar() {
       {data && (
         <>
           <div>
-            <Header name={data.orchestraById.name} />
+            <Header orchestra={data.orchestraById} />
             <MemberList members={data.orchestraById.members} />
           </div>
           <Bottom orchestraId={data.orchestraById._id} />
