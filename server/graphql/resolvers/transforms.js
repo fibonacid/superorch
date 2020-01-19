@@ -3,7 +3,7 @@
 //
 async function transformUser(
   userId,
-  { userLoader, orchestraLoader, memberLoader }
+  { userLoader, orchestraLoader, memberLoader, inviteLoader }
 ) {
   const user = await userLoader.load(userId.toString());
 
@@ -13,6 +13,14 @@ async function transformUser(
 
   const memberOf = await orchestraLoader.loadMany(
     user._doc.createdOrchestras.map(id => id.toString())
+  );
+
+  const sentInvites = await inviteLoader.loadMany(
+    user._doc.sentInvites.map(id => id.toString())
+  );
+
+  const receivedInvites = await inviteLoader.loadMany(
+    user._doc.receivedInvites.map(id => id.toString())
   );
 
   return {
@@ -28,6 +36,18 @@ async function transformUser(
       members: memberLoader.loadMany(
         orchestra._doc.members.map(id => id.toString())
       )
+    })),
+    sentInvites: sentInvites.map(invite => ({
+      ...invite._doc,
+      subject: orchestraLoader.load(invite._doc.subject.toString()),
+      from: userLoader.load(invite._doc.from.toString()),
+      to: userLoader.load(invite._doc.to.toString())
+    })),
+    receivedInvites: receivedInvites.map(invite => ({
+      ...invite._doc,
+      subject: orchestraLoader.load(invite._doc.subject.toString()),
+      from: userLoader.load(invite._doc.from.toString()),
+      to: userLoader.load(invite._doc.to.toString())
     }))
   };
 }
