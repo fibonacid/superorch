@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 import Sidebar from "../../Sidebar";
 
@@ -27,14 +28,28 @@ const StyledContent = styled.div`
   display: flex;
 `;
 
+const StyledGoBack = styled.span`
+  display: block;
+  padding: 15px 10px;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  color: grey;
+  cursor: pointer;
+`;
+
 function PrimaryLayout(props) {
+  const history = useHistory();
+
   return (
     <StyledWrapper>
       <Sidebar />
       <StyledContainer>
         <StyledInner>
           <StyledContent>{props.children}</StyledContent>
-          {props.back && <div>go back</div>}
+          {props.back && (
+            <StyledGoBack onClick={history.goBack}>{"<< go back"}</StyledGoBack>
+          )}
         </StyledInner>
       </StyledContainer>
     </StyledWrapper>
