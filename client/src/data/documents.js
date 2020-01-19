@@ -100,6 +100,16 @@ export const updateOrchestraDocument = gql`
   }
 `;
 
+export const sendInviteDocument = gql`
+  mutation sendInvite($orchestraId: String!, $email: String!) {
+    sendInvite(orchestraId: $orchestraId, email: $email) {
+      _id
+      pending
+      createdAt
+    }
+  }
+`;
+
 //
 // Subscriptions
 //
