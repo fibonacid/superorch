@@ -4,6 +4,7 @@ import Draggable from "react-draggable";
 
 const StyledContainer = styled.div`
   position: absolute;
+  z-index: 2;
   top: 10px;
   left: 80px;
   min-width: 200px;
