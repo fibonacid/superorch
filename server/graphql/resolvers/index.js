@@ -16,7 +16,7 @@ const rootResolver = {
     ...auth.Mutation,
     ...users.Mutation,
     ...orchestras.Mutation,
-    ...invites.sendInvite
+    ...invites.Mutation
   },
   Subscription: {
     ...invites.Subscription
