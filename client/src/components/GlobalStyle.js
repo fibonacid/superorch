@@ -15,12 +15,17 @@ const GlobalStyle = createGlobalStyle`
   #root {
     display: flex;
     flex-direction: column;
+    position: relative;
   }
 `;
 
 export default GlobalStyle;
 
 export const StyledContent = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   flex: 1 0 auto;
   display: flex;
   flex-direction: row;
