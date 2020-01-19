@@ -36,36 +36,44 @@ exports.Mutation = {
     if (!isAuth) {
       throw new Error("Unauthenticated");
     }
+    try {
+      //Check that orchestra exists and that is owner by the user
+      const orchestra = await Orchestra.findOne({
+        _id: orchestraId,
+        owner: userId
+      });
 
-    //Check that orchestra exists and that is owner by the user
-    const orchestra = await Orchestra.findOne({
-      _id: orchestraId,
-      owner: userId
-    });
+      if (!orchestra) {
+        throw new Error("Invalid request");
+      }
 
-    if (!orchestra) {
-      throw new Error("Invalid request");
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new Error("User doesn't exist");
+      }
+
+      // Create a new invite
+      const invite = await Invite.create({
+        subject: orchestraId,
+        from: userId,
+        to: user.id || null,
+        email
+      });
+
+      const result = await invite.save();
+
+      // Send a NEW_INVITE message
+      pubsub.publish(NEW_INVITE, {
+        newInvite: transformInvite(result.id, loaders)
+      });
+
+      // todo: use result id as email token
+      return transformInvite(result.id, loaders);
+    } catch (err) {
+      console.log(err);
+      return err;
     }
-
-    const user = await User.findOne({ email });
-
-    // Create a new invite
-    const invite = await Invite.create({
-      subject: orchestraId,
-      from: userId,
-      to: user.id || null,
-      email
-    });
-
-    const result = await invite.save();
-
-    // Send a NEW_INVITE message
-    pubsub.publish(NEW_INVITE, {
-      newInvite: transformInvite(result.id, loaders)
-    });
-
-    // todo: use result id as email token
-    return transformInvite(result.id, loaders);
   },
 
   acceptInvite: async (_, { inviteId }, { isAuth, userId, loaders }) => {
