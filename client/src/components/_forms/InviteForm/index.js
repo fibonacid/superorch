@@ -1,13 +1,13 @@
 import React from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
-import { EMAIL_REGEX, PASSWORD_REGEX } from "../../../helpers/regex";
+import { EMAIL_REGEX } from "../../../helpers/regex";
 import * as PrimaryForm from "../PrimaryForm";
 
 const INITIAL_VALUES = {
   email: ""
 };
 
-function OrchestraForm(props) {
+function InviteForm({ authenticate }) {
   function validate(values) {
     const errors = {};
     if (!values.email) {
@@ -16,10 +16,6 @@ function OrchestraForm(props) {
       errors.email = "Invalid email address";
     }
     return errors;
-  }
-
-  function authenticate(values) {
-    console.log("authenticate", values);
   }
 
   const {
@@ -51,4 +47,4 @@ function OrchestraForm(props) {
   );
 }
 
-export default OrchestraForm;
+export default InviteForm;
