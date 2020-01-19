@@ -9,6 +9,11 @@ const StyledContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
+`;
+
+const StyledEditor = styled(CodeEditor)`
+  flex: 1;
 `;
 
 const StyledConsole = styled(Console)`
@@ -21,7 +26,7 @@ function OrchestraIndexView() {
   return (
     <PrimaryLayout>
       <StyledContainer>
-        <CodeEditor key={params.id} />
+        <StyledEditor key={params.id} />
         <StyledConsole />
       </StyledContainer>
     </PrimaryLayout>

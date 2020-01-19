@@ -2,13 +2,23 @@ import React, { Component } from "react";
 import styled from "styled-components/macro";
 import { Editor, EditorState } from "draft-js";
 
-// Editor Wrapper
-const StyledWrapper = styled.div`
+const StyledContainer = styled.div`
+  position: relative;
   cursor: text;
   padding: 10px;
   flex: 1;
   font-size: 13px;
   font-family: monospace;
+`;
+
+// Editor Wrapper
+const StyledInner = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  overflow: auto;
 `;
 
 // -----------------------------------
@@ -30,13 +40,15 @@ export default class CodeEditor extends Component {
 
   render() {
     return (
-      <StyledWrapper onClick={this.focus}>
-        <Editor
-          editorState={this.state.editorState}
-          onChange={this.onChange}
-          ref={this.setDomEditorRef}
-        />
-      </StyledWrapper>
+      <StyledContainer className={this.props.className} onClick={this.focus}>
+        <StyledInner>
+          <Editor
+            editorState={this.state.editorState}
+            onChange={this.onChange}
+            ref={this.setDomEditorRef}
+          />
+        </StyledInner>
+      </StyledContainer>
     );
   }
 }
