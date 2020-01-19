@@ -87,11 +87,6 @@ module.exports = {
           throw new Error("Unauthorized");
         }
         const orchestra = await Orchestra.findById(orchestraId);
-        console.log("1.", orchestra.id, orchestra._doc.name);
-
-        console.log();
-        console.log(orchestraInput);
-        console.log();
 
         if (!orchestra) {
           throw new Error("Orchestra doesn't exist");
@@ -111,7 +106,6 @@ module.exports = {
           orchestraInput,
           { new: true }
         );
-        console.log("2.", result.id, result._doc.name);
 
         return transformOrchestra(result.id, loaders);
       } catch (err) {
