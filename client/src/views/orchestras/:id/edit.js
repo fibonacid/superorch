@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   updateOrchestraDocument,
@@ -34,7 +34,6 @@ const StyledStatus = styled.div`
 `;
 
 function EditOrchestraView(props) {
-  const location = useLocation();
   const params = useParams();
   const orchestraId = params.id;
 
