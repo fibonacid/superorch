@@ -34,7 +34,7 @@ function RegistrationForm(props) {
       errors.name = "Required username";
       // todo: add username regex check
     }
-    // Password errors
+    // Email errors
     if (!values.email) {
       errors.email = "Required Email";
     } else if (!EMAIL_REGEX.test(values.email)) {
