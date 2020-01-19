@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   updateOrchestraDocument,
@@ -33,15 +33,6 @@ const StyledStatus = styled.div`
   text-align: center;
 `;
 
-const StyledLink = styled(Link)`
-  display: block;
-  margin-top: 10px;
-  font-size: 14px;
-  text-align: center;
-  color: grey;
-  text-decoration: none;
-`;
-
 function EditOrchestraView(props) {
   const params = useParams();
   const orchestraId = params.id;
@@ -71,7 +62,7 @@ function EditOrchestraView(props) {
   }
 
   return (
-    <PrimaryLayout>
+    <PrimaryLayout back={true}>
       <StyledContainer>
         <StyledWrapper>
           {prevData && (
@@ -88,9 +79,6 @@ function EditOrchestraView(props) {
             {error && <span>{error.message}</span>}
           </StyledStatus>
         </StyledWrapper>
-        <StyledLink to={`/orchestras/${orchestraId}`}>
-          {"<< Go Back"}
-        </StyledLink>
       </StyledContainer>
     </PrimaryLayout>
   );
