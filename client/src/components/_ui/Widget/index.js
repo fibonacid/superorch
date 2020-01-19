@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
   border-radius: 10px;
   padding: 10px;
   font-size: 14px;
+  cursor: grab;
 `;
 
 const StyledHeader = styled.div`
