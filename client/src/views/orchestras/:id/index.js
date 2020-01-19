@@ -5,8 +5,9 @@ import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
 import CodeEditor from "../../../components/CodeEditor";
 import Console from "../../../components/Console";
 
-const StyledContainer = styled.div`
-  flex: 1;
+const StyledInner = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -25,10 +26,10 @@ function OrchestraIndexView() {
 
   return (
     <PrimaryLayout>
-      <StyledContainer>
+      <StyledInner>
         <StyledEditor key={params.id} />
         <StyledConsole />
-      </StyledContainer>
+      </StyledInner>
     </PrimaryLayout>
   );
 }

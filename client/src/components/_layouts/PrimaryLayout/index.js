@@ -7,17 +7,36 @@ const StyledWrapper = styled.div`
   flex: 1;
 `;
 
-const StyledContainer = styled.section`
+const StyledContainer = styled.div`
   flex: 1 0 auto;
+  position: relative;
+`;
+
+const StyledInner = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 1px;
   display: flex;
   flex-direction: column;
+`;
+
+const StyledContent = styled.div`
+  flex: 1;
+  display: flex;
 `;
 
 function PrimaryLayout(props) {
   return (
     <StyledWrapper>
       <Sidebar />
-      <StyledContainer>{props.children}</StyledContainer>
+      <StyledContainer>
+        <StyledInner>
+          <StyledContent>{props.children}</StyledContent>
+          {props.back && <div>go back</div>}
+        </StyledInner>
+      </StyledContainer>
     </StyledWrapper>
   );
 }

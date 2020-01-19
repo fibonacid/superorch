@@ -3,7 +3,7 @@ import React from "react";
 import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
 
 function InvitesOrchestraView() {
-  return <PrimaryLayout>Invite to orchestra</PrimaryLayout>;
+  return <PrimaryLayout back={true}>Invite to orchestra</PrimaryLayout>;
 }
 
 export default InvitesOrchestraView;
