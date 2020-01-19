@@ -12,9 +12,6 @@ const StyledContainer = styled.div`
   border-right: solid 1px lightgrey;
   flex: 0 1 200px;
   padding: 0 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 `;
 
 export default function Sidebar() {
@@ -27,13 +24,10 @@ export default function Sidebar() {
 
   return (
     <StyledContainer>
-      {data && (
+      {data && data.orchestraById && (
         <>
-          <div>
-            <Header orchestra={data.orchestraById} />
-            <MemberList members={data.orchestraById.members} />
-          </div>
-          <Bottom orchestraId={data.orchestraById._id} />
+          <Header orchestra={data.orchestraById} />
+          <MemberList orchestra={data.orchestraById} />
         </>
       )}
       {loading && <span>Loading ...</span>}
