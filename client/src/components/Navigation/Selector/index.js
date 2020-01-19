@@ -15,12 +15,10 @@ const StyledContainer = styled.div`
   margin-top: 15px;
 `;
 
-const StyledLink = styled(Link)`
-  margin-top: 10px;
+const StyledIcon = styled(FontAwesomeIcon)`
+  margin-top: 15px;
   border: none;
-  font-size: 25px;
-  color: white;
-  text-decoration: none;
+  font-size: 14px;
 `;
 
 function OrchestraSelector() {
@@ -45,12 +43,7 @@ function OrchestraSelector() {
             />
           ))}
       </ul>
-      <FontAwesomeIcon
-        onClick={redirect}
-        icon={faPlus}
-        size="1x"
-        style={{ marginTop: "15px", cursor: "pointer" }}
-      />
+      <StyledIcon onClick={redirect} icon={faPlus} />
     </StyledContainer>
   );
 }

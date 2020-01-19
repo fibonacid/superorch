@@ -16,7 +16,7 @@ const StyledWrap = styled.header`
   justify-content: space-between;
   flex-direction: column;
   color: white;
-  font-size: 14px;
+  font-size: 22px;
   text-align: center;
 `;
 
@@ -36,7 +36,6 @@ function Navigation() {
             <FontAwesomeIcon
               onClick={logout}
               icon={faSignOutAlt}
-              size="2x"
               style={{ cursor: "pointer" }}
             />
           </div>

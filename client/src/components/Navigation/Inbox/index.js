@@ -15,7 +15,6 @@ function Inbox(props) {
       <FontAwesomeIcon
         onClick={toggle}
         icon={faBell}
-        size="2x"
         style={{ cursor: "pointer" }}
       />
       {visible && (
