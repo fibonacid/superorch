@@ -19,6 +19,7 @@ const StyledIcon = styled(FontAwesomeIcon)`
   margin-top: 15px;
   border: none;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 function OrchestraSelector() {
