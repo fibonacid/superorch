@@ -22,8 +22,6 @@ function Invites() {
 
   useEffect(subscribeToNewInvite, []);
 
-  console.log(subscribeToNewInvite);
-
   return (
     <ul>
       {data &&
