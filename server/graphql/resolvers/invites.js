@@ -88,6 +88,27 @@ exports.Mutation = {
     }
   },
 
+  denyInvite: async (_, { inviteId }, { isAuth, userId, loaders }) => {
+    if (!isAuth) {
+      throw new Error("Unauthenticated");
+    }
+
+    const invite = await Invite.findOne({
+      _id: inviteId,
+      to: userId
+    });
+
+    if (!invite) {
+      throw new Error("Invalid request");
+    }
+
+    // Update invite pending status
+    invite.pending = false;
+    await invite.save();
+
+    return transformInvite(invite.id, loaders);
+  },
+
   acceptInvite: async (_, { inviteId }, { isAuth, userId, loaders }) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");

@@ -78,6 +78,7 @@ const typeDefs = gql`
     ): Orchestra!
     sendInvite(orchestraId: String!, email: String!): Invite!
     acceptInvite(inviteId: String!): Member!
+    denyInvite(inviteId: String!): Invite!
   }
 
   # The subscription root type, used to define all subscriptions.
