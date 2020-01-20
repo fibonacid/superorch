@@ -37,16 +37,19 @@ const server = new ApolloServer({
   },
   subscriptions: {
     onConnect: connectionParams => {
+      return {
+        isAuth: true
+      };
       // the returned value of this function will become
       // available to the subscription resolvers via context.
-      if (connectionParams.authToken) {
-        return validateToken(connectionParams.authToken).then(token => ({
-          userId: token.userId,
-          isAuth: true
-        }));
-      }
+      // if (connectionParams.authToken) {
+      //   return validateToken(connectionParams.authToken).then(token => ({
+      //     userId: token.userId,
+      //     isAuth: true
+      //   }));
+      // }
 
-      throw new Error("Missing auth token");
+      // throw new Error("Missing auth token");
     }
   },
   formatError: err => {
