@@ -165,3 +165,19 @@ export const newMemberDocument = gql`
     }
   }
 `;
+
+export const newInviteDocument = gql`
+  subscription {
+    newInvite {
+      _id
+      subject {
+        _id
+        name
+      }
+      from {
+        name
+      }
+      createdAt
+    }
+  }
+`;
