@@ -6,7 +6,7 @@ import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Widget from "../../_ui/Widget";
 import Notifications from "../../Notifications";
 
-function Inbox(props) {
+function Inbox() {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
   const { data } = useQuery(notificationsDocument);
@@ -37,11 +37,9 @@ function Inbox(props) {
         color={total > 0 ? "red" : null}
         style={{ cursor: "pointer" }}
       />
-      {visible && (
-        <Widget close={toggle}>
-          <Notifications />
-        </Widget>
-      )}
+      <Widget close={toggle} visible={visible}>
+        <Notifications />
+      </Widget>
     </div>
   );
 }
