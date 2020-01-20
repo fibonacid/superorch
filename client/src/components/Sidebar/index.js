@@ -30,20 +30,17 @@ export default function Sidebar() {
       variables: { orchestraId },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData) return prev;
+        const orchestra = prev.orchestraById;
         const { newMember } = subscriptionData.data;
 
-        console.log(subscriptionData);
-
         return {
-          ...prev,
-          members: [...prev.members, newMember]
+          orchestraById: {
+            ...orchestra,
+            members: [...orchestra.members, newMember]
+          }
         };
       }
     });
-
-  subscribeToNewMembers();
-
-  console.log();
 
   useEffect(subscribeToNewMembers, []);
 
