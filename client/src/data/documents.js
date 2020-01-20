@@ -75,6 +75,15 @@ export const invitesDocument = gql`
   }
 `;
 
+export const notificationsDocument = gql`
+  query {
+    invites {
+      _id
+    }
+  }
+  # add other queries that qualify as notification
+`;
+
 //
 // Mutations
 //
