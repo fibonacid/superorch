@@ -135,6 +135,14 @@ export const sendInviteDocument = gql`
   }
 `;
 
+export const acceptInviteDocument = gql`
+  mutation acceptInvite($inviteId: String!) {
+    acceptInvite(inviteId: $inviteId) {
+      _id
+    }
+  }
+`;
+
 //
 // Subscriptions
 //
