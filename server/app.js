@@ -37,7 +37,6 @@ async function setupContext(token) {
 
 function getTokenFromRequest(req) {
   const authHeader = req.get("Authorization");
-  console.log({ authHeader });
   return authHeader.split(" ")[1];
 }
 
@@ -46,8 +45,6 @@ const server = new ApolloServer({
   resolvers: grapgQlResolvers,
 
   context: async ({ req, payload }) => {
-    console.log(payload.authToken);
-
     const token = payload ? payload.authToken : getTokenFromRequest(req);
 
     return await setupContext(token);
