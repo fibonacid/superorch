@@ -19,7 +19,8 @@ const rootResolver = {
     ...invites.Mutation
   },
   Subscription: {
-    ...invites.Subscription
+    ...invites.Subscription,
+    ...members.Subscription
   }
 };
 
