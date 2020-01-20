@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 //import styled from 'styled-components/macro';
 import { useQuery } from "@apollo/react-hooks";
-import { invitesDocument } from "../../../data/documents";
+import { invitesDocument, newInviteDocument } from "../../../data/documents";
 import Item from "./Item";
 
 function Invites() {
-  const { data } = useQuery(invitesDocument);
+  const { subscribeToMore, data } = useQuery(invitesDocument);
+
+  const subscribeToNewInvite = () =>
+    subscribeToMore({
+      document: newInviteDocument,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData) return prev;
+        const { newInvite } = subscriptionData.data;
+
+        return {
+          invites: [...prev.invites, newInvite]
+        };
+      }
+    });
+
+  useEffect(subscribeToNewInvite, []);
+
+  console.log(subscribeToNewInvite);
 
   return (
     <ul>
