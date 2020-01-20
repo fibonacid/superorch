@@ -143,6 +143,14 @@ export const acceptInviteDocument = gql`
   }
 `;
 
+export const denyInviteDocument = gql`
+  mutation denyInvite($inviteId: String!) {
+    denyInvite(inviteId: $inviteId) {
+      _id
+    }
+  }
+`;
+
 //
 // Subscriptions
 //
