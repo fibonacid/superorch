@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   acceptInviteDocument,
   invitesDocument,
+  denyInviteDocument,
   notificationsDocument,
   orchestraListDocument
 } from "../../../../data/documents";
@@ -18,8 +19,8 @@ const StyledBtnWrap = styled.div`
 `;
 
 function Item({ invite }) {
-  const [disabled, setDisabled] = useState(false);
   const [acceptInvite] = useMutation(acceptInviteDocument);
+  const [denyInvite] = useMutation(denyInviteDocument);
 
   const orchestra = invite.subject;
   const user = invite.from;
@@ -36,9 +37,17 @@ function Item({ invite }) {
           { query: notificationsDocument }
         ]
       });
+    } else if (e.target.name === "ignore") {
+      denyInvite({
+        variables: {
+          inviteId: invite._id
+        },
+        refetchQueries: [
+          { query: invitesDocument },
+          { query: notificationsDocument }
+        ]
+      });
     }
-
-    setDisabled(true);
   };
 
   return (
@@ -47,10 +56,10 @@ function Item({ invite }) {
         {user.name} invited you to {orchestra.name}
       </p>
       <StyledBtnWrap>
-        <button name="accept" onClick={click} disabled={disabled}>
+        <button name="accept" onClick={click}>
           accept
         </button>
-        <button name="ignore" onClick={click} disabled={disabled}>
+        <button name="ignore" onClick={click}>
           ignore
         </button>
       </StyledBtnWrap>
