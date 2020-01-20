@@ -3,11 +3,7 @@ const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
 const Member = require("../../models/members");
 const { transformInvite, transformMember } = require("./transforms");
-const { PubSub } = require("apollo-server-express");
-
-const pubsub = new PubSub();
-
-const NEW_INVITE = "NEW_INVITE";
+const { NEW_INVITE, NEW_MEMBER } = require("./subscriptions");
 
 exports.Query = {
   //
@@ -34,7 +30,7 @@ exports.Mutation = {
   sendInvite: async (
     _,
     { orchestraId, email },
-    { isAuth, userId, loaders }
+    { isAuth, userId, loaders, pubsub }
   ) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");
@@ -87,7 +83,11 @@ exports.Mutation = {
     }
   },
 
-  acceptInvite: async (_, { inviteId }, { isAuth, userId, loaders }) => {
+  acceptInvite: async (
+    _,
+    { inviteId },
+    { isAuth, userId, loaders, pubsub }
+  ) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");
     }
@@ -116,6 +116,11 @@ exports.Mutation = {
     orchestra.members.push(member);
     await orchestra.save();
 
+    // Send a NEW_MEMBER message
+    pubsub.publish(NEW_MEMBER, {
+      newMember: transformMember(member.id, loaders)
+    });
+
     // Add orchestra to the user
     const user = await User.findById(userId);
     user.memberOf.push(orchestra);
@@ -131,6 +136,6 @@ exports.Subscription = {
   //
   newInvite: {
     resolve: payload => payload.newInvite,
-    subscribe: () => pubsub.asyncIterator(NEW_INVITE)
+    subscribe: (_, { pubsub }) => pubsub.asyncIterator(NEW_INVITE)
   }
 };
