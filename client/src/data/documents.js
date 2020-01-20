@@ -59,6 +59,22 @@ export const orchestraDocument = gql`
   }
 `;
 
+export const invitesDocument = gql`
+  query {
+    invites {
+      _id
+      subject {
+        _id
+        name
+      }
+      from {
+        name
+      }
+      createdAt
+    }
+  }
+`;
+
 //
 // Mutations
 //
