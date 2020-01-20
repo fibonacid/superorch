@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { acceptInviteDocument } from "../../../../data/documents";
+import {
+  acceptInviteDocument,
+  invitesDocument,
+  notificationsDocument
+} from "../../../../data/documents";
 import { useMutation } from "@apollo/react-hooks";
 
 const StyledContainer = styled.li`
@@ -14,7 +18,7 @@ const StyledBtnWrap = styled.div`
 
 function Item({ invite }) {
   const [disabled, setDisabled] = useState(false);
-  const [acceptInvite, { data, error }] = useMutation(acceptInviteDocument);
+  const [acceptInvite] = useMutation(acceptInviteDocument);
 
   const orchestra = invite.subject;
   const user = invite.from;
@@ -24,7 +28,11 @@ function Item({ invite }) {
       acceptInvite({
         variables: {
           inviteId: invite._id
-        }
+        },
+        refetchQueries: [
+          { query: invitesDocument },
+          { query: notificationsDocument }
+        ]
       });
     }
 
