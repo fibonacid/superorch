@@ -21,6 +21,7 @@ const StyledContainer = styled.div`
 const StyledHeader = styled.div`
   display: flex;
   flex-direction: row-reverse;
+  margin-bottom: 10px;
 `;
 
 const StyledClose = styled.span`
