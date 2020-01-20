@@ -1,9 +1,13 @@
+const { withFilter, PubSub } = require("apollo-server-express");
+const { transformInvite, transformMember } = require("./transforms");
+const { NEW_INVITE, NEW_MEMBER } = require("./subscriptions");
+
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
 const Member = require("../../models/members");
-const { transformInvite, transformMember } = require("./transforms");
-const { NEW_INVITE, NEW_MEMBER } = require("./subscriptions");
+
+const pubsub = new PubSub();
 
 exports.Query = {
   //
@@ -30,7 +34,7 @@ exports.Mutation = {
   sendInvite: async (
     _,
     { orchestraId, email },
-    { isAuth, userId, loaders, pubsub }
+    { isAuth, userId, loaders }
   ) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");
@@ -83,11 +87,7 @@ exports.Mutation = {
     }
   },
 
-  acceptInvite: async (
-    _,
-    { inviteId },
-    { isAuth, userId, loaders, pubsub }
-  ) => {
+  acceptInvite: async (_, { inviteId }, { isAuth, userId, loaders }) => {
     if (!isAuth) {
       throw new Error("Unauthenticated");
     }
@@ -136,6 +136,14 @@ exports.Subscription = {
   //
   newInvite: {
     resolve: payload => payload.newInvite,
-    subscribe: (_, { pubsub }) => pubsub.asyncIterator(NEW_INVITE)
+    subscribe: () => pubsub.asyncIterator(NEW_INVITE)
+  },
+
+  //
+  // New Member
+  //
+  newMember: {
+    resolve: payload => payload.newMember,
+    subscribe: () => pubsub.asyncIterator(NEW_MEMBER)
   }
 };
