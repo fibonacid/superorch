@@ -154,3 +154,14 @@ export const userJoinedDocument = gql`
     }
   }
 `;
+
+export const newMemberDocument = gql`
+  subscription($orchestraId: String!) {
+    newMember(orchestraId: $orchestraId) {
+      user {
+        _id
+        name
+      }
+    }
+  }
+`;
