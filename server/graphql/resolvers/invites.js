@@ -116,6 +116,11 @@ exports.Mutation = {
     orchestra.members.push(member);
     await orchestra.save();
 
+    // Add orchestra to the user
+    const user = await User.findById(userId);
+    user.memberOf.push(orchestra);
+    await user.save();
+
     return transformMember(member.id, loaders);
   }
 };
