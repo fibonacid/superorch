@@ -56,22 +56,13 @@ const wsLink = new WebSocketLink({
 });
 
 const subscriptionMiddleware = {
-  applyMiddleware: function(options, next) {
-    // Get the current context
-    const { graphqlContext } = options.getContext();
-
-    console.log({ graphqlContext });
-
-    // set it on the `options` which will be passed to the websocket.
-    // with Apollo Server it becomes: `ApolloServer({context: ({payload}) => (returns options)})
-    options.connectionParams = {
-      authToken: graphqlContext.token
-    };
+  applyMiddleware: (options, next) => {
+    options.authToken = localStorage.getItem("token");
     next();
   }
 };
 
-//wsLink.subscriptionClient.use([subscriptionMiddleware]);
+wsLink.subscriptionClient.use([subscriptionMiddleware]);
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent

@@ -14,43 +14,43 @@ const inviteLoader = require("./loaders/inviteLoader");
 const PORT = 3000;
 const app = express();
 
+async function setupContext(token) {
+  const loaders = {
+    userLoader: userLoader(),
+    orchestraLoader: orchestraLoader(),
+    memberLoader: memberLoader(),
+    inviteLoader: inviteLoader()
+  };
+  try {
+    const { userId } = await validateToken(token);
+    return {
+      loaders,
+      userId,
+      isAuth: true
+    };
+  } catch (err) {
+    return {
+      isAuth: false
+    };
+  }
+}
+
+function getTokenFromRequest(req) {
+  const authHeader = req.get("Authorization");
+  console.log({ authHeader });
+  return authHeader.split(" ")[1];
+}
+
 const server = new ApolloServer({
   typeDefs: graphQlSchema,
   resolvers: grapgQlResolvers,
 
-  context: async ({ res, connection }) => {
-    if (connection) {
-      // check connection for metadata
-      return connection.context;
-    } else {
-      return {
-        isAuth: res.locals.isAuth,
-        userId: res.locals.userId,
-        loaders: {
-          userLoader: userLoader(),
-          orchestraLoader: orchestraLoader(),
-          memberLoader: memberLoader(),
-          inviteLoader: inviteLoader()
-        }
-      };
-    }
-  },
-  subscriptions: {
-    onConnect: connectionParams => {
-      return {
-        isAuth: true
-      };
-      // the returned value of this function will become
-      // available to the subscription resolvers via context.
-      // if (connectionParams.authToken) {
-      //   return validateToken(connectionParams.authToken).then(token => ({
-      //     userId: token.userId,
-      //     isAuth: true
-      //   }));
-      // }
+  context: async ({ req, payload }) => {
+    console.log(payload.authToken);
 
-      // throw new Error("Missing auth token");
-    }
+    const token = payload ? payload.authToken : getTokenFromRequest(req);
+
+    return await setupContext(token);
   },
   formatError: err => {
     // Don't give the specific errors to the client.
@@ -71,7 +71,7 @@ const server = new ApolloServer({
   }
 });
 
-app.use("/graphql", isAuth);
+//app.use("/graphql", isAuth);
 
 server.applyMiddleware({ app, cors: true });
 
