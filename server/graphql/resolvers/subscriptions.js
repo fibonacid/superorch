@@ -1,3 +1,0 @@
-exports.NEW_INVITE = "NEW_INVITE";
-
-exports.NEW_MEMBER = "NEW_MEMBER";

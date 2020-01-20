@@ -1,13 +1,14 @@
 const { withFilter, PubSub } = require("apollo-server-express");
 const { transformInvite, transformMember } = require("./transforms");
-const { NEW_INVITE, NEW_MEMBER } = require("./subscriptions");
-
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
 const Member = require("../../models/members");
 
 const pubsub = new PubSub();
+
+const NEW_INVITE = "NEW_INVITE";
+const NEW_MEMBER = "NEW_MEMBER";
 
 exports.Query = {
   //
