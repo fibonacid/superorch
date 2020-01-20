@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { acceptInviteDocument } from "../../../../data/documents";
+import { useMutation } from "@apollo/react-hooks";
 
 const StyledContainer = styled.li`
   padding: 5px;
@@ -11,10 +13,23 @@ const StyledBtnWrap = styled.div`
 `;
 
 function Item({ invite }) {
-  console.log(invite);
+  const [disabled, setDisabled] = useState(false);
+  const [acceptInvite, { data, error }] = useMutation(acceptInviteDocument);
 
   const orchestra = invite.subject;
   const user = invite.from;
+
+  const click = e => {
+    if (e.target.name === "accept") {
+      acceptInvite({
+        variables: {
+          inviteId: invite._id
+        }
+      });
+    }
+
+    setDisabled(true);
+  };
 
   return (
     <StyledContainer>
@@ -22,8 +37,12 @@ function Item({ invite }) {
         {user.name} invited you to {orchestra.name}
       </p>
       <StyledBtnWrap>
-        <button>join</button>
-        <button>ignore</button>
+        <button name="accept" onClick={click} disabled={disabled}>
+          accept
+        </button>
+        <button name="ignore" onClick={click} disabled={disabled}>
+          ignore
+        </button>
       </StyledBtnWrap>
     </StyledContainer>
   );
