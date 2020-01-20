@@ -3,7 +3,8 @@ import styled from "styled-components";
 import {
   acceptInviteDocument,
   invitesDocument,
-  notificationsDocument
+  notificationsDocument,
+  orchestraListDocument
 } from "../../../../data/documents";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -30,6 +31,7 @@ function Item({ invite }) {
           inviteId: invite._id
         },
         refetchQueries: [
+          { query: orchestraListDocument },
           { query: invitesDocument },
           { query: notificationsDocument }
         ]
