@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
-import { orchestraDocument } from "../../data/documents";
+import { orchestraDocument, newMemberDocument } from "../../data/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
 
@@ -16,10 +16,36 @@ const StyledContainer = styled.div`
 export default function Sidebar() {
   const { id: orchestraId } = useParams();
 
-  const { data, loading, error } = useQuery(orchestraDocument, {
-    variables: { orchestraId },
-    skip: !orchestraId
-  });
+  const { subscribeToMore, data, loading, error } = useQuery(
+    orchestraDocument,
+    {
+      variables: { orchestraId },
+      skip: !orchestraId
+    }
+  );
+
+  const subscribeToNewMembers = () =>
+    subscribeToMore({
+      document: newMemberDocument,
+      variables: { orchestraId },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData) return prev;
+        const { newMember } = subscriptionData.data;
+
+        console.log(subscriptionData);
+
+        return {
+          ...prev,
+          members: [...prev.members, newMember]
+        };
+      }
+    });
+
+  subscribeToNewMembers();
+
+  console.log();
+
+  useEffect(subscribeToNewMembers, []);
 
   return (
     <StyledContainer>
