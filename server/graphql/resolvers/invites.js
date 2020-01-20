@@ -18,7 +18,10 @@ exports.Query = {
       throw new Error("Unauthenticated");
     }
 
-    const invites = await Invite.find({ to: userId });
+    const invites = await Invite.find({
+      pending: true,
+      to: userId
+    });
 
     return invites.map(invite => transformInvite(invite.id, loaders));
   }
