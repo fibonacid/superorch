@@ -77,7 +77,8 @@ exports.Mutation = {
 
       // Send a NEW_INVITE message
       pubsub.publish(NEW_INVITE, {
-        newInvite: result
+        newInvite: transformInvite(result.id, loaders),
+        userId: user.id
       });
 
       // todo: use result id as email token
@@ -157,13 +158,15 @@ exports.Subscription = {
   // New Invite
   //
   newInvite: {
+    resolve: payload => {
+      console.log("resolve", payload);
+      return payload.newInvite;
+    },
     subscribe: withFilter(
       () => pubsub.asyncIterator(NEW_INVITE),
-      ({ newInvite }, __, { userId }) => {
+      ({ userId }, __, context) => {
         // If user is supposed to receive the invite:
-        if (newInvite.to === userId) {
-          return transformInvite(newInvite._id);
-        }
+        return userId === context.userId;
       }
     )
   },
