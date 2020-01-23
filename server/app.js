@@ -37,7 +37,9 @@ async function setupContext(token) {
 
 function getTokenFromRequest(req) {
   const authHeader = req.get("Authorization");
-  return authHeader.split(" ")[1];
+  if (authHeader) {
+    return authHeader.split(" ")[1];
+  }
 }
 
 const server = new ApolloServer({
