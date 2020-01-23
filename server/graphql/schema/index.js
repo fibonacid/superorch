@@ -76,6 +76,7 @@ const typeDefs = gql`
       orchestraId: String!
       orchestraInput: OrchestraInput!
     ): Orchestra!
+    deleteOrchestra(orchestraId: String!): Orchestra
     sendInvite(orchestraId: String!, email: String!): Invite!
     acceptInvite(inviteId: String!): Member!
     denyInvite(inviteId: String!): Invite!

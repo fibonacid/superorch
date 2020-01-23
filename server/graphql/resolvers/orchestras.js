@@ -2,6 +2,7 @@ const Orchestra = require("../../models/orchestras");
 const User = require("../../models/users");
 const Member = require("../../models/members");
 const { transformOrchestra } = require("./transforms");
+const mongoose = require("mongoose");
 
 module.exports = {
   Query: {
@@ -108,6 +109,68 @@ module.exports = {
         );
 
         return transformOrchestra(result.id, loaders);
+      } catch (err) {
+        console.log(err);
+        return err;
+      }
+    },
+
+    deleteOrchestra: async (_, { orchestraId }, { isAuth, userId }) => {
+      try {
+        if (!isAuth) {
+          throw new Error("Unauthorized");
+        }
+
+        const orchestra = await Orchestra.findById(orchestraId);
+
+        if (!orchestra) {
+          throw new Error("Orchestra doesn't exist");
+        }
+
+        const ownerId = orchestra._doc.owner.toString();
+        // Check if the user is the creator of the orchestra
+        if (ownerId !== userId) {
+          throw new Error("Invalid request");
+        }
+
+        // Delete orchestra
+        await Orchestra.findByIdAndDelete(orchestraId);
+
+        // Delete orchestra from the user createdOrchestras field
+        const user = await User.findById(userId);
+        user.createdOrchestras = user.createdOrchestras.filter(
+          id => id !== orchestraId
+        );
+        await user.save();
+
+        // delete orchestra from every user that is a member
+        const members = await Member.find({
+          _id: {
+            $in: orchestra._doc.members
+          }
+        });
+        const users = await User.find({
+          _id: {
+            $in: members.map(m => m._doc.user)
+          }
+        });
+
+        await Promise.all(
+          users.map(user => {
+            user.memberOf = user._doc.memberOf.filter(o => {
+              return o.toString() !== orchestraId;
+            });
+            user.createdOrchestras = user._doc.createdOrchestras.filter(o => {
+              return o.toString() !== orchestraId;
+            });
+            return user.save();
+          })
+        );
+
+        // finally, delete every member of the orchestra
+        await Member.remove({ _id: { $in: orchestra.members } });
+
+        //return orchestra._doc
       } catch (err) {
         console.log(err);
         return err;
