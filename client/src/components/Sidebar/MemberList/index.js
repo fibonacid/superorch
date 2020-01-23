@@ -13,7 +13,7 @@ const StyledTitle = styled.h3`
 `;
 
 const StyledList = styled.ul`
-  margin-top: 15px;
+  margin: 15px 0;
 `;
 
 const StyledLink = styled(Link)`
