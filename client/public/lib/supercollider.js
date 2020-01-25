@@ -11,9 +11,7 @@ async function launchSuperCollider() {
   // Boot supercollider interpreter
   const sclang = await sc.lang.boot(options);
   // Boot supercollider sound server
-  await sclang.interpret(`s = Server.default; s.boot;`);
-
-  return sclang;
+  return sclang.interpret(`s = Server.default; s.boot;`);
 }
 
 module.exports = {
