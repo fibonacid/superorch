@@ -36,7 +36,8 @@
     "styled-components": "^4.4.1",
     "styled-normalize": "^8.0.6",
     "styled-reset": "^4.0.8",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "^0.9.16",
+    "supercolliderjs": "^1.0.0"
   },
   "devDependencies": {
     "concurrently": "^5.0.2",
