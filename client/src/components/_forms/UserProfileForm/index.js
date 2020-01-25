@@ -3,21 +3,22 @@ import useFormValidation from "../../../hooks/useFormValidation";
 import useModifyUser from "../../../hooks/useModifyUser";
 import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
-const INITIAL_VALUES = {
-  firstName: "",
-  lastName: "",
-  city: "",
-  birthdate: "",
-  bio: ""
-};
+function UserProfileForm({ cachedValues, onSuccess }) {
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    city: "",
+    birthdate: "",
+    bio: "",
+    ...cachedValues
+  };
 
-function UserProfileForm(props) {
   const [updateUser, { loading, error: backendError, data }] = useModifyUser();
 
   useEffect(() => {
-    if (data && props.onSuccess) {
+    if (data && onSuccess) {
       // Call function from parent
-      props.onSuccess();
+      onSuccess();
     }
   }, [data]);
 
@@ -47,7 +48,7 @@ function UserProfileForm(props) {
     values,
     errors,
     isSubmitting
-  } = useFormValidation(INITIAL_VALUES, validate, authenticate);
+  } = useFormValidation(initialValues, validate, authenticate);
 
   return (
     <>
@@ -118,11 +119,9 @@ function UserProfileForm(props) {
             name="bio"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.bio}
+            value={values.bio || ""}
           />
-          {errors.birthdate && (
-            <PrimaryForm.Error>{errors.bio}</PrimaryForm.Error>
-          )}
+          {errors.bio && <PrimaryForm.Error>{errors.bio}</PrimaryForm.Error>}
         </PrimaryForm.Field>
 
         {backendError && (
