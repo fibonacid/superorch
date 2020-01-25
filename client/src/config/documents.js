@@ -28,6 +28,11 @@ export const userDocument = gql`
       _id
       name
       email
+      firstName
+      lastName
+      city
+      birthdate
+      bio
     }
   }
 `;
@@ -101,6 +106,12 @@ export const updateUserDocument = gql`
   mutation updateUser($userInput: UserInput!) {
     updateUser(userInput: $userInput) {
       name
+      email
+      firstName
+      lastName
+      city
+      birthdate
+      bio
     }
   }
 `;
