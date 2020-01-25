@@ -22,6 +22,13 @@ async function installExtensions() {
   }
 }
 
+// Enable only one instance of the app to run at once.
+// This is especially important during development.
+app.requestSingleInstanceLock()
+app.on('second-instance', (event, argv, cwd) => {
+  app.quit();
+})
+
 //
 //  Creates a new window
 //
