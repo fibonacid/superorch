@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   updateOrchestraDocument,
@@ -20,6 +20,9 @@ const StyledContainer = styled.div`
 
 const StyledWrapper = styled.div`
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const StyledForm = styled(PrimaryForm)`
@@ -33,8 +36,18 @@ const StyledStatus = styled.div`
   text-align: center;
 `;
 
-function EditOrchestraView(props) {
+const StyledButton = styled.button`
+  background: red;
+  color: white;
+  min-width: 100px;
+  cursor: pointer;
+`;
+
+function EditOrchestraView() {
+  const history = useHistory();
+  const location = useLocation();
   const params = useParams();
+
   const orchestraId = params.id;
 
   const queryOptions = {
@@ -61,6 +74,14 @@ function EditOrchestraView(props) {
     });
   }
 
+  // Display an overlay with the delete view
+  const handleDelete = () => {
+    history.push({
+      pathname: `/orchestras/${orchestraId}/delete`,
+      state: { background: location }
+    });
+  };
+
   return (
     <PrimaryLayout back={true} rootpath={"/orchestras/" + params.id}>
       <StyledContainer>
@@ -78,6 +99,7 @@ function EditOrchestraView(props) {
             {data && <div>Success</div>}
             {error && <span>{error.message}</span>}
           </StyledStatus>
+          <StyledButton onClick={handleDelete}>Delete</StyledButton>
         </StyledWrapper>
       </StyledContainer>
     </PrimaryLayout>
@@ -85,3 +107,13 @@ function EditOrchestraView(props) {
 }
 
 export default EditOrchestraView;
+
+// <Link
+// key={i.id}
+// to={{
+//   pathname: `/img/${i.id}`,
+//   // This is the trick! This link sets
+//   // the `background` in location state.
+//   state: { background: location }
+// }}
+// >
