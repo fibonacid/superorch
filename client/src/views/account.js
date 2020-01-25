@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
+import useUserProfile from "../hooks/useUserProfile";
 import SecondaryLayout from "../components/_layouts/SecondaryLayout";
 import PrimaryForm from "../components/_forms/PrimaryForm";
 import UserProfileForm from "../components/_forms/UserProfileForm";
@@ -12,11 +13,15 @@ const StyledForm = styled(PrimaryForm)`
 `;
 
 export default function AccountView() {
+  const userProfile = useUserProfile();
+
   return (
     <SecondaryLayout>
-      <StyledForm title="User Settings">
-        <UserProfileForm />
-      </StyledForm>
+      {userProfile && (
+        <StyledForm title="User Profile">
+          <UserProfileForm cachedValues={userProfile} />
+        </StyledForm>
+      )}
     </SecondaryLayout>
   );
 }
