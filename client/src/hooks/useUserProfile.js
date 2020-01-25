@@ -10,11 +10,11 @@ export default function useRegister() {
     function() {
       if (data) {
         setUserProfile({
-          firstName: data.user.firstName,
-          lastName: data.user.lastName,
-          city: data.user.city,
-          birthdate: data.user.birthdate,
-          bio: data.user.bio
+          firstName: data.user.firstName || "",
+          lastName: data.user.lastName || "",
+          city: data.user.city || "",
+          birthdate: data.user.birthdate || "",
+          bio: data.user.bio || ""
         });
       }
     },
