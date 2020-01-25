@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { orchestraDocument } from "../../../data/documents";
 import PrimaryOverlay from "../../../components/_layouts/PrimaryOverlay";
@@ -13,16 +13,10 @@ const StyledContainer = styled.div`
 `;
 
 function DeleteOrchestraView() {
-  const history = useHistory();
   const params = useParams();
   const { data } = useQuery(orchestraDocument, {
     variables: { orchestraId: params.id }
   });
-
-  const redirect = e => {
-    e && e.stopPropagation();
-    history.push("/");
-  };
 
   return (
     <PrimaryOverlay>
@@ -32,10 +26,7 @@ function DeleteOrchestraView() {
             <p>
               Confirm by entering the name of the orchestra you want to delete
             </p>
-            <DeleteOrchestraForm
-              orchestra={data.orchestraById}
-              redirect={redirect}
-            />
+            <DeleteOrchestraForm orchestra={data.orchestraById} />
           </PrimaryForm>
         )}
       </StyledContainer>

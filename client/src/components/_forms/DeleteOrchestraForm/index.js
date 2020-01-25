@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import {
   deleteOrchestraDocument,
@@ -11,28 +12,26 @@ const INITIAL_VALUES = {
   name: ""
 };
 
-function DeleteOrchestraForm({ orchestra, redirect }) {
-  const [deleteOrchestra, { data, loading, backendError }] = useMutation(
+function DeleteOrchestraForm({ orchestra }) {
+  const history = useHistory();
+  const [deleteOrchestra, { loading, backendError }] = useMutation(
     deleteOrchestraDocument,
     {
       variables: { orchestraId: orchestra._id },
-      refetchQueries: [{ query: orchestraListDocument }]
+      refetchQueries: [{ query: orchestraListDocument }],
+      onCompleted: () => {
+        history.push("/");
+      }
     }
   );
 
-  useEffect(() => {
-    if (data) {
-      redirect();
-    }
-  }, [data]);
-
   function validate(values) {
     const errors = {};
+
     // Password errors
     if (!values.name) {
       errors.name = "Required Name";
-    }
-    if (values.name !== orchestra.name) {
+    } else if (values.name !== orchestra.name) {
       errors.name = "Names don't match";
     }
     return errors;
@@ -61,7 +60,9 @@ function DeleteOrchestraForm({ orchestra, redirect }) {
         />
         {errors.name && <PrimaryForm.Error>{errors.name}</PrimaryForm.Error>}
       </PrimaryForm.Field>
-      <PrimaryForm.Button onClick={redirect}>Cancel</PrimaryForm.Button>
+      <PrimaryForm.Button disabled={isSubmitting} onClick={history.goBack}>
+        Cancel
+      </PrimaryForm.Button>
       <PrimaryForm.RiskyButton disabled={isSubmitting} type="submit">
         Submit
       </PrimaryForm.RiskyButton>
