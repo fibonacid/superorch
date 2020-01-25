@@ -29,14 +29,15 @@ const typeDefs = gql`
     name: String
     email: String
     password: String
-    firstName: String
-    lastName: String
-    city: String
-    birthdate: String
     createdOrchestras: [Orchestra!]
     memberOf: [Orchestra!]
     sentInvites: [Invite!]
     receivedInvites: [Invite!]
+    firstName: String
+    lastName: String
+    city: String
+    birthdate: String
+    bio: String
   }
 
   type AuthData {
