@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 import styled from "styled-components/macro";
 import AuthContext from "../../context/auth-context";
-import useLogout from "../../hooks/useLogout";
 import Inbox from "./Inbox";
 import Selector from "./Selector";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import Account from "./Account";
 
 const StyledWrap = styled.header`
   flex: 0 0 60px;
@@ -20,13 +18,8 @@ const StyledWrap = styled.header`
   text-align: center;
 `;
 
-const StyledIcon = styled(FontAwesomeIcon)`
-  cursor: pointer;
-`;
-
 function Navigation() {
   const { token } = useContext(AuthContext);
-  const logout = useLogout();
 
   return (
     <StyledWrap>
@@ -36,9 +29,7 @@ function Navigation() {
             <Inbox />
             <Selector />
           </div>
-          <div>
-            <StyledIcon onClick={logout} icon={faSignOutAlt} />
-          </div>
+          <Account />
         </>
       )}
     </StyledWrap>
