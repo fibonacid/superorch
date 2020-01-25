@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
 import useRegister from "../../../hooks/useRegister";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../../helpers/regex";
-import * as PrimaryForm from "../PrimaryForm";
+import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
 const INITIAL_VALUES = {
   name: "",

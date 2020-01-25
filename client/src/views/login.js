@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import SecondaryLayout from "../components/_layouts/SecondaryLayout";
-import PrimaryForm from "../components/_forms/PrimaryForm";
+import PrimaryForm from "../components/_miscellaneous/PrimaryForm";
 import LoginForm from "../components/_forms/LoginForm";
 
 const StyledForm = styled(PrimaryForm)`

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import useUserProfile from "../hooks/useUserProfile";
 import SecondaryLayout from "../components/_layouts/SecondaryLayout";
-import PrimaryForm from "../components/_forms/PrimaryForm";
+import PrimaryForm from "../components/_miscellaneous/PrimaryForm";
 import UserProfileForm from "../components/_forms/UserProfileForm";
 
 const StyledForm = styled(PrimaryForm)`
