@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { notificationsDocument } from "../../../data/documents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import Widget from "../../_ui/Widget";
+import Widget from "../../_miscellaneous/Widget";
 import Notifications from "../../Notifications";
 
 function Inbox() {
