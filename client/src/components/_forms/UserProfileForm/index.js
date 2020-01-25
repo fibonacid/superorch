@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { updateUserDocument } from "../../../config/documents";
+import { updateUserDocument, userDocument } from "../../../config/documents";
 import useFormValidation from "../../../hooks/useFormValidation";
 import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
@@ -14,10 +14,13 @@ function UserProfileForm({ cachedValues, onSuccess }) {
     ...cachedValues
   };
 
-  const [
-    updateUser,
-    { loading, error: backendError }
-  ] = useMutation(updateUserDocument, { onCompleted: onSuccess });
+  const [updateUser, { loading, error: backendError }] = useMutation(
+    updateUserDocument,
+    {
+      onCompleted: onSuccess,
+      refetchQueries: [{ query: userDocument }]
+    }
+  );
 
   function validate(_) {
     const errors = {};
@@ -116,7 +119,7 @@ function UserProfileForm({ cachedValues, onSuccess }) {
             name="bio"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.bio || ""}
+            value={values.bio}
           />
           {errors.bio && <PrimaryForm.Error>{errors.bio}</PrimaryForm.Error>}
         </PrimaryForm.Field>
