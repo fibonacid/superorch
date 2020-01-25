@@ -104,7 +104,7 @@ function UserProfileForm({ cachedValues, onSuccess }) {
             name="birthdate"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.birthdate}
+            value={values.birthdate && values.birthdate.substring(0, 10)}
           />
           {errors.birthdate && (
             <PrimaryForm.Error>{errors.birthdate}</PrimaryForm.Error>
