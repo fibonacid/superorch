@@ -31,6 +31,10 @@ const userSchema = new Schema({
     type: Date,
     required: false
   },
+  bio: {
+    type: String,
+    required: false
+  },
   createdOrchestras: [
     {
       type: Schema.Types.ObjectID,
