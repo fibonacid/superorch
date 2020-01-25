@@ -41,6 +41,11 @@ export const Button = styled.button`
   width: 100%;
 `;
 
+export const RiskyButton = styled(Button)`
+  background: red;
+  color: white;
+`;
+
 export const Error = styled.p`
   margin-top: 5px;
   color: red;
