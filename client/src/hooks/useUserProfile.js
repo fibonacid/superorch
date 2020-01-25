@@ -9,7 +9,6 @@ export default function useRegister() {
   useEffect(
     function() {
       if (data) {
-        console.log(data);
         setUserProfile({
           firstName: data.user.firstName,
           lastName: data.user.lastName,
