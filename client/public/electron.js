@@ -24,10 +24,10 @@ async function installExtensions() {
 
 // Enable only one instance of the app to run at once.
 // This is especially important during development.
-app.requestSingleInstanceLock()
-app.on('second-instance', (event, argv, cwd) => {
+app.requestSingleInstanceLock();
+app.on("second-instance", (event, argv, cwd) => {
   app.quit();
-})
+});
 
 //
 //  Creates a new window
@@ -90,7 +90,6 @@ app.on("activate", () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+const { launchSuperCollider } = require("./supercollider");
 
-//ipcMain.on('pong', function(event, args) {
-//console.log('pong');
-//});
+let sclang = launchSuperCollider();
