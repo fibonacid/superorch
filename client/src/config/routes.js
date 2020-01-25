@@ -9,6 +9,7 @@ import EditOrchestraView from "../views/orchestras/:id/edit";
 import OrchestraView from "../views/orchestras/:id";
 import InvitesOrchestraView from "../views/orchestras/:id/invites";
 import DeleteOrchestraView from "../views/orchestras/:id/delete";
+import AccountView from "../views/account";
 
 export default function Routes() {
   const { token } = useContext(AuthContext);
@@ -43,6 +44,7 @@ export default function Routes() {
         {!token && <Redirect to="/login" />}
 
         {/* ----- Only logged in pages ----- */}
+        <Route exact path="/account" children={<AccountView />} />
 
         <Route
           exact
