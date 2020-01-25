@@ -6,7 +6,7 @@ import {
   orchestraListDocument
 } from "../../../config/documents";
 import useFormValidation from "../../../hooks/useFormValidation";
-import * as PrimaryForm from "../PrimaryForm";
+import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
 const INITIAL_VALUES = {
   name: ""

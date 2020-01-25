@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { orchestraDocument } from "../../../config/documents";
 import PrimaryOverlay from "../../../components/_layouts/PrimaryOverlay";
 import DeleteOrchestraForm from "../../../components/_forms/DeleteOrchestraForm";
-import PrimaryForm from "../../../components/_forms/PrimaryForm";
+import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 
 const StyledContainer = styled.div`
   background: white;

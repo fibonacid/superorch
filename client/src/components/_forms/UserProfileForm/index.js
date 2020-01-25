@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
 import useModifyUser from "../../../hooks/useModifyUser";
-import * as PrimaryForm from "../PrimaryForm";
+import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
 const INITIAL_VALUES = {
   firstName: "",

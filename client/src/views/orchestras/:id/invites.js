@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { sendInviteDocument } from "../../../config/documents";
 import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
-import PrimaryForm from "../../../components/_forms/PrimaryForm";
+import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import InviteForm from "../../../components/_forms/InviteForm";
 
 const StyledContainer = styled.div`

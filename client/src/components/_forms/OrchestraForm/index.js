@@ -1,6 +1,6 @@
 import React from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
-import * as PrimaryForm from "../PrimaryForm";
+import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
 function OrchestraForm({ cachedValues = {}, authenticate }) {
   const initialValues = {

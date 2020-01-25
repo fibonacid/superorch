@@ -8,7 +8,7 @@ import {
   orchestraDocument
 } from "../../../config/documents";
 import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
-import PrimaryForm from "../../../components/_forms/PrimaryForm";
+import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import OrchestraForm from "../../../components/_forms/OrchestraForm";
 
 const StyledContainer = styled.div`
