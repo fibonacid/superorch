@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 
@@ -92,4 +92,8 @@ app.on("activate", () => {
 // code. You can also put them in separate files and require them here.
 const { launchSuperCollider } = require("./lib/supercollider");
 
-let sclang = launchSuperCollider();
+launchSuperCollider().then(function(sclang) {
+  ipcMain.handle("interpret_sclang", async (event, args) => {
+    return await sclang.interpret(args.message);
+  });
+});
