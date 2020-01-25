@@ -1,3 +1,5 @@
+const { dateToString } = require("../../helpers/date");
+
 //
 // Transform User
 //
@@ -25,6 +27,7 @@ async function transformUser(
 
   return {
     ...user._doc,
+    birthdate: dateToString(user._doc.birthdate),
     createdOrchestras: createdOrchestras.map(orchestra => ({
       ...orchestra._doc,
       members: memberLoader.loadMany(
