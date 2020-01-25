@@ -125,6 +125,14 @@ export const updateOrchestraDocument = gql`
   }
 `;
 
+export const deleteOrchestraDocument = gql`
+  mutation deleteOrchestra($orchestraId: String!) {
+    deleteOrchestra(orchestraId: $orchestraId) {
+      _id
+    }
+  }
+`;
+
 export const sendInviteDocument = gql`
   mutation sendInvite($orchestraId: String!, $email: String!) {
     sendInvite(orchestraId: $orchestraId, email: $email) {
