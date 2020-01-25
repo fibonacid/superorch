@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components/macro";
 import reset from "styled-reset";
 import normalize from "styled-normalize";
 
@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 
 export default GlobalStyle;
 
-export const StyledContent = styled.div`
+export const StyledWrapper = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -29,4 +29,19 @@ export const StyledContent = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: row;
+`;
+
+export const StyledContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+export const StyledInner = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
 `;

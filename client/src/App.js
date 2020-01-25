@@ -8,7 +8,11 @@ import Routes from "./config/routes";
 import AuthProvider from "./components/_providers/AuthProvider";
 
 // Components
-import GlobalStyle, { StyledContent } from "./components/GlobalStyle";
+import GlobalStyle, {
+  StyledWrapper,
+  StyledContainer,
+  StyledInner
+} from "./components/GlobalStyle";
 import Navigation from "./components/Navigation";
 
 let ipc;
@@ -35,10 +39,14 @@ function App() {
       <GlobalStyle />
       <AuthProvider>
         <HashRouter>
-          <StyledContent>
+          <StyledWrapper>
             <Navigation />
-            <Routes />
-          </StyledContent>
+            <StyledContainer>
+              <StyledInner>
+                <Routes />
+              </StyledInner>
+            </StyledContainer>
+          </StyledWrapper>
         </HashRouter>
       </AuthProvider>
     </ApolloProvider>
