@@ -3,13 +3,7 @@ import { updateUserDocument } from "../config/documents";
 
 export default function useModifyUser() {
   const [updateUser, { data, loading, error }] = useMutation(
-    updateUserDocument,
-    {
-      onCompleted: ({ updateUser }) => {
-        console.log("Success", updateUser);
-      },
-      onError: err => console.log(err.message)
-    }
+    updateUserDocument
   );
 
   return [updateUser, { data, loading, error }];

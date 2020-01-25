@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useMutation } from "@apollo/react-hooks";
+import { updateUserDocument } from "../../../config/documents";
 import useFormValidation from "../../../hooks/useFormValidation";
-import useModifyUser from "../../../hooks/useModifyUser";
 import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
 function UserProfileForm({ cachedValues, onSuccess }) {
@@ -13,14 +14,10 @@ function UserProfileForm({ cachedValues, onSuccess }) {
     ...cachedValues
   };
 
-  const [updateUser, { loading, error: backendError, data }] = useModifyUser();
-
-  useEffect(() => {
-    if (data && onSuccess) {
-      // Call function from parent
-      onSuccess();
-    }
-  }, [data]);
+  const [
+    updateUser,
+    { loading, error: backendError }
+  ] = useMutation(updateUserDocument, { onCompleted: onSuccess });
 
   function validate(_) {
     const errors = {};
