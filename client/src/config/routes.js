@@ -8,6 +8,7 @@ import CreateOrchestraView from "../views/orchestras/create";
 import EditOrchestraView from "../views/orchestras/:id/edit";
 import OrchestraView from "../views/orchestras/:id";
 import InvitesOrchestraView from "../views/orchestras/:id/invites";
+import DeleteOrchestraView from "../views/orchestras/:id/delete";
 
 export default function Routes() {
   const { token } = useContext(AuthContext);
@@ -62,8 +63,13 @@ export default function Routes() {
         <Route exact path="/" children={<HomeView />} />
       </Switch>
 
-      {/* Show the modal when a background page is set */}
-      {/* {background && <Route path="/invites" children={<InvitesView />} />} */}
+      {/* Show the following views as overlays when a background page is set */}
+      {background && (
+        <Route
+          path="/orchestras/:id/delete"
+          children={<DeleteOrchestraView />}
+        />
+      )}
     </>
   );
 }
