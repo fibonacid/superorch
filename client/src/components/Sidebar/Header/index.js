@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`
+  color: grey;
   margin-left: 5px;
   cursor: pointer;
 `;
