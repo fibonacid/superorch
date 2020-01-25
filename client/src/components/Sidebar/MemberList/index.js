@@ -35,8 +35,6 @@ function MemberList({ orchestra }) {
 
   return (
     <StyledContainer>
-      <StyledTitle>{`${members.length} Members`}</StyledTitle>
-
       <StyledList>
         {members.map((m, i) => (
           <ListItem key={i} member={m} />
