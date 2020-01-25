@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import { sendInviteDocument } from "../../../data/documents";
+import { sendInviteDocument } from "../../../config/documents";
 import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
 import PrimaryForm from "../../../components/_forms/PrimaryForm";
 import InviteForm from "../../../components/_forms/InviteForm";

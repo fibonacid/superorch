@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/react-hooks";
 import {
   createOrchestraDocument,
   orchestraListDocument
-} from "../../data/documents";
+} from "../../config/documents";
 import SecondaryLayout from "../../components/_layouts/SecondaryLayout";
 import PrimaryForm from "../../components/_forms/PrimaryForm";
 import OrchestraForm from "../../components/_forms/OrchestraForm";

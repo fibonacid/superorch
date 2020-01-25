@@ -6,7 +6,7 @@ import {
   denyInviteDocument,
   notificationsDocument,
   orchestraListDocument
-} from "../../../../data/documents";
+} from "../../../../config/documents";
 import { useMutation } from "@apollo/react-hooks";
 
 const StyledContainer = styled.li`

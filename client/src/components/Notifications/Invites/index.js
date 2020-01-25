@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 //import styled from 'styled-components/macro';
 import { useQuery } from "@apollo/react-hooks";
-import { invitesDocument, newInviteDocument } from "../../../data/documents";
+import { invitesDocument, newInviteDocument } from "../../../config/documents";
 import Item from "./Item";
 
 function Invites() {

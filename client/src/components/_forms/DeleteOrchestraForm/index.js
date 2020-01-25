@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import {
   deleteOrchestraDocument,
   orchestraListDocument
-} from "../../../data/documents";
+} from "../../../config/documents";
 import useFormValidation from "../../../hooks/useFormValidation";
 import * as PrimaryForm from "../PrimaryForm";
 

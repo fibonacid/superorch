@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { registerDocument } from "../data/documents";
+import { registerDocument } from "../config/documents";
 import AuthContext from "../context/auth-context";
 
 export default function useRegister() {

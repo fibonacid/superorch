@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
-import { orchestraListDocument } from "../../../data/documents";
+import { orchestraListDocument } from "../../../config/documents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Item from "./Item";

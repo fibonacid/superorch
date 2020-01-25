@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
-import { orchestraDocument, newMemberDocument } from "../../data/documents";
+import { orchestraDocument, newMemberDocument } from "../../config/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { notificationsDocument } from "../../../data/documents";
+import { notificationsDocument } from "../../../config/documents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Widget from "../../_miscellaneous/Widget";
