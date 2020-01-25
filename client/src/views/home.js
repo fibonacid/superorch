@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
+import { soundTest } from "../helpers/electron";
 
 const StyledWrapper = styled.div`
   flex: 1;
@@ -10,14 +11,13 @@ const StyledWrapper = styled.div`
 
 const StyledTitle = styled.h1`
   text-align: center;
+  cursor: pointer;
 `;
 
 function HomeView() {
   return (
     <StyledWrapper>
-      <div>
-        <StyledTitle>Welcome</StyledTitle>
-      </div>
+      <StyledTitle onClick={soundTest}>Welcome</StyledTitle>
     </StyledWrapper>
   );
 }

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { HashRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
 import configureClient from "./config/apollo";
-import { soundTest } from "./helpers/electron";
 
 // Providers
 import AuthProvider from "./components/_providers/AuthProvider";
@@ -22,10 +21,6 @@ const client = configureClient();
 // Application
 // ---------------------------------
 function App() {
-  useEffect(function() {
-    soundTest().then(result => console.log(result));
-  }, []);
-
   return (
     <ApolloProvider client={client}>
       <GlobalStyle />
