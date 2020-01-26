@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components/macro";
 import Editor from "draft-js-plugins-editor";
 import { EditorState } from "draft-js";
-import createFlashyEvalPlugin from "../../plugins/draft-js/flashy-eval-plugin";
+import { createCodeEvaluationPlugin } from "../../plugins/code-evaluation-plugin";
 
 const StyledContainer = styled.div`
   position: relative;
@@ -23,13 +23,12 @@ const StyledInner = styled.div`
   overflow: auto;
 `;
 
-function onTextEval(text) {
-  console.log(text);
-}
+const codeEvaluationPlugin = createCodeEvaluationPlugin({
+  onEvaluate: console.log
+});
 
-const flashEvalPlugin = createFlashyEvalPlugin({ onTextEval });
-
-const plugins = [flashEvalPlugin];
+const plugins = [codeEvaluationPlugin];
+const decorators = [];
 
 // -----------------------------------
 // SuperCollider Editor
@@ -61,6 +60,7 @@ export default class CodeEditor extends Component {
             editorState={this.state.editorState}
             onChange={this.onChange}
             plugins={plugins}
+            decorators={decorators}
             ref={element => {
               this.editor = element;
             }}
