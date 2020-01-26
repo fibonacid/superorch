@@ -19,7 +19,7 @@ export function soundTest() {
       message: `
       (
          {
-            var env = Env([0, 1, 0.5, 1, 0], [0.01, 0.5, 0.02, 0.5]);
+            var env = Env.perc(0.5, 1, 0.5, -4);
             SinOsc.ar(470) * EnvGen.kr(env, doneAction: Done.freeSelf)
          }.play
       )
