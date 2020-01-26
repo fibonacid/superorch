@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components/macro";
-import { Editor, EditorState } from "draft-js";
+import Editor from "draft-js-plugins-editor";
+import { EditorState } from "draft-js";
 
 const StyledContainer = styled.div`
   position: relative;
@@ -21,22 +22,29 @@ const StyledInner = styled.div`
   overflow: auto;
 `;
 
+const plugins = [];
+
 // -----------------------------------
 // SuperCollider Editor
 // -----------------------------------
-
 export default class CodeEditor extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { editorState: EditorState.createEmpty() };
-    this.onChange = editorState => this.setState({ editorState });
-    this.setDomEditorRef = ref => (this.domEditor = ref);
-    this.focus = () => this.domEditor.focus();
-  }
+  state = {
+    editorState: EditorState.createEmpty()
+  };
 
   componentDidMount() {
-    this.domEditor.focus();
+    this.focus();
   }
+
+  onChange = editorState => {
+    this.setState({
+      editorState
+    });
+  };
+
+  focus = () => {
+    this.editor.focus();
+  };
 
   render() {
     return (
@@ -45,7 +53,10 @@ export default class CodeEditor extends Component {
           <Editor
             editorState={this.state.editorState}
             onChange={this.onChange}
-            ref={this.setDomEditorRef}
+            plugins={plugins}
+            ref={element => {
+              this.editor = element;
+            }}
           />
         </StyledInner>
       </StyledContainer>
