@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components/macro";
 import Editor from "draft-js-plugins-editor";
 import { EditorState } from "draft-js";
+import createFlashyEvalPlugin from "../../plugins/draft-js/flashy-eval-plugin";
 
 const StyledContainer = styled.div`
   position: relative;
@@ -22,7 +23,13 @@ const StyledInner = styled.div`
   overflow: auto;
 `;
 
-const plugins = [];
+function onTextEval(text) {
+  console.log(text);
+}
+
+const flashEvalPlugin = createFlashyEvalPlugin({ onTextEval });
+
+const plugins = [flashEvalPlugin];
 
 // -----------------------------------
 // SuperCollider Editor
