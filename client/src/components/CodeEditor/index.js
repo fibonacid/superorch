@@ -30,7 +30,7 @@ const codeEvaluationPlugin = createCodeEvaluationPlugin({
 const plugins = [codeEvaluationPlugin];
 
 const compositeDecorator = new CompositeDecorator([
-  codeEvaluationPlugin.decorator
+  ...codeEvaluationPlugin.decorators
 ]);
 
 const text = `Hello world`;
