@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components/macro";
 import Editor from "draft-js-plugins-editor";
-import { EditorState } from "draft-js";
+import { EditorState, CompositeDecorator, ContentState } from "draft-js";
 import { createCodeEvaluationPlugin } from "../../plugins/code-evaluation-plugin";
 
 const StyledContainer = styled.div`
@@ -28,14 +28,22 @@ const codeEvaluationPlugin = createCodeEvaluationPlugin({
 });
 
 const plugins = [codeEvaluationPlugin];
-const decorators = [];
+
+const compositeDecorator = new CompositeDecorator([
+  codeEvaluationPlugin.decorator
+]);
+
+const text = `Hello world`;
 
 // -----------------------------------
 // SuperCollider Editor
 // -----------------------------------
 export default class CodeEditor extends Component {
   state = {
-    editorState: EditorState.createEmpty()
+    editorState: EditorState.createWithContent(
+      ContentState.createFromText(text),
+      compositeDecorator
+    )
   };
 
   componentDidMount() {
@@ -60,7 +68,6 @@ export default class CodeEditor extends Component {
             editorState={this.state.editorState}
             onChange={this.onChange}
             plugins={plugins}
-            decorators={decorators}
             ref={element => {
               this.editor = element;
             }}
