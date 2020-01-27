@@ -1,6 +1,14 @@
-import React, { useEffect } from "react";
 import { EditorState, Modifier } from "draft-js";
-import { findEntities } from "../../helpers/draft-js";
+
+export function findEvaluatedEntities(contentBlock, callback, contentState) {
+  contentBlock.findEntityRanges(character => {
+    const entityKey = character.getEntity();
+    return (
+      entityKey !== null &&
+      contentState.getEntity(entityKey).getType() === "EVALUATED"
+    );
+  }, callback);
+}
 
 export function createEvaluatedEntity(editorState, selectionState) {
   const contentState = editorState.getCurrentContent();
@@ -16,27 +24,4 @@ export function createEvaluatedEntity(editorState, selectionState) {
     entityKey
   );
   return EditorState.push(editorState, contentStateWithLink, "apply-entity");
-}
-
-export const evaluatedStrategy = (contentBlock, callback, contentState) => {
-  return findEntities("EVALUATED", contentBlock, callback, contentState);
-};
-
-//
-//  Evaluated Entity
-//
-export function Evaluated({ entityKey, contentState, children }) {
-  const entity = contentState.getEntity(entityKey);
-
-  console.log({ data: entity.data });
-
-  return (
-    <span
-      style={{
-        background: "yellow"
-      }}
-    >
-      {children}
-    </span>
-  );
 }

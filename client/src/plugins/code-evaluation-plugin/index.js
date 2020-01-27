@@ -1,13 +1,14 @@
-import { EditorState, CompositeDecorator } from "draft-js";
+import { EditorState } from "draft-js";
 import { getSelectionText, getSelectionEntity } from "draftjs-utils";
-import { Evaluated, evaluatedStrategy, createEvaluatedEntity } from "./entity";
+import { EvaluatedSpan } from "./components";
+import { findEvaluatedEntities, createEvaluatedEntity } from "./entities";
 
 export function createCodeEvaluationPlugin({ onEvaluate = () => {} }) {
   return {
     decorators: [
       {
-        strategy: evaluatedStrategy,
-        component: Evaluated
+        strategy: findEvaluatedEntities,
+        component: EvaluatedSpan
       }
     ],
 
