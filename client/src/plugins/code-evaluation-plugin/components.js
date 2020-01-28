@@ -1,26 +1,39 @@
-import React, { useEffect } from "react";
-import styled, { keyframes } from "styled-components/macro";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
 
-const blink = keyframes`
-  0% {
-    background: rgba(25,25,255,0);
-  }
-  10% {
-    background: rgba(25,25,255, 1.0);
-  }
-  100% {
-    background: rgba(25,25,255,0);
-  }
-`;
+function blink(el) {
+  let timeline = gsap.timeline();
 
-const StyledSpan = styled.span`
-  animation: 1s ${blink};
-`;
+  timeline.set(el, {
+    backgroundColor: `rgba(25, 25, 255, 0)`,
+    duration: 0.0
+  });
+
+  timeline.to(el, {
+    backgroundColor: `rgba(25, 25, 255, 1)`,
+    duration: 0.25
+  });
+
+  timeline.to(el, {
+    backgroundColor: `rgba(25, 25, 255, 0)`,
+    duration: 1.0
+  });
+}
 
 export function EvaluatedSpan({ entityKey, contentState, children }) {
+  const ref = useRef();
+
   const entity = contentState.getEntity(entityKey);
+  const { evaluatedTimes } = entity.data;
 
-  console.log(entity.data);
+  useEffect(
+    function() {
+      if (typeof evaluatedTimes !== "undefined") {
+        blink(ref.current);
+      }
+    },
+    [evaluatedTimes]
+  );
 
-  return <StyledSpan>{children}</StyledSpan>;
+  return <span ref={ref} children={children} />;
 }
