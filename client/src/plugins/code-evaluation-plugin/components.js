@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components/macro";
 
 const blink = keyframes`
   0% {
-    background: rgba(0,0,0);
+    background: rgba(25,25,255,0);
+  }
+  10% {
+    background: rgba(25,25,255, 1.0);
   }
   100% {
-    background: rgba(0,255,0, 1.0);
+    background: rgba(25,25,255,0);
   }
 `;
 
 const StyledSpan = styled.span`
-  animation: 0.3s ${blink};
+  animation: 1s ${blink};
 `;
 
 export function EvaluatedSpan({ entityKey, contentState, children }) {
