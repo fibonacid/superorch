@@ -37,10 +37,15 @@ export function createCodeEvaluationPlugin({ onEvaluate = () => {} }) {
             evaluatedTimes: entity.data.evaluatedTimes + 1
           });
 
-          // Update editor.
-          setEditorState(
-            EditorState.push(editorState, nextContentState, "change-block-data")
+          const newEditorState = EditorState.push(
+            editorState,
+            nextContentState,
+            "change-block-data"
           );
+          const decorator = editorState.getDecorator();
+
+          // Update editor.
+          setEditorState(EditorState.set(newEditorState, { decorator }));
         }
 
         // Pass text to callback handle
