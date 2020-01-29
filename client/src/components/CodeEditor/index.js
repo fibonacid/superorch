@@ -26,7 +26,7 @@ const StyledInner = styled.div`
 `;
 
 const StyledContainer = styled.div`
-  margin: 10px;
+  padding: 10px 0 0 10px;
   position: absolute;
 `;
 

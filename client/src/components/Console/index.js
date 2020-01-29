@@ -10,15 +10,15 @@ const StyledWrapper = styled.div`
 
 const StyledInner = styled.div`
   position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: auto;
 `;
 
 const StyledContainer = styled.div`
-  margin: 10px;
+  padding: 10px 0 0 10px;
   position: absolute;
 `;
 
