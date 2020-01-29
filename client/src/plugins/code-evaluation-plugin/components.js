@@ -15,7 +15,7 @@ function blink(el) {
   });
 
   timeline.to(el, {
-    backgroundColor: `rgba(25, 25, 255, 0.25)`,
+    backgroundColor: `rgba(25, 25, 255, 0.0)`,
     duration: 1.0,
     ease: Power0.easeOut
   });
