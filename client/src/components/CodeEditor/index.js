@@ -4,6 +4,7 @@ import Editor from "draft-js-plugins-editor";
 import { EditorState, CompositeDecorator, ContentState } from "draft-js";
 import { createCodeEvaluationPlugin } from "../../plugins/code-evaluation-plugin";
 import { interpretWithSclang } from "../../helpers/electron";
+import SCLogContext from "../../context/sclog-context";
 
 const StyledContainer = styled.div`
   position: relative;
@@ -24,17 +25,19 @@ const StyledInner = styled.div`
   overflow: auto;
 `;
 
-const text = `1 + 1`;
+const text = `"Hello World"`;
 
 // -----------------------------------
 // SuperCollider Editor
 // -----------------------------------
 export default class CodeEditor extends Component {
+  static contextType = SCLogContext;
+
   constructor(props) {
     super(props);
 
     const codeEvaluationPlugin = createCodeEvaluationPlugin({
-      onEvaluate: this.onEvaluate
+      onEvaluate: this.onEvaluate.bind(this)
     });
 
     const decorators = [...codeEvaluationPlugin.decorators];
@@ -44,16 +47,23 @@ export default class CodeEditor extends Component {
         ContentState.createFromText(text),
         new CompositeDecorator(decorators)
       ),
-      plugins: [
-        createCodeEvaluationPlugin({
-          onEvaluate: this.onEvaluate
-        })
-      ]
+      plugins: []
     };
   }
 
   componentDidMount() {
     this.focus();
+
+    // CodeEvaluationPlugin needs to be loaded
+    // after context has been attached to "this"
+    this.setState({
+      plugins: [
+        ...this.state.plugins,
+        createCodeEvaluationPlugin({
+          onEvaluate: this.onEvaluate.bind(this)
+        })
+      ]
+    });
   }
 
   onChange = editorState => {
@@ -66,20 +76,27 @@ export default class CodeEditor extends Component {
     this.editor.focus();
   };
 
-  onEvaluate(text) {
-    interpretWithSclang(text)
-      .then(res => {
-        console.group("sclang");
-        console.log(text);
-        console.log(res);
-        console.groupEnd();
-      })
-      .catch(err => {
-        console.group("sclang");
-        console.log(text);
-        console.error(err.message);
-        console.groupEnd();
+  async onEvaluate(text) {
+    // Add input to the console
+    this.context.pushLine({
+      type: "stdin",
+      value: text
+    });
+    try {
+      // Send text to interpreter.
+      const result = await interpretWithSclang(text);
+      // Log response.
+      this.context.pushLine({
+        type: "stdout",
+        value: result.toString()
       });
+    } catch (err) {
+      // Log errors
+      this.context.pushLine({
+        type: "error",
+        value: err.message
+      });
+    }
   }
 
   render() {
