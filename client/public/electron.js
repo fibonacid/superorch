@@ -100,12 +100,13 @@ process.on("uncaughtException", function(error) {
 const sc = require("supercolliderjs");
 
 async function bootSuperCollider() {
-  const sclang = await sc.lang.boot({ echo: true });
+  const sclang = await sc.lang.boot({ echo: true, debug: true });
+  // Start the server
+  await sclang.interpret("s.boot");
 
   ipcMain.handle("interpret_sclang", async (_, args) => {
     try {
       const result = await sclang.interpret(args.message);
-
       return result;
     } catch (err) {
       return err;
