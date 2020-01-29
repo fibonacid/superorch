@@ -30,8 +30,6 @@ const StyledContainer = styled.div`
   position: absolute;
 `;
 
-const text = `"Hello World"`;
-
 // -----------------------------------
 // SuperCollider Editor
 // -----------------------------------
@@ -48,10 +46,7 @@ export default class CodeEditor extends Component {
     const decorators = [...codeEvaluationPlugin.decorators];
 
     this.state = {
-      editorState: EditorState.createWithContent(
-        ContentState.createFromText(text),
-        new CompositeDecorator(decorators)
-      ),
+      editorState: EditorState.createEmpty(new CompositeDecorator(decorators)),
       plugins: []
     };
   }
