@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
+import SCLogContext from "../../context/sclog-context";
 
 const StyledContainer = styled.div`
   position: relative;
@@ -19,13 +20,28 @@ const StyledInner = styled.div`
   overflow: auto;
 `;
 
+function Line({ line }) {
+  return (
+    <>
+      {line.type === "stdin" && <p>> {line.value}</p>}
+      {line.type === "stdout" && <p>{line.value}</p>}
+    </>
+  );
+}
+
 function Console(props) {
   return (
-    <StyledContainer className={props.className}>
-      <StyledInner>
-        <span>$ hello world</span>
-      </StyledInner>
-    </StyledContainer>
+    <SCLogContext.Consumer>
+      {value => (
+        <StyledContainer className={props.className}>
+          <StyledInner>
+            {value.lines.map((line, i) => (
+              <Line key={i} line={line} />
+            ))}
+          </StyledInner>
+        </StyledContainer>
+      )}
+    </SCLogContext.Consumer>
   );
 }
 
