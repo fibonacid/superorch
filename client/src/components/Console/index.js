@@ -5,10 +5,7 @@ import SCLogContext from "../../context/sclog-context";
 const StyledContainer = styled.div`
   position: relative;
   background: black;
-  color: rgb(0, 255, 0);
   padding: 10px;
-  font-size: 12px;
-  font-family: monospace;
 `;
 
 const StyledInner = styled.div`
@@ -20,11 +17,19 @@ const StyledInner = styled.div`
   overflow: auto;
 `;
 
+const StyledSpan = styled.span`
+  line-height: 1.2em;
+  display: block;
+  color: rgb(0, 255, 0);
+  font-size: 12px;
+  font-family: monospace;
+`;
+
 function Line({ line }) {
   return (
     <>
-      {line.type === "stdin" && <p>> {line.value}</p>}
-      {line.type === "stdout" && <p>{line.value}</p>}
+      {line.type === "stdin" && <StyledSpan>> {line.value}</StyledSpan>}
+      {line.type === "stdout" && <StyledSpan>{line.value}</StyledSpan>}
     </>
   );
 }
