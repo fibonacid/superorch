@@ -23,28 +23,33 @@ const StyledInner = styled.div`
   overflow: auto;
 `;
 
-const codeEvaluationPlugin = createCodeEvaluationPlugin({
-  onEvaluate: console.log
-});
-
-const plugins = [codeEvaluationPlugin];
-
-const compositeDecorator = new CompositeDecorator([
-  ...codeEvaluationPlugin.decorators
-]);
-
 const text = `Hello world`;
 
 // -----------------------------------
 // SuperCollider Editor
 // -----------------------------------
 export default class CodeEditor extends Component {
-  state = {
-    editorState: EditorState.createWithContent(
-      ContentState.createFromText(text),
-      compositeDecorator
-    )
-  };
+  constructor(props) {
+    super(props);
+
+    const codeEvaluationPlugin = createCodeEvaluationPlugin({
+      onEvaluate: this.onEvaluate
+    });
+
+    const decorators = [...codeEvaluationPlugin.decorators];
+
+    this.state = {
+      editorState: EditorState.createWithContent(
+        ContentState.createFromText(text),
+        new CompositeDecorator(decorators)
+      ),
+      plugins: [
+        createCodeEvaluationPlugin({
+          onEvaluate: this.onEvaluate
+        })
+      ]
+    };
+  }
 
   componentDidMount() {
     this.focus();
@@ -60,6 +65,10 @@ export default class CodeEditor extends Component {
     this.editor.focus();
   };
 
+  onEvaluate(text) {
+    console.log(text);
+  }
+
   render() {
     return (
       <StyledContainer className={this.props.className} onClick={this.focus}>
@@ -67,7 +76,7 @@ export default class CodeEditor extends Component {
           <Editor
             editorState={this.state.editorState}
             onChange={this.onChange}
-            plugins={plugins}
+            plugins={this.state.plugins}
             ref={element => {
               this.editor = element;
             }}
