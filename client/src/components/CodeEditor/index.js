@@ -3,6 +3,7 @@ import styled from "styled-components/macro";
 import Editor from "draft-js-plugins-editor";
 import { EditorState, CompositeDecorator, ContentState } from "draft-js";
 import { createCodeEvaluationPlugin } from "../../plugins/code-evaluation-plugin";
+import { interpretWithSclang } from "../../helpers/electron";
 
 const StyledContainer = styled.div`
   position: relative;
@@ -23,7 +24,7 @@ const StyledInner = styled.div`
   overflow: auto;
 `;
 
-const text = `Hello world`;
+const text = `1 + 1`;
 
 // -----------------------------------
 // SuperCollider Editor
@@ -66,7 +67,19 @@ export default class CodeEditor extends Component {
   };
 
   onEvaluate(text) {
-    console.log(text);
+    interpretWithSclang(text)
+      .then(res => {
+        console.group("sclang");
+        console.log(text);
+        console.log(res);
+        console.groupEnd();
+      })
+      .catch(err => {
+        console.group("sclang");
+        console.log(text);
+        console.error(err.message);
+        console.groupEnd();
+      });
   }
 
   render() {

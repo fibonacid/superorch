@@ -24,10 +24,11 @@ async function installExtensions() {
 
 // Enable only one instance of the app to run at once.
 // This is especially important during development.
-app.requestSingleInstanceLock();
-app.on("second-instance", (event, argv, cwd) => {
+/** Check if single instance, if not, simply quit new instance */
+let isSingleInstance = app.requestSingleInstanceLock();
+if (!isSingleInstance) {
   app.quit();
-});
+}
 
 //
 //  Creates a new window
@@ -88,12 +89,34 @@ app.on("activate", () => {
   }
 });
 
+// Handle the errors
+process.on("uncaughtException", function(error) {
+  console.error(error);
+});
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-const { launchSuperCollider } = require("./lib/supercollider");
 
-launchSuperCollider().then(function(sclang) {
-  ipcMain.handle("interpret_sclang", async (event, args) => {
-    return await sclang.interpret(args.message);
+const sc = require("supercolliderjs");
+
+async function bootSuperCollider() {
+  const sclang = await sc.lang.boot({ echo: true });
+
+  ipcMain.handle("interpret_sclang", async (_, args) => {
+    try {
+      const result = await sclang.interpret(args.message);
+
+      const test = new Promise(() => {
+        throw new Error("test error");
+      });
+      await test;
+      // throw new Error('test error');
+
+      return result;
+    } catch (err) {
+      return err;
+    }
   });
-});
+}
+
+bootSuperCollider();
