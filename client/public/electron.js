@@ -106,12 +106,6 @@ async function bootSuperCollider() {
     try {
       const result = await sclang.interpret(args.message);
 
-      const test = new Promise(() => {
-        throw new Error("test error");
-      });
-      await test;
-      // throw new Error('test error');
-
       return result;
     } catch (err) {
       return err;
