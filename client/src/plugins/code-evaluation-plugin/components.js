@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
+import gsap, { Power0 } from "gsap";
 
 function blink(el) {
   let timeline = gsap.timeline();
@@ -11,12 +11,13 @@ function blink(el) {
 
   timeline.to(el, {
     backgroundColor: `rgba(25, 25, 255, 1)`,
-    duration: 0.25
+    duration: 0.2
   });
 
   timeline.to(el, {
-    backgroundColor: `rgba(25, 25, 255, 0)`,
-    duration: 1.0
+    backgroundColor: `rgba(25, 25, 255, 0.25)`,
+    duration: 1.0,
+    ease: Power0.easeOut
   });
 }
 
