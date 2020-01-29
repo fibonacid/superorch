@@ -6,7 +6,7 @@ import { createCodeEvaluationPlugin } from "../../plugins/code-evaluation-plugin
 import { interpretWithSclang } from "../../helpers/electron";
 import SCLogContext from "../../context/sclog-context";
 
-const StyledContainer = styled.div`
+const StyledWrapper = styled.div`
   position: relative;
   cursor: text;
   padding: 10px;
@@ -18,11 +18,16 @@ const StyledContainer = styled.div`
 // Editor Wrapper
 const StyledInner = styled.div`
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: auto;
+`;
+
+const StyledContainer = styled.div`
+  margin: 10px;
+  position: absolute;
 `;
 
 const text = `"Hello World"`;
@@ -101,18 +106,20 @@ export default class CodeEditor extends Component {
 
   render() {
     return (
-      <StyledContainer className={this.props.className} onClick={this.focus}>
+      <StyledWrapper className={this.props.className} onClick={this.focus}>
         <StyledInner>
-          <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-            plugins={this.state.plugins}
-            ref={element => {
-              this.editor = element;
-            }}
-          />
+          <StyledContainer>
+            <Editor
+              editorState={this.state.editorState}
+              onChange={this.onChange}
+              plugins={this.state.plugins}
+              ref={element => {
+                this.editor = element;
+              }}
+            />
+          </StyledContainer>
         </StyledInner>
-      </StyledContainer>
+      </StyledWrapper>
     );
   }
 }

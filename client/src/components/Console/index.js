@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components/macro";
 import SCLogContext from "../../context/sclog-context";
 
-const StyledContainer = styled.div`
+const StyledWrapper = styled.div`
   position: relative;
   background: black;
   padding: 10px;
@@ -10,11 +10,16 @@ const StyledContainer = styled.div`
 
 const StyledInner = styled.div`
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   overflow: auto;
+`;
+
+const StyledContainer = styled.div`
+  margin: 10px;
+  position: absolute;
 `;
 
 const StyledSpan = styled.span`
@@ -35,18 +40,19 @@ function Line({ line }) {
 }
 
 function Console(props) {
+  const { lines } = useContext(SCLogContext);
+
   return (
-    <SCLogContext.Consumer>
-      {value => (
-        <StyledContainer className={props.className}>
-          <StyledInner>
-            {value.lines.map((line, i) => (
-              <Line key={i} line={line} />
-            ))}
-          </StyledInner>
+    <StyledWrapper className={props.className}>
+      <StyledInner>
+        <StyledContainer>
+          {lines.map((line, i) => (
+            <Line key={i} line={line} />
+          ))}
+          }
         </StyledContainer>
-      )}
-    </SCLogContext.Consumer>
+      </StyledInner>
+    </StyledWrapper>
   );
 }
 
