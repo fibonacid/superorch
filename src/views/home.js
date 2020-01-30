@@ -1,40 +1,25 @@
-import React, { useContext } from "react";
-import authContext from "../context/auth-context";
-import Frame from "../components/Frame";
-import FrameBox from "../components/FrameBox";
-import styled from "styled-components";
-import UserList from "../components/UserList";
-import Playground from "../components/Playground";
+import React from "react";
+import styled from "styled-components/macro";
+import { soundTest } from "../helpers/electron";
 
-const StyledContainer = styled(Frame)`
-  max-height: 100%;
-  height: 100%;
-  overflow: auto;
+const StyledWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
-const StyledSidebar = styled(FrameBox)`
-  background: whitesmoke;
-  border-right: solid 1px lightgrey;
+const StyledTitle = styled.h1`
+  text-align: center;
+  cursor: pointer;
 `;
 
-const StyledMainbar = styled(FrameBox)``;
-
-function HomeView(props) {
-
-  const { token, userId } = useContext(authContext); 
-
+function HomeView() {
   return (
-    <StyledContainer>
-      {token &&
-        <StyledSidebar grow="0" shrink="1" basis="200px">
-          <UserList />
-        </StyledSidebar>
-      }
-      <StyledMainbar>
-        <Playground />
-      </StyledMainbar>
-    </StyledContainer>
-  )
+    <StyledWrapper>
+      <StyledTitle onClick={soundTest}>Welcome</StyledTitle>
+    </StyledWrapper>
+  );
 }
 
 export default HomeView;

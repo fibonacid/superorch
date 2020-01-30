@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 
@@ -11,7 +11,7 @@ let win;
 //
 async function installExtensions() {
   const installer = require("electron-devtools-installer");
-  const extensions = ["REACT_DEVELOPER_TOOLS"];
+  const extensions = ["REACT_DEVELOPER_TOOLS", "APOLLO_DEVELOPER_TOOLS"];
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   for (const name of extensions) {
     try {
@@ -20,6 +20,14 @@ async function installExtensions() {
       console.log(`Error installing ${name} extension: ${e.message}`);
     }
   }
+}
+
+// Enable only one instance of the app to run at once.
+// This is especially important during development.
+/** Check if single instance, if not, simply quit new instance */
+let isSingleInstance = app.requestSingleInstanceLock();
+if (!isSingleInstance) {
+  app.quit();
 }
 
 //
@@ -81,9 +89,27 @@ app.on("activate", () => {
   }
 });
 
+// Handle the errors
+// process.on("uncaughtException", function(error) {
+//   return error
+// });
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-//ipcMain.on('pong', function(event, args) {
-//console.log('pong');
-//});
+const sc = require("supercolliderjs");
+
+async function bootSuperCollider() {
+  const lang = await sc.lang.boot({ echo: true, debug: false });
+
+  ipcMain.handle("interpret_sclang", async (_, args) => {
+    try {
+      const result = await lang.interpret(args.message);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  });
+}
+
+bootSuperCollider();
