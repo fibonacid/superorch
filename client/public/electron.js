@@ -100,7 +100,7 @@ app.on("activate", () => {
 const sc = require("supercolliderjs");
 
 async function bootSuperCollider() {
-  const lang = await sc.lang.boot({ echo: true, debug: false });
+  const lang = await sc.lang.boot({ echo: true, debug: true });
 
   ipcMain.handle("interpret_sclang", async (_, args) => {
     try {
