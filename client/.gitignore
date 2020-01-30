@@ -10,6 +10,9 @@
 /build
 /dist
 
+# config
+.supercollider.yaml
+
 # misc
 .DS_Store
 .env.local
