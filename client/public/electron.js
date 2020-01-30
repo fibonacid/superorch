@@ -90,9 +90,9 @@ app.on("activate", () => {
 });
 
 // Handle the errors
-process.on("uncaughtException", function(error) {
-  console.error(error);
-});
+// process.on("uncaughtException", function(error) {
+//   return error
+// });
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
@@ -100,17 +100,21 @@ process.on("uncaughtException", function(error) {
 const sc = require("supercolliderjs");
 
 async function bootSuperCollider() {
-  const sclang = await sc.lang.boot({ echo: true, debug: true });
-  // Start the server
-  await sclang.interpret("s.boot");
+  const lang = await sc.lang.boot({ echo: true, debug: false });
 
   ipcMain.handle("interpret_sclang", async (_, args) => {
-    try {
-      const result = await sclang.interpret(args.message);
-      return result;
-    } catch (err) {
-      return err;
-    }
+    const output = await lang.interpret(args.message).then(
+      function(result) {
+        // result is a native javascript array
+        return result;
+      },
+      function(error) {
+        // syntax or runtime errors
+        // are returned as javascript objects
+        return error;
+      }
+    );
+    return output;
   });
 }
 
