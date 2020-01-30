@@ -13,7 +13,7 @@ const StyledContainer = styled.div`
   padding: 0 10px;
 `;
 
-export default function Sidebar() {
+export default function Orchestra() {
   const { id: orchestraId } = useParams();
 
   const { subscribeToMore, data, loading, error } = useQuery(
