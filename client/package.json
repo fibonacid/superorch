@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "An desktop client for superorch",
   "author": "Lorenzo Rivosecchi",
+  "homepage": "./",
   "main": "public/electron.js",
   "scripts": {
     "react-start": "react-scripts start",
@@ -70,7 +71,14 @@
     ]
   },
   "build": {
-    "appId": "lorenzorivosecchi.superorch-app",
+    "appId": "lorenzorivosecchi.superorch",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
     "mac": {
       "icon": "assets/favicon.icns"
     },
