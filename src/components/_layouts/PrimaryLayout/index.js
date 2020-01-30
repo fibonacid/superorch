@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components/macro";
-import Sidebar from "../../Sidebar";
 import GoBack from "./GoBack";
 
 const StyledWrapper = styled.div`
@@ -32,7 +31,6 @@ const StyledContent = styled.div`
 function PrimaryLayout(props) {
   return (
     <StyledWrapper>
-      <Sidebar />
       <StyledContainer>
         <StyledInner>
           <StyledContent>{props.children}</StyledContent>
