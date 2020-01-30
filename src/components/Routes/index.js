@@ -63,28 +63,26 @@ return (
     </StyledSidebar>
     <StyledMain>
       <Switch location={background || location}>
-        {routes.map((route, index) => {
+        {routes.map((route, index) => (
           // console.log(route.path, location.pathname);
           // Render more <Routes> with the same paths as
           // above, but different components this time.
-          return (
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              children={<route.main token={token}/>}
-            />
-          )
-        })}
-      </Switch>
-      {background && routes.map((route, index) => (
-          <Route 
+          <Route
             key={index}
             path={route.path}
-            children={route.modal}
+            exact={route.exact}
+            children={<route.main token={token}/>}
           />
-      ))}
+        ))}
+      </Switch>
     </StyledMain>
+    {background && routes.map((route, index) => (
+        <Route 
+          key={index}
+          path={route.path}
+          children={route.modal}
+        />
+    ))}
   </StyledWrapper>
 )
 }
