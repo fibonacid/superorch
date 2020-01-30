@@ -103,18 +103,12 @@ async function bootSuperCollider() {
   const lang = await sc.lang.boot({ echo: true, debug: false });
 
   ipcMain.handle("interpret_sclang", async (_, args) => {
-    const output = await lang.interpret(args.message).then(
-      function(result) {
-        // result is a native javascript array
-        return result;
-      },
-      function(error) {
-        // syntax or runtime errors
-        // are returned as javascript objects
-        return error;
-      }
-    );
-    return output;
+    try {
+      const result = await lang.interpret(args.message);
+      return result;
+    } catch (error) {
+      return error;
+    }
   });
 }
 
