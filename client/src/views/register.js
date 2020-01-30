@@ -1,30 +1,60 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-//import AuthContext from "../context/auth-context";
-import Layout from "../components/Layout";
-import RegistrationForm from "../components/RegistrationForm";
-import FormWrapper from "../components/FormWrapper";
+import React, { useState, useCallback } from "react";
+import { Link, useHistory } from "react-router-dom";
+import styled from "styled-components/macro";
+import SecondaryLayout from "../components/_layouts/SecondaryLayout";
+import PrimaryForm from "../components/_miscellaneous/PrimaryForm";
+import RegistrationForm from "../components/_forms/RegistrationForm";
+import UserProfileForm from "../components/_forms/UserProfileForm";
 
-const StyledWrap = styled.div`
-  max-width: 200px;
+const StyledForm = styled(PrimaryForm)`
+  max-width: 300px;
   border: solid 1px lightgrey;
   border-radius: 10px;
-  margin: 0 auto;
+  margin: auto;
+`;
+
+const StyledLink = styled(Link)`
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: lightgrey;
+  text-decoration: none;
 `;
 
 function RegisterView() {
+  const [index, setIndex] = useState(0);
+  const nextForm = useCallback(() => {
+    setIndex(index + 1);
+  }, [index]);
 
-  //const { token } = useContext(AuthContext);
+  const history = useHistory();
+  const redirect = () => {
+    history.push("/");
+  };
 
   return (
-	 <Layout>
-		<StyledWrap>
-		  <FormWrapper title="Register">
-				<RegistrationForm />
-		  </FormWrapper>
-		</StyledWrap>
-	 </Layout>
-  )
+    <SecondaryLayout>
+      {/* First part: email and password */}
+      {index === 0 && (
+        <>
+          <StyledForm title="Register">
+            <RegistrationForm onSuccess={nextForm} />
+          </StyledForm>
+          <StyledLink to="/login">Back to login</StyledLink>
+        </>
+      )}
+      {/* Second part: choose nickname */}
+      {index === 1 && (
+        <>
+          <StyledForm title="User Profile">
+            <UserProfileForm onSuccess={redirect} />
+          </StyledForm>
+          <StyledLink to="/">Skip</StyledLink>
+        </>
+      )}
+    </SecondaryLayout>
+  );
 }
 
 export default RegisterView;

@@ -1,61 +1,42 @@
-import React from "react";
-import { HashRouter, Route, Redirect } from "react-router-dom";
-import { ApolloProvider } from '@apollo/react-hooks';
+import React, { useEffect } from "react";
+import { HashRouter } from "react-router-dom";
+import { ApolloProvider } from "@apollo/react-hooks";
+import configureClient from "./config/apollo";
 
-// Context
-import AuthContext from "./context/auth-context";
-
-// Hooks
-import useAuth from "./hooks/useAuth";
-import useApollo from "./hooks/useApollo";
+// Providers
+import AuthProvider from "./components/_providers/AuthProvider";
 
 // Components
-import GlobalStyle, {StyledContent} from "./components/GlobalStyle";
-import Header from './components/Header';
-import Footer from './components/Footer';
+import GlobalStyle, {
+  StyledWrapper,
+  StyledContainer,
+  StyledInner
+} from "./components/GlobalStyle";
+import Navigation from "./components/Navigation";
+import Routes from "./config/routes";
 
-// Views
-import HomeView from "./views/home";
-import RegisterView from "./views/register";
-import LoginView from "./views/login";
-
-let ipc;
-try {
-  //
-  // This should throw an error
-  // when application is runs on
-  // a regular browser.
-  //
-  const electron = window.require("electron");
-  ipc = electron.ipcRenderer;
-} catch(err) {
-  console.log(err);
-}
+const client = configureClient();
 
 // ---------------------------------
 // Application
 // ---------------------------------
 function App() {
-
-  const {token, userId, tokenExpiration, login, logout} = useAuth();
-  const { client } = useApollo(token);
-
   return (
     <ApolloProvider client={client}>
-      <AuthContext.Provider value={{token, userId, tokenExpiration, login, logout }}>
-        <GlobalStyle />
+      <GlobalStyle />
+      <AuthProvider>
         <HashRouter>
-          <StyledContent>
-            <Header />
-            {/* {token && <Redirect from="/auth" to="/" /> } */}
-            <Route path="/register" exact component={RegisterView} />
-            <Route path="/login" exact component={LoginView} />
-            <Route path="/" exact component={HomeView} />
-          </StyledContent>
-          <Footer />
+          <StyledWrapper>
+            <Navigation />
+            <StyledContainer>
+              <StyledInner>
+                <Routes />
+              </StyledInner>
+            </StyledContainer>
+          </StyledWrapper>
         </HashRouter>
-      </AuthContext.Provider>
-    </ ApolloProvider>
+      </AuthProvider>
+    </ApolloProvider>
   );
 }
 
