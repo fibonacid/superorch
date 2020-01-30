@@ -1,2 +1,2 @@
-# superorch-app
-An electron application that connects to a superorch-server
+# superorch-client
+A portal for SuperCollider orchestras
