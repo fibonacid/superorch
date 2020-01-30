@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { HashRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
 import configureClient from "./config/apollo";
@@ -13,7 +13,7 @@ import GlobalStyle, {
   StyledInner
 } from "./components/GlobalStyle";
 import Navigation from "./components/Navigation";
-import Routes from "./config/routes";
+import Routes from "./components/Routes";
 
 const client = configureClient();
 
