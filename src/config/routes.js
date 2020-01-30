@@ -69,21 +69,21 @@ export default [
   {
     path: "/orchestras/:id",
     exact: true,
-    sidebar: () => (<OrchestraManager />),
     modal: noob,
+    sidebar: () => (<OrchestraManager />),
     main: () => (<OrchestraView />),
   },
   {
     path: "/orchestras/:id/edit",
-    sidebar: noob,
     modal: noob,
+    sidebar: () => (<OrchestraManager />),
     main: () => (<EditOrchestraView />),
   },
   {
     path: "/orchestras/:id/delete",
-    sidebar: noob,
-    modal: () => (<DeleteOrchestraView />),
     main: noob,
+    sidebar: () => (<OrchestraManager />),
+    modal: () => (<DeleteOrchestraView />),
   },
   {
     path: "/orchestras/:id/invites",
