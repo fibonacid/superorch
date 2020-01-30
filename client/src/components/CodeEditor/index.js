@@ -30,6 +30,9 @@ const StyledContainer = styled.div`
   position: absolute;
 `;
 
+const text = `// Start the server
+s.boot`;
+
 // -----------------------------------
 // SuperCollider Editor
 // -----------------------------------
@@ -46,7 +49,10 @@ export default class CodeEditor extends Component {
     const decorators = [...codeEvaluationPlugin.decorators];
 
     this.state = {
-      editorState: EditorState.createEmpty(new CompositeDecorator(decorators)),
+      editorState: EditorState.createWithContent(
+        ContentState.createFromText(text),
+        new CompositeDecorator(decorators)
+      ),
       plugins: []
     };
   }
@@ -88,7 +94,7 @@ export default class CodeEditor extends Component {
       // Log response.
       this.context.pushLine({
         type: "stdout",
-        value: result.toString()
+        value: JSON.stringify(result)
       });
     } catch (err) {
       // Log errors
