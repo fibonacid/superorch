@@ -1183,22 +1183,22 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@supercollider/dryads@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@supercollider/dryads/-/dryads-1.0.0.tgz#00e2dc9199ee531961038f579157e54c12f5cf32"
-  integrity sha512-HYO58Ta+mlUdBw/kUvi/15sobJ0oNVX1BKphn4o0TfIXSVeAzB7v10IzAzsGsl7HZaYg61hgLZ9SR84kI7aNYQ==
+"@supercollider/dryads@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@supercollider/dryads/-/dryads-1.0.1.tgz#e141c6060909d50e5a54923972e4d0de60a0d7e8"
+  integrity sha512-m66RcOqwtVv8/LxHzKH0QewYXQ4ubHTQnZWMMuhplyVtwPCDzybPTABH1UOLEHOAiaS9VB18yvDkBBUT/xWI+g==
   dependencies:
-    "@supercollider/lang" "^1.0.0"
+    "@supercollider/lang" "^1.0.1"
     "@supercollider/logger" "^1.0.0"
     "@supercollider/server" "^1.0.0"
     baconjs "^0.7.93"
     dryadic "^1.0.0"
     lodash "^4.17.15"
 
-"@supercollider/lang@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@supercollider/lang/-/lang-1.0.0.tgz#5cd16dffe29c58376d46ce2f75b7607497662865"
-  integrity sha512-KN9RuZMm/HNXSXWFr3UrIrb/4CfUDV0MO0eBlXJm+e0awOpcm+LCaGE1dbNQ8LtuxWSSuqvQbeChK5L2Nu42qw==
+"@supercollider/lang@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@supercollider/lang/-/lang-1.0.1.tgz#59d18e057c5ebe92890ddc75cc5b8e82b6966abb"
+  integrity sha512-1Mz3DH1kpIznuxsIDPxFb1sMI3mmmZmMAiJlp2nyXR/CeAV4IZCtpALkJERfEPBHvBB+pNEgAGSufJA3pMV5XQ==
   dependencies:
     "@supercollider/logger" "^1.0.0"
     "@supercollider/server" "^1.0.0"
@@ -1223,12 +1223,12 @@
   resolved "https://registry.yarnpkg.com/@supercollider/osc/-/osc-1.0.0.tgz#f6943c8f1ce3936c87ac364da4e1be006c1331b3"
   integrity sha512-HZfPC5+dWfbsYUEUBji2rQE+NMdeaMuyeyAMOkxCGRO6h5eGqPqs4Cx2pFVUcc2UBQgazkrzoN7sHYmn81iisg==
 
-"@supercollider/server-plus@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@supercollider/server-plus/-/server-plus-1.0.0.tgz#d55fb2d8973ccb7bcc3242ff35b746a9872c3ea1"
-  integrity sha512-LsOCfTE4gCvOFwre5rnH1X5ikJMA9suQmrtIoW5trP9QURZsLbKsxxLc1kkL2LMpz3q8rGoHPMLZUUVD9JCl5w==
+"@supercollider/server-plus@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@supercollider/server-plus/-/server-plus-1.0.1.tgz#c916e894de2df728e14dcd43a39235bea73d1b16"
+  integrity sha512-kTraodgTq+gLcuNDxptIIyd+odZ7CdWNqAv5ejkf8FaTeVyfttLNJO8dN+9xVaDx8yDMzDCuykgbI+8b5efMYg==
   dependencies:
-    "@supercollider/lang" "^1.0.0"
+    "@supercollider/lang" "^1.0.1"
     "@supercollider/server" "^1.0.0"
     lodash "^4.17.15"
     tslib "1.10.0"
@@ -11302,16 +11302,16 @@ sumchecker@^3.0.1:
   dependencies:
     debug "^4.1.0"
 
-supercolliderjs@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/supercolliderjs/-/supercolliderjs-1.0.0.tgz#9bd0792e96c9159b083c2731852f04a0c1701952"
-  integrity sha512-O3pkeQ0yLJ8kVXAXn76xlaX1sohmtD4jhoK8Mpi/G+6G4BLlX+T1s7pIdla1PYItShagP5BMmiqLEeIOVo0CsQ==
+supercolliderjs@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/supercolliderjs/-/supercolliderjs-1.0.1.tgz#3e3e66518acdd2fcf8d94140ddd930b5e6a8052c"
+  integrity sha512-M6u1nDjmk0QEYMqRxLP5ixzUYFsMlFJm/rdFMh5l+9ffjJefnmH45JTs8csB87PAgklidWy4rRNqG/ISpgUthQ==
   dependencies:
-    "@supercollider/dryads" "^1.0.0"
-    "@supercollider/lang" "^1.0.0"
+    "@supercollider/dryads" "^1.0.1"
+    "@supercollider/lang" "^1.0.1"
     "@supercollider/logger" "^1.0.0"
     "@supercollider/server" "^1.0.0"
-    "@supercollider/server-plus" "^1.0.0"
+    "@supercollider/server-plus" "^1.0.1"
     commander "^2.9.0"
     ncp "^2.0.0"
     tslib "1.10.0"
