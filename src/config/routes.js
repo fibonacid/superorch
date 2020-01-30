@@ -1,7 +1,5 @@
-import React, { useEffect, useContext } from "react";
-import styled from 'styled-components/macro';
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
-import AuthContext from "../context/auth-context";
+import React from "react";
+import { Redirect } from "react-router-dom";
 import HomeView from "../views/home";
 import LoginView from "../views/login";
 import RegisterView from "../views/register";
@@ -11,6 +9,7 @@ import OrchestraView from "../views/orchestras/:id";
 import InvitesOrchestraView from "../views/orchestras/:id/invites";
 import DeleteOrchestraView from "../views/orchestras/:id/delete";
 import AccountView from "../views/account";
+import OrchestraManager from "../components/OrchestraManager";
 
 const noob = () => null;
 
@@ -70,7 +69,7 @@ export default [
   {
     path: "/orchestras/:id",
     exact: true,
-    sidebar: noob,
+    sidebar: () => (<OrchestraManager />),
     modal: noob,
     main: () => (<OrchestraView />),
   },
