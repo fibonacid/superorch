@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
-import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
 import CodeEditor from "../../../components/CodeEditor";
 import Console from "../../../components/Console";
 import SCLogProvider from "../../../components/_providers/SCLogProvider";
+
+const StyledWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
 
 const StyledInner = styled.div`
   height: 100%;
@@ -26,14 +31,14 @@ function OrchestraIndexView() {
   const params = useParams();
 
   return (
-    <PrimaryLayout>
+    <StyledWrapper>
       <StyledInner>
         <SCLogProvider>
           <StyledEditor key={params.id} />
           <StyledConsole />
         </SCLogProvider>
       </StyledInner>
-    </PrimaryLayout>
+    </StyledWrapper>
   );
 }
 

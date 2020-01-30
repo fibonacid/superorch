@@ -5,8 +5,8 @@ import AuthContext from "../../context/auth-context";
 import routes from '../../config/routes';
 
 const StyledWrapper = styled.div`
-flex: 1;
-display: flex;
+  flex: 1;
+  display: flex;
 `;
 
 const StyledMain = styled.div`
@@ -15,7 +15,10 @@ display: flex;
 `;
 
 const StyledSidebar = styled.div`
-background: lightgrey;
+  background: whitesmoke;
+  border-right: solid 1px lightgrey;
+  flex: 0 1 200px;
+  padding: 0 10px;
 `;
 
 export default function Routes() {
