@@ -11,6 +11,7 @@ import OrchestraShowView from "../views/orchestras/show";
 import OrchestraPlayView from "../views/orchestras/:id/play";
 import OrchestraEditView from "../views/orchestras/:id/edit";
 import OrchestraInvitesView from "../views/orchestras/:id/invites";
+import OrchestraDeleteView from "../views/orchestras/:id/delete";
 
 const routes = [
   {
@@ -52,6 +53,10 @@ const routes = [
           {
             path: "/orchestras/:id/edit",
             component: OrchestraEditView
+          },
+          {
+            path: "/orchestras/:id/delete",
+            component: OrchestraDeleteView
           },
           {
             path: "/orchestras/:id/invites",
