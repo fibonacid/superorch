@@ -77,9 +77,4 @@ const routes = [
   },
 ]
 
-export default routes.map(route => ({
-    sidebar: () => null,
-    main: () => null,
-    modal: () => null,
-    ...route
-}))
+export default routes;
