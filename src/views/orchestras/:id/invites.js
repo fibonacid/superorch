@@ -15,6 +15,7 @@ const StyledContainer = styled.div`
 const StyledForm = styled(PrimaryForm)`
   border: solid 1px lightgrey;
   border-radius: 10px;
+  background: white;
 `;
 
 const StyledStatus = styled.div`
@@ -48,7 +49,6 @@ function OrchestraInvitesView() {
         {data && <p>success</p>}
         {error && <p>{error.message}</p>}
       </StyledStatus>
-      <GoBackLink rootpath={"/orchestras/"+params.id}/>
     </StyledContainer>
   );
 }
