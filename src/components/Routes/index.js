@@ -3,8 +3,10 @@ import styled from "styled-components/macro";
 import { Switch, Route, useLocation } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
 import routes from "../../config/routes";
+
 import Sidebar from "../_miscellaneous/Sidebar";
 import Mainbar from "../_miscellaneous/Mainbar";
+import Modal from "../_miscellaneous/Modal";
 
 const StyledWrapper = styled.div`
   flex: 1;
@@ -36,39 +38,45 @@ export default function Routes() {
           {routes.map((route, index) => (
             // You can render a <Route> in as many places
             // as you want in your app. It will render along
-            // with any other <Route>s that also match the URL.
+            // with any other <Routes> that also match the URL.
             // So, a sidebar or breadcrumbs or anything else
             // that requires you to render multiple things
             // in multiple places at the same URL is nothing
             // more than multiple <Routes>.
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              children={<route.sidebar token={token} />}
-            />
+            <Route key={index} path={route.path} exact={route.exact}>
+              {route.sidebar && (
+                <Sidebar
+                  key={index}
+                  children={<route.sidebar token={token} />}
+                />
+              )}
+            </Route>
           ))}
         </Switch>
       </Sidebar>
       <Mainbar>
         <Switch location={background || location}>
           {routes.map((route, index) => (
-            // console.log(route.path, location.pathname);
             // Render more <Routes> with the same paths as
             // above, but different components this time.
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              children={<route.main token={token} />}
-            />
+            <Route key={index} path={route.path} exact={route.exact}>
+              {route.main && (
+                <Mainbar children={<route.main token={token} />} />
+              )}
+            </Route>
           ))}
         </Switch>
       </Mainbar>
-      {background &&
-        routes.map((route, index) => (
-          <Route key={index} path={route.path} children={route.modal} />
-        ))}
+      {background && (
+        <Switch>
+          {routes.map((route, index) => (
+            <Route key={index} path={route.path} exact={route.exact}>
+              {route.modal && <Modal children={<route.modal />} />}
+            </Route>
+          ))}
+          }
+        </Switch>
+      )}
     </StyledWrapper>
   );
 }
