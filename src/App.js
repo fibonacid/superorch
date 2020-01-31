@@ -13,7 +13,7 @@ import GlobalStyle, {
   StyledInner
 } from "./components/GlobalStyle";
 import Navigation from "./components/Navigation";
-import Routes from "./components/Routes";
+import RouteConfig from "./components/RouteConfig";
 
 const client = configureClient();
 
@@ -30,7 +30,7 @@ function App() {
             <Navigation />
             <StyledContainer>
               <StyledInner>
-                <Routes />
+                <RouteConfig />
               </StyledInner>
             </StyledContainer>
           </StyledWrapper>
