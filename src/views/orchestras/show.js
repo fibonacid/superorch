@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { Switch, Route, useLocation } from "react-router-dom";
+import OrchestraManager from "../../components/OrchestraManager";
+import Sidebar from "../../components/_miscellaneous/Sidebar";
 import Modal from "../../components/_miscellaneous/Modal";
 
 const StyledContainer = styled.div`
@@ -14,6 +16,9 @@ function OrchestraShowView({ routes }) {
 
   return (
     <StyledContainer>
+      <Sidebar>
+        <OrchestraManager />
+      </Sidebar>
       <Switch location={background || location}>
         {routes.map((route, i) => (
           <Route key={i} {...route} />

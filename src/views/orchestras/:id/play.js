@@ -1,13 +1,9 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
-import OrchestraManager from "../../../components/OrchestraManager";
-import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
-import Sidebar from "../../../components/_miscellaneous/Sidebar";
 import CodeEditor from "../../../components/CodeEditor";
 import Console from "../../../components/Console";
 import SCLogProvider from "../../../components/_providers/SCLogProvider";
-import { StyledContainer } from "../../../components/GlobalStyle";
 
 const StyledWrapper = styled.div`
   flex: 1;
@@ -35,10 +31,6 @@ function OrchestraPlayView() {
   const params = useParams();
 
   return (
-   <PrimaryLayout>
-    <Sidebar>
-       <OrchestraManager />      
-    </Sidebar>
     <StyledWrapper>
       <StyledInner>
         <SCLogProvider>
@@ -47,7 +39,6 @@ function OrchestraPlayView() {
         </SCLogProvider>
       </StyledInner>
     </StyledWrapper>
-   </PrimaryLayout>
   );
 }
 
