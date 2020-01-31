@@ -1,6 +1,6 @@
 import React from "react";
 
-// import HomeView from "../views/home";
+import HomeView from "../views/home";
 import LoginView from "../views/login";
 import RegisterView from "../views/register";
 
@@ -18,14 +18,14 @@ import OrchestraDeleteView from "../views/orchestras/:id/delete";
 
 const routes = [
   {
-    path: "/",
     exact: true,
-    component: LoginView,
+    path: "/",
+    component: props => (props.token ? <HomeView/> : <LoginView/>),
     routes: []
   },
   {
     path: "/login",
-    component: LoginView,
+    component: props => (!props.token ? <LoginView/> : <HomeView/>),
     routes: []
   },
   {
