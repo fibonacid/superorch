@@ -22,7 +22,7 @@ const StyledStatus = styled.div`
   margin-top: 15px;
 `;
 
-function InvitesOrchestraView() {
+function OrchestraInvitesView() {
   const params = useParams();
 
   const [sendInvite, { loading, data, error }] = useMutation(
@@ -54,4 +54,4 @@ function InvitesOrchestraView() {
   );
 }
 
-export default InvitesOrchestraView;
+export default OrchestraInvitesView;

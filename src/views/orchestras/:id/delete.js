@@ -11,7 +11,7 @@ const StyledContainer = styled.div`
   padding: 10px;
 `;
 
-function DeleteOrchestraView() {
+function OrchestraDeleteView() {
   const params = useParams();
   const { data } = useQuery(orchestraDocument, {
     variables: { orchestraId: params.id }
@@ -31,4 +31,4 @@ function DeleteOrchestraView() {
   );
 }
 
-export default DeleteOrchestraView;
+export default OrchestraDeleteView;

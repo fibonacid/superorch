@@ -1,84 +1,74 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
-import HomeView from "../views/home";
+
+// import HomeView from "../views/home";
 import LoginView from "../views/login";
 import RegisterView from "../views/register";
-import CreateOrchestraView from "../views/orchestras/create";
-import EditOrchestraView from "../views/orchestras/:id/edit";
-import OrchestraView from "../views/orchestras/:id";
-import InvitesOrchestraView from "../views/orchestras/:id/invites";
-import DeleteOrchestraView from "../views/orchestras/:id/delete";
 import AccountView from "../views/account";
-import OrchestraManager from "../components/OrchestraManager";
+
+import OrchestraCreateView from "../views/orchestras/create";
+import OrchestraIndexView from "../views/orchestras";
+import OrchestraShowView from "../views/orchestras/show";
+import OrchestraPlayView from "../views/orchestras/:id/play";
+import OrchestraEditView from "../views/orchestras/:id/edit";
+import OrchestraInvitesView from "../views/orchestras/:id/invites";
 
 const routes = [
   {
     path: "/",
     exact: true,
-    main: props => (props.token
-      ? <HomeView/>
-      : <LoginView />
-    ), 
+    component: LoginView,
+    routes: []
   },
   {
     path: "/login",
-    main: props => (props.token
-      ? <Redirect to="/"/>
-      : <LoginView />
-    ), 
+    component: LoginView,
+    routes: []
   },
   {
     path: "/register",
-    main: props => (props.token
-      ? <Redirect to="/" />
-      : <RegisterView />
-    ),
+    component: RegisterView,
+    routes: []
   },
-  // {
-  //   path: "/",
-  //   exact: false,
-  //   sidebar: noob,
-  //   modal: noob,
-  //   main: props => (!props.token && 
-  //     <Redirect to="/login" />
-  //   ),
-  // },
   // ===========================================
   // From this point on is only logged in views
   // ===========================================
   {
     path: "/account",
-    sidebar: () => <div>Account Sidebar</div>,
-    main: () => (<AccountView />)
+    component: AccountView,
+    routes: []
   },
   {
-    path: "/orchestras/create",
-    main: () => (<CreateOrchestraView />),
-  },
-  {
-    path: "/orchestras/:id",
-    exact: true,
-    sidebar: () => (<OrchestraManager />),
-    main: () => (<OrchestraView />),
-  },
-  {
-    path: "/orchestras/:id/edit",
-    sidebar: () => (<OrchestraManager />),
-    main: () => (<EditOrchestraView />),
-  },
-  {
-    path: "/orchestras/:id/delete",
-    sidebar: () => (<OrchestraManager />),
-    modal: () => (<DeleteOrchestraView />),
-  },
-  {
-    path: "/orchestras/:id/invites",
-    main: () => (<InvitesOrchestraView />),
+    path: "/orchestras",
+    component: OrchestraIndexView,
+    routes: [
+      {
+        path: "/orchestras/create",
+        component: OrchestraCreateView
+      },
+      {
+        path: "/orchestras/:id",
+        exact: true,
+        component: OrchestraShowView,
+        routes: [
+          {
+            path: "/orchestras/:id/edit",
+            component: OrchestraEditView
+          },
+          {
+            path: "/orchestras/:id/invites",
+            component: OrchestraInvitesView
+          },
+          {
+            path: "/orchestras/:id/play",
+            component: OrchestraPlayView
+          },
+        ]
+      },
+    ]
   },
   {
     path: "*",
-    main: () => <div>404</div>,
-    modal: () => <div>404</div>,
+    component: () => <div>404</div>,
   }
 ]
 

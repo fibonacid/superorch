@@ -43,7 +43,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-function EditOrchestraView() {
+function OrchestraEditView() {
   const history = useHistory();
   const location = useLocation();
   const params = useParams();
@@ -106,7 +106,7 @@ function EditOrchestraView() {
   );
 }
 
-export default EditOrchestraView;
+export default OrchestraEditView;
 
 // <Link
 // key={i.id}

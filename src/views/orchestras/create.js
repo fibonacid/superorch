@@ -17,7 +17,7 @@ const StyledForm = styled(PrimaryForm)`
   margin: auto;
 `;
 
-function CreateOrchestraView() {
+function OrchestraCreateView() {
   const [createOrchestra, { data, loading, error }] = useMutation(
     createOrchestraDocument
   );
@@ -47,4 +47,4 @@ function CreateOrchestraView() {
   );
 }
 
-export default CreateOrchestraView;
+export default OrchestraCreateView;
