@@ -9,7 +9,7 @@ import {
 } from "../../../config/documents";
 import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import OrchestraForm from "../../../components/_forms/OrchestraForm";
-import GoBack from '../../../components/_miscellaneous/'
+import GoBackLink from "../../../components/_miscellaneous/GoBackLink";
 
 const StyledContainer = styled.div`
   margin: 15px 10px;
@@ -100,7 +100,7 @@ function OrchestraEditView() {
         </StyledStatus>
         <StyledButton onClick={handleDelete}>Delete</StyledButton>
       </StyledWrapper>
-      <GoBack />
+      <GoBackLink rootpath={"/orchestras/"+params.id}/>
     </StyledContainer>
   );
 }

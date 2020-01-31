@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { sendInviteDocument } from "../../../config/documents";
 import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import InviteForm from "../../../components/_forms/InviteForm";
+import GoBackLink from "../../../components/_miscellaneous/GoBackLink";
 
 const StyledContainer = styled.div`
   max-width: 300px;
@@ -47,6 +48,7 @@ function OrchestraInvitesView() {
         {data && <p>success</p>}
         {error && <p>{error.message}</p>}
       </StyledStatus>
+      <GoBackLink rootpath={"/orchestras/"+params.id}/>
     </StyledContainer>
   );
 }
