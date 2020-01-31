@@ -25,7 +25,6 @@ const StyledInner = styled.div`
 const StyledContent = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: column;
 `;
 
 function PrimaryLayout(props) {
