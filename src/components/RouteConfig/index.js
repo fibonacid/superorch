@@ -7,8 +7,8 @@ export default function RouteConfig() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location)
-  }, [location]);
+    console.log(location.pathname)
+  }, [location.pathname]);
 
   return (
     <Switch>
