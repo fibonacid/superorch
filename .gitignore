@@ -11,7 +11,7 @@
 /dist
 
 # vendor
-/public/vendor/supercollider/osx
+/public/vendor/osx/SuperCollider
 /public/vendor/**/*.dylib
 
 # misc
