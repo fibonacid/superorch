@@ -47,7 +47,6 @@ const routes = [
       },
       {
         path: "/orchestras/:id",
-        exact: true,
         component: OrchestraShowView,
         routes: [
           {
@@ -59,7 +58,7 @@ const routes = [
             component: OrchestraInvitesView
           },
           {
-            path: "/orchestras/:id/play",
+            path: "/orchestras/:id",
             component: OrchestraPlayView
           },
         ]
