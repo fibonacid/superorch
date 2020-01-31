@@ -46,9 +46,9 @@ function InviteForm({ authenticate }) {
       <PrimaryForm.Button disabled={isSubmitting} onClick={history.goBack}>
         Cancel
       </PrimaryForm.Button>
-      <PrimaryForm.Button disabled={isSubmitting} type="submit">
+      <PrimaryForm.SubmitButton disabled={isSubmitting} type="submit">
         Submit
-      </PrimaryForm.Button>
+      </PrimaryForm.SubmitButton>
     </form>
   );
 }
