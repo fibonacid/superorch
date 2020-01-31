@@ -6,6 +6,10 @@ import { orchestraDocument, newMemberDocument } from "../../config/documents";
 import Header from "./Header";
 import MemberList from "./MemberList";
 
+const StyledContainer = styled.div`
+  padding: 10px;
+`;
+
 export default function Orchestra() {
   const { id: orchestraId } = useParams();
 
@@ -38,7 +42,7 @@ export default function Orchestra() {
   useEffect(subscribeToNewMembers, []);
 
   return (
-    <div>
+    <StyledContainer>
       {data && data.orchestraById && (
         <>
           <Header orchestra={data.orchestraById} />
@@ -47,7 +51,7 @@ export default function Orchestra() {
       )}
       {loading && <span>Loading ...</span>}
       {error && <span>{error.message}</span>}
-    </div>
+    </StyledContainer>
   );
 }
 
