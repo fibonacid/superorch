@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   updateOrchestraDocument,
@@ -9,6 +9,7 @@ import {
 } from "../../../config/documents";
 import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import OrchestraForm from "../../../components/_forms/OrchestraForm";
+import BackgroundLink from "../../../components/_miscellaneous/BackgroundLink";
 import GoBackLink from "../../../components/_miscellaneous/GoBackLink";
 
 const StyledContainer = styled.div`
@@ -36,16 +37,7 @@ const StyledStatus = styled.div`
   text-align: center;
 `;
 
-const StyledButton = styled.button`
-  background: red;
-  color: white;
-  min-width: 100px;
-  cursor: pointer;
-`;
-
 function OrchestraEditView() {
-  const history = useHistory();
-  const location = useLocation();
   const params = useParams();
 
   const orchestraId = params.id;
@@ -74,14 +66,6 @@ function OrchestraEditView() {
     });
   }
 
-  // Display an overlay with the delete view
-  const handleDelete = () => {
-    history.push({
-      pathname: `/orchestras/${orchestraId}/delete`,
-      state: { background: location }
-    });
-  };
-
   return (
     <StyledContainer>
       <StyledWrapper>
@@ -98,7 +82,7 @@ function OrchestraEditView() {
           {data && <div>Success</div>}
           {error && <span>{error.message}</span>}
         </StyledStatus>
-        <StyledButton onClick={handleDelete}>Delete</StyledButton>
+        <BackgroundLink to={`/orchestras/${orchestraId}/delete`}>Delete Orchestra</BackgroundLink>
       </StyledWrapper>
       <GoBackLink rootpath={"/orchestras/"+params.id}/>
     </StyledContainer>
