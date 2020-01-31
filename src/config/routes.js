@@ -11,6 +11,7 @@ import AccountSecurityView from "../views/account/security"
 import OrchestraIndexView from "../views/orchestras";
 import OrchestraShowView from "../views/orchestras/show";
 import OrchestraCreateView from "../views/orchestras/create";
+import OrchestraWelcomeView from "../views/orchestras/welcome";
 import OrchestraPlayView from "../views/orchestras/:id/play";
 import OrchestraEditView from "../views/orchestras/:id/edit";
 import OrchestraInvitesView from "../views/orchestras/:id/invites";
@@ -61,6 +62,11 @@ const routes = [
       {
         path: "/orchestras/create",
         component: OrchestraCreateView
+      },
+      {
+        exact: true,
+        path: "/orchestras",
+        component: OrchestraWelcomeView
       },
       {
         path: "/orchestras/:id",
