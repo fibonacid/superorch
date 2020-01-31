@@ -10,6 +10,10 @@
 /build
 /dist
 
+# vendor
+/public/vendor/supercollider/osx
+/public/vendor/**/*.dylib
+
 # misc
 .DS_Store
 .env.local
