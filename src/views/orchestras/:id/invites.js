@@ -3,7 +3,6 @@ import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { sendInviteDocument } from "../../../config/documents";
-import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
 import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import InviteForm from "../../../components/_forms/InviteForm";
 
@@ -39,18 +38,16 @@ function OrchestraInvitesView() {
   }, []);
 
   return (
-    <PrimaryLayout back={true} rootpath={"/orchestras/" + params.id}>
-      <StyledContainer>
-        <StyledForm title="Send Invite">
-          <InviteForm authenticate={authenticate} />
-        </StyledForm>
-        <StyledStatus>
-          {loading && <p>loading ...</p>}
-          {data && <p>success</p>}
-          {error && <p>{error.message}</p>}
-        </StyledStatus>
-      </StyledContainer>
-    </PrimaryLayout>
+    <StyledContainer>
+      <StyledForm title="Send Invite">
+        <InviteForm authenticate={authenticate} />
+      </StyledForm>
+      <StyledStatus>
+        {loading && <p>loading ...</p>}
+        {data && <p>success</p>}
+        {error && <p>{error.message}</p>}
+      </StyledStatus>
+    </StyledContainer>
   );
 }
 

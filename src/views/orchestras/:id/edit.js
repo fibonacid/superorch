@@ -7,9 +7,9 @@ import {
   orchestraListDocument,
   orchestraDocument
 } from "../../../config/documents";
-import PrimaryLayout from "../../../components/_layouts/PrimaryLayout";
 import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import OrchestraForm from "../../../components/_forms/OrchestraForm";
+import GoBack from '../../../components/_miscellaneous/'
 
 const StyledContainer = styled.div`
   margin: 15px 10px;
@@ -83,26 +83,25 @@ function OrchestraEditView() {
   };
 
   return (
-    <PrimaryLayout back={true} rootpath={"/orchestras/" + params.id}>
-      <StyledContainer>
-        <StyledWrapper>
-          {prevData && (
-            <StyledForm title="Edit Orchestra">
-              <OrchestraForm
-                authenticate={authenticate}
-                cachedValues={prevData.orchestraById}
-              />
-            </StyledForm>
-          )}
-          <StyledStatus>
-            {loading && <span>Loading ...</span>}
-            {data && <div>Success</div>}
-            {error && <span>{error.message}</span>}
-          </StyledStatus>
-          <StyledButton onClick={handleDelete}>Delete</StyledButton>
-        </StyledWrapper>
-      </StyledContainer>
-    </PrimaryLayout>
+    <StyledContainer>
+      <StyledWrapper>
+        {prevData && (
+          <StyledForm title="Edit Orchestra">
+            <OrchestraForm
+              authenticate={authenticate}
+              cachedValues={prevData.orchestraById}
+            />
+          </StyledForm>
+        )}
+        <StyledStatus>
+          {loading && <span>Loading ...</span>}
+          {data && <div>Success</div>}
+          {error && <span>{error.message}</span>}
+        </StyledStatus>
+        <StyledButton onClick={handleDelete}>Delete</StyledButton>
+      </StyledWrapper>
+      <GoBack />
+    </StyledContainer>
   );
 }
 
