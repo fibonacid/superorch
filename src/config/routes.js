@@ -11,14 +11,10 @@ import DeleteOrchestraView from "../views/orchestras/:id/delete";
 import AccountView from "../views/account";
 import OrchestraManager from "../components/OrchestraManager";
 
-const noob = () => null;
-
-export default [
+const routes = [
   {
     path: "/",
     exact: true,
-    sidebar: noob,
-    modal: noob,
     main: props => (props.token
       ? <HomeView/>
       : <LoginView />
@@ -26,8 +22,6 @@ export default [
   },
   {
     path: "/login",
-    sidebar: noob,
-    modal: noob,
     main: props => (props.token
       ? <Redirect to="/"/>
       : <LoginView />
@@ -35,8 +29,6 @@ export default [
   },
   {
     path: "/register",
-    sidebar: noob,
-    modal: noob,
     main: props => (props.token
       ? <Redirect to="/" />
       : <RegisterView />
@@ -57,38 +49,37 @@ export default [
   {
     path: "/account",
     sidebar: () => <div>Account Sidebar</div>,
-    modal: noob,
     main: () => (<AccountView />)
   },
   {
     path: "/orchestras/create",
-    sidebar: noob,
-    modal: noob,
     main: () => (<CreateOrchestraView />),
   },
   {
     path: "/orchestras/:id",
     exact: true,
-    modal: noob,
     sidebar: () => (<OrchestraManager />),
     main: () => (<OrchestraView />),
   },
   {
     path: "/orchestras/:id/edit",
-    modal: noob,
     sidebar: () => (<OrchestraManager />),
     main: () => (<EditOrchestraView />),
   },
   {
     path: "/orchestras/:id/delete",
-    main: noob,
     sidebar: () => (<OrchestraManager />),
     modal: () => (<DeleteOrchestraView />),
   },
   {
     path: "/orchestras/:id/invites",
-    sidebar: noob,
-    modal: noob,
     main: () => (<InvitesOrchestraView />),
   },
 ]
+
+export default routes.map(route => ({
+    sidebar: () => null,
+    main: () => null,
+    modal: () => null,
+    ...route
+}))
