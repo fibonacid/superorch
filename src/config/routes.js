@@ -75,6 +75,11 @@ const routes = [
     path: "/orchestras/:id/invites",
     main: () => (<InvitesOrchestraView />),
   },
+  {
+    path: "*",
+    main: () => <div>404</div>,
+    modal: () => <div>404</div>,
+  }
 ]
 
 export default routes;
