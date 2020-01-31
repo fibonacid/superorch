@@ -18,7 +18,7 @@ const StyledIcon = styled(FontAwesomeIcon)`
   margin: 0 5px;
 `;
 
-export default function GoBack({ rootpath }) {
+export default function GoBackLink({ rootpath }) {
   const history = useHistory();
 
   const redirect = () => {
