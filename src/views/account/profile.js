@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components/macro";
-import useUserProfile from "../hooks/useUserProfile";
-import SecondaryLayout from "../components/_layouts/SecondaryLayout";
-import PrimaryForm from "../components/_miscellaneous/PrimaryForm";
-import UserProfileForm from "../components/_forms/UserProfileForm";
+import useUserProfile from "../../hooks/useUserProfile";
+import SecondaryLayout from "../../components/_layouts/SecondaryLayout";
+import PrimaryForm from "../../components/_miscellaneous/PrimaryForm";
+import UserProfileForm from "../../components/_forms/UserProfileForm";
 
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
@@ -12,7 +12,7 @@ const StyledForm = styled(PrimaryForm)`
   margin: auto;
 `;
 
-export default function AccountView() {
+export default function AccountProfileView() {
   const userProfile = useUserProfile();
 
   return (

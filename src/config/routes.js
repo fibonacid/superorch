@@ -3,11 +3,13 @@ import React from "react";
 // import HomeView from "../views/home";
 import LoginView from "../views/login";
 import RegisterView from "../views/register";
-import AccountView from "../views/account";
 
-import OrchestraCreateView from "../views/orchestras/create";
+import AccountIndexView from "../views/account";
+import AccountProfileView from "../views/account/profile"
+
 import OrchestraIndexView from "../views/orchestras";
 import OrchestraShowView from "../views/orchestras/show";
+import OrchestraCreateView from "../views/orchestras/create";
 import OrchestraPlayView from "../views/orchestras/:id/play";
 import OrchestraEditView from "../views/orchestras/:id/edit";
 import OrchestraInvitesView from "../views/orchestras/:id/invites";
@@ -35,8 +37,17 @@ const routes = [
   // ===========================================
   {
     path: "/account",
-    component: AccountView,
-    routes: []
+    component: AccountIndexView,
+    routes: [
+      {
+        path: "/account/profile",
+        component: AccountProfileView
+      },
+      { // fallback on profile view
+        path: "/account",
+        component: AccountProfileView
+      }
+    ]
   },
   {
     path: "/orchestras",
@@ -62,7 +73,7 @@ const routes = [
             path: "/orchestras/:id/invites",
             component: OrchestraInvitesView
           },
-          {
+          { // fallback on play view
             path: "/orchestras/:id",
             component: OrchestraPlayView
           },
