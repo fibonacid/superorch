@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
+import BackgroundLink from '../../_miscellaneous/BackgroundLink';
 import ListItem from "./ListItem";
 
 const StyledContainer = styled.div`
@@ -16,7 +16,7 @@ const StyledList = styled.ul`
   margin: 15px 0;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(BackgroundLink)`
   color: grey;
   margin-top: 15px;
   text-decoration: none;
