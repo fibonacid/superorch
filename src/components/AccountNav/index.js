@@ -16,6 +16,9 @@ export default function AccountNav() {
          <li>
             <StyledLink to={"/account/profile"}>User profile</StyledLink>
          </li>
+         <li>
+            <StyledLink to={"/account/security"}>Security</StyledLink>
+         </li>
       </ul>
    )
 }

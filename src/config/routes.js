@@ -6,6 +6,7 @@ import RegisterView from "../views/register";
 
 import AccountIndexView from "../views/account";
 import AccountProfileView from "../views/account/profile"
+import AccountSecurityView from "../views/account/security"
 
 import OrchestraIndexView from "../views/orchestras";
 import OrchestraShowView from "../views/orchestras/show";
@@ -42,6 +43,10 @@ const routes = [
       {
         path: "/account/profile",
         component: AccountProfileView
+      },
+      {
+        path: "/account/security",
+        component: AccountSecurityView
       },
       { // fallback on profile view
         path: "/account",
