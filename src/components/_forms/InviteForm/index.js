@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import useFormValidation from "../../../hooks/useFormValidation";
 import { EMAIL_REGEX } from "../../../helpers/regex";
 import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
@@ -8,6 +9,8 @@ const INITIAL_VALUES = {
 };
 
 function InviteForm({ authenticate }) {
+  const history = useHistory();
+
   function validate(values) {
     const errors = {};
     if (!values.email) {
@@ -40,6 +43,9 @@ function InviteForm({ authenticate }) {
         />
         {errors.email && <PrimaryForm.Error>{errors.email}</PrimaryForm.Error>}
       </PrimaryForm.Field>
+      <PrimaryForm.Button disabled={isSubmitting} onClick={history.goBack}>
+        Cancel
+      </PrimaryForm.Button>
       <PrimaryForm.Button disabled={isSubmitting} type="submit">
         Submit
       </PrimaryForm.Button>
