@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import useUsername from "../../hooks/useUsername";
 
 const StyledContainer = styled.div`
    flex: 1;
@@ -8,10 +9,11 @@ const StyledContainer = styled.div`
 `;
 
 export default function OrchestraWelcomeView() {
+   const username = useUsername();
+
    return (
       <StyledContainer>
-         <h1>Welcome !</h1>
-         <p>Select an orchestra</p>
+         <h1>Welcome {username}</h1>
       </StyledContainer>
    )
 }
