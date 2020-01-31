@@ -39,6 +39,7 @@ export const Input = styled.input`
 export const Button = styled.button`
   margin-top: 10px;
   width: 100%;
+  cursor: pointer;
 `;
 
 export const RiskyButton = styled(Button)`
