@@ -24,7 +24,7 @@ const StyledLink = styled(Link)`
 function LoginView() {
   const history = useHistory();
   const redirect = () => {
-    history.push("/");
+    history.push("/orchestras");
   };
 
   return (
