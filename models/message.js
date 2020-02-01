@@ -33,4 +33,4 @@ const messageSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("Channel", messageSchema);
+module.exports = mongoose.model("Message", messageSchema);
