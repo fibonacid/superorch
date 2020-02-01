@@ -77,11 +77,13 @@ const typeDefs = gql`
     members: [Member!]
   }
 
+  union MessageDestination = Member | Channel
+
   interface Message {
     from: Member!
     format: MessageFormat!
     context: MessageContext!
-    to: Member || Channel
+    to: MessageDestination
   }
 
   input MessageInput {
