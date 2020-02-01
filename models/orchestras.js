@@ -16,6 +16,12 @@ const orchestraSchema = new Schema({
       type: Schema.Types.ObjectID,
       ref: "User"
     }
+  ],
+  channels: [
+    {
+      type: Schema.Types.ObjectID,
+      ref: "Channel"
+    }
   ]
 });
 
