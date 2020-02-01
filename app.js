@@ -1,16 +1,18 @@
 const http = require("http");
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
-const isAuth = require("./middleware/is-auth");
 const mongoose = require("mongoose");
 const graphQlSchema = require("./graphql/schema");
 const grapgQlResolvers = require("./graphql/resolvers");
 const validateToken = require("./helpers/auth");
+
+// Loaders
 const userLoader = require("./loaders/userLoader");
 const orchestraLoader = require("./loaders/orchestraLoader");
 const memberLoader = require("./loaders/memberLoader");
 const inviteLoader = require("./loaders/inviteLoader");
 const messageLoader = require("./loaders/messageLoader");
+const channelLoader = require("./loaders/channelLoader");
 
 const PORT = 3000;
 const app = express();
@@ -21,7 +23,8 @@ async function setupContext(token) {
     orchestraLoader: orchestraLoader(),
     memberLoader: memberLoader(),
     inviteLoader: inviteLoader(),
-    messageLoader: messageLoader()
+    messageLoader: messageLoader(),
+    channelLoader: channelLoader()
   };
   try {
     const { userId } = await validateToken(token);
