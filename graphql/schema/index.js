@@ -78,35 +78,43 @@ const typeDefs = gql`
     members: [Member!]
   }
 
-  union MessageDestination = Member | Channel
-
   interface Message {
     from: Member!
     format: MessageFormat!
     context: MessageContext!
-    to: MessageDestination
+    body: String!
   }
 
-  input MessageInput {
+  input ChannelMessageInput {
+    channelId: String!
     format: MessageFormat!
     context: MessageContext!
-    to: String!
+    body: String!
   }
 
   type ChannelMessage implements Message {
     _id: ID!
     from: Member!
+    to: Channel!
     format: MessageFormat!
     context: MessageContext!
-    to: Channel
+    body: String!
+  }
+
+  input PrivateMessageInput {
+    memberId: String!
+    format: MessageFormat!
+    context: MessageContext!
+    body: String!
   }
 
   type PrivateMessage implements Message {
     _id: ID!
     from: Member!
+    to: Member!
     format: MessageFormat!
     context: MessageContext!
-    to: Member
+    body: String!
   } 
 
   # This type specifies the entry points into our API.
@@ -132,8 +140,8 @@ const typeDefs = gql`
     sendInvite(orchestraId: String!, email: String!): Invite!
     acceptInvite(inviteId: String!): Member!
     denyInvite(inviteId: String!): Invite!
-    sendMessageToMember(messageInput: MessageInput!): Message!
-    sendMessageToChannel(messageInput: MessageInput!): Message!
+    sendMessageToMember(messageInput: PrivateMessageInput!): Message!
+    sendMessageToChannel(messageInput: ChannelMessageInput!): Message!
   }
 
   # The subscription root type, used to define all subscriptions.
