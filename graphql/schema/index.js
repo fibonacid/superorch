@@ -91,7 +91,7 @@ const typeDefs = gql`
     to: String!
   }
 
-  type PublicMessage implements Message {
+  type ChannelMessage implements Message {
     _id: ID!
     from: Member!
     format: MessageFormat!
