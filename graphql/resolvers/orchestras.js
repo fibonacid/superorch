@@ -1,8 +1,8 @@
 const Orchestra = require("../../models/orchestras");
 const User = require("../../models/users");
 const Member = require("../../models/members");
+const Channel = require("../../models/channel");
 const { transformOrchestra } = require("./_transforms");
-const mongoose = require("mongoose");
 
 module.exports = {
   Query: {
@@ -68,10 +68,17 @@ module.exports = {
         user: owner.id,
         orchestra: orchestra.id
       });
-
       orchestra.members.push(member);
-      const result = await orchestra.save();
 
+      // Create public channel
+      const public = await Channel.create({
+        name: "public",
+        orchestra: orchestra.id,
+        members: orchestra.members
+      })
+      orchestra.channels.push(public);
+
+      const result = await orchestra.save();
       return transformOrchestra(result.id, loaders);
     },
 
