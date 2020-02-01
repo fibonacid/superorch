@@ -60,12 +60,16 @@ async function transformUser(
 //
 async function transformOrchestra(
   orchestraId,
-  { userLoader, orchestraLoader, memberLoader }
+  { userLoader, orchestraLoader, memberLoader, channelLoader }
 ) {
   const orchestra = await orchestraLoader.load(orchestraId.toString());
 
   const members = await memberLoader.loadMany(
     orchestra._doc.members.map(id => id.toString())
+  );
+
+  const channels = await channelLoader.loadMany(
+    orchestra._doc.channels.map(id => id.toString())
   );
 
   return {
@@ -74,6 +78,14 @@ async function transformOrchestra(
     members: members.map(member => ({
       ...member._doc,
       user: userLoader.load(member._doc.user.toString())
+    })),
+    channels: channels.map(channel => ({
+      ...channel._doc,
+      orchestra: orchestraLoader.load(channel._doc.orchestra.toString()),
+      members: members.map(member => ({
+        ...member._doc,
+        user: userLoader.load(member._doc.user.toString())
+      }))
     }))
   };
 }
@@ -117,3 +129,26 @@ module.exports = {
   transformMember,
   transformInvite
 };
+
+//
+//  Transform Channel
+//
+// async function transformChannel(
+//   channelId,
+//   { channelLoader, orchestraLoader, memberLoader }
+// ) {
+//   const channel = await channelLoader.load(channelId.toString());
+
+//   const members = await memberLoader.loadMany(
+//     orchestra._doc.members.map(id => id.toString())
+//   );
+
+//   return {
+//     ...channel._doc,
+//     orchestra: orchestraLoader.load(channel._doc.orchestra.toString()),
+//     members: members.map(member => ({
+//       ...member._doc,
+//       user: userLoader.load(member._doc.user.toString())
+//     }))
+//   }
+// }
