@@ -123,12 +123,6 @@ async function transformInvite(
   };
 }
 
-module.exports = {
-  transformUser,
-  transformOrchestra,
-  transformMember,
-  transformInvite
-};
 
 //
 //  Transform Channel
@@ -153,16 +147,10 @@ async function transformChannel(
   }
 }
 
-//   const members = await memberLoader.loadMany(
-//     orchestra._doc.members.map(id => id.toString())
-//   );
-
-//   return {
-//     ...channel._doc,
-//     orchestra: orchestraLoader.load(channel._doc.orchestra.toString()),
-//     members: members.map(member => ({
-//       ...member._doc,
-//       user: userLoader.load(member._doc.user.toString())
-//     }))
-//   }
-// }
+module.exports = {
+  transformUser,
+  transformOrchestra,
+  transformMember,
+  transformInvite,
+  transformChannel
+};
