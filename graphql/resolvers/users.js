@@ -1,6 +1,6 @@
 const User = require("../../models/users");
 const { PubSub } = require("apollo-server-express");
-const { transformUser } = require("./transforms");
+const { transformUser } = require("./_transforms");
 
 const pubsub = new PubSub();
 

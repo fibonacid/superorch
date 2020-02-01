@@ -1,5 +1,5 @@
 const Member = require("../../models/members");
-const { transformMember } = require("./transforms");
+const { transformMember } = require("./_transforms");
 
 exports.Query = {
   //
