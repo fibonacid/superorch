@@ -132,8 +132,8 @@ const typeDefs = gql`
     sendInvite(orchestraId: String!, email: String!): Invite!
     acceptInvite(inviteId: String!): Member!
     denyInvite(inviteId: String!): Invite!
-    sendMessageToMember(messageInput: MessageInput!)
-    sendMessageToChannel(messageInput: MessageInput!)
+    sendMessageToMember(messageInput: MessageInput!): Message!
+    sendMessageToChannel(messageInput: MessageInput!): Message!
   }
 
   # The subscription root type, used to define all subscriptions.
