@@ -14,6 +14,14 @@ public/vendor
         └── sclang.sh
 ```
 
+
+Where the outer `sclang` is a script that launches the actual `sclang` binary:
+
+```
+#!/bin/bash
+exec "./SuperCollider/MacOS/sclang"
+```
+
 In order to compile, MacOS folder must contain the following resources:
 
 ```sh
@@ -31,11 +39,4 @@ public/vendor/supercollider/osx/bundle/MacOS
 ├── sqldrivers
 ├── styles
 └── virtualkeyboard
-```
-
-Where the outer `sclang` is a script that launches the actual `sclang` binary:
-
-```
-#!/bin/bash
-exec "./SuperCollider/MacOS/sclang"
 ```
