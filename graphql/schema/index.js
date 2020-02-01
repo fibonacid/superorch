@@ -88,7 +88,6 @@ const typeDefs = gql`
   }
 
   input MessageInput {
-    from: String!
     format: MessageFormat!
     context: MessageContext!
     to: String!
