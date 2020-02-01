@@ -10,6 +10,7 @@ const userLoader = require("./loaders/userLoader");
 const orchestraLoader = require("./loaders/orchestraLoader");
 const memberLoader = require("./loaders/memberLoader");
 const inviteLoader = require("./loaders/inviteLoader");
+const messageLoader = require("./loaders/messageLoader");
 
 const PORT = 3000;
 const app = express();
@@ -19,7 +20,8 @@ async function setupContext(token) {
     userLoader: userLoader(),
     orchestraLoader: orchestraLoader(),
     memberLoader: memberLoader(),
-    inviteLoader: inviteLoader()
+    inviteLoader: inviteLoader(),
+    messageLoader: messageLoader()
   };
   try {
     const { userId } = await validateToken(token);
