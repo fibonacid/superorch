@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from 'react-router-dom';
 
 import HomeView from "../views/home";
 import LoginView from "../views/login";
@@ -21,12 +22,12 @@ const routes = [
   {
     exact: true,
     path: "/",
-    component: props => (props.token ? <HomeView/> : <LoginView/>),
+    component: props => (props.token ? <HomeView/> : <Redirect to="/login"/>),
     routes: []
   },
   {
     path: "/login",
-    component: props => (!props.token ? <LoginView/> : <HomeView/>),
+    component: props => (!props.token ? <LoginView/> : <Redirect to="/"/>),
     routes: []
   },
   {
