@@ -58,6 +58,54 @@ const typeDefs = gql`
     name: String
   }
 
+  enum MessageFormat {
+    PLAIN_TEXT
+    JSON
+    OSC
+  }
+
+  enum MessageContext {
+    CHAT
+    SUPERCOLLIDER
+  }
+
+  type Channel {
+    _id: ID!
+    name: String #public
+    orchestra: Orchestra!
+    members: [Member!]
+  }
+
+  interface Message {
+    from: Member!
+    format: MessageFormat!
+    context: MessageContext!
+    to: Member || Channel
+  }
+
+  input MessageInput {
+    from: String!
+    format: MessageFormat!
+    context: MessageContext!
+    to: String!
+  }
+
+  type PublicMessage implements Message {
+    _id: ID!
+    from: Member!
+    format: MessageFormat!
+    context: MessageContext!
+    to: Channel
+  }
+
+  type PrivateMessage implements Message {
+    _id: ID!
+    from: Member!
+    format: MessageFormat!
+    context: MessageContext!
+    to: Member
+  } 
+
   # This type specifies the entry points into our API.
   type Query {
     user: User!
@@ -81,12 +129,16 @@ const typeDefs = gql`
     sendInvite(orchestraId: String!, email: String!): Invite!
     acceptInvite(inviteId: String!): Member!
     denyInvite(inviteId: String!): Invite!
+    sendMessageToMember(messageInput: MessageInput!)
+    sendMessageToChannel(messageInput: MessageInput!)
   }
 
   # The subscription root type, used to define all subscriptions.
   type Subscription {
     newInvite: Invite!
     newMember(orchestraId: String!): Member!
+    newMessageFromMember(orchestraId: String!, memberId: String!, context: MessageContext)
+    newMessageFromChannel(orchestraId: String!, channelId: String!, context: MessageContext)
   }
 `;
 
