@@ -30,6 +30,10 @@ const messageSchema = new Schema({
     type: Schema.Types.String,
     enum: ["PLAIN_TEXT", "JSON", "SC_RAW", "SC_LANG"],
     default: "PLAIN_TEXT"
+  },
+  body: {
+    type: Schema.Types.String,
+    required: true
   }
 });
 
