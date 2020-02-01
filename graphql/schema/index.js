@@ -138,8 +138,8 @@ const typeDefs = gql`
   type Subscription {
     newInvite: Invite!
     newMember(orchestraId: String!): Member!
-    newMessageFromMember(orchestraId: String!, memberId: String!, context: MessageContext): PrivateMessage
-    newMessageFromChannel(orchestraId: String!, channelId: String!, context: MessageContext): ChannelMessage
+    newPrivateMessage(orchestraId: String!, memberId: String!, context: MessageContext): PrivateMessage
+    newChannelMessage(orchestraId: String!, channelId: String!, context: MessageContext): ChannelMessage
   }
 `;
 
