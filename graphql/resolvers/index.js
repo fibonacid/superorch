@@ -3,6 +3,7 @@ const users = require("./users");
 const orchestras = require("./orchestras");
 const members = require("./members");
 const invites = require("./invites");
+const messages = require("./messages");
 
 const rootResolver = {
   Query: {
@@ -16,10 +17,12 @@ const rootResolver = {
     ...auth.Mutation,
     ...users.Mutation,
     ...orchestras.Mutation,
-    ...invites.Mutation
+    ...invites.Mutation,
+    ...messages.Mutation
   },
   Subscription: {
-    ...invites.Subscription
+    ...invites.Subscription,
+    ...messages.Subscription
   }
 };
 
