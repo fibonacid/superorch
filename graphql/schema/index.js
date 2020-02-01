@@ -61,7 +61,8 @@ const typeDefs = gql`
   enum MessageFormat {
     PLAIN_TEXT
     JSON
-    OSC
+    SC_OSC
+    SC_SCLANG
   }
 
   enum MessageContext {
