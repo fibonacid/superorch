@@ -13,11 +13,11 @@ const messageSchema = new Schema({
     ref: "Member",
     required: true
   },
-  toMember: {
+  member: {
     type: Schema.Types.ObjectID,
     ref: "Member",
   },
-  toChannel: {
+  channel: {
     type: Schema.Types.ObjectID,
     ref: "Channel",
   },
