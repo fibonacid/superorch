@@ -1,5 +1,5 @@
 const DataLoader = require("dataloader");
-const Message = require("../models/messages");
+const Message = require("../models/message");
 
 const batchMessages = async ids => {
   const messages = await Message.find({ _id: { $in: ids } });
