@@ -5,7 +5,9 @@ import { invitesDocument, newInviteDocument } from "../../../config/documents";
 import Item from "./Item";
 
 function Invites() {
-  const { subscribeToMore, data } = useQuery(invitesDocument);
+  const { subscribeToMore, data } = useQuery(invitesDocument, {
+    errorPolicy: 'ignore'
+  });
 
   const subscribeToNewInvite = () =>
     subscribeToMore({

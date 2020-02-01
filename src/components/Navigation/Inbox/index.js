@@ -9,7 +9,9 @@ import Notifications from "../../Notifications";
 function Inbox() {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
-  const { data } = useQuery(notificationsDocument);
+  const { data } = useQuery(notificationsDocument, {
+    errorPolicy: 'ignore'
+  });
 
   const toggle = () => {
     setVisible(!visible);
