@@ -14,7 +14,7 @@ async function transformUser(
   );
 
   const memberOf = await orchestraLoader.loadMany(
-    user._doc.createdOrchestras.map(id => id.toString())
+    user._doc.memberOf.map(id => id.toString())
   );
 
   const sentInvites = await inviteLoader.loadMany(
