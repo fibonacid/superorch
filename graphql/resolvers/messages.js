@@ -3,9 +3,7 @@ const Orchestra = require("../../models/orchestras");
 const Channel = require("../../models/channel");
 const Message = require("../../models/message");
 const Member = require("../../models/members");
-const {
-  transformMessage,
-} = require("./_transforms");
+const { transformMessage } = require("./_transforms");
 
 const NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
 const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
@@ -13,18 +11,18 @@ const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
 const pubsub = new PubSub();
 
 exports.Message = {
-  __resolveType(message){
-    if(message.member){
-      return 'PrivateMessage';
+  __resolveType(message) {
+    if (message.toMember) {
+      return "PrivateMessage";
     }
 
-    if(message.channel){
-      return 'ChannelMessage';
+    if (message.toChannel) {
+      return "ChannelMessage";
     }
 
     return null;
-  },
-}
+  }
+};
 
 exports.Query = {
   messages: async (_, { orchestraId }, { isAuth, userId, loaders }) => {
@@ -39,24 +37,24 @@ exports.Query = {
       const member = await Member.findOne({
         orchestra: orchestraId,
         user: userId
-      })
+      });
       if (!member) {
         throw new Error("Member doesn't exist");
       }
       console.log({ member });
-      
-      // Find messages where user is included as member 
+
+      // Find messages where user is included as member
       const privateMessages = await Message.find({
         toMember: member._doc._id
       });
-      console.log({privateMessages});
+      console.log({ privateMessages });
 
       // Find channels in which the user is present
       const channels = await Channel.find({
         members: {
           $in: [member._doc._id]
         }
-      })
+      });
       // console.log({channels});
 
       // Find messages sent to all the channel in which
@@ -65,15 +63,12 @@ exports.Query = {
         toChannel: {
           $in: channels
         }
-      })
+      });
 
-      const messages = [
-        ...privateMessages,
-        ...channelMessages
-      ]
+      const messages = [...privateMessages, ...channelMessages];
       console.log(messages);
 
-      return messages.map(message => transformMessage(message.id, loaders))
+      return messages.map(message => transformMessage(message.id, loaders));
     } catch (err) {
       return err;
     }
@@ -110,7 +105,7 @@ exports.Mutation = {
         context: messageInput.context,
         format: messageInput.format,
         body: messageInput.body,
-        toMember: receiver,
+        toMember: receiver
       });
 
       return transformMessage(message.id, loaders);
