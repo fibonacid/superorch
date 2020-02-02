@@ -164,11 +164,29 @@ async function transformChannelMessage(
   }
 }
 
+//
+//  Transform Private Message
+//
+async function transformPrivateMessage(
+  messageId,
+  { memberLoader, messageLoader, orchestraLoader }
+) {
+  const message = await messageLoader.load(messageId.toString());
+
+  return {
+    ...message._doc,
+    from: memberLoader.load(message._doc.from),
+    to: memberLoader.load(message._doc.member),
+    orchestra: orchestraLoader.load(message._doc.orchestra),
+  }
+}
+
 module.exports = {
   transformUser,
   transformOrchestra,
   transformMember,
   transformInvite,
   transformChannel,
-  transformChannelMessage
+  transformChannelMessage,
+  transformPrivateMessage
 };
