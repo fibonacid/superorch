@@ -11,24 +11,43 @@ const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
 const pubsub = new PubSub();
 
 exports.Query = {
-  privateMessages: async (
-    _,
-    { orchestraId, messageFilters },
-    { isAuth, userId, loaders }
-  ) => {
+  privateMessages: async (_, { orchestraId, filters }, { loaders }) => {
     try {
-      throw new Error("Not implemented yet");
+      const orchestra = await Orchestra.findById(orchestraId);
+      if (!orchestra) {
+        throw new Error("Orchestra doesn't exist");
+      }
+
+      // Find all messages
+      const messages = await Message.find({
+        orchestra: orchestraId,
+        targetType: "Member",
+        context: { $in: filters.contexts },
+        format: { $in: filters.formats }
+      });
+
+      return messages.map(message => transformMessage(message.id, loaders));
     } catch (err) {
       return err;
     }
   },
-  channelMessages: async (
-    _,
-    { orchestraId, messageFilters },
-    { isAuth, userId, loaders }
-  ) => {
+  channelMessages: async (_, { orchestraId, filters }, { loaders }) => {
     try {
-      throw new Error("Not implemented yet");
+      const orchestra = await Orchestra.findById(orchestraId);
+      if (!orchestra) {
+        throw new Error("Orchestra doesn't exist");
+      }
+
+      // Find all messages
+      const messages = await Message.find({
+        orchestra: orchestraId,
+        targetType: "Channel",
+        context: { $in: filters.contexts },
+        format: { $in: filters.formats }
+      });
+      console.log(messages);
+
+      return messages.map(message => transformMessage(message.id, loaders));
     } catch (err) {
       return err;
     }
@@ -102,11 +121,11 @@ exports.Mutation = {
 
       // Create message
       const message = await Message.create({
-         orchestra,
-         ...messageInput,
-         from: sender,
-         targetId: receiver._doc._id,
-         targetType: "Channel"
+        orchestra,
+        ...messageInput,
+        from: sender,
+        targetId: receiver._doc._id,
+        targetType: "Channel"
       });
 
       return transformMessage(message.id, loaders);
