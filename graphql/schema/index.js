@@ -105,7 +105,7 @@ const typeDefs = gql`
   }
 
   input MessageFilter {
-    context: MessageContext
+    contexts: [MessageContext!]
     formats: [MessageFormat!]
   }
 
