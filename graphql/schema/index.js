@@ -79,6 +79,7 @@ const typeDefs = gql`
   }
 
   interface Message {
+    _id: ID!
     format: MessageFormat!
     context: MessageContext!
     body: String!
@@ -86,6 +87,7 @@ const typeDefs = gql`
   }
 
   type ChannelMessage {
+    _id: ID!
     format: MessageFormat!
     context: MessageContext!
     body: String!
@@ -94,6 +96,7 @@ const typeDefs = gql`
   }
 
   type PrivateMessage {
+    _id: ID!
     format: MessageFormat!
     context: MessageContext!
     body: String!
