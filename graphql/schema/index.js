@@ -78,44 +78,30 @@ const typeDefs = gql`
     members: [Member!]
   }
 
-  interface Message {
+  union MessageTarget = Channel | Member
+
+  type Message {
+    format: MessageFormat!
+    context: MessageContext!
+    body: String!
     from: Member!
+    to: MessageTarget
+  }
+
+  input MessageFilter {
+    targetType: __typename
+    targetId: String
+    context: MessageContext,
+    formats: [MessageFormat!]
+  }
+
+  input MessageInput {
+    targetType: __typename!
+    targetId: String!
     format: MessageFormat!
     context: MessageContext!
     body: String!
   }
-
-  input ChannelMessageInput {
-    channelId: String!
-    format: MessageFormat!
-    context: MessageContext!
-    body: String!
-  }
-
-  type ChannelMessage implements Message {
-    _id: ID!
-    from: Member!
-    format: MessageFormat!
-    context: MessageContext!
-    body: String!
-    toChannel: Channel!
-  }
-
-  input PrivateMessageInput {
-    memberId: String!
-    format: MessageFormat!
-    context: MessageContext!
-    body: String!
-  }
-
-  type PrivateMessage implements Message {
-    _id: ID!
-    from: Member!
-    format: MessageFormat!
-    context: MessageContext!
-    body: String!
-    toMember: Member!
-  } 
 
   # This type specifies the entry points into our API.
   type Query {
@@ -123,9 +109,9 @@ const typeDefs = gql`
     user: User!
     orchestras: [Orchestra!]!
     orchestraById(orchestraId: String!): Orchestra!
-    members(orchestraId: String!): [Member!]!
-    invites: [Invite!]!
-    messages(orchestraId: String!): [Message!]
+    members(orchestraId: String!): [Member!]
+    invites: [Invite!]
+    messages(orchestraId: String!, messageFilter: MessageFilter): [Message!]
   }
 
   # The mutation root type, used to define all mutations.
@@ -141,16 +127,14 @@ const typeDefs = gql`
     sendInvite(orchestraId: String!, email: String!): Invite!
     acceptInvite(inviteId: String!): Member!
     denyInvite(inviteId: String!): Invite!
-    sendMessageToMember(messageInput: PrivateMessageInput!): PrivateMessage!
-    sendMessageToChannel(messageInput: ChannelMessageInput!): ChannelMessage!
+    sendMessage(orchestraId: String!, messageInput: messageInput!): Message!
   }
 
   # The subscription root type, used to define all subscriptions.
   type Subscription {
     newInvite: Invite!
     newMember(orchestraId: String!): Member!
-    newPrivateMessage(orchestraId: String!, memberId: String!, context: MessageContext): PrivateMessage
-    newChannelMessage(orchestraId: String!, channelId: String!, context: MessageContext): ChannelMessage
+    newMessage(orchestraId: String!, messageFilter: MessageFilter): Message!
   }
 `;
 
