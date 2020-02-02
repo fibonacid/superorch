@@ -45,9 +45,30 @@ exports.Mutation = {
       if (!isAuth) {
         throw new Error("Unauthenticated");
       }
-      console.log({ messageInput });
+      // Check that the orchestra exists
+      const orchestra = await Orchestra.findById(orchestraId);
+      if (!orchestra) {
+        throw new Error("Orchestra doesn't exist");
+      }
 
-      throw new Error("Not implemented yet");
+      // Get members involved in the communication
+      const sender = await Member.findOne({ user: userId });
+      const receiver = await Member.findById(memberId);
+
+      if (!sender || !receiver) {
+        throw new Error("Member doesn't exist");
+      }
+
+      // Create message
+      const message = await Message.create({
+        orchestra,
+        ...messageInput,
+        from: sender,
+        targetId: receiver._doc._id,
+        targetType: "Member"
+      });
+
+      return transformMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
@@ -61,9 +82,34 @@ exports.Mutation = {
       if (!isAuth) {
         throw new Error("Unauthenticated");
       }
-      console.log({ messageInput });
+      // Check that the orchestra exists
+      const orchestra = await Orchestra.findById(orchestraId);
+      if (!orchestra) {
+        throw new Error("Orchestra doesn't exist");
+      }
 
-      throw new Error("Not implemented yet");
+      // Check if sending member exists
+      const sender = await Member.findOne({ user: userId });
+      if (!sender) {
+        return new Error("Member doesn't exist");
+      }
+
+      // Check if receiving channel exists
+      const receiver = await Channel.findById(channelId);
+      if (!receiver) {
+        return new Error("Channel doesn't exist");
+      }
+
+      // Create message
+      const message = await Message.create({
+         orchestra,
+         ...messageInput,
+         from: sender,
+         targetId: receiver._doc._id,
+         targetType: "Channel"
+      });
+
+      return transformMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
