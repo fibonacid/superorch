@@ -12,6 +12,19 @@ const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
 
 const pubsub = new PubSub();
 
+exports.Message = {
+  __resolveType(message){
+    if(message.member){
+      return 'PrivateMessage';
+    }
+
+    if(message.channel){
+      return 'ChannelMessage';
+    }
+
+    return null;
+  },
+}
 
 exports.Query = {
   messages: async (_, { orchestraId }, { isAuth, userId, loaders }) => {
@@ -59,7 +72,7 @@ exports.Query = {
         ...privateMessages,
         ...channelMessages
       ]
-      throw new Error('not implemented yet')
+      console.log(messages);
 
       return messages.map(message => transformMessage(message.id, loaders))
     } catch (err) {
