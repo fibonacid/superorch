@@ -125,7 +125,7 @@ const typeDefs = gql`
     orchestraById(orchestraId: String!): Orchestra!
     members(orchestraId: String!): [Member!]!
     invites: [Invite!]!
-    messages: [Message!]
+    messages(orchestraId: String!): [Message!]
   }
 
   # The mutation root type, used to define all mutations.
