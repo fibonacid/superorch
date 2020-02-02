@@ -147,10 +147,28 @@ async function transformChannel(
   }
 }
 
+//
+//  Transform Channel Message
+//
+async function transformChannelMessage(
+  messageId,
+  { memberLoader, messageLoader, channelLoader, orchestraLoader }
+) {
+  const message = await messageLoader.load(messageId.toString());
+
+  return {
+    ...message._doc,
+    from: memberLoader.load(message._doc.from),
+    channel: channelLoader.load(message._doc.channel),
+    orchestra: orchestraLoader.load(message._doc.orchestra),
+  }
+}
+
 module.exports = {
   transformUser,
   transformOrchestra,
   transformMember,
   transformInvite,
-  transformChannel
+  transformChannel,
+  transformChannelMessage
 };
