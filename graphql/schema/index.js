@@ -119,12 +119,12 @@ const typeDefs = gql`
 
   # This type specifies the entry points into our API.
   type Query {
+    login(email: String!, password: String!): AuthData!
     user: User!
     orchestras: [Orchestra!]!
     orchestraById(orchestraId: String!): Orchestra!
+    members(orchestraId: String!): [Member!]!
     invites: [Invite!]!
-    members(orchestraId: ID!): [Member!]!
-    login(email: String!, password: String!): AuthData!
   }
 
   # The mutation root type, used to define all mutations.
