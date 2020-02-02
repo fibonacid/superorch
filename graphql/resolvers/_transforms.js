@@ -148,36 +148,31 @@ async function transformChannel(
 }
 
 //
-//  Transform Channel Message
+//  Transform Message
 //
-async function transformChannelMessage(
+async function transformMessage(
   messageId,
-  { memberLoader, messageLoader, channelLoader, orchestraLoader }
+  { memberLoader, channelLoader, messageLoader, orchestraLoader }
 ) {
   const message = await messageLoader.load(messageId.toString());
 
-  return {
-    ...message._doc,
-    from: memberLoader.load(message._doc.from),
-    to: channelLoader.load(message._doc.channel),
-    orchestra: orchestraLoader.load(message._doc.orchestra),
+  let __resolveType, to;
+  if (message._doc.channel) {
+    __resolveType = "ChannelMessage";
+    to = channelLoader.load(message._doc.channel)
   }
-}
-
-//
-//  Transform Private Message
-//
-async function transformPrivateMessage(
-  messageId,
-  { memberLoader, messageLoader, orchestraLoader }
-) {
-  const message = await messageLoader.load(messageId.toString());
+  else if (message._doc.member) {
+    __resolveType = "PrivateMessage";
+    to = memberLoader.load(message._doc.member)
+  } else {
+    throw new Error('Invalid resolve type')
+  }
 
   return {
     ...message._doc,
     from: memberLoader.load(message._doc.from),
-    to: memberLoader.load(message._doc.member),
     orchestra: orchestraLoader.load(message._doc.orchestra),
+    __resolveType, to
   }
 }
 
@@ -187,6 +182,5 @@ module.exports = {
   transformMember,
   transformInvite,
   transformChannel,
-  transformChannelMessage,
-  transformPrivateMessage
+  transformMessage
 };

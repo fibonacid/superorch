@@ -3,8 +3,7 @@ const Channel = require("../../models/channel");
 const Message = require("../../models/message");
 const Member = require("../../models/members");
 const {
-  transformChannelMessage,
-  transformPrivateMessage
+  transformMessage,
 } = require("./_transforms");
 
 const NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
@@ -15,6 +14,9 @@ const pubsub = new PubSub();
 exports.Query = {
   messages: async (_, __, { isAuth, userId, loaders }) => {
     try {
+      if (!isAuth) {
+        throw new Error("Unauthenticated");
+      }
       throw new Error('not implemented yet')
     } catch (err) {
       return err;
@@ -56,7 +58,7 @@ exports.Mutation = {
         body: messageInput.body
       });
 
-      return transformPrivateMessage(message.id, loaders);
+      return transformMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
@@ -95,7 +97,7 @@ exports.Mutation = {
         body: messageInput.body
       });
 
-      return transformChannelMessage(message.id, loaders);
+      return transformMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
