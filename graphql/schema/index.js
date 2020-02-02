@@ -71,32 +71,37 @@ const typeDefs = gql`
     SUPERCOLLIDER
   }
 
+  enum MessageTarget {
+    CHANNEL
+    MEMBER
+  }
+
   type Channel {
     _id: ID!
-    name: String #public
+    name: String
     orchestra: Orchestra!
     members: [Member!]
   }
 
-  union MessageTarget = Channel | Member
+  union MessageReceiver = Channel | Member
 
   type Message {
     format: MessageFormat!
     context: MessageContext!
     body: String!
     from: Member!
-    to: MessageTarget
+    to: MessageReceiver
   }
 
   input MessageFilter {
-    targetType: __typename
+    targetType: String
     targetId: String
     context: MessageContext,
     formats: [MessageFormat!]
   }
 
   input MessageInput {
-    targetType: __typename!
+    targetType: String!
     targetId: String!
     format: MessageFormat!
     context: MessageContext!
