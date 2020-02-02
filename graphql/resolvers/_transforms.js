@@ -123,7 +123,6 @@ async function transformInvite(
   };
 }
 
-
 //
 //  Transform Channel
 //
@@ -144,7 +143,7 @@ async function transformChannel(
       ...member._doc,
       user: userLoader.load(member._doc.user.toString())
     }))
-  }
+  };
 }
 
 //
@@ -156,26 +155,24 @@ async function transformMessage(
 ) {
   const message = await messageLoader.load(messageId.toString());
 
-  let receiver = {};
-  if (message._doc.toChannel) {
-    receiver = {
-      toChannel: channelLoader.load(message._doc.toChannel)
-    }
-  }
-  else if (message._doc.toMember) {
-    receiver = {
-      toMember: memberLoader.load(message._doc.toMember)
-    }
-  } else {
-    throw new Error('Invalid resolve type')
+  let receiver;
+  switch (message._doc.targetType) {
+    case "Member":
+      receiver = memberLoader.load(message._doc.targetId);
+      break;
+    case "Channel":
+      receiver = channelLoader.load(message._doc.targetId);
+      break;
+    default:
+      throw new Error("Invalid target type ", message._doc.targetType);
   }
 
   return {
     ...message._doc,
-    from: memberLoader.load(message._doc.from),
     orchestra: orchestraLoader.load(message._doc.orchestra),
-    ...receiver
-  }
+    from: memberLoader.load(message._doc.from),
+    to: receiver
+  };
 }
 
 module.exports = {
