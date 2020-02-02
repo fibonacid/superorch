@@ -4,6 +4,7 @@ const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
 const Member = require("../../models/members");
+const Channel = require("../../models/channel");
 
 const pubsub = new PubSub();
 
@@ -138,6 +139,14 @@ exports.Mutation = {
     const orchestra = await Orchestra.findById(invite.subject);
     orchestra.members.push(member);
     await orchestra.save();
+
+    // Add member to public channel
+    const channel = await Channel.findOne({
+      orchestra: orchestra._doc._id,
+      name: "public"
+    })
+    channel.members.push(member);
+    await channel.save();
 
     // Send a NEW_MEMBER message
     pubsub.publish(NEW_MEMBER, {
