@@ -37,24 +37,24 @@ exports.Query = {
         throw new Error("Orchestra doesn't exist");
       }
       const member = await Member.findOne({
-        orchestra,
-        user: { _id: userId }
+        orchestra: orchestraId,
+        user: userId
       })
       if (!member) {
         throw new Error("Member doesn't exist");
       }
+      console.log({ member });
       
       // Find messages where user is included as member 
       const privateMessages = await Message.find({
-        orchestra,
-        toMember: member
+        toMember: member._doc._id
       });
-      // console.log({privateMessages});
+      console.log({privateMessages});
 
       // Find channels in which the user is present
       const channels = await Channel.find({
         members: {
-          $in: [member]
+          $in: [member._doc._id]
         }
       })
       // console.log({channels});
@@ -62,7 +62,6 @@ exports.Query = {
       // Find messages sent to all the channel in which
       // the user is present
       const channelMessages = await Message.find({
-        orchestra: orchestraId,
         toChannel: {
           $in: channels
         }
