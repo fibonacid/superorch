@@ -45,7 +45,6 @@ exports.Query = {
         context: { $in: filters.contexts },
         format: { $in: filters.formats }
       });
-      console.log(messages);
 
       return messages.map(message => transformMessage(message.id, loaders));
     } catch (err) {
@@ -87,6 +86,11 @@ exports.Mutation = {
         targetType: "Member"
       });
 
+      // Send a NEW_MEMBER message
+      pubsub.publish(NEW_PRIVATE_MESSAGE, {
+        newPrivateMessage: transformMessage(message.id, loaders)
+      });
+
       return transformMessage(message.id, loaders);
     } catch (err) {
       return err;
@@ -126,6 +130,11 @@ exports.Mutation = {
         from: sender,
         targetId: receiver._doc._id,
         targetType: "Channel"
+      });
+
+      // Send a NEW_MEMBER message
+      pubsub.publish(NEW_CHANNEL_MESSAGE, {
+        newChannelMessage: transformMessage(message.id, loaders)
       });
 
       return transformMessage(message.id, loaders);
