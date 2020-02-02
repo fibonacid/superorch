@@ -1,4 +1,5 @@
 const { PubSub } = require("apollo-server-express");
+const Orchestra = require("../../models/orchestras");
 const Channel = require("../../models/channel");
 const Message = require("../../models/message");
 const Member = require("../../models/members");
@@ -11,13 +12,56 @@ const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
 
 const pubsub = new PubSub();
 
+
 exports.Query = {
-  messages: async (_, __, { isAuth, userId, loaders }) => {
+  messages: async (_, { orchestraId }, { isAuth, userId, loaders }) => {
     try {
       if (!isAuth) {
         throw new Error("Unauthenticated");
       }
+      const orchestra = await Orchestra.findById(orchestraId);
+      if (!orchestra) {
+        throw new Error("Orchestra doesn't exist");
+      }
+      const member = await Member.findOne({
+        orchestra,
+        user: { _id: userId }
+      })
+      if (!member) {
+        throw new Error("Member doesn't exist");
+      }
+      
+      // Find messages where user is included as member 
+      const privateMessages = await Message.find({
+        orchestra,
+        toMember: member
+      });
+      // console.log({privateMessages});
+
+      // Find channels in which the user is present
+      const channels = await Channel.find({
+        members: {
+          $in: [member]
+        }
+      })
+      // console.log({channels});
+
+      // Find messages sent to all the channel in which
+      // the user is present
+      const channelMessages = await Message.find({
+        orchestra: orchestraId,
+        toChannel: {
+          $in: channels
+        }
+      })
+
+      const messages = [
+        ...privateMessages,
+        ...channelMessages
+      ]
       throw new Error('not implemented yet')
+
+      return messages.map(message => transformMessage(message.id, loaders))
     } catch (err) {
       return err;
     }
@@ -49,13 +93,12 @@ exports.Mutation = {
 
       // Create message
       const message = await Message.create({
-        member: receiver,
         from: member,
         orchestra: member.orchestra,
         context: messageInput.context,
         format: messageInput.format,
-        value: messageInput.value,
-        body: messageInput.body
+        body: messageInput.body,
+        toMember: receiver,
       });
 
       return transformMessage(message.id, loaders);
@@ -88,13 +131,13 @@ exports.Mutation = {
 
       // Create message
       const message = await Message.create({
-        channel,
         from: member,
         orchestra: member.orchestra,
         context: messageInput.context,
         format: messageInput.format,
         value: messageInput.value,
-        body: messageInput.body
+        body: messageInput.body,
+        toChannel: channel
       });
 
       return transformMessage(message.id, loaders);

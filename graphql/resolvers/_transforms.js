@@ -156,14 +156,16 @@ async function transformMessage(
 ) {
   const message = await messageLoader.load(messageId.toString());
 
-  let __resolveType, to;
-  if (message._doc.channel) {
-    __resolveType = "ChannelMessage";
-    to = channelLoader.load(message._doc.channel)
+  let receiver = {};
+  if (message._doc.toChannel) {
+    receiver = {
+      toChannel: channelLoader.load(message._doc.toChannel)
+    }
   }
-  else if (message._doc.member) {
-    __resolveType = "PrivateMessage";
-    to = memberLoader.load(message._doc.member)
+  else if (message._doc.toMember) {
+    receiver = {
+      toMember: memberLoader.load(message._doc.toMember)
+    }
   } else {
     throw new Error('Invalid resolve type')
   }
@@ -172,7 +174,7 @@ async function transformMessage(
     ...message._doc,
     from: memberLoader.load(message._doc.from),
     orchestra: orchestraLoader.load(message._doc.orchestra),
-    __resolveType, to
+    ...receiver
   }
 }
 

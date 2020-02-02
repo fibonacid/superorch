@@ -95,10 +95,10 @@ const typeDefs = gql`
   type ChannelMessage implements Message {
     _id: ID!
     from: Member!
-    to: Channel!
     format: MessageFormat!
     context: MessageContext!
     body: String!
+    toChannel: Channel!
   }
 
   input PrivateMessageInput {
@@ -111,10 +111,10 @@ const typeDefs = gql`
   type PrivateMessage implements Message {
     _id: ID!
     from: Member!
-    to: Member!
     format: MessageFormat!
     context: MessageContext!
     body: String!
+    toMember: Member!
   } 
 
   # This type specifies the entry points into our API.
