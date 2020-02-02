@@ -6,7 +6,6 @@ const invites = require("./invites");
 const messages = require("./messages");
 
 const rootResolver = {
-  Message: messages.Message,
   Query: {
     ...auth.Query,
     ...users.Query,
