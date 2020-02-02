@@ -159,7 +159,7 @@ async function transformChannelMessage(
   return {
     ...message._doc,
     from: memberLoader.load(message._doc.from),
-    channel: channelLoader.load(message._doc.channel),
+    to: channelLoader.load(message._doc.channel),
     orchestra: orchestraLoader.load(message._doc.orchestra),
   }
 }
