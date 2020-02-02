@@ -13,13 +13,14 @@ const messageSchema = new Schema({
     ref: "Member",
     required: true
   },
-  toMember: {
+  targetId: {
     type: Schema.Types.ObjectID,
-    ref: "Member",
+    required: true
   },
-  toChannel: {
-    type: Schema.Types.ObjectID,
-    ref: "Channel",
+  targetType: {
+    type: Schema.Types.String,
+    enum: ["Member", "Channel"],
+    required: true
   },
   context: {
     type: Schema.Types.String,
