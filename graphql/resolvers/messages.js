@@ -2,7 +2,7 @@ const { PubSub } = require("apollo-server-express");
 const Channel = require("../../models/channel");
 const Message = require("../../models/message");
 const Member = require("../../models/members");
-const { transformMessage } = require("./_transforms");
+const { transformChannelMessage } = require("./_transforms");
 
 const NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
 const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
@@ -35,7 +35,7 @@ exports.Mutation = {
       }
       
       // Check if member exists
-      const member = await Member.find({ user: userId });
+      const member = await Member.findOne({ user: userId });
       if (!member) {
          return new Error("Member doesn't exist")
       }
@@ -50,10 +50,8 @@ exports.Mutation = {
          value: messageInput.value,
          body: messageInput.body
       })
-      console.log(message);
-
-      return message._doc
-      //return transformMessage(message, loaders);
+      
+      return transformChannelMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
