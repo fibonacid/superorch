@@ -8,10 +8,6 @@ const StyledContainer = styled.div`
   font-size: 14px;
 `;
 
-const StyledTitle = styled.h3`
-  font-size: 18px;
-`;
-
 const StyledList = styled.ul`
   margin: 15px 0;
 `;
