@@ -4,6 +4,7 @@ const orchestras = require("./orchestras");
 const members = require("./members");
 const invites = require("./invites");
 const messages = require("./messages");
+const channels = require("./channels");
 
 const rootResolver = {
   Query: {
@@ -12,7 +13,8 @@ const rootResolver = {
     ...orchestras.Query,
     ...invites.Query,
     ...members.Query,
-    ...messages.Query
+    ...messages.Query,
+    ...channels.Query
   },
   Mutation: {
     ...auth.Mutation,
