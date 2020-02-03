@@ -17,6 +17,7 @@ import OrchestraPlayView from "../views/orchestras/:id/play";
 import OrchestraEditView from "../views/orchestras/:id/edit";
 import OrchestraInvitesView from "../views/orchestras/:id/invites";
 import OrchestraDeleteView from "../views/orchestras/:id/delete";
+import OrchestraChatView from "../views/orchestras/:id/chat";
 
 const routes = [
   {
@@ -85,10 +86,14 @@ const routes = [
             path: "/orchestras/:id/invites",
             component: OrchestraInvitesView
           },
+          {
+            path: "/orchestras/:id/chat",
+            component: OrchestraChatView
+          },
           { // fallback on play view
             path: "/orchestras/:id",
             component: OrchestraPlayView
-          },
+          }
         ]
       },
     ]
