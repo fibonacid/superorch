@@ -37,16 +37,25 @@ exports.Query = {
       return err;
     }
   },
-  channelMessages: async (_, { orchestraId, filters }, { loaders }) => {
+  channelMessages: async (
+    _,
+    { orchestraId, channelId, filters },
+    { loaders }
+  ) => {
     try {
       const orchestra = await Orchestra.findById(orchestraId);
       if (!orchestra) {
         throw new Error("Orchestra doesn't exist");
       }
+      const channel = await Channel.findById(channelId);
+      if (!channel) {
+        throw new Error("Channel doesn't exist");
+      }
 
       // Find all messages
       const messages = await Message.find({
         orchestra: orchestraId,
+        targetId: channelId,
         targetType: "Channel",
         context: { $in: filters.contexts },
         format: { $in: filters.formats }
@@ -196,6 +205,17 @@ exports.Subscription = {
   },
   newChannelMessage: {
     resolve: payload => payload.newChannelMessage,
-    subscribe: () => pubsub.asyncIterator(NEW_CHANNEL_MESSAGE)
+    subscribe: withFilter(
+      () => pubsub.asyncIterator(NEW_CHANNEL_MESSAGE),
+      async (
+        { newChannelMessage },
+        { channelId, filters },
+        { isAuth, userId }
+      ) => {
+        if (!isAuth) {
+          return false;
+        }
+      }
+    )
   }
 };
