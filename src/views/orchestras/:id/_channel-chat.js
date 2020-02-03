@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function ChannelChatView(props) {
-   return <div>this is a channel chat</div>
+export default function ChannelChatView({ channelId }) {
+   return <div>this is a chat on channel {channelId}</div>
 }
