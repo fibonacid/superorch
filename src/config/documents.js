@@ -59,6 +59,7 @@ export const orchestraDocument = gql`
         name
       }
       members {
+        _id
         user {
           _id
           name
