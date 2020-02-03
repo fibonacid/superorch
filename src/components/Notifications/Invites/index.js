@@ -5,9 +5,7 @@ import { invitesDocument, newInviteDocument } from "../../../config/documents";
 import Item from "./Item";
 
 function Invites() {
-  const { subscribeToMore, data } = useQuery(invitesDocument, {
-    errorPolicy: 'ignore'
-  });
+  const { subscribeToMore, data } = useQuery(invitesDocument);
 
   const subscribeToNewInvite = () =>
     subscribeToMore({
@@ -26,8 +24,7 @@ function Invites() {
 
   return (
     <ul>
-      {data &&
-        data.invites.map((invite, i) => <Item key={i} invite={invite} />)}
+      {data && data.invites.map((invite, i) => <Item key={i} invite={invite} />)}
     </ul>
   );
 }
