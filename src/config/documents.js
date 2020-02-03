@@ -89,6 +89,22 @@ export const notificationsDocument = gql`
   # add other queries that qualify as notification
 `;
 
+export const channelMessageDocument = gql`
+  query channelMessages($orchestraId: String!, $channelId: String!) {
+    channelMessages(
+      orchestraId: $orchestraId
+      channelId: $channelId
+      filters: {
+        contexts: [CHAT, SUPERCOLLIDER]
+        formats: [PLAIN_TEXT, JSON, SC_RAW, SC_LANG]
+      }
+    ) {
+      _id
+      body
+    }
+  }
+`;
+
 //
 // Mutations
 //
