@@ -163,9 +163,28 @@ exports.Subscription = {
     resolve: payload => payload.newPrivateMessage,
     subscribe: withFilter(
       () => pubsub.asyncIterator(NEW_PRIVATE_MESSAGE),
-      async ({ newPrivateMessage }, { filters }, { userId }) => {
-        const member = await newPrivateMessage.targetId();
-        return member.user._id === userId;
+      async ({ newPrivateMessage }, { filters }, { isAuth, userId }) => {
+        if (!isAuth) {
+          return false;
+        }
+        // Check if user is the receiver of the message
+        const member = await Member.findById(newPrivateMessage.targetId);
+        const isReceiver = member._doc.user !== userId;
+        if (!isReceiver) return false;
+
+        // Check if message context is correct
+        const validContext = filters.contexts.some(
+          context => context === newPrivateMessage.context
+        );
+        if (!validContext) return false;
+
+        // Check if message format is correct
+        const validFormat = filters.formats.some(
+          format => format === newPrivateMessage.format
+        );
+        if (!validFormat) return false;
+
+        return true;
       }
     )
   },
