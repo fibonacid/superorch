@@ -169,6 +169,7 @@ const typeDefs = gql`
     ): PrivateMessage!
     newChannelMessage(
       orchestraId: String!
+      channelId: String!
       filters: MessageFilter
     ): ChannelMessage!
   }
