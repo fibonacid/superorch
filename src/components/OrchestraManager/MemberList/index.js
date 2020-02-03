@@ -37,7 +37,7 @@ function MemberList({ orchestra }) {
     <StyledContainer>
       <StyledList>
         {members.map((m, i) => (
-          <ListItem key={i} member={m} />
+          <ListItem key={i} orchestra={orchestra} member={m} />
         ))}
       </StyledList>
 
