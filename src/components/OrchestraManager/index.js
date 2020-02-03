@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
 import { orchestraDocument, newMemberDocument } from "../../config/documents";
 import Header from "./Header";
+import ChannelList from "./ChannelList";
 import MemberList from "./MemberList";
 
 const StyledContainer = styled.div`
@@ -46,6 +47,7 @@ export default function Orchestra() {
       {data && data.orchestraById && (
         <>
           <Header orchestra={data.orchestraById} />
+          <ChannelList orchestra={data.orchestraById} />
           <MemberList orchestra={data.orchestraById} />
         </>
       )}
