@@ -124,6 +124,7 @@ const typeDefs = gql`
     members(orchestraId: String!): [Member!]
     memberById(orchestraId: String!, memberId: String!): Member!
     invites: [Invite!]
+    channelById(orchestraId: String!, channelId: String!): Channel!
     privateMessages(
       orchestraId: String!
       filters: MessageFilter
