@@ -1,4 +1,4 @@
-const { PubSub } = require("apollo-server-express");
+const { PubSub, withFilter } = require("apollo-server-express");
 const Orchestra = require("../../models/orchestras");
 const Channel = require("../../models/channel");
 const Message = require("../../models/message");
@@ -88,7 +88,7 @@ exports.Mutation = {
 
       // Send a NEW_MEMBER message
       pubsub.publish(NEW_PRIVATE_MESSAGE, {
-        newPrivateMessage: transformMessage(message.id, loaders)
+        newPrivateMessage: await transformMessage(message.id, loaders)
       });
 
       return transformMessage(message.id, loaders);
@@ -134,7 +134,7 @@ exports.Mutation = {
 
       // Send a NEW_MEMBER message
       pubsub.publish(NEW_CHANNEL_MESSAGE, {
-        newChannelMessage: transformMessage(message.id, loaders)
+        newChannelMessage: await transformMessage(message.id, loaders)
       });
 
       return transformMessage(message.id, loaders);
@@ -144,10 +144,30 @@ exports.Mutation = {
   }
 };
 
+/*
+{ newPrivateMessage:
+   { format: 'PLAIN_TEXT',
+     _id: 5e376837b3fade289e5c95a5,
+     orchestra: Promise { <pending> },
+     context: 'CHAT',
+     body: 'Hi marco again',
+     from: Promise { <pending> },
+     targetId: 5e374c800c0f2722f3dfa735,
+     targetType: 'Member',
+     __v: 0,
+     to: Promise { <pending> } } }
+*/
+
 exports.Subscription = {
   newPrivateMessage: {
     resolve: payload => payload.newPrivateMessage,
-    subscribe: () => pubsub.asyncIterator(NEW_PRIVATE_MESSAGE)
+    subscribe: withFilter(
+      () => pubsub.asyncIterator(NEW_PRIVATE_MESSAGE),
+      async ({ newPrivateMessage }, { filters }, { userId }) => {
+        const member = await newPrivateMessage.targetId();
+        return member.user._id === userId;
+      }
+    )
   },
   newChannelMessage: {
     resolve: payload => payload.newChannelMessage,
