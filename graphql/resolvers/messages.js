@@ -174,10 +174,12 @@ exports.Subscription = {
     resolve: payload => payload.newPrivateMessage,
     subscribe: withFilter(
       () => pubsub.asyncIterator(NEW_PRIVATE_MESSAGE),
-      async ({ newPrivateMessage }, { filters }, { isAuth, userId }) => {
-        if (!isAuth) {
-          return false;
-        }
+      async function ({ newPrivateMessage }, { filters }, { isAuth, userId }) {
+        console.log();
+        console.log(NEW_PRIVATE_MESSAGE);
+        // if (!isAuth) {
+        //   return false;
+        // }
         // Check if user is the receiver of the message
         const member = await Member.findById(newPrivateMessage.targetId);
         const isReceiver = member._doc.user !== userId;
@@ -204,48 +206,62 @@ exports.Subscription = {
     resolve: payload => payload.newChannelMessage,
     subscribe: withFilter(
       () => pubsub.asyncIterator(NEW_CHANNEL_MESSAGE),
-      async (
+      async function (
         { newChannelMessage },
-        { channelId, filters },
+        { orchestraId, channelId, filters },
         { userId }
-      ) => {
-        // if (!isAuth) {
-        //   return false;
-        // }
-
-        // Check if message channel is correct.
-        const targetId = newChannelMessage.targetId.toString();
-        if (channelId !== targetId) return false;
-
-        // Check if user is a member of the channel
-        const members = await Member.find({
-          orchestra: orchestraId,
-          user: userId
-        })
-        if (members.length === 0) return false;
-  
-        // Verify that channel exists and that the user is a member.
-        const channel = await Channel.findOne({
-          _id: channelId,
-          members: {
-            $in: members
+      ) {
+        console.log();
+        console.log(NEW_CHANNEL_MESSAGE);
+        try {
+          // Check if message channel is correct.
+          const targetId = newChannelMessage.targetId.toString();
+          if (channelId !== targetId) {
+            throw new Error("Channels don't match", channelId)
           }
-        });
-        if (!channel) return false;
 
-        // Check if message context is correct
-        const validContext = filters.contexts.some(
-          context => context === newPrivateMessage.context
-        );
-        if (!validContext) return false;
+          // Check if user is a member of the channel
+          const members = await Member.find({
+            orchestra: orchestraId,
+            user: userId
+          })
+          if (members.length === 0) {
+            console.log({orchestraId, userId});
+            throw new Error("User doesn't belong to any orchestra")
+          }
+    
+          // Verify that channel exists and that the user is a member.
+          const channel = await Channel.findOne({
+            _id: channelId,
+            members: {
+              $in: members
+            }
+          });
+          if (!channel) {
+            throw new Error("User doesn't belong to channel", channelId);
+          }
 
-        // Check if message format is correct
-        const validFormat = filters.formats.some(
-          format => format === newPrivateMessage.format
-        );
-        if (!validFormat) return false;
+          // Check if message context is correct
+          const validContext = filters.contexts.some(
+            context => context === newPrivateMessage.context
+          );
+          if (!validContext) {
+            throw new Error('Invalid message context');
+          }
 
-        return true;
+          // Check if message format is correct
+          const validFormat = filters.formats.some(
+            format => format === newPrivateMessage.format
+          );
+          if (!validFormat) {
+            throw new Error('Invalid message format');
+          }
+
+          return true;
+        } catch(err) {
+          console.log(err);
+          return false;
+        }
       }
     )
   }
