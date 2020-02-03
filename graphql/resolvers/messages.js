@@ -54,11 +54,11 @@ exports.Query = {
           $in: [{ user: userId }]
         }
       });
-      if(!channel) {
+      if (!channel) {
         throw new Error("Invalid channel");
       }
 
-      // Find all messages
+      // Retrieve
       const messages = await Message.find({
         orchestra: orchestraId,
         targetId: channelId,
@@ -209,6 +209,30 @@ exports.Subscription = {
       }
     )
   },
+
+  /*
+{ 
+  format: 'PLAIN_TEXT',
+  _id: 5e3822c976e7952e1ca6714c,
+  orchestra: Promise { <pending> },
+  context: 'CHAT',
+  body: 'Hello everybody again',
+  from: Promise { <pending> },
+  targetId: 5e374bf70c0f2722f3dfa72e,
+  targetType: 'Channel',
+  __v: 0,
+  to: Promise { <pending> } 
+}
+
+{ 
+  members: [ 5e374bf70c0f2722f3dfa72d, 5e374c800c0f2722f3dfa735 ],
+    _id: 5e374bf70c0f2722f3dfa72e,
+    name: 'public',
+    orchestra: 5e374bf70c0f2722f3dfa72a,
+    __v: 1 
+}
+*/
+
   newChannelMessage: {
     resolve: payload => payload.newChannelMessage,
     subscribe: withFilter(
@@ -218,9 +242,36 @@ exports.Subscription = {
         { channelId, filters },
         { isAuth, userId }
       ) => {
-        if (!isAuth) {
-          return false;
-        }
+        // if (!isAuth) {
+        //   return false;
+        // }
+
+        // Check if message channel is correct.
+        const targetId = newChannelMessage.targetId.toString();
+        if (channelId !== targetId) return false;
+
+        // Check if user is a member of the channel
+        const channel = await Channel.findOne({
+          _id: channelId,
+          members: {
+            $in: [{ user: userId }]
+          }
+        });
+        if (!channel) return false;
+
+        // Check if message context is correct
+        const validContext = filters.contexts.some(
+          context => context === newPrivateMessage.context
+        );
+        if (!validContext) return false;
+
+        // Check if message format is correct
+        const validFormat = filters.formats.some(
+          format => format === newPrivateMessage.format
+        );
+        if (!validFormat) return false;
+
+        return true;
       }
     )
   }
