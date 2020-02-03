@@ -26,7 +26,7 @@ exports.Query = {
       // Find all messages sent to the user
       const messages = await Message.find({
         orchestra: orchestraId,
-        targetId: member._doc.id,
+        targetId: member._doc._id,
         targetType: "Member",
         context: { $in: filters.contexts },
         format: { $in: filters.formats }
