@@ -1,15 +1,20 @@
 import React from 'react';
+import useSearchParams from '../../../hooks/useSearchParams';
+import ChannelChatView from "./_channel-chat";
+import PrivateChatView from "./_private-chat";
 
 export default function OrchestraChatView() {
-   return (
-      <ChannelChatView />
-   )
-}
+   const params = useSearchParams();
 
-function PrivateChatView() {
-   return <div>this is a private chat</div>
-}
+   const type = params.get("type");
+   const id = params.get("id");
 
-function ChannelChatView() {
-   return <div>this is a private chat</div>
+   switch(type) {
+      case("channel"):
+         return <ChannelChatView channelId={id} />
+      case("private"):
+         return <PrivateChatView memberId={id} />
+      default:
+         return <div>404</div>
+   }
 }
