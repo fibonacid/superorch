@@ -54,6 +54,10 @@ export const orchestraDocument = gql`
     orchestraById(orchestraId: $orchestraId) {
       _id
       name
+      channels {
+        _id
+        name
+      }
       members {
         user {
           _id
