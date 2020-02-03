@@ -110,6 +110,25 @@ export const channelMessageDocument = gql`
   }
 `;
 
+export const channelByIdDocument = gql`
+  query channelById($orchestraId: String!, $channelId: String!) {
+    channelById(orchestraId: $orchestraId, channelId: $channelId) {
+      _id
+      name
+      orchestra {
+        _id
+        name
+      }
+      members {
+        _id
+        user {
+          name
+        }
+      }
+    }
+  }
+`;
+
 //
 // Mutations
 //
