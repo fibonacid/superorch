@@ -12,7 +12,8 @@ const rootResolver = {
     ...orchestras.Query,
     ...invites.Query,
     ...members.Query,
-    ...messages.Query
+    ...messages.Query,
+    ...channels.Query
   },
   Mutation: {
     ...auth.Mutation,
