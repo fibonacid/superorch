@@ -115,16 +115,6 @@ export const channelByIdDocument = gql`
     channelById(orchestraId: $orchestraId, channelId: $channelId) {
       _id
       name
-      orchestra {
-        _id
-        name
-      }
-      members {
-        _id
-        user {
-          name
-        }
-      }
     }
   }
 `;
