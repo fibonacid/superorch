@@ -47,21 +47,15 @@ exports.Query = {
       if (!orchestra) {
         throw new Error("Orchestra doesn't exist");
       }
-      const channel = await Channel.findById(channelId);
-      if (!channel) {
-        throw new Error("Channel doesn't exist");
-      }
-      // Check if user is part of the cannel
-      const userMembers = await Member.find({
-        orchestra: orchestraId,
-        user: userId
-      })
-
-      const isChannelMember = channel._doc.members.some(
-        member => userMembers.some(m === member)
-      )
-      if (!isChannelMember) {
-        throw new Error("User doesn't belong to the channel")
+      // Verify that channel exists and that the user is a member.
+      const channel = await Channel.findOne({
+        _id: channelId,
+        members: {
+          $in: [{ user: userId }]
+        }
+      });
+      if(!channel) {
+        throw new Error("Invalid channel");
       }
 
       // Find all messages
