@@ -11,7 +11,9 @@ exports.Query = {
       throw new Error("Unauthenticated");
     }
 
-    const members = await Member.findById(orchestraId);
+    const members = await Member.find({
+      orchestra: orchestraId
+    });
 
     return members.map(member => transformMember(member.id, loaders));
   },
