@@ -40,22 +40,26 @@ exports.Query = {
   channelMessages: async (
     _,
     { orchestraId, channelId, filters },
-    { loaders }
+    { userId, loaders }
   ) => {
     try {
-      const orchestra = await Orchestra.findById(orchestraId);
-      if (!orchestra) {
-        throw new Error("Orchestra doesn't exist");
+      const members = await Member.find({
+        orchestra: orchestraId,
+        user: userId
+      })
+      if (members.length === 0) {
+        throw new Error("User doesn't belong to any orchestra");
       }
+
       // Verify that channel exists and that the user is a member.
       const channel = await Channel.findOne({
         _id: channelId,
         members: {
-          $in: [{ user: userId }]
+          $in: members
         }
       });
       if (!channel) {
-        throw new Error("Invalid channel");
+        throw new Error("User doesn't belong to this channel");
       }
 
       // Retrieve
@@ -165,20 +169,6 @@ exports.Mutation = {
   }
 };
 
-/*
-{ newPrivateMessage:
-   { format: 'PLAIN_TEXT',
-     _id: 5e376837b3fade289e5c95a5,
-     orchestra: Promise { <pending> },
-     context: 'CHAT',
-     body: 'Hi marco again',
-     from: Promise { <pending> },
-     targetId: 5e374c800c0f2722f3dfa735,
-     targetType: 'Member',
-     __v: 0,
-     to: Promise { <pending> } } }
-*/
-
 exports.Subscription = {
   newPrivateMessage: {
     resolve: payload => payload.newPrivateMessage,
@@ -210,29 +200,6 @@ exports.Subscription = {
     )
   },
 
-  /*
-{ 
-  format: 'PLAIN_TEXT',
-  _id: 5e3822c976e7952e1ca6714c,
-  orchestra: Promise { <pending> },
-  context: 'CHAT',
-  body: 'Hello everybody again',
-  from: Promise { <pending> },
-  targetId: 5e374bf70c0f2722f3dfa72e,
-  targetType: 'Channel',
-  __v: 0,
-  to: Promise { <pending> } 
-}
-
-{ 
-  members: [ 5e374bf70c0f2722f3dfa72d, 5e374c800c0f2722f3dfa735 ],
-    _id: 5e374bf70c0f2722f3dfa72e,
-    name: 'public',
-    orchestra: 5e374bf70c0f2722f3dfa72a,
-    __v: 1 
-}
-*/
-
   newChannelMessage: {
     resolve: payload => payload.newChannelMessage,
     subscribe: withFilter(
@@ -240,7 +207,7 @@ exports.Subscription = {
       async (
         { newChannelMessage },
         { channelId, filters },
-        { isAuth, userId }
+        { userId }
       ) => {
         // if (!isAuth) {
         //   return false;
@@ -251,10 +218,17 @@ exports.Subscription = {
         if (channelId !== targetId) return false;
 
         // Check if user is a member of the channel
+        const members = await Member.find({
+          orchestra: orchestraId,
+          user: userId
+        })
+        if (members.length === 0) return false;
+  
+        // Verify that channel exists and that the user is a member.
         const channel = await Channel.findOne({
           _id: channelId,
           members: {
-            $in: [{ user: userId }]
+            $in: members
           }
         });
         if (!channel) return false;
