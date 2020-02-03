@@ -122,6 +122,7 @@ const typeDefs = gql`
     orchestras: [Orchestra!]!
     orchestraById(orchestraId: String!): Orchestra!
     members(orchestraId: String!): [Member!]
+    memberById(orchestraId: String!, memberId: String!): Member!
     invites: [Invite!]
     privateMessages(
       orchestraId: String!
