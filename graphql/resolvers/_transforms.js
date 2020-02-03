@@ -128,12 +128,12 @@ async function transformInvite(
 //
 async function transformChannel(
   channelId,
-  { channelLoader, orchestraLoader, memberLoader }
+  { channelLoader, userLoader, orchestraLoader, memberLoader }
 ) {
   const channel = await channelLoader.load(channelId.toString());
 
   const members = await memberLoader.loadMany(
-    orchestra._doc.members.map(id => id.toString())
+    channel._doc.members.map(id => id.toString())
   );
 
   return {
