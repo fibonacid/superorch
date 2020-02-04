@@ -23,7 +23,7 @@ export default function ChannelList({ orchestra }) {
          {
             orchestra.channels.map((channel, index) => (
                <StyledItem key={index}>
-                  <Link to={`/orchestras/${orchestra._id}/chat?type=channel&id=${channel._id}`}>
+                  <Link to={`/orchestras/${orchestra._id}/channels/${channel._id}`}>
                      # {channel.name}
                   </Link>
                </StyledItem>

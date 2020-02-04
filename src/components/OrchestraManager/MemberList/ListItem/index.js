@@ -19,7 +19,7 @@ function ListItem({ orchestra, member }) {
   return (
     <StyledContainer>
       <Link
-        to={`/orchestras/${orchestra._id}/chat?type=private&id=${member._id}`}
+        to={`/orchestras/${orchestra._id}/members/${member._id}`}
       >
         {user.name}
       </Link>
