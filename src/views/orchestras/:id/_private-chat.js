@@ -20,10 +20,12 @@ export default function PrivateChatView({ memberId }) {
 
   return (
     <>
-      <span>this is a private chat</span>
-      {member && <span> with {member.user.name}</span>}
       {data && (
-        <MessageBoard messages={data.privateMessages} onSend={console.log} />
+        <MessageBoard
+          title={member && member.user.name || ""}
+          messages={data.privateMessages}
+          onSend={console.log}
+        />
       )}
       {error && <span>{error.message}</span>}
       {loading && <span>loading ...</span>}

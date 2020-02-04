@@ -20,9 +20,9 @@ export default function ChannelChatView({ channelId }) {
 
   return (
     <>
-      {channel && <h2> {channel.name}</h2>}
       {data && (
         <MessageBoard
+          title={channel && channel.name || ""}
           messages={data.channelMessages}
           onSend={console.log}
         />
