@@ -44,6 +44,10 @@ export const orchestraListDocument = gql`
       name
       members {
         _id
+        user {
+          _id
+          name
+        } 
       }
     }
   }
@@ -108,7 +112,6 @@ export const channelMessagesDocument = gql`
       from {
         user {
           _id
-          name
         }
       }
       body
