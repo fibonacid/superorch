@@ -242,6 +242,23 @@ export const denyInviteDocument = gql`
   }
 `;
 
+export const sendChannelMessageDocument = gql`
+  mutation sendChannelMessage(
+    $orchestraId: String!
+    $channelId: String!
+    $format: MessageFormat!
+    $context: MessageContext!
+    $body: String!
+  ) {
+    sendChannelMessage(
+      orchestraId: $orchestraId
+      channelId: $channelId
+      messageInput: { format: $format, context: $context, body: $body }
+    ) {
+      _id
+    }
+  }
+`;
 //
 // Subscriptions
 //
