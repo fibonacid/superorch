@@ -259,6 +259,25 @@ export const sendChannelMessageDocument = gql`
     }
   }
 `;
+
+export const sendPrivateMessageDocument = gql`
+  mutation sendPrivateMessage(
+    $orchestraId: String!
+    $memberId: String!
+    $format: MessageFormat!
+    $context: MessageContext!
+    $body: String!
+  ) {
+    sendPrivateMessage(
+      orchestraId: $orchestraId
+      memberId: $memberId
+      messageInput: { format: $format, context: $context, body: $body }
+    ) {
+      _id
+    }
+  }
+`;
+
 //
 // Subscriptions
 //
