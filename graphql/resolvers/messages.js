@@ -11,7 +11,11 @@ const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
 const pubsub = new PubSub();
 
 exports.Query = {
-  privateMessages: async (_, { orchestraId, memberId, filters }, { userId, loaders }) => {
+  privateMessages: async (
+    _,
+    { orchestraId, memberId, filters },
+    { userId, loaders }
+  ) => {
     try {
       const orchestra = await Orchestra.findById(orchestraId);
       if (!orchestra) {
@@ -22,13 +26,30 @@ exports.Query = {
         orchestra: orchestraId,
         user: userId
       });
+      if (!member) {
+        throw new Error("User doesn't belong to the orchestra");
+      }
+
+      const otherMember = await Member.findOne({
+        _id: memberId,
+        orchestra: orchestraId
+      });
+      if (!otherMember) {
+        throw new Error("Member not found");
+      }
+
+      const memberIds = [member._doc._id, otherMember._doc._id];
 
       // Find all messages sent to the user by
       // the specified member
       const messages = await Message.find({
         orchestra: orchestraId,
-        from: memberId,
-        targetId: member._doc._id,
+        from: {
+          $in: memberIds
+        },
+        targetId: {
+          $in: memberIds
+        },
         targetType: "Member",
         context: { $in: filters.contexts },
         format: { $in: filters.formats }
@@ -48,7 +69,7 @@ exports.Query = {
       const members = await Member.find({
         orchestra: orchestraId,
         user: userId
-      })
+      });
       if (members.length === 0) {
         throw new Error("User doesn't belong to any orchestra");
       }
@@ -176,7 +197,11 @@ exports.Subscription = {
     resolve: payload => payload.newPrivateMessage,
     subscribe: withFilter(
       () => pubsub.asyncIterator(NEW_PRIVATE_MESSAGE),
-      async function ({ newPrivateMessage }, { memberId, filters }, { isAuth, userId }) {
+      async function(
+        { newPrivateMessage },
+        { memberId, filters },
+        { isAuth, userId }
+      ) {
         console.log();
         console.log(NEW_PRIVATE_MESSAGE);
         // if (!isAuth) {
@@ -215,7 +240,7 @@ exports.Subscription = {
     resolve: payload => payload.newChannelMessage,
     subscribe: withFilter(
       () => pubsub.asyncIterator(NEW_CHANNEL_MESSAGE),
-      async function (
+      async function(
         { newChannelMessage },
         { orchestraId, channelId, filters },
         { userId }
@@ -226,19 +251,19 @@ exports.Subscription = {
           // Check if message channel is correct.
           const targetId = newChannelMessage.targetId.toString();
           if (channelId !== targetId) {
-            throw new Error("Channels don't match", channelId)
+            throw new Error("Channels don't match", channelId);
           }
 
           // Check if user is a member of the channel
           const members = await Member.find({
             orchestra: orchestraId,
             user: userId
-          })
+          });
           if (members.length === 0) {
-            console.log({orchestraId, userId});
-            throw new Error("User doesn't belong to any orchestra")
+            console.log({ orchestraId, userId });
+            throw new Error("User doesn't belong to any orchestra");
           }
-    
+
           // Verify that channel exists and that the user is a member.
           const channel = await Channel.findOne({
             _id: channelId,
@@ -255,7 +280,7 @@ exports.Subscription = {
             context => context === newPrivateMessage.context
           );
           if (!validContext) {
-            throw new Error('Invalid message context');
+            throw new Error("Invalid message context");
           }
 
           // Check if message format is correct
@@ -263,11 +288,11 @@ exports.Subscription = {
             format => format === newPrivateMessage.format
           );
           if (!validFormat) {
-            throw new Error('Invalid message format');
+            throw new Error("Invalid message format");
           }
 
           return true;
-        } catch(err) {
+        } catch (err) {
           console.log(err);
           return false;
         }
