@@ -11,7 +11,7 @@ const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
 const pubsub = new PubSub();
 
 exports.Query = {
-  privateMessages: async (_, { orchestraId, filters }, { userId, loaders }) => {
+  privateMessages: async (_, { orchestraId, memberId, filters }, { userId, loaders }) => {
     try {
       const orchestra = await Orchestra.findById(orchestraId);
       if (!orchestra) {
@@ -23,9 +23,11 @@ exports.Query = {
         user: userId
       });
 
-      // Find all messages sent to the user
+      // Find all messages sent to the user by
+      // the specified member
       const messages = await Message.find({
         orchestra: orchestraId,
+        from: memberId,
         targetId: member._doc._id,
         targetType: "Member",
         context: { $in: filters.contexts },
