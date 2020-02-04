@@ -176,12 +176,19 @@ exports.Subscription = {
     resolve: payload => payload.newPrivateMessage,
     subscribe: withFilter(
       () => pubsub.asyncIterator(NEW_PRIVATE_MESSAGE),
-      async function ({ newPrivateMessage }, { filters }, { isAuth, userId }) {
+      async function ({ newPrivateMessage }, { memberId, filters }, { isAuth, userId }) {
         console.log();
         console.log(NEW_PRIVATE_MESSAGE);
         // if (!isAuth) {
         //   return false;
         // }
+
+        // Check if message was sent by specified member
+        const sender = await Member.findById(newPrivateMessage.from);
+        if (sender.id != memberId) {
+          return false;
+        }
+
         // Check if user is the receiver of the message
         const member = await Member.findById(newPrivateMessage.targetId);
         const isReceiver = member._doc.user !== userId;

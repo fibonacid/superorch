@@ -167,7 +167,8 @@ const typeDefs = gql`
     newInvite: Invite!
     newMember(orchestraId: String!): Member!
     newPrivateMessage(
-      orchestraId: String!
+      orchestraId: String!,
+      memberId: String!,
       filters: MessageFilter
     ): PrivateMessage!
     newChannelMessage(
