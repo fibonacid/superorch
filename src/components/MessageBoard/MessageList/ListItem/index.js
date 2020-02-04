@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import useMember from "../../../../hooks/useMember";
 
 const StyledContainer = styled.li`
   margin: 5px;
@@ -17,8 +16,8 @@ const StyledInner = styled.div`
 `;
 
 export default function ListItem({ message }) {
-  const from = message.from.user._id;
-  const isLoggedUser = from === localStorage.getItem("userId");
+  const [userId] = useState(localStorage.getItem("userId"))
+  const isLoggedUser = message.from.user._id === userId;
 
   return (
     <StyledContainer right={isLoggedUser}>
