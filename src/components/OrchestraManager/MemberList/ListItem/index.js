@@ -7,6 +7,10 @@ const StyledContainer = styled.li`
   display: flex;
   justify-content: space-between;
   border-bottom: solid 1px lightgrey;
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 function ListItem({ orchestra, member }) {

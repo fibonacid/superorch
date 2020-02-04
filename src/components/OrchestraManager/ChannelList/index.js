@@ -10,6 +10,10 @@ const StyledList = styled.ul`
 const StyledItem = styled.li`
    color: grey;
    padding: 5px 0;
+   a {
+      color: black;
+      text-decoration: none;
+    }
 `;
 
 export default function ChannelList({ orchestra }) {

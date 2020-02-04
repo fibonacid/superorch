@@ -9,6 +9,10 @@ import MemberList from "./MemberList";
 
 const StyledContainer = styled.div`
   padding: 10px;
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 export default function Orchestra() {
