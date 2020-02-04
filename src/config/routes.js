@@ -19,7 +19,7 @@ import OrchestraInvitesView from "../views/orchestras/show/invites";
 import OrchestraDeleteView from "../views/orchestras/show/delete";
 import OrchestraChannelIndexView from "../views/orchestras/show/channels"
 import OrchestraChannelShowView from "../views/orchestras/show/channels/show"
-import OrchestraMemberIndexView from "../views/orchestras/show/members/show"
+import OrchestraMemberIndexView from "../views/orchestras/show/members"
 import OrchestraMemberShowView from "../views/orchestras/show/members/show"
 
 const routes = [
