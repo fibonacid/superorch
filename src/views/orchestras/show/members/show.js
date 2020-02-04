@@ -1,8 +1,6 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import useMember from "../../../../hooks/useMember";
-import { privateMessagesDocument, sendPrivateMessageDocument } from "../../../../config/documents";
+import usePrivateMessages from "../../../../hooks/usePrivateMessages";
 import MessageBoard from "../../../../components/MessageBoard";
 
 export default function OrchestraMemberShowView() {
@@ -10,32 +8,11 @@ export default function OrchestraMemberShowView() {
     orchestra: orchestraId,
     member: memberId 
   } = useParams();
-
-  const member = useMember(orchestraId, memberId);
-
-  const queryOptions = {
-    variables: {
-      orchestraId,
-      memberId
-    }
-  };
-
-  const { data, loading, error } = useQuery(privateMessagesDocument, queryOptions);
-
-  const [sendPrivateMessage] = useMutation(sendPrivateMessageDocument, {
-    refetchQueries: [
-      {
-        query: privateMessagesDocument,
-        ...queryOptions
-      }
-    ]
-  });
+  const [messages, sendMessages] = usePrivateMessages(orchestraId, memberId);
 
   const onSend = useCallback(text => {
-    sendPrivateMessage({
+    sendMessages({
       variables: {
-        orchestraId,
-        memberId,
         format: "PLAIN_TEXT",
         context: "CHAT",
         body: text
@@ -43,17 +20,15 @@ export default function OrchestraMemberShowView() {
     });
   }, []);
 
+  if (!messages) {
+    return <></>;
+  }
+
   return (
-    <>
-      {data && (
-        <MessageBoard
-          title={member && member.user.name || ""}
-          messages={data.privateMessages}
-          onSend={onSend}
-        />
-      )}
-      {error && <span>{error.message}</span>}
-      {loading && <span>loading ...</span>}
-    </>
+    <MessageBoard
+      messages={messages}
+      onSend={onSend}
+    />
   );
 }
+
