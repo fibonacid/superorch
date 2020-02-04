@@ -1,39 +1,45 @@
 import React, { useCallback } from "react";
+import {
+  channelMessagesDocument,
+  sendChannelMessageDocument
+} from "../../../../config/documents";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import useMember from "../../../hooks/useMember";
-import { privateMessagesDocument, sendPrivateMessageDocument } from "../../../config/documents";
-import MessageBoard from "../../../components/MessageBoard";
+import useChannel from "../../../../hooks/useChannel";
+import MessageBoard from "../../../../components/MessageBoard";
 
-export default function PrivateChatView({ memberId }) {
+export default function ChannelChatView({ channelId }) {
   const params = useParams();
   const orchestraId = params.orchestra;
 
-  const member = useMember(orchestraId, memberId);
+  const channel = useChannel(orchestraId, channelId);
 
   const queryOptions = {
     variables: {
       orchestraId,
-      memberId
+      channelId
     }
   };
 
-  const { data, loading, error } = useQuery(privateMessagesDocument, queryOptions);
+  const { data, loading, error } = useQuery(
+    channelMessagesDocument,
+    queryOptions
+  );
 
-  const [sendPrivateMessage] = useMutation(sendPrivateMessageDocument, {
+  const [sendChannelMessage] = useMutation(sendChannelMessageDocument, {
     refetchQueries: [
       {
-        query: privateMessagesDocument,
+        query: channelMessagesDocument,
         ...queryOptions
       }
     ]
   });
 
   const onSend = useCallback(text => {
-    sendPrivateMessage({
+    sendChannelMessage({
       variables: {
         orchestraId,
-        memberId,
+        channelId,
         format: "PLAIN_TEXT",
         context: "CHAT",
         body: text
@@ -45,8 +51,8 @@ export default function PrivateChatView({ memberId }) {
     <>
       {data && (
         <MessageBoard
-          title={member && member.user.name || ""}
-          messages={data.privateMessages}
+          title={(channel && channel.name) || ""}
+          messages={data.channelMessages}
           onSend={onSend}
         />
       )}

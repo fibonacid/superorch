@@ -2,15 +2,17 @@ import React, { useCallback } from "react";
 import {
   channelMessagesDocument,
   sendChannelMessageDocument
-} from "../../../config/documents";
+} from "../../../../config/documents";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import useChannel from "../../../hooks/useChannel";
-import MessageBoard from "../../../components/MessageBoard";
+import useChannel from "../../../../hooks/useChannel";
+import MessageBoard from "../../../../components/MessageBoard";
 
-export default function ChannelChatView({ channelId }) {
-  const params = useParams();
-  const orchestraId = params.orchestra;
+export default function OrchestraChannelShowView() {
+  const { 
+    orchestra: orchestraId,
+    channel: channelId 
+  } = useParams();
 
   const channel = useChannel(orchestraId, channelId);
 

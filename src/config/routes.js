@@ -13,11 +13,14 @@ import OrchestraIndexView from "../views/orchestras";
 import OrchestraShowView from "../views/orchestras/show";
 import OrchestraCreateView from "../views/orchestras/create";
 import OrchestraWelcomeView from "../views/orchestras/welcome";
-import OrchestraPlayView from "../views/orchestras/:orchestra/play";
-import OrchestraEditView from "../views/orchestras/:orchestra/edit";
-import OrchestraInvitesView from "../views/orchestras/:orchestra/invites";
-import OrchestraDeleteView from "../views/orchestras/:orchestra/delete";
-import OrchestraChatView from "../views/orchestras/:orchestra/chat";
+import OrchestraPlayView from "../views/orchestras/show/play";
+import OrchestraEditView from "../views/orchestras/show/edit";
+import OrchestraInvitesView from "../views/orchestras/show/invites";
+import OrchestraDeleteView from "../views/orchestras/show/delete";
+import OrchestraChannelIndexView from "../views/orchestras/show/channels"
+import OrchestraChannelShowView from "../views/orchestras/show/channels/show"
+import OrchestraMemberIndexView from "../views/orchestras/show/members/show"
+import OrchestraMemberShowView from "../views/orchestras/show/members/show"
 
 const routes = [
   {
@@ -87,8 +90,24 @@ const routes = [
             component: OrchestraInvitesView
           },
           {
-            path: "/orchestras/:orchestra/chat",
-            component: OrchestraChatView
+            path: "/orchestras/:orchestra/channels",
+            component: OrchestraChannelIndexView,
+            routes: [
+              {
+                path: "/orchestras/:orchestra/channels/:channel",
+                component: OrchestraChannelShowView,
+              }
+            ]
+          },
+          {
+            path: "/orchestras/:orchestra/members",
+            component: OrchestraMemberIndexView,
+            routes: [
+              {
+                path: "/orchestras/:orchestra/members/:member",
+                component: OrchestraMemberShowView,
+              }
+            ]
           },
           { // fallback on play view
             path: "/orchestras/:orchestra",
