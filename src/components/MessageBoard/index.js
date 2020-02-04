@@ -10,17 +10,9 @@ const StyledContainer = styled.div`
   background: rgb(231, 221, 212);
 `;
 
-const StyledTitle = styled.h2`
-   text-align: center;
-   padding: 5px 0;
-   background: whitesmoke;
-   border-bottom: solid 1px lightgrey;
-`;
-
-export default function MessageBoard({ title, messages, onSend }) {
+export default function MessageBoard({ messages, onSend }) {
   return (
     <StyledContainer>
-      <StyledTitle>{title}</StyledTitle>
       <MessageList messages={messages} />
       <InputBox onSend={onSend} />
     </StyledContainer>
