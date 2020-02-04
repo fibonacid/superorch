@@ -1,15 +1,16 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router-dom";
+import useChannel from "../../../../hooks/useChannel";
 import useChannelMessages from "../../../../hooks/useChannelMessages";
 import MessageBoard from "../../../../components/MessageBoard";
+import * as chatLayout from "../../../../components/_layouts/chatLayout";
 
 export default function OrchestraChannelShowView() {
-  const { 
-    orchestra: orchestraId,
-    channel: channelId 
-  } = useParams();
+  const { orchestra: orchestraId, channel: channelId } = useParams();
 
   const [messages, sendMessages] = useChannelMessages(orchestraId, channelId);
+
+  const channel = useChannel(orchestraId, channelId);
 
   const onSend = useCallback(text => {
     sendMessages({
@@ -26,9 +27,11 @@ export default function OrchestraChannelShowView() {
   }
 
   return (
-    <MessageBoard
-      messages={messages}
-      onSend={onSend}
-    />
+    <chatLayout.Container>
+      <chatLayout.Header>
+        {channel ? channel.name : "channel"}
+      </chatLayout.Header>
+      <MessageBoard messages={messages} onSend={onSend} />
+    </chatLayout.Container>
   );
 }
