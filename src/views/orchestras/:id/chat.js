@@ -1,7 +1,14 @@
 import React from 'react';
+import styled from 'styled-components/macro';
 import useSearchParams from '../../../hooks/useSearchParams';
 import ChannelChatView from "./_channel-chat";
 import PrivateChatView from "./_private-chat";
+
+const StyledContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
 
 export default function OrchestraChatView() {
    const params = useSearchParams();
@@ -9,12 +16,10 @@ export default function OrchestraChatView() {
    const type = params.get("type");
    const id = params.get("id");
 
-   switch(type) {
-      case("channel"):
-         return <ChannelChatView channelId={id} />
-      case("private"):
-         return <PrivateChatView memberId={id} />
-      default:
-         return <div>404</div>
-   }
+   return (
+      <StyledContainer>
+         {type === "channel" && <ChannelChatView channelId={id} />}
+         {type === "private" && <PrivateChatView memberId={id} /> }
+      </StyledContainer>
+   )
 }
