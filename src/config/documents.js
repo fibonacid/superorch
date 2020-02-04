@@ -117,6 +117,29 @@ export const channelMessagesDocument = gql`
   }
 `;
 
+export const privateMessagesDocument = gql`
+  query privateMessages($orchestraId: String!, $memberId: String!) {
+    privateMessages(
+      orchestraId: $orchestraId
+      memberId: $memberId
+      filters: {
+        contexts: [CHAT, SUPERCOLLIDER]
+        formats: [PLAIN_TEXT, JSON, SC_RAW, SC_LANG]
+      }
+    ) {
+      _id
+      from {
+        user {
+          name
+        }
+      }
+      body
+      format
+      context
+    }
+  }
+`;
+
 export const channelByIdDocument = gql`
   query channelById($orchestraId: String!, $channelId: String!) {
     channelById(orchestraId: $orchestraId, channelId: $channelId) {
