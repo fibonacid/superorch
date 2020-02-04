@@ -107,6 +107,7 @@ export const channelMessagesDocument = gql`
       _id
       from {
         user {
+          _id
           name
         }
       }
