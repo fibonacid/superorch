@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { userDocument } from "../../../config/documents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,7 +39,9 @@ function Header({ orchestra }) {
     <StyledContainer>
       <div>
         {data && <StyledSubtitle>{data.user.name}</StyledSubtitle>}
-        <StyledTitle>{orchestra.name}</StyledTitle>
+        <Link to={`/orchestras/${orchestra._id}`}>
+          <StyledTitle>{orchestra.name}</StyledTitle>
+        </Link>
       </div>
       <StyledIcon onClick={redirect} icon={faCog} size="sm" />
     </StyledContainer>
