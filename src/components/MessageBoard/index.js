@@ -1,15 +1,21 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
+import MessageList from "./MessageList";
 
-export default function MessageBoard({ messages }) {
-   return (
+const StyledContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+export default function MessageBoard({ messages, onSend }) {
+  return (
+    <StyledContainer>
+      <MessageList messages={messages} />
       <div>
-         {messages.map((message, index) => (
-            <div key={index}>
-               <span>{message.from.user.name} sent: </span>
-               <span>{message.body}</span>
-            </div>
-         ))}
+        <input></input>
+        <button>Send</button>
       </div>
-   )
+    </StyledContainer>
+  );
 }
