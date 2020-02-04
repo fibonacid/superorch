@@ -29,8 +29,10 @@ export default function InputBox({ onSend }) {
   const onSubmit = useCallback(
     event => {
       event.stopPropagation();
-      onSend(value);
-      setValue("");
+      if (value) {
+        onSend(value);
+        setValue("");
+      }
     },
     [value]
   );
