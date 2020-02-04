@@ -1,11 +1,6 @@
 import React, { useCallback } from "react";
-import {
-  channelMessagesDocument,
-  sendChannelMessageDocument
-} from "../../../../config/documents";
 import { useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import useChannel from "../../../../hooks/useChannel";
+import useChannelMessages from "../../../../hooks/useChannelMessages";
 import MessageBoard from "../../../../components/MessageBoard";
 
 export default function OrchestraChannelShowView() {
@@ -14,34 +9,11 @@ export default function OrchestraChannelShowView() {
     channel: channelId 
   } = useParams();
 
-  const channel = useChannel(orchestraId, channelId);
-
-  const queryOptions = {
-    variables: {
-      orchestraId,
-      channelId
-    }
-  };
-
-  const { data, loading, error } = useQuery(
-    channelMessagesDocument,
-    queryOptions
-  );
-
-  const [sendChannelMessage] = useMutation(sendChannelMessageDocument, {
-    refetchQueries: [
-      {
-        query: channelMessagesDocument,
-        ...queryOptions
-      }
-    ]
-  });
+  const [messages, sendMessages] = useChannelMessages(orchestraId, channelId);
 
   const onSend = useCallback(text => {
-    sendChannelMessage({
+    sendMessages({
       variables: {
-        orchestraId,
-        channelId,
         format: "PLAIN_TEXT",
         context: "CHAT",
         body: text
@@ -49,17 +21,14 @@ export default function OrchestraChannelShowView() {
     });
   }, []);
 
+  if (!messages) {
+    return <div>... loading</div>;
+  }
+
   return (
-    <>
-      {data && (
-        <MessageBoard
-          title={(channel && channel.name) || ""}
-          messages={data.channelMessages}
-          onSend={onSend}
-        />
-      )}
-      {error && <span>{error.message}</span>}
-      {loading && <span>loading ...</span>}
-    </>
+    <MessageBoard
+      messages={messages}
+      onSend={onSend}
+    />
   );
 }
