@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import useMember from '../../../hooks/useMember';
 import { privateMessagesDocument } from "../../../config/documents";
+import MessageBoard from '../../../components/MessageBoard';
 
 export default function PrivateChatView({ memberId }) {
   const params = useParams();
@@ -22,12 +23,10 @@ export default function PrivateChatView({ memberId }) {
       <span>this is a private chat</span>
       {member && <span> with {member.user.name}</span>}
       {data && (
-         data.privateMessages.map((message, index) => (
-            <div key={index}>
-               <span>{message.from.user.name} sent: </span>
-               <span>{message.body}</span>
-            </div>
-         ))
+        <MessageBoard
+          messages={data.privateMessages}
+          onSend={console.log}
+        />
       )}
       {error && <span>{error.message}</span>}
       {loading && <span>loading ...</span>}
