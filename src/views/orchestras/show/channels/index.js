@@ -1,7 +1,15 @@
-import React from 'react';
+import React from "react";
+import {Switch} from 'react-router-dom';
+import RouteWithSubRoutes from '../../../../components/_miscellaneous/RouteWithSubRoutes';
 
-export default function OrchestraChannelIndexView() {
-   return (
-      <div>OrchestraChannelIndexView</div>
-   )
+function OrchestraChannelIndexView({ routes }) {
+  return (
+    <Switch>
+      {routes.map((route, i) => (
+        <RouteWithSubRoutes key={i} {...route} />
+      ))}
+    </Switch>
+  );
 }
+
+export default OrchestraChannelIndexView;
