@@ -4,6 +4,7 @@ import { Switch, Route, useLocation } from "react-router-dom";
 import OrchestraManager from "../../../components/OrchestraManager";
 import Sidebar from "../../../components/_miscellaneous/Sidebar";
 import Modal from "../../../components/_miscellaneous/Modal";
+import RouteWithSubRoutes from "../../../components/_miscellaneous/RouteWithSubRoutes";
 
 const StyledContainer = styled.div`
   flex: 1;
@@ -21,7 +22,7 @@ function OrchestraShowView({ routes }) {
       </Sidebar>
       <Switch location={background || location}>
         {routes.map((route, i) => (
-          <Route key={i} {...route} />
+          <RouteWithSubRoutes key={i} {...route} />
         ))}
       </Switch>
       {background && (
