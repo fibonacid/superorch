@@ -13,11 +13,11 @@ import OrchestraIndexView from "../views/orchestras";
 import OrchestraShowView from "../views/orchestras/show";
 import OrchestraCreateView from "../views/orchestras/create";
 import OrchestraWelcomeView from "../views/orchestras/welcome";
-import OrchestraPlayView from "../views/orchestras/:id/play";
-import OrchestraEditView from "../views/orchestras/:id/edit";
-import OrchestraInvitesView from "../views/orchestras/:id/invites";
-import OrchestraDeleteView from "../views/orchestras/:id/delete";
-import OrchestraChatView from "../views/orchestras/:id/chat";
+import OrchestraPlayView from "../views/orchestras/:orchestra/play";
+import OrchestraEditView from "../views/orchestras/:orchestra/edit";
+import OrchestraInvitesView from "../views/orchestras/:orchestra/invites";
+import OrchestraDeleteView from "../views/orchestras/:orchestra/delete";
+import OrchestraChatView from "../views/orchestras/:orchestra/chat";
 
 const routes = [
   {
@@ -71,27 +71,27 @@ const routes = [
         component: OrchestraWelcomeView
       },
       {
-        path: "/orchestras/:id",
+        path: "/orchestras/:orchestra",
         component: OrchestraShowView,
         routes: [
           {
-            path: "/orchestras/:id/edit",
+            path: "/orchestras/:orchestra/edit",
             component: OrchestraEditView
           },
           {
-            path: "/orchestras/:id/delete",
+            path: "/orchestras/:orchestra/delete",
             component: OrchestraDeleteView
           },
           {
-            path: "/orchestras/:id/invites",
+            path: "/orchestras/:orchestra/invites",
             component: OrchestraInvitesView
           },
           {
-            path: "/orchestras/:id/chat",
+            path: "/orchestras/:orchestra/chat",
             component: OrchestraChatView
           },
           { // fallback on play view
-            path: "/orchestras/:id",
+            path: "/orchestras/:orchestra",
             component: OrchestraPlayView
           }
         ]

@@ -1,45 +1,39 @@
 import React, { useCallback } from "react";
-import {
-  channelMessagesDocument,
-  sendChannelMessageDocument
-} from "../../../config/documents";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import useChannel from "../../../hooks/useChannel";
+import useMember from "../../../hooks/useMember";
+import { privateMessagesDocument, sendPrivateMessageDocument } from "../../../config/documents";
 import MessageBoard from "../../../components/MessageBoard";
 
-export default function ChannelChatView({ channelId }) {
+export default function PrivateChatView({ memberId }) {
   const params = useParams();
-  const orchestraId = params.id;
+  const orchestraId = params.orchestra;
 
-  const channel = useChannel(orchestraId, channelId);
+  const member = useMember(orchestraId, memberId);
 
   const queryOptions = {
     variables: {
       orchestraId,
-      channelId
+      memberId
     }
   };
 
-  const { data, loading, error } = useQuery(
-    channelMessagesDocument,
-    queryOptions
-  );
+  const { data, loading, error } = useQuery(privateMessagesDocument, queryOptions);
 
-  const [sendChannelMessage] = useMutation(sendChannelMessageDocument, {
+  const [sendPrivateMessage] = useMutation(sendPrivateMessageDocument, {
     refetchQueries: [
       {
-        query: channelMessagesDocument,
+        query: privateMessagesDocument,
         ...queryOptions
       }
     ]
   });
 
   const onSend = useCallback(text => {
-    sendChannelMessage({
+    sendPrivateMessage({
       variables: {
         orchestraId,
-        channelId,
+        memberId,
         format: "PLAIN_TEXT",
         context: "CHAT",
         body: text
@@ -51,8 +45,8 @@ export default function ChannelChatView({ channelId }) {
     <>
       {data && (
         <MessageBoard
-          title={(channel && channel.name) || ""}
-          messages={data.channelMessages}
+          title={member && member.user.name || ""}
+          messages={data.privateMessages}
           onSend={onSend}
         />
       )}

@@ -34,7 +34,7 @@ function OrchestraPlayView() {
     <StyledWrapper>
       <StyledInner>
         <SCLogProvider>
-          <StyledEditor key={params.id} />
+          <StyledEditor key={params.orchestra} />
           <StyledConsole />
         </SCLogProvider>
       </StyledInner>

@@ -16,7 +16,8 @@ const StyledContainer = styled.div`
 `;
 
 export default function Orchestra() {
-  const { id: orchestraId } = useParams();
+  const params = useParams();
+  const orchestraId = params.orchestra;
 
   const { subscribeToMore, data, loading, error } = useQuery(
     orchestraDocument,

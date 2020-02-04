@@ -14,7 +14,7 @@ const StyledContainer = styled.div`
 function OrchestraDeleteView() {
   const params = useParams();
   const { data } = useQuery(orchestraDocument, {
-    variables: { orchestraId: params.id }
+    variables: { orchestraId: params.orchestra }
   });
 
   return (

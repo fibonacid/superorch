@@ -40,7 +40,7 @@ const StyledStatus = styled.div`
 function OrchestraEditView() {
   const params = useParams();
 
-  const orchestraId = params.id;
+  const orchestraId = params.orchestra;
 
   const queryOptions = {
     variables: { orchestraId },
@@ -84,7 +84,7 @@ function OrchestraEditView() {
         </StyledStatus>
         <BackgroundLink to={`/orchestras/${orchestraId}/delete`}>Delete Orchestra</BackgroundLink>
       </StyledWrapper>
-      <GoBackLink rootpath={"/orchestras/"+params.id}/>
+      <GoBackLink rootpath={"/orchestras/"+params.orchestra}/>
     </StyledContainer>
   );
 }

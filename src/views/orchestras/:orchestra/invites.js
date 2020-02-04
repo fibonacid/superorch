@@ -33,7 +33,7 @@ function OrchestraInvitesView() {
   const authenticate = useCallback(values => {
     sendInvite({
       variables: {
-        orchestraId: params.id,
+        orchestraId: params.orchestra,
         email: values.email
       }
     });
