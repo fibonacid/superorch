@@ -94,7 +94,7 @@ export const notificationsDocument = gql`
   # add other queries that qualify as notification
 `;
 
-export const channelMessageDocument = gql`
+export const channelMessagesDocument = gql`
   query channelMessages($orchestraId: String!, $channelId: String!) {
     channelMessages(
       orchestraId: $orchestraId
@@ -105,7 +105,14 @@ export const channelMessageDocument = gql`
       }
     ) {
       _id
+      from {
+        user {
+          name
+        }
+      }
       body
+      format
+      context
     }
   }
 `;
