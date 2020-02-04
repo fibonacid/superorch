@@ -19,7 +19,7 @@ export default function ChannelChatView({ channelId }) {
   });
 
   return (
-    <div>
+    <>
       {channel && <h2> {channel.name}</h2>}
       {data && (
         <MessageBoard
@@ -29,6 +29,6 @@ export default function ChannelChatView({ channelId }) {
       )}
       {error && <span>{error.message}</span>}
       {loading && <span>loading ...</span>}
-    </div>
+    </>
   );
 }
