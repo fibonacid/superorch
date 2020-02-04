@@ -10,9 +10,9 @@ import AccountProfileView from "../views/account/profile"
 import AccountSecurityView from "../views/account/security"
 
 import OrchestraIndexView from "../views/orchestras";
-import OrchestraShowView from "../views/orchestras/show";
 import OrchestraCreateView from "../views/orchestras/create";
 import OrchestraWelcomeView from "../views/orchestras/welcome";
+import OrchestraShowView from "../views/orchestras/show";
 import OrchestraPlayView from "../views/orchestras/show/play";
 import OrchestraEditView from "../views/orchestras/show/edit";
 import OrchestraInvitesView from "../views/orchestras/show/invites";
