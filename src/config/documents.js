@@ -130,6 +130,7 @@ export const privateMessagesDocument = gql`
     ) {
       _id
       from {
+        _id
         user {
           _id
           name
