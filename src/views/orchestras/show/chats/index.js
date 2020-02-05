@@ -2,7 +2,7 @@ import React from "react";
 import { Switch } from "react-router-dom";
 import RouteWithSubRoutes from "../../../../components/_miscellaneous/RouteWithSubRoutes";
 
-function OrchestraMemberIndexView({ routes }) {
+function OrchestraChatIndexView({ routes }) {
   return (
     <Switch>
       {routes.map((route, i) => (
@@ -12,4 +12,4 @@ function OrchestraMemberIndexView({ routes }) {
   );
 }
 
-export default OrchestraMemberIndexView;
+export default OrchestraChatIndexView;
