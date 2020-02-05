@@ -17,8 +17,6 @@ export default function OrchestraChatShowView() {
 
   const { title, messages } = useChat(orchestra, type, id);
 
-  console.log({title, messages});
-
   return (
     <chatLayout.Container>
       <chatLayout.Header>{title}</chatLayout.Header>
