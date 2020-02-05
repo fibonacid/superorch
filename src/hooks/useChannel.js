@@ -17,7 +17,7 @@ export default function useChannel(orchestraId, channelId) {
             data.channelById
          )
       }
-   })
+   }, [data])
 
    return channel;
 }

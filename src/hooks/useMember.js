@@ -17,7 +17,7 @@ export default function useMember(orchestraId, memberId) {
             data.memberById
          )
       }
-   })
+   }, [data])
 
    return member;
 }
