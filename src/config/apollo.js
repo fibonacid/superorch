@@ -1,4 +1,5 @@
 import { ApolloClient } from "apollo-boost";
+import { toIdValue } from "apollo-utilities";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import { ApolloLink, split } from "apollo-link";
@@ -79,10 +80,32 @@ const link = split(
   httpLink
 );
 
+const cache = new InMemoryCache({
+  cacheRedirects: {
+    Query: {
+      orchestra: (_, args) => (
+        toIdValue(
+          cache.config.dataIdFromObject({ __typename: "Orchestra", _id: args.id })
+        )
+      ),
+      channel: (_, args) => (
+        toIdValue(
+          cache.config.dataIdFromObject({ __typename: "Channel", _id: args.id })
+        )
+      ),
+      member: (_, args) => (
+        toIdValue(
+          cache.config.dataIdFromObject({ __typename: "Member", _id: args.id })
+        )
+      )
+    }
+  }
+});
+
 export default function configureClient() {
   return new ApolloClient({
     link,
-    cache: new InMemoryCache(),
+    cache,
     connectToDevTools: process.env.NODE_ENV !== "production"
   });
 }

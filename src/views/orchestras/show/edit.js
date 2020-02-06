@@ -73,7 +73,7 @@ function OrchestraEditView() {
           <StyledForm title="Edit Orchestra">
             <OrchestraForm
               authenticate={authenticate}
-              cachedValues={prevData.orchestraById}
+              cachedValues={prevData.orchestra}
             />
           </StyledForm>
         )}

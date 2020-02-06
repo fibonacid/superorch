@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import {memberByIdDocument} from '../config/documents';
+import {memberDocument} from '../config/documents';
 import {useQuery} from '@apollo/react-hooks';
 
 export default function useMember(orchestraId, memberId) {
    const [member, setMember] = useState(null);
-   const { data } = useQuery(memberByIdDocument, {
+   const { data } = useQuery(memberDocument, {
       variables: {
          orchestraId,
          memberId
@@ -14,7 +14,7 @@ export default function useMember(orchestraId, memberId) {
    useEffect(() => {
       if(data) {
          setMember(
-            data.memberById
+            data.member
          )
       }
    }, [data])

@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
-import { orchestraDocument, newMemberDocument } from "../../config/documents";
+import { getOrchestra } from '../../api/orchestras';
+import { newMemberDocument } from "../../config/documents";
 import Header from "./Header";
 import ChannelList from "./ChannelList";
 import MemberList from "./MemberList";
@@ -15,45 +16,44 @@ const StyledContainer = styled.div`
   }
 `;
 
-export default function Orchestra() {
+export default function OrchestraManager() {
   const params = useParams();
   const orchestraId = params.orchestra;
 
-  const { subscribeToMore, data, loading, error } = useQuery(
-    orchestraDocument,
+  const { data, loading, error } = useQuery(getOrchestra,
     {
-      variables: { orchestraId },
+      variables: { id: orchestraId },
       skip: !orchestraId
     }
   );
 
-  const subscribeToNewMembers = () =>
-    subscribeToMore({
-      document: newMemberDocument,
-      variables: { orchestraId },
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData) return prev;
-        const orchestra = prev.orchestraById;
-        const { newMember } = subscriptionData.data;
+  // const subscribeToNewMembers = () =>
+  //   subscribeToMore({
+  //     document: newMemberDocument,
+  //     variables: { orchestraId },
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData) return prev;
+  //       const orchestra = prev.orchestra;
+  //       const { newMember } = subscriptionData.data;
 
-        return {
-          orchestraById: {
-            ...orchestra,
-            members: [...orchestra.members, newMember]
-          }
-        };
-      }
-    });
+  //       return {
+  //         orchestra: {
+  //           ...orchestra,
+  //           members: [...orchestra.members, newMember]
+  //         }
+  //       };
+  //     }
+  //   });
 
-  useEffect(subscribeToNewMembers, []);
+  // useEffect(subscribeToNewMembers, []);
 
   return (
     <StyledContainer>
-      {data && data.orchestraById && (
+      {data && data.orchestra && (
         <>
-          <Header orchestra={data.orchestraById} />
-          <ChannelList orchestra={data.orchestraById} />
-          <MemberList orchestra={data.orchestraById} />
+          <Header orchestra={data.orchestra} />
+          <ChannelList orchestra={data.orchestra} />
+          <MemberList orchestra={data.orchestra} />
         </>
       )}
       {loading && <span>Loading ...</span>}

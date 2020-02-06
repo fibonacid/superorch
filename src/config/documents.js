@@ -55,7 +55,7 @@ export const orchestraListDocument = gql`
 
 export const orchestraDocument = gql`
   query($orchestraId: String!) {
-    orchestraById(orchestraId: $orchestraId) {
+    orchestra(orchestraId: $orchestraId) {
       _id
       name
       channels {
@@ -146,18 +146,18 @@ export const privateMessagesDocument = gql`
   }
 `;
 
-export const channelByIdDocument = gql`
-  query channelById($orchestraId: String!, $channelId: String!) {
-    channelById(orchestraId: $orchestraId, channelId: $channelId) {
+export const channelDocument = gql`
+  query channel($orchestraId: String!, $channelId: String!) {
+    channel(orchestraId: $orchestraId, channelId: $channelId) {
       _id
       name
     }
   }
 `;
 
-export const memberByIdDocument = gql`
-  query memberById($orchestraId: String!, $memberId: String!) {
-    memberById(orchestraId: $orchestraId, memberId: $memberId) {
+export const memberDocument = gql`
+  query member($orchestraId: String!, $memberId: String!) {
+    member(orchestraId: $orchestraId, memberId: $memberId) {
       _id
       user {
         _id

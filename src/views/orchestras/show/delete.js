@@ -24,7 +24,7 @@ function OrchestraDeleteView() {
           <p>
             Confirm by entering the name of the orchestra you want to delete
           </p>
-          <DeleteOrchestraForm orchestra={data.orchestraById} />
+          <DeleteOrchestraForm orchestra={data.orchestra} />
         </PrimaryForm>
       )}
     </StyledContainer>

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { memberByIdDocument } from "../../../../config/documents";
+import { memberDocument } from "../../../../config/documents";
 import usePrivateMessages from "../../../../hooks/usePrivateMessages";
 import * as chatLayout from "../../../../components/_layouts/chatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
@@ -9,7 +9,7 @@ import MessageBoard from "../../../../components/MessageBoard";
 export default function OrchestraMemberShowView() {
   const { orchestra: orchestraId, member: memberId } = useParams();
 
-  const { data } = useQuery(memberByIdDocument, {
+  const { data } = useQuery(memberDocument, {
     variables: {
       orchestraId,
       memberId
@@ -31,7 +31,7 @@ export default function OrchestraMemberShowView() {
 
   return (
     <chatLayout.Container>
-      <chatLayout.Header>{data?.memberById?.user?.name || "empty"}</chatLayout.Header>
+      <chatLayout.Header>{data?.member?.user?.name || "empty"}</chatLayout.Header>
       <MessageBoard messages={messages} onSend={onSend} />
     </chatLayout.Container>
   );
