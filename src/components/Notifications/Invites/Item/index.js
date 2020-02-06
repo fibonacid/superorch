@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { GET_INVITES_QUERY, ACCEPT_INVITE_MUTATION, denyInvite } from "../../../../api/invites";
+import { GET_INVITES_QUERY, ACCEPT_INVITE_MUTATION, DENY_INVITE_MUTATION } from "../../../../api/invites";
 import { GET_NOTIFICATIONS_QUERY } from "../../../../api/notifications";
 import { GET_ORCHESTRAS_QUERY } from "../../../../api/orchestras";
 
@@ -16,7 +16,7 @@ const StyledBtnWrap = styled.div`
 `;
 
 function Item({ invite }) {
-  const [denyInvite] = useMutation(denyInvite);
+  const [denyInvite] = useMutation(DENY_INVITE_MUTATION);
   const [acceptInvite] = useMutation(ACCEPT_INVITE_MUTATION);
 
   const orchestra = invite.subject;
