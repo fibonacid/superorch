@@ -139,7 +139,7 @@ exports.Mutation = {
         newPrivateMessage: await transformPrivateMessage(message.id, loaders)
       });
 
-      return transformMessage(message.id, loaders);
+      return transformPrivateMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
