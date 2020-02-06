@@ -12,7 +12,7 @@ export default function OrchestraChannelShowView() {
   const { orchestra: orchestraId, channel: channelId } = useParams();
   const [messages, sendMessages] = useChannelMessages(orchestraId, channelId);
 
-  const { data: channel } = useQuery(GET_CHANNEL_QUERY, {
+  const { data } = useQuery(GET_CHANNEL_QUERY, {
     variables: {
       orchestraId,
       channelId
@@ -31,13 +31,9 @@ export default function OrchestraChannelShowView() {
     });
   }, []);
 
-  if (!messages || !channel) {
-    return <div>... loading</div>;
-  }
-
   return (
     <ChatLayout.Wrapper>
-      <ChatLayout.Header>{channel?.name || 'Channel'}</ChatLayout.Header>
+      <ChatLayout.Header>{data?.channel?.name}</ChatLayout.Header>
       <ChatLayout.Container>
         <Playground />
         <MessageBoard messages={messages} onSend={onSend} />
