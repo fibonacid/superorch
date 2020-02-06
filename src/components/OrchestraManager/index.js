@@ -22,7 +22,7 @@ export default function OrchestraManager() {
 
   const { data, loading, error } = useQuery(getOrchestra,
     {
-      variables: { id: orchestraId },
+      variables: { orchestraId },
       skip: !orchestraId
     }
   );
