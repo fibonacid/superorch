@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Item from "./Item";
-import { GET_ORCHESTRA_QUERY } from "../../../api/orchestras";
+import { GET_ORCHESTRAS_QUERY } from "../../../api/orchestras";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const StyledIcon = styled(FontAwesomeIcon)`
 function OrchestraSelector() {
   const history = useHistory();
   const [index, setIndex] = useState(null);
-  const { data } = useQuery(GET_ORCHESTRA_QUERY);
+  const { data } = useQuery(GET_ORCHESTRAS_QUERY);
 
   const redirect = () => {
     history.push("/orchestras/create");
