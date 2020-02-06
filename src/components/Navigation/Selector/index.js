@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
-import { orchestraListDocument } from "../../../config/documents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Item from "./Item";
+import { getOrchestras } from "../../../api/orchestras";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const StyledIcon = styled(FontAwesomeIcon)`
 function OrchestraSelector() {
   const history = useHistory();
   const [index, setIndex] = useState(null);
-  const { data } = useQuery(orchestraListDocument);
+  const { data } = useQuery(getOrchestras);
 
   const redirect = () => {
     history.push("/orchestras/create");
