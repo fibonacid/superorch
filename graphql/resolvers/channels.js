@@ -3,7 +3,7 @@ const Channel = require('../../models/channel');
 const { transformChannel } = require('./_transforms');
 
 exports.Query = {
-  channelById: async (
+  channel: async (
     _,
     { orchestraId, channelId },
     { isAuth, userId, loaders }

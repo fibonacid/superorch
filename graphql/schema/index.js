@@ -120,11 +120,11 @@ const typeDefs = gql`
     login(email: String!, password: String!): AuthData!
     user: User!
     orchestras: [Orchestra!]!
-    orchestraById(orchestraId: String!): Orchestra!
+    orchestra(orchestraId: String!): Orchestra!
     members(orchestraId: String!): [Member!]
-    memberById(orchestraId: String!, memberId: String!): Member!
+    member(orchestraId: String!, memberId: String!): Member!
     invites: [Invite!]
-    channelById(orchestraId: String!, channelId: String!): Channel!
+    channel(orchestraId: String!, channelId: String!): Channel!
     privateMessages(
       orchestraId: String!,
       memberId: String!

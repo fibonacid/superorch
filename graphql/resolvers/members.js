@@ -18,7 +18,7 @@ exports.Query = {
     return members.map(member => transformMember(member.id, loaders));
   },
 
-  memberById: async (
+  member: async (
     _,
     { orchestraId, memberId },
     { userId, isAuth, loaders }
