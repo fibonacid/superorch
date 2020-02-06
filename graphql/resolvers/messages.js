@@ -3,7 +3,7 @@ const Orchestra = require("../../models/orchestras");
 const Channel = require("../../models/channel");
 const Message = require("../../models/message");
 const Member = require("../../models/members");
-const { transformMessage } = require("./_transforms");
+const { transformChannelMessage, transformPrivateMessage } = require("./_transforms");
 
 const NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
 const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
@@ -55,7 +55,7 @@ exports.Query = {
         format: { $in: filters.formats }
       });
 
-      return messages.map(message => transformMessage(message.id, loaders));
+      return messages.map(message => transformPrivateMessage(message.id, loaders));
     } catch (err) {
       return err;
     }
@@ -94,7 +94,7 @@ exports.Query = {
         format: { $in: filters.formats }
       });
 
-      return messages.map(message => transformMessage(message.id, loaders));
+      return messages.map(message => transformChannelMessage(message.id, loaders));
     } catch (err) {
       return err;
     }
@@ -136,7 +136,7 @@ exports.Mutation = {
 
       // Send a NEW_MEMBER message
       pubsub.publish(NEW_PRIVATE_MESSAGE, {
-        newPrivateMessage: await transformMessage(message.id, loaders)
+        newPrivateMessage: await transformPrivateMessage(message.id, loaders)
       });
 
       return transformMessage(message.id, loaders);
@@ -182,10 +182,10 @@ exports.Mutation = {
 
       // Send a NEW_MEMBER message
       pubsub.publish(NEW_CHANNEL_MESSAGE, {
-        newChannelMessage: await transformMessage(message.id, loaders)
+        newChannelMessage: await transformChannelMessage(message.id, loaders)
       });
 
-      return transformMessage(message.id, loaders);
+      return transformChannelMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
@@ -202,8 +202,6 @@ exports.Subscription = {
         { memberId, filters },
         { isAuth, userId }
       ) {
-        console.log();
-        console.log(NEW_PRIVATE_MESSAGE);
         // if (!isAuth) {
         //   return false;
         // }
@@ -245,8 +243,6 @@ exports.Subscription = {
         { orchestraId, channelId, filters },
         { userId }
       ) {
-        console.log();
-        console.log(NEW_CHANNEL_MESSAGE);
         try {
           // Check if message channel is correct.
           const targetId = newChannelMessage.targetId.toString();

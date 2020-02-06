@@ -146,32 +146,43 @@ async function transformChannel(
   };
 }
 
-//
-//  Transform Message
-//
-async function transformMessage(
+async function transformChannelMessage(
   messageId,
-  { memberLoader, channelLoader, messageLoader, orchestraLoader }
+  { memberLoader, channelLoader, messageLoader, orchestraLoader, userLoader }
 ) {
   const message = await messageLoader.load(messageId.toString());
-
-  let receiver;
-  switch (message._doc.targetType) {
-    case "Member":
-      receiver = memberLoader.load(message._doc.targetId);
-      break;
-    case "Channel":
-      receiver = channelLoader.load(message._doc.targetId);
-      break;
-    default:
-      throw new Error("Invalid target type ", message._doc.targetType);
-  }
+  const from = await memberLoader.load(message._doc.from);
 
   return {
     ...message._doc,
     orchestra: orchestraLoader.load(message._doc.orchestra),
-    from: memberLoader.load(message._doc.from),
-    to: receiver
+    from: {
+      ...from._doc,
+      user: userLoader.load(from._doc.user)
+    },
+    to: channelLoader.load(message._doc.targetId)
+  };
+}
+
+async function transformPrivateMessage(
+  messageId,
+  { memberLoader, messageLoader, orchestraLoader, userLoader }
+) {
+  const message = await messageLoader.load(messageId.toString());
+  const from = await memberLoader.load(message._doc.from);
+  const to = await memberLoader.load(message._doc.to);
+
+  return {
+    ...message._doc,
+    orchestra: orchestraLoader.load(message._doc.orchestra),
+    from: {
+      ...from._doc,
+      user: userLoader.load(from._doc.user)
+    },
+    to: {
+      ...to._doc,
+      user: userLoader.load(to._doc.user)
+    }
   };
 }
 
@@ -181,5 +192,6 @@ module.exports = {
   transformMember,
   transformInvite,
   transformChannel,
-  transformMessage
+  transformChannelMessage,
+  transformPrivateMessage
 };
