@@ -6,7 +6,7 @@ export const MEMBER_DETAIL_FRAGMENT = gql`
       _id
       __typename
       user {
-         ...USER_DETAIL_FRAGMENT
+         ...UserDetail
       }
    }
    ${USER_DETAIL_FRAGMENT}
