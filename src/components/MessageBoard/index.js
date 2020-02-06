@@ -8,11 +8,12 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: rgb(231, 221, 212);
+  flex: 0 1 300px;
 `;
 
-export default function MessageBoard({ messages, onSend }) {
+export default function MessageBoard({ className, messages, onSend }) {
   return (
-    <StyledContainer>
+    <StyledContainer className={className}>
       <MessageList messages={messages} />
       <InputBox onSend={onSend} />
     </StyledContainer>
