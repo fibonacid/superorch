@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { getChannel } from "../../../../api/channels";
 import useChannelMessages from "../../../../hooks/useChannelMessages";
 import MessageBoard from "../../../../components/MessageBoard";
 import * as chatLayout from "../../../../components/_layouts/chatLayout";
