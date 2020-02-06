@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { GET_ORCHESTRA_QUERY, deleteOrchestra } from "../../../api/orchestras";
+import { GET_ORCHESTRA_QUERY } from "../../../api/orchestras";
 import DeleteOrchestraForm from "../../../components/_forms/DeleteOrchestraForm";
 import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 
