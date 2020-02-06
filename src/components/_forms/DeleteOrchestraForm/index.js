@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import {
-  deleteOrchestra,
-  GET_ORCHESTRA_QUERY
+  DELETE_ORCHESTRA_MUTATION,
+  GET_ORCHESTRAS_QUERY
 } from "../../../api/orchestras";
 import useFormValidation from "../../../hooks/useFormValidation";
 import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
@@ -15,10 +15,10 @@ const INITIAL_VALUES = {
 function DeleteOrchestraForm({ orchestra }) {
   const history = useHistory();
   const [deleteOrchestra, { loading, backendError }] = useMutation(
-    deleteOrchestra,
+    DELETE_ORCHESTRA_MUTATION,
     {
       variables: { orchestraId: orchestra._id },
-      refetchQueries: [{ query: GET_ORCHESTRA_QUERY }],
+      refetchQueries: [{ query: GET_ORCHESTRAS_QUERY }],
       onCompleted: () => {
         history.push("/");
       }
