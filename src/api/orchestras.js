@@ -45,7 +45,7 @@ export const GET_ORCHESTRA_QUERY = gql`
 `;
 
 export const CREATE_ORCHESTRA_MUTATION = gql`
-   mutation createOrchestra($name: String) {
+   mutation createOrchestra($name: String!) {
       createOrchestra(name: $name) {
          ...OrchestraDetail
       }
