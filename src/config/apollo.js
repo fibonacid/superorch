@@ -1,12 +1,15 @@
 import { ApolloClient } from "apollo-boost";
-import { toIdValue } from "apollo-utilities";
-import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import { ApolloLink, split } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
 import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
-import { getMainDefinition } from "apollo-utilities";
+import { getMainDefinition, toIdValue } from "apollo-utilities";
+import {
+  InMemoryCache,
+  IntrospectionFragmentMatcher
+} from "apollo-cache-inmemory";
+import introspectionQueryResultData from "./fragmentTypes.json";
 
 //
 // Formats GraphQL errors
@@ -80,26 +83,12 @@ const link = split(
   httpLink
 );
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
+
 const cache = new InMemoryCache({
-  cacheRedirects: {
-    Query: {
-      // orchestra: (_, args) => (
-      //   toIdValue(
-      //     cache.config.dataIdFromObject({ __typename: "Orchestra", _id: args.id })
-      //   )
-      // ),
-      // channel: (_, args) => (
-      //   toIdValue(
-      //     cache.config.dataIdFromObject({ __typename: "Channel", _id: args.id })
-      //   )
-      // ),
-      // member: (_, args) => (
-      //   toIdValue(
-      //     cache.config.dataIdFromObject({ __typename: "Member", _id: args.id })
-      //   )
-      // )
-    }
-  }
+  fragmentMatcher
 });
 
 export default function configureClient() {
