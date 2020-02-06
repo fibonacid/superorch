@@ -17,7 +17,7 @@ export const GET_CHANNELS_QUERY = gql`
    ${CHANNEL_DETAIL_FRAGMENT}
 `;
 
-export const getChannel = gql`
+export const GET_CHANNEL_QUERY = gql`
    query getChannel($orchestraId: String!, $channelId: String!) {
       channel(orchestraId: $orchestraId, channelId: $channelId) {
          ...ChannelDetail

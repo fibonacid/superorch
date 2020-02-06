@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import styled from 'styled-components/macro';
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { getChannel } from "../../../../api/channels";
+import { GET_CHANNEL_QUERY } from "../../../../api/channels";
 import useChannelMessages from "../../../../hooks/useChannelMessages";
 import * as ChatLayout from "../../../../components/_layouts/ChatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
@@ -17,7 +17,7 @@ export default function OrchestraChannelShowView() {
   const { orchestra: orchestraId, channel: channelId } = useParams();
   const [messages, sendMessages] = useChannelMessages(orchestraId, channelId);
 
-  const { data: channel } = useQuery(getChannel, {
+  const { data: channel } = useQuery(GET_CHANNEL_QUERY, {
     variables: {
       orchestraId,
       channelId
