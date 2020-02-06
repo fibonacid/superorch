@@ -1,44 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { GET_NOTIFICATIONS_QUERY } from "../../../api/notifications";
+import {
+  GET_INVITES_QUERY,
+  NEW_INVITE_SUBSCRIPTION
+} from "../../../api/invites";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Widget from "../../_miscellaneous/Widget";
-import Notifications from "../../Notifications";
+import Invites from "./Invites";
 
 function Inbox() {
-  const [visible, setVisible] = useState(false);
-  const [total, setTotal] = useState(0);
-  const { data } = useQuery(GET_NOTIFICATIONS_QUERY);
+  const { subscribeToMore, data } = useQuery(GET_INVITES_QUERY);
+  const subscribeToNewInvite = useCallback(
+    () =>
+      subscribeToMore({
+        document: NEW_INVITE_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData) return prev;
+          const { newInvite } = subscriptionData.data;
 
-  const toggle = () => {
-    setVisible(!visible);
-  };
-
-  // Count notifications
-  useEffect(
-    function() {
-      if (data) {
-        let count = 0;
-        for (const key in data) {
-          count += data[key].length;
+          return {
+            invites: [...prev.invites, newInvite]
+          };
         }
-        setTotal(count);
-      }
-    },
-    [data]
+      }),
+    []
   );
+
+  useEffect(() => {
+    // subscribe when stack is empty, just in case
+    setTimeout(subscribeToNewInvite, 0);
+  }, []);
+
+  const [visible, setVisible] = useState(false);
+
+  const toggle = useCallback(
+    function() {
+      setVisible(!visible);
+    },
+    [visible]
+  );
+
+  // Parse invites
+  const invites = data?.invites || [];
+  const total = invites?.length || 0;
 
   return (
     <div>
       <FontAwesomeIcon
-        onClick={toggle}
         icon={faBell}
+        onClick={toggle}
         color={total > 0 ? "red" : null}
         style={{ cursor: "pointer" }}
       />
       <Widget close={toggle} visible={visible}>
-        <Notifications />
+        <Invites invites={invites} />
       </Widget>
     </div>
   );
