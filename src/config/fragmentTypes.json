@@ -1,1 +1,1 @@
-{"__schema":{"types":[{"kind":"INTERFACE","name":"Message","possibleTypes":[]}]}}
+{"__schema":{"types":[{"kind":"INTERFACE","name":"Message","possibleTypes":["PrivateMessage", "ChannelMessage"]}]}}
