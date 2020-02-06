@@ -170,7 +170,7 @@ async function transformPrivateMessage(
 ) {
   const message = await messageLoader.load(messageId.toString());
   const from = await memberLoader.load(message._doc.from);
-  const to = await memberLoader.load(message._doc.to);
+  const to = await memberLoader.load(message._doc.targetId);
 
   return {
     ...message._doc,
