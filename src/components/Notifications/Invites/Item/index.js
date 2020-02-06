@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  acceptInviteDocument,
-  invitesDocument,
-  denyInviteDocument,
-  notificationsDocument,
-  orchestraListDocument
-} from "../../../../config/documents";
+import { GET_INVITES_QUERY, ACCEPT_INVITE_MUTATION, denyInvite } from "../../../../api/invites";
+import { GET_NOTIFICATIONS_QUERY } from "../../../../api/notifications";
+import { GET_ORCHESTRAS_QUERY } from "../../../../api/orchestras";
+
 import { useMutation } from "@apollo/react-hooks";
 
 const StyledContainer = styled.li`
@@ -19,8 +16,8 @@ const StyledBtnWrap = styled.div`
 `;
 
 function Item({ invite }) {
-  const [acceptInvite] = useMutation(acceptInviteDocument);
-  const [denyInvite] = useMutation(denyInviteDocument);
+  const [denyInvite] = useMutation(denyInvite);
+  const [acceptInvite] = useMutation(ACCEPT_INVITE_MUTATION);
 
   const orchestra = invite.subject;
   const user = invite.from;
@@ -32,9 +29,9 @@ function Item({ invite }) {
           inviteId: invite._id
         },
         refetchQueries: [
-          { query: orchestraListDocument },
-          { query: invitesDocument },
-          { query: notificationsDocument }
+          { query: GET_ORCHESTRAS_QUERY },
+          { query: GET_INVITES_QUERY },
+          { query: GET_NOTIFICATIONS_QUERY }
         ]
       });
     } else if (e.target.name === "ignore") {
@@ -42,10 +39,7 @@ function Item({ invite }) {
         variables: {
           inviteId: invite._id
         },
-        refetchQueries: [
-          { query: invitesDocument },
-          { query: notificationsDocument }
-        ]
+        refetchQueries: [{ query: GET_INVITES_QUERY }, { query: GET_NOTIFICATIONS_QUERY }]
       });
     }
   };

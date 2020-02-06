@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
-import { getOrchestra } from '../../api/orchestras';
-import { newMemberDocument } from "../../config/documents";
+import { GET_ORCHESTRA_QUERY } from '../../api/orchestras';
+import { getMoreMembers } from "../../api/members";
 import Header from "./Header";
 import ChannelList from "./ChannelList";
 import MemberList from "./MemberList";
@@ -20,7 +20,7 @@ export default function OrchestraManager() {
   const params = useParams();
   const orchestraId = params.orchestra;
 
-  const { data, loading, error } = useQuery(getOrchestra,
+  const { data, loading, error } = useQuery(GET_ORCHESTRA_QUERY,
     {
       variables: { orchestraId },
       skip: !orchestraId
@@ -29,7 +29,7 @@ export default function OrchestraManager() {
 
   // const subscribeToNewMembers = () =>
   //   subscribeToMore({
-  //     document: newMemberDocument,
+  //     document: getMoreMembers,
   //     variables: { orchestraId },
   //     updateQuery: (prev, { subscriptionData }) => {
   //       if (!subscriptionData) return prev;

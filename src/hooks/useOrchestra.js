@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/react-hooks";
-import { orchestraDocument } from "../config/documents";
+import { GET_ORCHESTRA_QUERY } from "../api/orchestras";
 
 export default function useOrchestra(orchestraId) {
-  return useQuery(orchestraDocument, {
+  return useQuery(GET_ORCHESTRA_QUERY, {
     variables: {
       orchestraId
     },

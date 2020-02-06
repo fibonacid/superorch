@@ -1,6 +1,6 @@
 import { gql } from "apollo-boost";
 
-export const ChannelDetail = gql`
+export const CHANNEL_DETAIL_FRAGMENT = gql`
    fragment ChannelDetail on Channel {
       _id
       __typename
@@ -8,13 +8,13 @@ export const ChannelDetail = gql`
    }
 `;
 
-export const getChannels = gql`
+export const GET_CHANNELS_QUERY = gql`
    query getChannels($orchestraId: String!) {
       channels(orchestraId: $orchestraId) {
          ...ChannelDetail
       }
    }
-   ${ChannelDetail}
+   ${CHANNEL_DETAIL_FRAGMENT}
 `;
 
 export const getChannel = gql`
@@ -23,5 +23,5 @@ export const getChannel = gql`
          ...ChannelDetail
       }
    }
-   ${ChannelDetail}
+   ${CHANNEL_DETAIL_FRAGMENT}
 `;

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import { Link, useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { userDocument } from "../../../config/documents";
+import { GET_USER_QUERY } from "../../../api/users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,7 +29,7 @@ const StyledSubtitle = styled.p`
 
 function Header({ orchestra }) {
   const history = useHistory();
-  const { data } = useQuery(userDocument);
+  const { data } = useQuery(GET_USER_QUERY);
 
   const redirect = () => {
     history.push(`/orchestras/${orchestra._id}/edit`);

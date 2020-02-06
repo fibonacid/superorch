@@ -1,7 +1,7 @@
 import {
-  channelMessagesDocument,
-  sendChannelMessageDocument
-} from "../config/documents";
+  GET_CHANNEL_MESSAGES_QUERY,
+  SEND_CHANNEL_MESSAGE_MUTATION
+} from "../api/messages";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 export default function useChannelMessages(orchestraId, channelId) {
@@ -10,12 +10,12 @@ export default function useChannelMessages(orchestraId, channelId) {
     channelId
   };
 
-  const { data } = useQuery(channelMessagesDocument, { variables });
+  const { data } = useQuery(GET_CHANNEL_MESSAGES_QUERY, { variables });
 
-  const [sendChannelMessage] = useMutation(sendChannelMessageDocument, {
+  const [sendChannelMessage] = useMutation(SEND_CHANNEL_MESSAGE_MUTATION, {
     refetchQueries: [
       {
-        query: channelMessagesDocument,
+        query: GET_CHANNEL_MESSAGES_QUERY,
         variables
       }
     ]

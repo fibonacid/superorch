@@ -83,21 +83,21 @@ const link = split(
 const cache = new InMemoryCache({
   cacheRedirects: {
     Query: {
-      orchestra: (_, args) => (
-        toIdValue(
-          cache.config.dataIdFromObject({ __typename: "Orchestra", _id: args.id })
-        )
-      ),
-      channel: (_, args) => (
-        toIdValue(
-          cache.config.dataIdFromObject({ __typename: "Channel", _id: args.id })
-        )
-      ),
-      member: (_, args) => (
-        toIdValue(
-          cache.config.dataIdFromObject({ __typename: "Member", _id: args.id })
-        )
-      )
+      // orchestra: (_, args) => (
+      //   toIdValue(
+      //     cache.config.dataIdFromObject({ __typename: "Orchestra", _id: args.id })
+      //   )
+      // ),
+      // channel: (_, args) => (
+      //   toIdValue(
+      //     cache.config.dataIdFromObject({ __typename: "Channel", _id: args.id })
+      //   )
+      // ),
+      // member: (_, args) => (
+      //   toIdValue(
+      //     cache.config.dataIdFromObject({ __typename: "Member", _id: args.id })
+      //   )
+      // )
     }
   }
 });

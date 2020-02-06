@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { notificationsDocument } from "../../../config/documents";
+import { GET_NOTIFICATIONS_QUERY } from "../../../api/notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import Widget from "../../_miscellaneous/Widget";
@@ -9,7 +9,7 @@ import Notifications from "../../Notifications";
 function Inbox() {
   const [visible, setVisible] = useState(false);
   const [total, setTotal] = useState(0);
-  const { data } = useQuery(notificationsDocument);
+  const { data } = useQuery(GET_NOTIFICATIONS_QUERY);
 
   const toggle = () => {
     setVisible(!visible);

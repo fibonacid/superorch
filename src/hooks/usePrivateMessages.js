@@ -1,7 +1,7 @@
 import {
-   privateMessagesDocument,
-   sendPrivateMessageDocument
- } from "../config/documents";
+   GET_PRIVATE_MESSAGES_QUERY,
+   SEND_PRIVATE_MESSAGE_MUTATION
+ } from "../api/messages";
  import { useQuery, useMutation } from "@apollo/react-hooks";
  
  export default function usePrivateMessages(orchestraId, memberId) {
@@ -10,12 +10,12 @@ import {
      memberId
    };
  
-   const { data } = useQuery(privateMessagesDocument, { variables });
+   const { data } = useQuery(GET_PRIVATE_MESSAGES_QUERY, { variables });
  
-   const [sendPrivateMessage] = useMutation(sendPrivateMessageDocument, {
+   const [sendPrivateMessage] = useMutation(SEND_PRIVATE_MESSAGE_MUTATION, {
      refetchQueries: [
        {
-         query: privateMessagesDocument,
+         query: GET_PRIVATE_MESSAGES_QUERY,
          variables
        }
      ]

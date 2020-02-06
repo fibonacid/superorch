@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { updateUserDocument, userDocument } from "../../../config/documents";
+import { UPDATE_USER_MUTATION } from "../../../api/users";
 import useFormValidation from "../../../hooks/useFormValidation";
 import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
@@ -15,10 +15,9 @@ function UserProfileForm({ cachedValues, onSuccess }) {
   };
 
   const [updateUser, { loading, error: backendError }] = useMutation(
-    updateUserDocument,
+    UPDATE_USER_MUTATION,
     {
       onCompleted: onSuccess,
-      refetchQueries: [{ query: userDocument }]
     }
   );
 

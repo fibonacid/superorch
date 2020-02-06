@@ -1,8 +1,8 @@
 import { gql } from "apollo-boost";
-import {ChannelDetail} from './channels';
-import {MemberDetail} from './members';
+import {CHANNEL_DETAIL_FRAGMENT} from './channels';
+import {MEMBER_DETAIL_FRAGMENT} from './members';
 
-export const OrchestraDetail = gql`
+export const ORCHESTRA_DETAIL_FRAGMENT = gql`
    fragment OrchestraDetail on Orchestra {
       _id
       __typename
@@ -10,7 +10,7 @@ export const OrchestraDetail = gql`
    }
 `;
 
-export const getOrchestras = gql`
+export const GET_ORCHESTRAS_QUERY = gql`
   query getOrchestras {
     orchestras {
       ...OrchestraDetail
@@ -22,12 +22,12 @@ export const getOrchestras = gql`
       }
     }
   }
-  ${OrchestraDetail}
-  ${MemberDetail}
-  ${ChannelDetail}
+  ${ORCHESTRA_DETAIL_FRAGMENT}
+  ${MEMBER_DETAIL_FRAGMENT}
+  ${CHANNEL_DETAIL_FRAGMENT}
 `;
 
-export const getOrchestra = gql`
+export const GET_ORCHESTRA_QUERY = gql`
    query getOrchestra($orchestraId: String!) {
       orchestra(orchestraId: $orchestraId) {
          ...OrchestraDetail
@@ -39,19 +39,19 @@ export const getOrchestra = gql`
          }
       }
    }
-   ${OrchestraDetail}
-   ${MemberDetail}
-   ${ChannelDetail}
+   ${ORCHESTRA_DETAIL_FRAGMENT}
+   ${MEMBER_DETAIL_FRAGMENT}
+   ${CHANNEL_DETAIL_FRAGMENT}
 `;
 
-export const createOrchestra = gql`
+export const CREATE_ORCHESTRA_MUTATION = gql`
    mutation createOrchestra($name: String) {
       ...OrchestraDetail
    }
-   ${OrchestraDetail}
+   ${ORCHESTRA_DETAIL_FRAGMENT}
 `;
 
-export const updateOrchestra = gql`
+export const UPDATE_ORCHESTRA_MUTATION = gql`
   mutation updateOrchestra($orchestraId: String!, $name: String) {
     updateOrchestra(
       orchestraId: $orchestraId
@@ -60,10 +60,10 @@ export const updateOrchestra = gql`
       ...OrchestraDetail
     }
   }
-  ${OrchestraDetail}
+  ${ORCHESTRA_DETAIL_FRAGMENT}
 `;
 
-export const deleteOrchestra = gql`
+export const DELETE_ORCHESTRA_MUTATION = gql`
   mutation deleteOrchestra($orchestraId: String!) {
     deleteOrchestra(orchestraId: $orchestraId) {
       _id

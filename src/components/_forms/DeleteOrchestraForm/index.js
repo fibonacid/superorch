@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import {
   deleteOrchestra,
-  getOrchestra
+  GET_ORCHESTRA_QUERY
 } from "../../../api/orchestras";
 import useFormValidation from "../../../hooks/useFormValidation";
 import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
@@ -18,7 +18,7 @@ function DeleteOrchestraForm({ orchestra }) {
     deleteOrchestra,
     {
       variables: { orchestraId: orchestra._id },
-      refetchQueries: [{ query: getOrchestra }],
+      refetchQueries: [{ query: GET_ORCHESTRA_QUERY }],
       onCompleted: () => {
         history.push("/");
       }

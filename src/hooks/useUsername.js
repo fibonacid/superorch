@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { userDocument } from "../config/documents";
+import { GET_USER_QUERY } from "../api/users";
 
 export default function useUsername() {
   const [name, setName] = useState("");
-  const { data } = useQuery(userDocument);
+  const { data } = useQuery(GET_USER_QUERY);
 
   useEffect(() => {
     if (data && data.user) {

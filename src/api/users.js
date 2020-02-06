@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost';
 
-export const UserDetail = gql`
+export const USER_DETAIL_FRAGMENT = gql`
    fragment UserDetail on User {
       _id
       __typename
@@ -8,7 +8,7 @@ export const UserDetail = gql`
    }
 `;
 
-export const UserProfile = gql`
+export const USER_PROFILE_FRAGMENT = gql`
    fragment UserProfile on User {
       firstName
       lastName
@@ -18,24 +18,24 @@ export const UserProfile = gql`
    }
 `
 
-export const getUser = gql`
+export const GET_USER_QUERY = gql`
    query getUser {
       user {
          ...UserDetail
          ...UserProfile
       }
    }
-   ${UserDetail}
-   ${UserProfile}
+   ${USER_DETAIL_FRAGMENT}
+   ${USER_PROFILE_FRAGMENT}
 `;
 
-export const updateUser = gql`
+export const UPDATE_USER_MUTATION = gql`
   mutation updateUser($userInput: UserInput!) {
     updateUser(userInput: $userInput) {
       ...UserDetail
       ...UserProfile
     }
   }
-  ${UserDetail}
-  ${UserProfile}
+  ${USER_DETAIL_FRAGMENT}
+  ${USER_PROFILE_FRAGMENT}
 `;

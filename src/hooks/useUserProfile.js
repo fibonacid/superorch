@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { userDocument } from "../config/documents";
+import { GET_USER_QUERY } from "../api/users";
 
 export default function useRegister() {
   const [userProfile, setUserProfile] = useState(null);
-  const { data } = useQuery(userDocument);
+  const { data } = useQuery(GET_USER_QUERY);
 
   useEffect(
     function() {

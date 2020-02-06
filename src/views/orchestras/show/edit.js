@@ -3,10 +3,10 @@ import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
-  updateOrchestraDocument,
-  orchestraListDocument,
-  orchestraDocument
-} from "../../../config/documents";
+  UPDATE_ORCHESTRA_MUTATION,
+  GET_ORCHESTRAS_QUERY,
+  GET_ORCHESTRA_QUERY
+} from "../../../api/orchestras";
 import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import OrchestraForm from "../../../components/_forms/OrchestraForm";
 import BackgroundLink from "../../../components/_miscellaneous/BackgroundLink";
@@ -48,20 +48,20 @@ function OrchestraEditView() {
   };
 
   // Get previous orchestra data to populate fields
-  const { data: prevData } = useQuery(orchestraDocument, queryOptions);
+  const { data: prevData } = useQuery(GET_ORCHESTRA_QUERY, queryOptions);
 
   // Get function to update orchestra
-  const [updateOrchestra, { data, loading, error }] = useMutation(
-    updateOrchestraDocument
+  const [UPDATE_ORCHESTRA_MUTATION, { data, loading, error }] = useMutation(
+    UPDATE_ORCHESTRA_MUTATION
   );
 
   // Form submit callback
   function authenticate(values) {
-    updateOrchestra({
+    UPDATE_ORCHESTRA_MUTATION({
       variables: { orchestraId, name: values.name },
       refetchQueries: [
-        { query: orchestraListDocument },
-        { query: orchestraDocument, ...queryOptions }
+        { query: GET_ORCHESTRAS_QUERY },
+        { query: GET_ORCHESTRA_QUERY, ...queryOptions }
       ]
     });
   }

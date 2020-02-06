@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { registerDocument } from "../config/documents";
+import { REGISTER_QUERY } from "../api/auth";
 import AuthContext from "../context/auth-context";
 
 export default function useRegister() {
   const context = useContext(AuthContext);
 
-  const [register, { data, loading, error }] = useMutation(registerDocument, {
+  const [mutate, { data, loading, error }] = useMutation(REGISTER_QUERY, {
     onCompleted: ({ register }) => {
       console.log("Success", register.token);
       // Save authentication data and leave.
@@ -15,5 +15,5 @@ export default function useRegister() {
     onError: err => console.log(err.message)
   });
 
-  return [register, { data, loading, error }];
+  return [mutate, { data, loading, error }];
 }

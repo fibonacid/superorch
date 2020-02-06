@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import { sendInviteDocument } from "../../../config/documents";
+import { sendInvite } from "../../../api/invites";
 import PrimaryForm from "../../../components/_miscellaneous/PrimaryForm";
 import InviteForm from "../../../components/_forms/InviteForm";
 import GoBackLink from "../../../components/_miscellaneous/GoBackLink";
@@ -27,7 +27,7 @@ function OrchestraInvitesView() {
   const params = useParams();
 
   const [sendInvite, { loading, data, error }] = useMutation(
-    sendInviteDocument
+    sendInvite
   );
 
   const authenticate = useCallback(values => {
