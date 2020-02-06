@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const API_HOST = process.env.API_HOST || 'http://localhost:5000';
-console.log(`... Fetching graphql schema from host ${API_HOST}`);
+console.log(`Fetching ${API_HOST}/graphql ...`);
 
 fetch(`${API_HOST}/graphql`, {
   method: 'POST',
@@ -34,7 +34,7 @@ fetch(`${API_HOST}/graphql`, {
     result.data.__schema.types = filteredData;
 
 
-    fs.writeFile(path.join(__dirname, '../src/data/fragmentTypes.json'), JSON.stringify(result.data), err => {
+    fs.writeFile(path.join(__dirname, './src/data/fragmentTypes.json'), JSON.stringify(result.data), err => {
       if (err) {
         console.error('Error writing fragmentTypes file', err);
       } else {
