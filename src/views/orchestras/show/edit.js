@@ -51,13 +51,13 @@ function OrchestraEditView() {
   const { data: prevData } = useQuery(GET_ORCHESTRA_QUERY, queryOptions);
 
   // Get function to update orchestra
-  const [UPDATE_ORCHESTRA_MUTATION, { data, loading, error }] = useMutation(
+  const [updateOrchestra, { data, loading, error }] = useMutation(
     UPDATE_ORCHESTRA_MUTATION
   );
 
   // Form submit callback
   function authenticate(values) {
-    UPDATE_ORCHESTRA_MUTATION({
+    updateOrchestra({
       variables: { orchestraId, name: values.name },
       refetchQueries: [
         { query: GET_ORCHESTRAS_QUERY },
