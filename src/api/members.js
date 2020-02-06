@@ -22,8 +22,8 @@ export const getMembers = gql`
 `;
 
 export const getMember = gql`
-   query getMember($id: String) {
-      member(id: $id) {
+   query getMember($orchestraId: String!, $memberId: String!) {
+      member(orchestraId: $orchestraId, memberId: $memberId) {
          ...MemberDetail
       }
    }

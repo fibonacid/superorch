@@ -16,8 +16,8 @@ export const getChannels = gql`
 `;
 
 export const getChannel = gql`
-   query channel($id: String!) {
-      channel(id: $id) {
+   query channel($orchestraId: String!, $channelId: String!) {
+      channel(orchestraId: $orchestraId, channelId: $channelId) {
          ...ChannelDetail
       }
    }

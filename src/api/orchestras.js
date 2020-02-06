@@ -28,8 +28,8 @@ export const getOrchestras = gql`
 `;
 
 export const getOrchestra = gql`
-   query getOrchestra($id: String!) {
-      orchestra(id: $id) {
+   query getOrchestra($orchestraId: String!) {
+      orchestra(orchestraId: $orchestraId) {
          ...OrchestraDetail
          members {
             ...MemberDetail
