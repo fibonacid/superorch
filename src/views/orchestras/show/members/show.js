@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { memberDocument } from "../../../../config/documents";
+import { getMember } from "../../../../api/members";
 import usePrivateMessages from "../../../../hooks/usePrivateMessages";
 import * as chatLayout from "../../../../components/_layouts/chatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
@@ -9,7 +9,7 @@ import MessageBoard from "../../../../components/MessageBoard";
 export default function OrchestraMemberShowView() {
   const { orchestra: orchestraId, member: memberId } = useParams();
 
-  const { data } = useQuery(memberDocument, {
+  const { data } = useQuery(getMember, {
     variables: {
       orchestraId,
       memberId
