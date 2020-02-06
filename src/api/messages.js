@@ -1,4 +1,33 @@
 import { gql } from 'apollo-boost';
+import { MEMBER_DETAIL_FRAGMENT } from './members'
+
+export const PRIVATE_MESSAGE_DETAIL_FRAGMENT = gql`
+  fragment PrivateMessageDetail on PrivateMessage {
+    _id
+    __typename
+    from {
+      ...MemberDetail
+    }
+    body
+    format
+    context
+  }
+  ${MEMBER_DETAIL_FRAGMENT}
+`;
+
+export const CHANNEL_MESSAGE_DETAIL_FRAGMENT = gql`
+  fragment ChannelMessageDetail on ChannelMessage {
+    _id
+    __typename
+    from {
+      ...MemberDetail
+    }
+    body
+    format
+    context
+  }
+  ${MEMBER_DETAIL_FRAGMENT}
+`;
 
 export const GET_CHANNEL_MESSAGES_QUERY = gql`
   query getChannelMessages($orchestraId: String!, $channelId: String!) {
@@ -10,17 +39,10 @@ export const GET_CHANNEL_MESSAGES_QUERY = gql`
         formats: [PLAIN_TEXT, JSON, SC_RAW, SC_LANG]
       }
     ) {
-      _id
-      from {
-        user {
-          _id
-        }
-      }
-      body
-      format
-      context
+      ...ChannelMessageDetail
     }
   }
+  ${CHANNEL_MESSAGE_DETAIL_FRAGMENT}
 `;
 
 export const GET_PRIVATE_MESSAGES_QUERY = gql`
@@ -33,19 +55,10 @@ export const GET_PRIVATE_MESSAGES_QUERY = gql`
         formats: [PLAIN_TEXT, JSON, SC_RAW, SC_LANG]
       }
     ) {
-      _id
-      from {
-        _id
-        user {
-          _id
-          name
-        }
-      }
-      body
-      format
-      context
+      ...PrivateMessageDetail
     }
   }
+  ${PRIVATE_MESSAGE_DETAIL_FRAGMENT}
 `;
 
 
@@ -62,9 +75,10 @@ export const SEND_CHANNEL_MESSAGE_MUTATION = gql`
       channelId: $channelId
       messageInput: { format: $format, context: $context, body: $body }
     ) {
-      _id
+      ...ChannelMessageDetail
     }
   }
+  ${CHANNEL_MESSAGE_DETAIL_FRAGMENT}
 `;
 
 export const SEND_PRIVATE_MESSAGE_MUTATION = gql`
@@ -80,7 +94,8 @@ export const SEND_PRIVATE_MESSAGE_MUTATION = gql`
       memberId: $memberId
       messageInput: { format: $format, context: $context, body: $body }
     ) {
-      _id
+      ...PrivateMessageDetail
     }
   }
+  ${PRIVATE_MESSAGE_DETAIL_FRAGMENT}
 `;
