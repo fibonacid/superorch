@@ -1,10 +1,17 @@
 import React, { useCallback } from "react";
+import styled from 'styled-components/macro';
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { getChannel } from "../../../../api/channels";
 import useChannelMessages from "../../../../hooks/useChannelMessages";
+import * as ChatLayout from "../../../../components/_layouts/ChatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
-import * as chatLayout from "../../../../components/_layouts/chatLayout";
+import Playground from "../../../../components/Playground";
+
+const StyledContainer = styled.div`
+  flex: 1;
+  display: flex;
+`;
 
 export default function OrchestraChannelShowView() {
   const { orchestra: orchestraId, channel: channelId } = useParams();
@@ -34,9 +41,12 @@ export default function OrchestraChannelShowView() {
   }
 
   return (
-    <chatLayout.Container>
-      <chatLayout.Header>{channel.name}</chatLayout.Header>
-      <MessageBoard messages={messages} onSend={onSend} />
-    </chatLayout.Container>
+    <ChatLayout.Wrapper>
+      <ChatLayout.Header>{channel?.name || 'Channel'}</ChatLayout.Header>
+      <ChatLayout.Container>
+        <Playground />
+        <MessageBoard messages={messages} onSend={onSend} />
+      </ChatLayout.Container>
+    </ChatLayout.Wrapper>
   );
 }

@@ -1,7 +1,6 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -12,4 +11,9 @@ export const Header = styled.h2`
    background: whitesmoke;
    border-bottom: solid 1px lightgrey;
    font-size: 16px;
+`;
+
+export const Container = styled.div`
+  flex: 1;
+  display: flex;
 `;
