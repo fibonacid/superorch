@@ -8,11 +8,6 @@ import * as ChatLayout from "../../../../components/_layouts/ChatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
 import Playground from "../../../../components/Playground";
 
-const StyledContainer = styled.div`
-  flex: 1;
-  display: flex;
-`;
-
 export default function OrchestraChannelShowView() {
   const { orchestra: orchestraId, channel: channelId } = useParams();
   const [messages, sendMessages] = useChannelMessages(orchestraId, channelId);
