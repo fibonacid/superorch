@@ -6,6 +6,7 @@ const StyledWrapper = styled.div`
   position: relative;
   background: black;
   padding: 10px;
+  flex: 0 1 25%;
 `;
 
 const StyledInner = styled.div`
