@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from 'styled-components/macro';
 import ListItem from "./ListItem";
 
@@ -19,12 +19,22 @@ const StyledInner = styled.div`
 const StyledList = styled.ul`
   display: flex;
   flex-direction: column;
+  margin-bottom: 50px;
 `;
 
 export default function MessageList({ messages }) {
+  const containerRef = useRef(null)
+
+  useEffect(function() {
+    if(containerRef) {
+      const y = containerRef.current.scrollHeight;
+      containerRef.current.scroll(0,y);
+    }
+  }, [containerRef, messages])
+
   return (
     <StyledContainer>
-      <StyledInner>
+      <StyledInner ref={containerRef}>
         <StyledList>
           {messages.map((message, index) => (
             <ListItem key={index} message={message} />
