@@ -3,7 +3,10 @@ const Orchestra = require("../../models/orchestras");
 const Channel = require("../../models/channel");
 const Message = require("../../models/message");
 const Member = require("../../models/members");
-const { transformChannelMessage, transformPrivateMessage } = require("./_transforms");
+const {
+  transformChannelMessage,
+  transformPrivateMessage
+} = require("./_transforms");
 
 const NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
 const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
@@ -55,7 +58,9 @@ exports.Query = {
         format: { $in: filters.formats }
       });
 
-      return messages.map(message => transformPrivateMessage(message.id, loaders));
+      return messages.map(message =>
+        transformPrivateMessage(message.id, loaders)
+      );
     } catch (err) {
       return err;
     }
@@ -94,7 +99,9 @@ exports.Query = {
         format: { $in: filters.formats }
       });
 
-      return messages.map(message => transformChannelMessage(message.id, loaders));
+      return messages.map(message =>
+        transformChannelMessage(message.id, loaders)
+      );
     } catch (err) {
       return err;
     }
@@ -218,17 +225,20 @@ exports.Subscription = {
         if (!isReceiver) return false;
 
         // Check if message context is correct
-        const validContext = filters.contexts.some(
-          context => context === newPrivateMessage.context
-        );
-        if (!validContext) return false;
+        if (filters && filters.contexts) {
+          const validContext = filters.contexts.some(
+            context => context === newPrivateMessage.context
+          );
+          if (!validContext) return false;
+        }
 
         // Check if message format is correct
-        const validFormat = filters.formats.some(
-          format => format === newPrivateMessage.format
-        );
-        if (!validFormat) return false;
-
+        if (filters && filters.formats) {
+          const validFormat = filters.formats.some(
+            format => format === newPrivateMessage.format
+          );
+          if (!validFormat) return false;
+        }
         return true;
       }
     )
@@ -243,55 +253,42 @@ exports.Subscription = {
         { orchestraId, channelId, filters },
         { userId }
       ) {
-        try {
-          // Check if message channel is correct.
-          const targetId = newChannelMessage.targetId.toString();
-          if (channelId !== targetId) {
-            throw new Error("Channels don't match", channelId);
-          }
+        // Check if message channel is correct.
+        const targetId = newChannelMessage.targetId.toString();
+        if (channelId !== targetId) return false;
 
-          // Check if user is a member of the channel
-          const members = await Member.find({
-            orchestra: orchestraId,
-            user: userId
-          });
-          if (members.length === 0) {
-            console.log({ orchestraId, userId });
-            throw new Error("User doesn't belong to any orchestra");
-          }
+        // Check if user is a member of the channel
+        const members = await Member.find({
+          orchestra: orchestraId,
+          user: userId
+        });
+        if (members.length === 0) return false;
 
-          // Verify that channel exists and that the user is a member.
-          const channel = await Channel.findOne({
-            _id: channelId,
-            members: {
-              $in: members
-            }
-          });
-          if (!channel) {
-            throw new Error("User doesn't belong to channel", channelId);
+        // Verify that channel exists and that the user is a member.
+        const channel = await Channel.findOne({
+          _id: channelId,
+          members: {
+            $in: members
           }
+        });
+        if (!channel) return false;
 
-          // Check if message context is correct
+        // Check if message context is correct
+        if (filters && filters.contexts) {
           const validContext = filters.contexts.some(
             context => context === newPrivateMessage.context
           );
-          if (!validContext) {
-            throw new Error("Invalid message context");
-          }
+          if (!validContext) return false;
+        }
 
-          // Check if message format is correct
+        // Check if message format is correct
+        if (filters && filters.formats) {
           const validFormat = filters.formats.some(
             format => format === newPrivateMessage.format
           );
-          if (!validFormat) {
-            throw new Error("Invalid message format");
-          }
-
-          return true;
-        } catch (err) {
-          console.log(err);
-          return false;
+          if (!validFormat) return false;
         }
+        return true;
       }
     )
   }
