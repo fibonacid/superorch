@@ -33,7 +33,7 @@ export default function usePrivateMessages(
         if (!subscriptionData) return prev;
         const { newPrivateMessage } = subscriptionData.data;
         return {
-          privateMessage: [...prev.privateMessages, newPrivateMessage]
+          privateMessages: [...prev.privateMessages, newPrivateMessage]
         };
       }
     })
