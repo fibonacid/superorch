@@ -12,7 +12,7 @@ export const MEMBER_DETAIL_FRAGMENT = gql`
    ${USER_DETAIL_FRAGMENT}
 `;
 
-export const getMembers = gql`
+export const GET_MEMBERS_QUERY = gql`
    query getMembers($orchestraId: String!) {
       members(orchestraId: $orchestraId) {
          ...MemberDetail
@@ -21,7 +21,7 @@ export const getMembers = gql`
    ${MEMBER_DETAIL_FRAGMENT}
 `;
 
-export const getMoreMembers = gql`
+export const NEW_MEMBER_SUBSCRIPTION = gql`
   subscription($orchestraId: String!) {
     newMember(orchestraId: $orchestraId) {
       ...MemberDetail
@@ -30,7 +30,7 @@ export const getMoreMembers = gql`
   ${MEMBER_DETAIL_FRAGMENT}
 `;
 
-export const getMember = gql`
+export const GET_MEMBER_QUERY = gql`
    query getMember($orchestraId: String!, $memberId: String!) {
       member(orchestraId: $orchestraId, memberId: $memberId) {
          ...MemberDetail
