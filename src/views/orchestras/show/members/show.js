@@ -5,7 +5,9 @@ import { getMember } from "../../../../api/members";
 import usePrivateMessages from "../../../../hooks/usePrivateMessages";
 import * as ChatLayout from "../../../../components/_layouts/ChatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
-import Playground from "../../../../components/Playground";
+import Console from "../../../../components/Console";
+import CodeEditor from "../../../../components/CodeEditor";
+import SCLogProvider from '../../../../components/_providers/SCLogProvider'
 
 export default function OrchestraMemberShowView() {
   const { orchestra: orchestraId, member: memberId } = useParams();
@@ -45,12 +47,15 @@ export default function OrchestraMemberShowView() {
   return (
     <ChatLayout.Wrapper>
       <ChatLayout.Header>
-        {data?.member?.user?.name || "Member"}
+        {data?.member?.user?.name}
       </ChatLayout.Header>
-      <ChatLayout.Container>
-        <Playground onEvaluate={onEvaluate} />
-        <MessageBoard messages={messages} onSend={onSend} />
-      </ChatLayout.Container>
+      <SCLogProvider>
+        <ChatLayout.Container>
+          <CodeEditor onEvaluate={onEvaluate}/>
+          <MessageBoard messages={messages} onSend={onSend} />
+        </ChatLayout.Container>
+        <Console />
+      </SCLogProvider>
     </ChatLayout.Wrapper>
   );
 }

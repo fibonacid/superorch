@@ -1,12 +1,13 @@
 import React, { useCallback } from "react";
-import styled from 'styled-components/macro';
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_CHANNEL_QUERY } from "../../../../api/channels";
 import useChannelMessages from "../../../../hooks/useChannelMessages";
 import * as ChatLayout from "../../../../components/_layouts/ChatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
-import Playground from "../../../../components/Playground";
+import Console from "../../../../components/Console";
+import CodeEditor from "../../../../components/CodeEditor";
+import SCLogProvider from '../../../../components/_providers/SCLogProvider'
 
 export default function OrchestraChannelShowView() {
   const { orchestra: orchestraId, channel: channelId } = useParams();
@@ -46,10 +47,13 @@ export default function OrchestraChannelShowView() {
   return (
     <ChatLayout.Wrapper>
       <ChatLayout.Header>{data?.channel?.name}</ChatLayout.Header>
-      <ChatLayout.Container>
-        <Playground onEvaluate={onEvaluate}/>
-        <MessageBoard messages={messages} onSend={onSend} />
-      </ChatLayout.Container>
+      <SCLogProvider>
+        <ChatLayout.Container>
+          <CodeEditor onEvaluate={onEvaluate}/>
+          <MessageBoard messages={messages} onSend={onSend} />
+        </ChatLayout.Container>
+        <Console />
+      </SCLogProvider>
     </ChatLayout.Wrapper>
   );
 }
