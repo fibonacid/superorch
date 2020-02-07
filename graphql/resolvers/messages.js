@@ -215,9 +215,7 @@ exports.Subscription = {
 
         // Check if message was sent by specified member
         const sender = await Member.findById(newPrivateMessage.from);
-        if (sender.id != memberId) {
-          return false;
-        }
+        if (sender.id != memberId) return false;
 
         // Check if user is the receiver of the message
         const member = await Member.findById(newPrivateMessage.targetId);
