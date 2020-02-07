@@ -17,7 +17,7 @@ export default function OrchestraMemberShowView() {
     }
   });
 
-  const [messages, sendMessages] = usePrivateMessages(orchestraId, memberId);
+  const [messages, sendMessages] = usePrivateMessages(orchestraId, memberId, ["CHAT"]);
   const onSend = useCallback(text => {
     sendMessages({
       variables: {
@@ -30,14 +30,25 @@ export default function OrchestraMemberShowView() {
     });
   }, []);
 
-
-  const onEvaluate = useCallback(console.log, []);
+  const onEvaluate = useCallback(text => {
+    sendMessages({
+      variables: {
+        orchestraId,
+        memberId,
+        format: "SC_LANG",
+        context: "SUPERCOLLIDER",
+        body: text
+      }
+    });
+  }, []);
 
   return (
     <ChatLayout.Wrapper>
-      <ChatLayout.Header>{data?.member?.user?.name || "Member"}</ChatLayout.Header>
+      <ChatLayout.Header>
+        {data?.member?.user?.name || "Member"}
+      </ChatLayout.Header>
       <ChatLayout.Container>
-        <Playground onEvaluate={onEvaluate}/>
+        <Playground onEvaluate={onEvaluate} />
         <MessageBoard messages={messages} onSend={onSend} />
       </ChatLayout.Container>
     </ChatLayout.Wrapper>

@@ -10,7 +10,7 @@ import Playground from "../../../../components/Playground";
 
 export default function OrchestraChannelShowView() {
   const { orchestra: orchestraId, channel: channelId } = useParams();
-  const [messages, sendMessages] = useChannelMessages(orchestraId, channelId);
+  const [messages, sendMessages] = useChannelMessages(orchestraId, channelId, ["CHAT"]);
 
   const { data } = useQuery(GET_CHANNEL_QUERY, {
     variables: {
@@ -31,7 +31,17 @@ export default function OrchestraChannelShowView() {
     });
   }, []);
 
-  const onEvaluate = useCallback(console.log, []);
+  const onEvaluate = useCallback(text => {
+    sendMessages({
+      variables: {
+        orchestraId,
+        channelId,
+        format: "SC_LANG",
+        context: "SUPERCOLLIDER",
+        body: text
+      }
+    });
+  }, []);
 
   return (
     <ChatLayout.Wrapper>
