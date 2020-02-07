@@ -1,5 +1,5 @@
-import { gql } from 'apollo-boost';
-import { MEMBER_DETAIL_FRAGMENT } from './members'
+import { gql } from "apollo-boost";
+import { MEMBER_DETAIL_FRAGMENT } from "./members";
 
 export const PRIVATE_MESSAGE_DETAIL_FRAGMENT = gql`
   fragment PrivateMessageDetail on PrivateMessage {
@@ -61,7 +61,6 @@ export const GET_PRIVATE_MESSAGES_QUERY = gql`
   ${PRIVATE_MESSAGE_DETAIL_FRAGMENT}
 `;
 
-
 export const SEND_CHANNEL_MESSAGE_MUTATION = gql`
   mutation sendChannelMessage(
     $orchestraId: String!
@@ -98,4 +97,40 @@ export const SEND_PRIVATE_MESSAGE_MUTATION = gql`
     }
   }
   ${PRIVATE_MESSAGE_DETAIL_FRAGMENT}
+`;
+
+export const NEW_PRIVATE_MESSAGE_SUBSCRIPTION = gql`
+  subscription newPrivateMessage(
+    $orchestraId: String!
+    $memberId: String!
+    $formats: [MessageFormat!]
+    $contexts: [MessageContext!]
+  ) {
+    newPrivateMessage(
+      orchestraId: $orchestraId
+      memberId: $memberId
+      filters: { formats: $formats, context: $context }
+    ) {
+      ...PrivateMessageDetail
+    }
+  }
+  ${PRIVATE_MESSAGE_DETAIL_FRAGMENT}
+`;
+
+export const NEW_CHANNEL_MESSAGE_SUBSCRIPTION = gql`
+  subscription newChannelMessage(
+    $orchestraId: String!
+    $channelId: String!
+    $formats: [MessageFormat!]
+    $contexts: [MessageContext!]
+  ) {
+    newChannelMessage(
+      orchestraId: $orchestraId
+      channelId: $channelId
+      filters: { formats: $formats, contexts: $contexts }
+    ) {
+      ...ChannelMessageDetail
+    }
+  }
+  ${CHANNEL_MESSAGE_DETAIL_FRAGMENT}
 `;
