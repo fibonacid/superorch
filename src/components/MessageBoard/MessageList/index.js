@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styled from 'styled-components/macro';
-import ListItem from "./ListItem";
+import Message from "../Message";
 
 const StyledContainer = styled.div`
    flex: 1;
@@ -13,7 +13,7 @@ const StyledInner = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: auto;
+  overflow-y: auto;
 `;
 
 const StyledList = styled.ul`
@@ -37,7 +37,7 @@ export default function MessageList({ messages }) {
       <StyledInner ref={containerRef}>
         <StyledList>
           {messages.map((message, index) => (
-            <ListItem key={index} message={message} />
+            <Message key={index} message={message} />
           ))}
         </StyledList>
       </StyledInner>

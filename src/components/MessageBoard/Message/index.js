@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import SpeachBubble from "../../../_miscellaneous/SpeachBubble";
+import SpeachBubble from "../../_miscellaneous/SpeachBubble";
 
 const StyledContainer = styled.li`
   margin: 5px 20px;
@@ -15,6 +15,13 @@ const StyledUsername = styled.p`
   margin-bottom: 5px;
 `;
 
+const StyledSC = styled.p`
+   font-family: monospace;
+   color: grey;
+   font-size: 13px;
+   text-overflow: ellipsis;
+`;
+
 export default function ListItem({ message }) {
   const [userId] = useState(localStorage.getItem("userId"));
   const isLoggedUser = message.from.user._id === userId;
@@ -27,8 +34,18 @@ export default function ListItem({ message }) {
     <StyledContainer right={isLoggedUser}>
       <SpeachBubble right={isLoggedUser}>
         {showUsername && <StyledUsername>{username}</StyledUsername>}
-        <div>{message.body}</div>
+        {renderBody(message.format, message.body)}
       </SpeachBubble>
     </StyledContainer>
   );
+}
+
+function renderBody(format, body) {
+  switch(format) {
+    case "SC_RAW":
+    case "SC_LANG":
+      return <StyledSC>{body}</StyledSC>
+    default:
+      return <p>{body}</p>
+  }
 }
