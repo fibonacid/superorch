@@ -109,7 +109,7 @@ export const NEW_PRIVATE_MESSAGE_SUBSCRIPTION = gql`
     newPrivateMessage(
       orchestraId: $orchestraId
       memberId: $memberId
-      filters: { formats: $formats, context: $context }
+      filters: { formats: $formats, contexts: $contexts }
     ) {
       ...PrivateMessageDetail
     }
