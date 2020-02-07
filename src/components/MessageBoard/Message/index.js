@@ -7,6 +7,7 @@ const StyledContainer = styled.li`
   display: flex;
   flex-direction: ${props => (props.right ? "row-reverse" : "row")};
   font-size: 14px;
+  overflow-wrap: break-word;
 `;
 
 const StyledUsername = styled.p`

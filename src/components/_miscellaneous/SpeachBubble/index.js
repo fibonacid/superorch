@@ -4,7 +4,7 @@ const SpeachBubble = styled.div`
   position: relative;
   background: white;
   border-radius: .4em;
-
+  min-width: 0;
   padding: 8px;
 
   &:after {
