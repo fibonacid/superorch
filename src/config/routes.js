@@ -17,10 +17,12 @@ import OrchestraPlayView from "../views/orchestras/show/play";
 import OrchestraEditView from "../views/orchestras/show/edit";
 import OrchestraInvitesView from "../views/orchestras/show/invites";
 import OrchestraDeleteView from "../views/orchestras/show/delete";
-import OrchestraMemberIndexView from "../views/orchestras/show/members"
-import OrchestraMemberShowView from "../views/orchestras/show/members/show"
-import OrchestraChannelIndexView from "../views/orchestras/show/channels"
-import OrchestraChannelShowView from "../views/orchestras/show/channels/show"
+import OrchestraChatIndexView from "../views/orchestras/show/chats"
+import OrchestraChatShowView from "../views/orchestras/show/chats/show"
+// import OrchestraMemberIndexView from "../views/orchestras/show/members"
+// import OrchestraMemberShowView from "../views/orchestras/show/members/show"
+// import OrchestraChannelIndexView from "../views/orchestras/show/channels"
+// import OrchestraChannelShowView from "../views/orchestras/show/channels/show"
 
 
 const routes = [
@@ -91,25 +93,35 @@ const routes = [
             component: OrchestraInvitesView
           },
           {
-            path: "/orchestras/:orchestra/members",
-            component: OrchestraMemberIndexView,
+            path: "/orchestras/:orchestra/chats",
+            component: OrchestraChatIndexView,
             routes: [
               {
-                path: "/orchestras/:orchestra/members/:member",
-                component: OrchestraMemberShowView,
+                path: "/orchestras/:orchestra/chats/:chat",
+                component: OrchestraChatShowView, 
               }
             ]
           },
-          {
-            path: "/orchestras/:orchestra/channels",
-            component: OrchestraChannelIndexView,
-            routes: [
-              {
-                path: "/orchestras/:orchestra/channels/:channel",
-                component: OrchestraChannelShowView,
-              }
-            ]
-          },
+          // {
+          //   path: "/orchestras/:orchestra/members",
+          //   component: OrchestraMemberIndexView,
+          //   routes: [
+          //     {
+          //       path: "/orchestras/:orchestra/members/:member",
+          //       component: OrchestraMemberShowView,
+          //     }
+          //   ]
+          // },
+          // {
+          //   path: "/orchestras/:orchestra/channels",
+          //   component: OrchestraChannelIndexView,
+          //   routes: [
+          //     {
+          //       path: "/orchestras/:orchestra/channels/:channel",
+          //       component: OrchestraChannelShowView,
+          //     }
+          //   ]
+          // },
           { // fallback on play view
             path: "/orchestras/:orchestra",
             component: OrchestraPlayView
