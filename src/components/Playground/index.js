@@ -27,14 +27,14 @@ const StyledConsole = styled(Console)`
   flex: 0 1 30%;
 `;
 
-function Playground() {
+function Playground({ onEvaluate }) {
   const params = useParams();
 
   return (
     <StyledWrapper>
       <StyledInner>
         <SCLogProvider>
-          <StyledEditor key={params.orchestra} />
+          <StyledEditor key={params.orchestra} onEvaluate={onEvaluate}/>
           <StyledConsole />
         </SCLogProvider>
       </StyledInner>

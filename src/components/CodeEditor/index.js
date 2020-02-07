@@ -38,12 +38,13 @@ s.boot`;
 // -----------------------------------
 export default class CodeEditor extends Component {
   static contextType = SCLogContext;
+  static onEvaluate = () => {};
 
   constructor(props) {
     super(props);
 
     const codeEvaluationPlugin = createCodeEvaluationPlugin({
-      onEvaluate: this.onEvaluate.bind(this)
+      onEvaluate: this.handleEvaluate.bind(this)
     });
 
     const decorators = [...codeEvaluationPlugin.decorators];
@@ -66,7 +67,7 @@ export default class CodeEditor extends Component {
       plugins: [
         ...this.state.plugins,
         createCodeEvaluationPlugin({
-          onEvaluate: this.onEvaluate.bind(this)
+          onEvaluate: this.handleEvaluate.bind(this)
         })
       ]
     });
@@ -82,15 +83,19 @@ export default class CodeEditor extends Component {
     this.editor.focus();
   };
 
-  async onEvaluate(text) {
+  async handleEvaluate(text) {
     // Add input to the console
     this.context.pushLine({
       type: "stdin",
       value: text
     });
     try {
+      // Send text to the server
+      this.props.onEvaluate(text);
+
       // Send text to interpreter.
       const result = await interpretWithSclang(text);
+
       // Log response.
       this.context.pushLine({
         type: "stdout",

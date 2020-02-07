@@ -30,11 +30,14 @@ export default function OrchestraMemberShowView() {
     });
   }, []);
 
+
+  const onEvaluate = useCallback(console.log, []);
+
   return (
     <ChatLayout.Wrapper>
       <ChatLayout.Header>{data?.member?.user?.name || "Member"}</ChatLayout.Header>
       <ChatLayout.Container>
-        <Playground />
+        <Playground onEvaluate={onEvaluate}/>
         <MessageBoard messages={messages} onSend={onSend} />
       </ChatLayout.Container>
     </ChatLayout.Wrapper>

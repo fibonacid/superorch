@@ -31,11 +31,13 @@ export default function OrchestraChannelShowView() {
     });
   }, []);
 
+  const onEvaluate = useCallback(console.log, []);
+
   return (
     <ChatLayout.Wrapper>
       <ChatLayout.Header>{data?.channel?.name}</ChatLayout.Header>
       <ChatLayout.Container>
-        <Playground />
+        <Playground onEvaluate={onEvaluate}/>
         <MessageBoard messages={messages} onSend={onSend} />
       </ChatLayout.Container>
     </ChatLayout.Wrapper>
