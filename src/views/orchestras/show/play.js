@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import CodeEditor from "../../../components/CodeEditor";
-import Console from "../../../components/Console";
+import Console from "../../../components/Playground/Console";
 import SCLogProvider from "../../../components/_providers/SCLogProvider";
 
 const StyledWrapper = styled.div`

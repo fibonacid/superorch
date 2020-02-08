@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components/macro";
-import { SCLogContext } from "../../context/sclog-context";
+import { SCLogContext } from "../../../context/sclog-context";
 
 const StyledWrapper = styled.div`
   position: relative;
