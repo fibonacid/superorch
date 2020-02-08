@@ -6,7 +6,7 @@ import Console from "../Console";
 import SCLogProvider from "../_providers/SCLogProvider";
 
 const StyledWrapper = styled.div`
-  flex: 1;
+  flex: 1 0 60%;
   display: flex;
   flex-direction: column;
 `;
