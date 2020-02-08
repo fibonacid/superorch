@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import CodeEditor from "../CodeEditor";
 import Console from "../Console";
-import SCLogProvider from "../_providers/SCLogProvider";
+import { SCLogProvider } from "../../context/sclog-context";
 
 const StyledWrapper = styled.div`
   flex: 1 0 60%;

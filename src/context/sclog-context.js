@@ -1,9 +1,31 @@
-import { createContext } from "react";
+import React, { useState, createContext } from "react";
 
-const InterpreterContext = createContext({
+export const { SCLogContext } = createContext({
   lines: [],
   pushLine: () => {},
   clearLine: () => {}
 });
 
-export default InterpreterContext;
+export function SCLogProvider(props) {
+  const [lines, setLines] = useState([]);
+
+  const pushLine = line => {
+    setLines([...lines, line]);
+  };
+
+  const clearLines = () => {
+    setLines([]);
+  };
+
+  return (
+    <SCLogContext.Provider
+      value={{
+        lines,
+        pushLine,
+        clearLines
+      }}
+    >
+      {props.children}
+    </SCLogContext.Provider>
+  );
+}

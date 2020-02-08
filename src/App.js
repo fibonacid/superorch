@@ -2,9 +2,8 @@ import React from "react";
 import { HashRouter } from "react-router-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
 import configureClient from "./config/apollo";
-
-// Providers
-import AuthProvider from "./components/_providers/AuthProvider";
+import { AuthProvider } from "./context/auth-context";
+import { BreakpointProvider } from "./context/breakpoint-context";
 
 // Components
 import GlobalStyle, {
@@ -12,7 +11,6 @@ import GlobalStyle, {
   StyledContainer,
   StyledInner
 } from "./components/GlobalStyle";
-import BreakpointProvider from './components/_providers/BreakpointProvider';
 import MainNav from "./components/MainNav";
 import RouteConfig from "./components/RouteConfig";
 
