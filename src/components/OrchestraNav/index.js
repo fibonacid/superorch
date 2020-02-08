@@ -16,7 +16,7 @@ const StyledContainer = styled.div`
   }
 `;
 
-export default function OrchestraManager() {
+export default function OrchestraNav() {
   const params = useParams();
   const orchestraId = params.orchestra;
 
