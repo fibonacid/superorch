@@ -85,7 +85,7 @@ export default function OrchestraChatShowView() {
   );
 
   const breakpoints = useBreakpoint();
-  console.log({ breakpoints })
+  const editorVisible = breakpoints.sm || !chatVisible;
   
   return (
     <ChatLayout.Wrapper>
@@ -98,7 +98,7 @@ export default function OrchestraChatShowView() {
         />
       </ChatLayout.Header>
       <ChatLayout.Container>
-        <Playground onEvaluate={onEvaluate} />
+        {editorVisible && <Playground onEvaluate={onEvaluate} />}
         {chatVisible && <MessageBoard messages={messages || []} onSend={onSend} />}
       </ChatLayout.Container>
     </ChatLayout.Wrapper>
