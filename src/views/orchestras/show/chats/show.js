@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import useBreakpoint from '../../../../hooks/useBreakpoint';
 import { getRequestMap } from "./_map";
 import * as ChatLayout from "../../../../components/_layouts/ChatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
@@ -82,6 +83,9 @@ export default function OrchestraChatShowView() {
     () => setChatVisible(!chatVisible),
     [chatVisible]
   );
+
+  const breakpoints = useBreakpoint();
+  console.log({ breakpoints })
   
   return (
     <ChatLayout.Wrapper>
