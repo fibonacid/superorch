@@ -3,7 +3,7 @@ import { Switch, useLocation } from "react-router-dom";
 import routes from "../../config/routes";
 import RouteWithSubRoutes from '../_miscellaneous/RouteWithSubRoutes';
 
-export default function RouteConfig() {
+export default function RootSwitch() {
   const location = useLocation();
 
   useEffect(() => {

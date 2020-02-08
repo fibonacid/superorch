@@ -12,7 +12,7 @@ import GlobalStyle, {
   StyledInner
 } from "./components/GlobalStyle";
 import MainNav from "./components/MainNav";
-import RouteConfig from "./components/RouteConfig";
+import RootSwitch from "./components/RootSwitch";
 
 const client = configureClient();
 
@@ -36,7 +36,7 @@ function App() {
               <MainNav />
               <StyledContainer>
                 <StyledInner>
-                  <RouteConfig />
+                  <RootSwitch />
                 </StyledInner>
               </StyledContainer>
             </StyledWrapper>
