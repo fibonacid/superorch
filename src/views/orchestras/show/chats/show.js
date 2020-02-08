@@ -1,12 +1,11 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { getRequestMap } from "./_map";
 import * as ChatLayout from "../../../../components/_layouts/ChatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
-import Console from "../../../../components/Console";
-import CodeEditor from "../../../../components/CodeEditor";
-import SCLogProvider from "../../../../components/_providers/SCLogProvider";
+import Playground from "../../../../components/Playground";
+import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 export default function OrchestraChatShowView() {
   const { orchestra: orchestraId, chat } = useParams();
@@ -77,16 +76,27 @@ export default function OrchestraChatShowView() {
   const title = getTitle(targetData);
   const messages = getMessages(messagesData);
 
+  // Toggle visibility of message board
+  const [chatVisible, setChatVisible] = useState(true);
+  const onChatClick = useCallback(
+    () => setChatVisible(!chatVisible),
+    [chatVisible]
+  );
+  
   return (
     <ChatLayout.Wrapper>
-      <ChatLayout.Header>{title}</ChatLayout.Header>
-      <SCLogProvider>
-        <ChatLayout.Container>
-          <CodeEditor onEvaluate={onEvaluate} />
-          <MessageBoard messages={messages || []} onSend={onSend} />
-        </ChatLayout.Container>
-        <Console />
-      </SCLogProvider>
+      <ChatLayout.Header>
+        <h3>{title}</h3>
+        <ChatLayout.Icon
+          icon={faCommentDots}
+          onClick={onChatClick}
+          color={chatVisible ? "black" : "lightgrey"}
+        />
+      </ChatLayout.Header>
+      <ChatLayout.Container>
+        <Playground onEvaluate={onEvaluate} />
+        {chatVisible && <MessageBoard messages={messages || []} onSend={onSend} />}
+      </ChatLayout.Container>
     </ChatLayout.Wrapper>
   );
 }
