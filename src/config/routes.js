@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 
-import HomeView from "../views/home";
 import LoginView from "../views/login";
 import RegisterView from "../views/register";
 
@@ -11,9 +10,7 @@ import AccountSecurityView from "../views/account/security"
 
 import OrchestraIndexView from "../views/orchestras";
 import OrchestraCreateView from "../views/orchestras/create";
-import OrchestraWelcomeView from "../views/orchestras/welcome";
 import OrchestraShowView from "../views/orchestras/show";
-import OrchestraPlayView from "../views/orchestras/show/play";
 import OrchestraEditView from "../views/orchestras/show/edit";
 import OrchestraInvitesView from "../views/orchestras/show/invites";
 import OrchestraDeleteView from "../views/orchestras/show/delete";
@@ -22,14 +19,8 @@ import OrchestraChatShowView from "../views/orchestras/show/chats/show"
 
 const routes = [
   {
-    exact: true,
-    path: "/",
-    component: props => (props.token ? <HomeView/> : <Redirect to="/login"/>),
-    routes: []
-  },
-  {
     path: "/login",
-    component: props => (!props.token ? <LoginView/> : <Redirect to="/"/>),
+    component: LoginView,
     routes: []
   },
   {
@@ -67,11 +58,6 @@ const routes = [
         component: OrchestraCreateView
       },
       {
-        exact: true,
-        path: "/orchestras",
-        component: OrchestraWelcomeView
-      },
-      {
         path: "/orchestras/:orchestra",
         component: OrchestraShowView,
         routes: [
@@ -96,10 +82,6 @@ const routes = [
                 component: OrchestraChatShowView, 
               }
             ]
-          },
-          { // fallback on play view
-            path: "/orchestras/:orchestra",
-            component: OrchestraPlayView
           }
         ]
       },
