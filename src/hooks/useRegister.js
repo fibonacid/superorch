@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { REGISTER_QUERY } from "../api/auth";
-import { AuthContext } from "../context/auth-context";
+import useAuth from './useAuth';
 
 export default function useRegister() {
-  const context = useContext(AuthContext);
+  const context = useAuth();
 
   const [mutate, { data, loading, error }] = useMutation(REGISTER_QUERY, {
     onCompleted: ({ register }) => {

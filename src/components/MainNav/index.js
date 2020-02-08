@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import { AuthContext } from "../../context/auth-context";
+import useAuth from "../../hooks/useAuth";
 import Inbox from "./Inbox";
 import Selector from "./Selector";
 import Account from "./Account";
@@ -19,7 +19,7 @@ const StyledWrap = styled.header`
 `;
 
 function MainNav() {
-  const { token } = useContext(AuthContext);
+  const { token } = useAuth();
 
   return (
     <StyledWrap>
