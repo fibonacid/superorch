@@ -1,12 +1,39 @@
 import React, { useEffect, useCallback, useState } from "react";
+import styled from 'styled-components';
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import useBreakpoint from '../../../../hooks/useBreakpoint';
 import { getRequestMap } from "./_map";
-import * as ChatLayout from "../../../../components/_layouts/ChatLayout";
 import MessageBoard from "../../../../components/MessageBoard";
 import Playground from "../../../../components/Playground";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
+
+const StyledWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledHeader = styled.div`
+   padding: 5px 10px;
+   background: whitesmoke;
+   border-bottom: solid 1px lightgrey;
+   font-size: 18px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+`;
+
+const StyledContainer = styled.div`
+  flex: 1;
+  display: flex;
+`;
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  font-size: 30px;
+  cursor: pointer;
+  margin-left: 5px;
+`;
 
 export default function OrchestraChatShowView() {
   const { orchestra: orchestraId, chat } = useParams();
@@ -88,19 +115,19 @@ export default function OrchestraChatShowView() {
   const editorVisible = breakpoints.sm || !chatVisible;
   
   return (
-    <ChatLayout.Wrapper>
-      <ChatLayout.Header>
+    <StyledWrapper>
+      <StyledHeader>
         <h3>{title}</h3>
-        <ChatLayout.Icon
+        <StyledIcon
           icon={faCommentDots}
           onClick={onChatClick}
           color={chatVisible ? "black" : "lightgrey"}
         />
-      </ChatLayout.Header>
-      <ChatLayout.Container>
+      </StyledHeader>
+      <StyledContainer>
         {editorVisible && <Playground onEvaluate={onEvaluate} />}
         {chatVisible && <MessageBoard messages={messages || []} onSend={onSend} />}
-      </ChatLayout.Container>
-    </ChatLayout.Wrapper>
+      </StyledContainer>
+    </StyledWrapper>
   );
 }
