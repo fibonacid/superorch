@@ -9,42 +9,60 @@ import {
   NEW_PRIVATE_MESSAGE_SUBSCRIPTION
 } from "../../../../api/messages";
 
+const filters = {
+  contexts: ["CHAT", "SUPERCOLLIDER"],
+  formats: ["PLAIN_TEXT", "JSON", "SC_RAW", "SC_LANG"]
+};
+
 export function getRequestMap(orchestraId, targetId, targetType) {
-  let variables = {};
   switch (targetType) {
     case "channel":
-      variables = {
-        orchestraId,
-        channelId: targetId
-      };
       return {
         getTargetQuery: {
           document: GET_CHANNEL_QUERY,
           options: {
-            variables
+            variables: {
+              orchestraId,
+              channelId: targetId
+            }
           }
         },
         getMessagesQuery: {
           document: GET_CHANNEL_MESSAGES_QUERY,
           options: {
-            variables
+            variables: {
+              orchestraId,
+              channelId: targetId,
+              filters
+            }
           }
         },
         sendMessageMutation: {
           document: SEND_CHANNEL_MESSAGE_MUTATION,
           options: {
-            variables,
+            variables: {
+              orchestraId,
+              channelId: targetId
+            },
             refetchQueries: [
               {
                 query: GET_CHANNEL_MESSAGES_QUERY,
-                variables
+                variables: {
+                  orchestraId,
+                  channelId: targetId,
+                  filters
+                }
               }
             ]
           }
         },
         newMessageSubscription: {
           document: NEW_CHANNEL_MESSAGE_SUBSCRIPTION,
-          variables,
+          variables: {
+            orchestraId,
+            channelId: targetId,
+            filters
+          },
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData) return prev;
             const { newChannelMessage } = subscriptionData.data;
@@ -57,38 +75,53 @@ export function getRequestMap(orchestraId, targetId, targetType) {
         getMessages: data => data?.channelMessages
       };
     case "member":
-      variables = {
-        orchestraId,
-        memberId: targetId
-      };
       return {
         getTargetQuery: {
           document: GET_MEMBER_QUERY,
           options: {
-            variables
+            variables: {
+              orchestraId,
+              memberId: targetId,
+              filters
+            }
           }
         },
         getMessagesQuery: {
           document: GET_PRIVATE_MESSAGES_QUERY,
           options: {
-            variables
+            variables: {
+              orchestraId,
+              memberId: targetId,
+              filters
+            }
           }
         },
         sendMessageMutation: {
           document: SEND_PRIVATE_MESSAGE_MUTATION,
           options: {
-            variables,
+            variables: {
+              orchestraId,
+              memberId: targetId
+            },
             refetchQueries: [
               {
                 query: GET_PRIVATE_MESSAGES_QUERY,
-                variables
+                variables: {
+                  orchestraId,
+                  memberId: targetId,
+                  filters
+                }
               }
             ]
           }
         },
         newMessageSubscription: {
           document: NEW_PRIVATE_MESSAGE_SUBSCRIPTION,
-          variables,
+          variables: {
+            orchestraId,
+            memberId: targetId,
+            filters
+          },
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData) return prev;
             const { newPrivateMessage } = subscriptionData.data;
