@@ -12,7 +12,7 @@ import GlobalStyle, {
   StyledContainer,
   StyledInner
 } from "./components/GlobalStyle";
-import Navigation from "./components/Navigation";
+import MainNav from "./components/MainNav";
 import RouteConfig from "./components/RouteConfig";
 
 const client = configureClient();
@@ -27,7 +27,7 @@ function App() {
       <AuthProvider>
         <HashRouter>
           <StyledWrapper>
-            <Navigation />
+            <MainNav />
             <StyledContainer>
               <StyledInner>
                 <RouteConfig />

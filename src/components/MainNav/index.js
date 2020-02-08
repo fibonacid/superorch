@@ -18,7 +18,7 @@ const StyledWrap = styled.header`
   text-align: center;
 `;
 
-function Navigation() {
+function MainNav() {
   const { token } = useContext(AuthContext);
 
   return (
@@ -36,4 +36,4 @@ function Navigation() {
   );
 }
 
-export default Navigation;
+export default MainNav;
