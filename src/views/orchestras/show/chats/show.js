@@ -34,7 +34,10 @@ export default function OrchestraChatShowView() {
   );
 
   // Submit a subscription to receive more messages
-  useEffect((() => subscribeToMore(newMessageSubscription))(), []);
+  const subscribeToNewMessages = useCallback(() =>
+    subscribeToMore(newMessageSubscription)
+  );
+  useEffect(subscribeToNewMessages, []);
 
   // Get function to send a new message
   const [sendMessage] = useMutation(
