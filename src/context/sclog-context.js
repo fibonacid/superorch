@@ -1,6 +1,6 @@
 import React, { useState, createContext } from "react";
 
-export const { SCLogContext } = createContext({
+export const SCLogContext = createContext({
   lines: [],
   pushLine: () => {},
   clearLine: () => {}

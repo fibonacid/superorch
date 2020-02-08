@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
-import CodeEditor from "../CodeEditor";
+import CodeEditor from "./CodeEditor";
 import Console from "./Console";
 import { SCLogProvider } from "../../context/sclog-context";
 

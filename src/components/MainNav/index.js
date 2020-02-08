@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components/macro";
-import AuthContext from "../../context/auth-context";
+import { AuthContext } from "../../context/auth-context";
 import Inbox from "./Inbox";
 import Selector from "./Selector";
 import Account from "./Account";

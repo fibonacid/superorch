@@ -1,10 +1,16 @@
 import React, { useState, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
-import SecondaryLayout from "../components/_layouts/SecondaryLayout";
 import PrimaryForm from "../components/_miscellaneous/PrimaryForm";
 import RegistrationForm from "../components/_forms/RegistrationForm";
 import UserProfileForm from "../components/_forms/UserProfileForm";
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex: 1;
+  padding: 15px 10px;
+  flex-direction: column;
+`;
 
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
@@ -34,7 +40,7 @@ function RegisterView() {
   };
 
   return (
-    <SecondaryLayout>
+    <StyledContainer>
       {/* First part: email and password */}
       {index === 0 && (
         <>
@@ -53,7 +59,7 @@ function RegisterView() {
           <StyledLink to="/">Skip</StyledLink>
         </>
       )}
-    </SecondaryLayout>
+    </StyledContainer>
   );
 }
 

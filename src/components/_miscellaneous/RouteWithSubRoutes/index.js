@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import { Route } from "react-router-dom";
-import AuthContext from '../../../context/auth-context';
+import { AuthContext } from '../../../context/auth-context';
 
 // A special wrapper for <Route> that knows how to
 // handle "sub"-routes by passing them in a `routes`

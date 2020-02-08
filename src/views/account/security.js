@@ -1,8 +1,15 @@
 import React from "react";
-import SecondaryLayout from "../../components/_layouts/SecondaryLayout";
+import styled from 'styled-components';
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex: 1;
+  padding: 15px 10px;
+  flex-direction: column;
+`;
 
 export default function AccountSecurityView() {
   return (
-   <SecondaryLayout>Setup username and password</SecondaryLayout>
+   <StyledContainer>Setup username and password</StyledContainer>
   );
 }

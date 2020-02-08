@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { LOGIN_QUERY } from "../api/auth";
-import AuthContext from "../context/auth-context";
+import { AuthContext } from "../context/auth-context";
 
 export default function useLogin() {
   const context = useContext(AuthContext);

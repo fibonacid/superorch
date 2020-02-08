@@ -6,6 +6,7 @@ import useBreakpoint from '../../../../hooks/useBreakpoint';
 import { getRequestMap } from "./_map";
 import MessageBoard from "../../../../components/MessageBoard";
 import Playground from "../../../../components/Playground";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 const StyledWrapper = styled.div`

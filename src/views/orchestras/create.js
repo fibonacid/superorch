@@ -6,9 +6,15 @@ import {
   CREATE_ORCHESTRA_MUTATION,
   GET_ORCHESTRAS_QUERY
 } from "../../api/orchestras";
-import SecondaryLayout from "../../components/_layouts/SecondaryLayout";
 import PrimaryForm from "../../components/_miscellaneous/PrimaryForm";
 import OrchestraForm from "../../components/_forms/OrchestraForm";
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex: 1;
+  padding: 15px 10px;
+  flex-direction: column;
+`;
 
 const StyledForm = styled(PrimaryForm)`
   max-width: 300px;
@@ -37,13 +43,13 @@ function OrchestraCreateView() {
   }, [data, history]);
 
   return (
-    <SecondaryLayout>
+    <StyledContainer>
       <StyledForm title="Create Orchestra">
         <OrchestraForm authenticate={authenticate} />
       </StyledForm>
       {loading && <span>Loading ...</span>}
       {error && <span>{error.message}</span>}
-    </SecondaryLayout>
+    </StyledContainer>
   );
 }
 

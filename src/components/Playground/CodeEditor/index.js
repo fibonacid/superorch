@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components/macro";
 import Editor from "draft-js-plugins-editor";
 import { EditorState, CompositeDecorator, ContentState } from "draft-js";
-import { createCodeEvaluationPlugin } from "../../plugins/code-evaluation-plugin";
-import { interpretWithSclang } from "../../helpers/electron";
-import SCLogContext from "../../context/sclog-context";
+import { createCodeEvaluationPlugin } from "../../../plugins/code-evaluation-plugin";
+import { interpretWithSclang } from "../../../helpers/electron";
+import { SCLogContext } from "../../../context/sclog-context";
 
 const StyledWrapper = styled.div`
   position: relative;
