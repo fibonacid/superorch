@@ -18,7 +18,7 @@ export default function ChannelList({ orchestra }) {
       <StyledList>
         {orchestra.channels.map((channel, index) => (
           <ListItem key={index} url={`${url}/channel-${channel._id}`}>
-            {channel.name}
+            # {channel.name}
           </ListItem>
         ))}
       </StyledList>

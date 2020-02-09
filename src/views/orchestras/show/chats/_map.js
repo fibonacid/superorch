@@ -71,7 +71,7 @@ export function getRequestMap(orchestraId, targetId, targetType) {
             };
           }
         },
-        getTitle: data => data?.channel?.name,
+        getTitle: data => data?.channel?.name && `# ${data.channel.name}`,
         getMessages: data => data?.channelMessages
       };
     case "member":
