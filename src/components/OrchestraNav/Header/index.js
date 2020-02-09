@@ -11,10 +11,6 @@ const StyledContainer = styled.div`
   font-size: 20px;
   display: flex;
   justify-content: space-between;
-  a {
-    color: black;
-    text-decoration: none;
-  }
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`

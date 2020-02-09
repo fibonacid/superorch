@@ -11,8 +11,6 @@ const StyledItem = styled.li`
   color: grey;
   padding: 5px 0;
   a {
-    color: black;
-    text-decoration: none;
     font-weight: ${props => (props.current ? "bold" : "normal")};
   }
 `;
