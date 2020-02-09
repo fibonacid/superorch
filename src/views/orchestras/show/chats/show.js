@@ -34,6 +34,9 @@ const StyledIcon = styled(FontAwesomeIcon)`
   font-size: 30px;
   cursor: pointer;
   margin-left: 5px;
+  color: ${props => props.color};
+  &:hover { color: black }
+  transition: color 50ms ease-in;
 `;
 
 export default function OrchestraChatShowView() {

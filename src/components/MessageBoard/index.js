@@ -7,7 +7,8 @@ const StyledContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: rgb(100,100,100);
+  background: rgb(245,245,245);
+  border-left: solid 1px lightgrey; 
 `;
 
 export default function MessageBoard({ className, messages, onSend }) {

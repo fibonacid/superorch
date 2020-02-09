@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components/macro";
 import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-dom";
 import { GET_ORCHESTRA_QUERY } from '../../api/orchestras';
-import { getMoreMembers } from "../../api/members";
 import Header from "./Header";
 import ChannelList from "./ChannelList";
 import MemberList from "./MemberList";
@@ -60,15 +59,4 @@ export default function OrchestraNav() {
       {error && <span>{error.message}</span>}
     </StyledContainer>
   );
-}
-
-const StyledError = styled.span`
-  color: red;
-`;
-
-//
-// Renders eventual errors
-//
-function Error(props) {
-  return <StyledError>{props.message}</StyledError>;
 }

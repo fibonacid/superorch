@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components/macro";
 import { Link, useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
@@ -14,9 +14,11 @@ const StyledContainer = styled.div`
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`
-  color: grey;
   margin-left: 5px;
   cursor: pointer;
+  color: ${props => props.color};
+  &:hover { color: black }
+  transition: color 50ms ease-in;
 `;
 
 const StyledTitle = styled.h2`
@@ -28,12 +30,20 @@ const StyledSubtitle = styled.p`
 `;
 
 function Header({ orchestra }) {
-  const history = useHistory();
   const { data } = useQuery(GET_USER_QUERY);
+  const history = useHistory();
 
-  const redirect = () => {
-    history.push(`/orchestras/${orchestra._id}/edit`);
-  };
+  const baseSlug = `/orchestras/${orchestra._id}`;
+  const editUrl = `${baseSlug}/edit`;
+
+  const redirect = useCallback(
+    function() {
+      history.push(editUrl);
+    },
+    [editUrl]
+  );
+
+  const matchEdit = history?.location?.pathname === editUrl;
 
   return (
     <StyledContainer>
@@ -43,7 +53,12 @@ function Header({ orchestra }) {
           <StyledTitle>{orchestra.name}</StyledTitle>
         </Link>
       </div>
-      <StyledIcon onClick={redirect} icon={faCog} size="sm" />
+      <StyledIcon
+        onClick={redirect}
+        icon={faCog}
+        size="sm"
+        color={matchEdit ? "black" : "lightgrey"}
+      />
     </StyledContainer>
   );
 }

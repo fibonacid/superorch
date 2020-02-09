@@ -8,8 +8,9 @@ const StyledSquare = styled.div`
   position: relative;
   border: solid 1px white;
   background: ${props =>
-    props.active ? "rgba(245,245,245,0.8)" : "transparent"};
-  color: white;
+    props.active ? "rgb(245,245,245)" : "transparent"};
+  color: ${props =>
+    props.active ? "black" : "white"};
   border-radius: 8px;
   transition: background 0.1s;
   cursor: pointer;
@@ -17,7 +18,7 @@ const StyledSquare = styled.div`
     margin-top: 10px;
   }
   &:hover {
-    background: rgba(245, 245, 245, 0.8);
+    background: rgb(245, 245, 245);
   }
 `;
 
