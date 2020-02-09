@@ -13,9 +13,9 @@ const StyledList = styled.ul`
 `;
 
 const StyledLink = styled(BackgroundLink)`
-  color: grey;
   margin-top: 15px;
   text-decoration: none;
+  color: grey;
 `;
 
 //
@@ -29,6 +29,8 @@ function MemberList({ orchestra }) {
     member => member.user._id !== userId
   );
 
+  const base = `/orchestras/${orchestra._id}`;
+
   return (
     <StyledContainer>
       <StyledList>
@@ -36,10 +38,7 @@ function MemberList({ orchestra }) {
           <ListItem key={i} orchestra={orchestra} member={m} />
         ))}
       </StyledList>
-
-      <StyledLink to={`/orchestras/${orchestra._id}/invites`}>
-        + invite
-      </StyledLink>
+      <StyledLink to={`${base}/invites`}>+ invite</StyledLink>
     </StyledContainer>
   );
 }
