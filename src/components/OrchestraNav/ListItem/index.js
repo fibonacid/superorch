@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { Link, useRouteMatch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const StyledContainer = styled.li`
   padding: 5px 0;
@@ -12,16 +12,13 @@ const StyledContainer = styled.li`
   a {
     color: black;
     text-decoration: none;
-    font-weight: ${props => (props.current ? "bold" : "normal")};
   }
 `;
 
 function ListItem({ url, children }) {
-  const match = useRouteMatch(url);
-
   return (
-    <StyledContainer current={!!match}>
-      <Link to={url}>{children}</Link>
+    <StyledContainer>
+      <NavLink to={url} activeStyle={{ fontWeight: "bold" }}>{children}</NavLink>
     </StyledContainer>
   );
 }
