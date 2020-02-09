@@ -6,6 +6,7 @@ export default function BackgroundLink(props) {
 
   return (
     <Link
+      className={props.className}
       to={{
         pathname: props.to,
         // This is the trick! This link sets
