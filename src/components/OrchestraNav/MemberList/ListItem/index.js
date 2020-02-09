@@ -8,6 +8,8 @@ const StyledContainer = styled.li`
   justify-content: space-between;
   border-bottom: solid 1px lightgrey;
   a {
+    color: black;
+    text-decoration: none;
     font-weight: ${props => (props.current ? "bold" : "normal")};
   }
 `;
