@@ -106,7 +106,7 @@ export default function OrchestraChatShowView() {
   const messages = getMessages(messagesData);
 
   // Toggle visibility of message board
-  const [chatVisible, setChatVisible] = useState(true);
+  const [chatVisible, setChatVisible] = useState(false);
   const onChatClick = useCallback(
     () => setChatVisible(!chatVisible),
     [chatVisible]
