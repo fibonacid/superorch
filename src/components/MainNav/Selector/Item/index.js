@@ -4,16 +4,24 @@ import Icon from "./Icon";
 
 function SelectorIcon(props) {
   const history = useHistory();
+  const targetUrl = `/orchestras/${props.orchestra._id}`;
+  const match = history?.location?.pathname?.includes(targetUrl);
 
   function handleClick() {
-    history.push(`/orchestras/${props.orchestra._id}`);
+    history.push(targetUrl);
 
     props.onClick();
   }
 
   const letter = props.orchestra.name.charAt(0).toUpperCase();
 
-  return <Icon onClick={handleClick} letter={letter} active={props.active} />;
+  return (
+    <Icon 
+      letter={letter}
+      onClick={handleClick} 
+      active={props.active || match} 
+    />
+  )
 }
 
 export default SelectorIcon;
