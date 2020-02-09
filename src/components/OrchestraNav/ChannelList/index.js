@@ -1,38 +1,27 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { Link, useHistory } from "react-router-dom";
+import ListItem from "../ListItem";
 
-const StyledList = styled.ul`
-  margin-top: 30px;
-  font-size: 15px;
+const StyledContainer = styled.div`
+  margin: 30px 0 5px 0;
+  font-size: 14px;
 `;
 
-const StyledItem = styled.li`
-  color: grey;
-  padding: 5px 0;
-  a {
-    color: black;
-    text-decoration: none;
-    font-weight: ${props => (props.current ? "bold" : "normal")};
-  }
+const StyledList = styled.ul`
+  margin: 15px 0;
 `;
 
 export default function ChannelList({ orchestra }) {
-  const { location } = useHistory();
-  const base = `/orchestras/${orchestra._id}/chats`;
-
+  const url = `/orchestras/${orchestra._id}/chats`;
   return (
-    <StyledList>
-      {orchestra.channels.map((channel, index) => {
-        const slug = `channel-${channel._id}`;
-        const url = base + "/" + slug;
-        const match = location?.pathname?.includes(slug);
-        return (
-          <StyledItem key={index} current={match}>
-            <Link to={url}>{channel.name}</Link>
-          </StyledItem>
-        );
-      })}
-    </StyledList>
+    <StyledContainer>
+      <StyledList>
+        {orchestra.channels.map((channel, index) => (
+          <ListItem key={index} url={`${url}/channel-${channel._id}`}>
+            {channel.name}
+          </ListItem>
+        ))}
+      </StyledList>
+    </StyledContainer>
   );
 }

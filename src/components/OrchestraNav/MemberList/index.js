@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components/macro";
-import BackgroundLink from '../../_miscellaneous/BackgroundLink';
-import ListItem from "./ListItem";
+import BackgroundLink from "../../_miscellaneous/BackgroundLink";
+import ListItem from "../ListItem";
 
 const StyledContainer = styled.div`
-  margin: 30px 0 5px 0;
+  margin: 10px 0 5px 0;
   font-size: 14px;
 `;
 
@@ -29,16 +29,18 @@ function MemberList({ orchestra }) {
     member => member.user._id !== userId
   );
 
-  const base = `/orchestras/${orchestra._id}`;
+  const url = `/orchestras/${orchestra._id}`;
 
   return (
     <StyledContainer>
       <StyledList>
-        {members.map((m, i) => (
-          <ListItem key={i} orchestra={orchestra} member={m} />
+        {members.map((member, index) => (
+          <ListItem key={index} url={`${url}/chats/member-${member._id}`}>
+            {member?.user?.name}
+          </ListItem>
         ))}
       </StyledList>
-      <StyledLink to={`${base}/invites`}>+ invite</StyledLink>
+      <StyledLink to={`${url}/invites`}>+ invite</StyledLink>
     </StyledContainer>
   );
 }
