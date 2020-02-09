@@ -11,6 +11,10 @@ const StyledContainer = styled.div`
   font-size: 20px;
   display: flex;
   justify-content: space-between;
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`
@@ -22,11 +26,11 @@ const StyledIcon = styled(FontAwesomeIcon)`
 `;
 
 const StyledTitle = styled.h2`
-  font-size: 24px;
+  font-size: 27px;
 `;
 
 const StyledSubtitle = styled.p`
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 function Header({ orchestra }) {
