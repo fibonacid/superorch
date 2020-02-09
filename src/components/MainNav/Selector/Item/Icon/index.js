@@ -1,5 +1,10 @@
 import React from "react";
-import styled from "styled-components/macro";
+import styled, {css} from "styled-components/macro";
+
+const active = css`
+  background: rgba(245,245,245, 1);
+  color: rgba(0,0,0,1);
+`
 
 const StyledSquare = styled.div`
   width: 40px;
@@ -7,19 +12,21 @@ const StyledSquare = styled.div`
   margin: 0 auto;
   position: relative;
   border: solid 1px white;
-  background: ${props =>
-    props.active ? "rgb(245,245,245)" : "transparent"};
-  color: ${props =>
-    props.active ? "black" : "white"};
-  border-radius: 8px;
-  transition: background 0.1s;
   cursor: pointer;
+  border-radius: 8px;
+
   &:not(:first-of-type) {
     margin-top: 10px;
   }
-  &:hover {
-    background: rgb(245, 245, 245);
-  }
+
+  ${props => props.active ? active : `
+    background: rgba(245,245,245, 0);
+    color: rgba(255,255,255,1);
+  `};
+
+  transition: background 0.2s ease-in;
+
+  &:hover { ${active} }
 `;
 
 const StyledLetter = styled.span`
