@@ -33,17 +33,17 @@ function Header({ orchestra }) {
   const { data } = useQuery(GET_USER_QUERY);
   const history = useHistory();
 
-  const baseSlug = `/orchestras/${orchestra._id}`;
-  const editUrl = `${baseSlug}/edit`;
+  const base = `/orchestras/${orchestra._id}`;
+  const editSlug = `${base}/edit`;
 
   const redirect = useCallback(
     function() {
-      history.push(editUrl);
+      history.push(editSlug);
     },
-    [editUrl]
+    [editSlug]
   );
 
-  const matchEdit = history?.location?.pathname === editUrl;
+  const matchEdit = history?.location?.pathname === editSlug;
 
   return (
     <StyledContainer>
