@@ -1,6 +1,28 @@
-import styled, { createGlobalStyle } from "styled-components/macro";
+import styled, { createGlobalStyle, css } from "styled-components/macro";
 import reset from "styled-reset";
 import normalize from "styled-normalize";
+
+const transitions = css`
+    .fade {
+        &-enter,&-appear {
+          opacity: 0;
+        }
+
+        &-enter-active,&-appear-active {
+          opacity: 1;
+          transition: opacity 200ms;
+        }
+
+        &-exit {
+          opacity: 1;
+        }
+
+        &-exit-active {
+          opacity: 0;
+          transition: opacity 200ms;
+        }
+    }
+`;
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -17,6 +39,8 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     position: relative;
   }
+
+  ${transitions}
 `;
 
 export default GlobalStyle;
