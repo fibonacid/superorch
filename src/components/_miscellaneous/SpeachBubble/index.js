@@ -35,6 +35,7 @@ const SpeachBubble = styled.div`
     margin-top: -0.281em;
     ${props => props.direction === "right" && right};
     ${props => props.direction === "left" && left};
+  }
 `;
 
 export default SpeachBubble;
