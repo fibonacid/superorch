@@ -4,14 +4,14 @@ import Header from '../Header';
 
 export default function PlainText({
   direction = "right",
-  children,
+  body,
   username,
   showUsername = false
 }) {
   return (
     <SpeachBubble direction={direction} color="white">
       <Header username={username} showUsername={showUsername} />
-      {children}
+      {body}
     </SpeachBubble>
   );
 }

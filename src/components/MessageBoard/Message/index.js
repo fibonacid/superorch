@@ -40,9 +40,12 @@ export default function Message({ message }) {
 
   return (
     <StyledContainer direction={direction}>
-      <Component direction="right" username={username} showUsername={showName}>
-        {body}
-      </Component>
+      <Component
+        direction="right"
+        username={username}
+        showUsername={showName}
+        body={body}
+      />
     </StyledContainer>
   );
 }
