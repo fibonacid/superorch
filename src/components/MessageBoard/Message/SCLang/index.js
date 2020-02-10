@@ -1,8 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import styled from "styled-components/macro";
 import SpeachBubble from "../../../_miscellaneous/SpeachBubble";
 import Header from "../Header";
-import { copyToClipboard } from "../../../../helpers/electron";
+import { copyToClipboard } from "../../../../helpers/common";
 
 const StyledContainer = styled(SpeachBubble)`
   cursor: pointer;
@@ -24,22 +24,22 @@ export default function SCLang({
   username,
   showUsername = false
 }) {
+  const bodyRef = useRef();
 
   // Copy text to clipboard
-  // Note: this will only work on electron.
   const onClick = useCallback(() => {
-    const { clipboard } = window.require("electron");
-    clipboard.writeText(body);
-
-    if(clipboard.readText() === body) {
+    try {
+      copyToClipboard(bodyRef.current);
       alert('Copied to clipboard')
+    } catch(err) {
+      console.error(err);
     }
-  }, [body]);
+  }, [bodyRef]);
 
   return (
     <StyledContainer onClick={onClick} direction={direction} color="black">
       <Header username={username} showUsername={showUsername} />
-      <StyledBody>{body}</StyledBody>
+      <StyledBody ref={bodyRef}>{body}</StyledBody>
     </StyledContainer>
   );
 }
