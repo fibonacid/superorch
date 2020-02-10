@@ -1,32 +1,55 @@
-import React, { createContext, useState } from 'react';
-
-export const createFlashMessage = (value="Oops, empty message", options={}) => ({
-   type: "info",
-   disappear: true,
-   ...options,
-   value
-})
+import React, { createContext, useState, useCallback } from "react";
 
 export const FlashMessageContext = createContext({
-   messages: []
+  messages: [],
+  removeMessage: id => {},
+  addMessage: (values, options) => {}
 });
 
-const defaultMessages = [
-   { _id: 0, ...createFlashMessage() },
-   { _id: 1, ...createFlashMessage() }
-]
-
 export function FlashMessageProvider({ children }) {
-   const [counter, setCounter] = useState(1);
-   const [messages, setMessages] = useState(defaultMessages);
+  const [messages, setMessages] = useState([]);
 
-   return (
-      <FlashMessageContext.Provider
-         value={{
-            messages
-         }}
-      >
+  const createMessage = useCallback(
+    (value = "Oops, empty message", options = {}) => ({
+      type: "info",
+      disappear: true,
+      ...options,
+      id: messages.length,
+      value
+    }),
+    [messages]
+  );
+
+  const addMessage = useCallback(
+     function(value, options) {
+        const message = createMessage(value, options);
+        setMessages([
+           message,
+           ...messages,
+        ])
+     },
+     [messages, setMessages, createMessage]
+  )
+
+  const removeMessage = useCallback(
+     function(id) {
+        setMessages(
+           messages.filter(message => message.id !== id)
+        )
+     },
+     [messages, setMessages]
+  )
+
+
+  return (
+    <FlashMessageContext.Provider
+      value={{
+        messages,
+        addMessage,
+        removeMessage
+      }}
+    >
       {children}
     </FlashMessageContext.Provider>
-   )
+  );
 }
