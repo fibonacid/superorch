@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import styled, {css} from "styled-components";
-import SpeachBubble from "../../_miscellaneous/SpeachBubble";
+import styled from "styled-components";
+import PlainText from "./PlainText";
+import SCLang from "./SCLang";
 
 const StyledContainer = styled.li`
   margin: 5px 20px;
@@ -9,16 +10,9 @@ const StyledContainer = styled.li`
   font-size: 14px;
 `;
 
-const StyledUsername = styled.p`
-  color: blue;
-  font-size: 13px;
-  margin-bottom: 5px;
-  font-weight: bold;
-`;
-
 const StyledSCBody = styled.p`
   font-family: monospace;
-  color: rgb(0,255,0);
+  color: rgb(0, 255, 0);
   font-size: 12px;
   text-overflow: ellipsis;
   max-width: 100%;
@@ -26,7 +20,7 @@ const StyledSCBody = styled.p`
   white-space: nowrap;
 `;
 
-export default function ListItem({ message }) {
+export default function Message({ message }) {
   const [userId] = useState(localStorage.getItem("userId"));
   const isMe = message.from.user._id === userId;
 
@@ -36,24 +30,19 @@ export default function ListItem({ message }) {
 
   const direction = isMe ? "right" : "left";
   const { format, body } = message;
-  const background = format === "SC_RAW" || format === "SC_LANG" ? "black" : "white";
+
+  let Component;
+  if (format === "SC_LANG" || format === "SC_RAW") {
+    Component = SCLang;
+  } else {
+    Component = PlainText;
+  }
 
   return (
     <StyledContainer direction={direction}>
-      <SpeachBubble direction={direction} color={background}>
-        {showName && <StyledUsername>{username}</StyledUsername>}
-        {renderBody(format, body)}
-      </SpeachBubble>
+      <Component direction="right" username={username} showUsername={showName}>
+        {body}
+      </Component>
     </StyledContainer>
   );
-}
-
-function renderBody(format, body) {
-  switch (format) {
-    case "SC_RAW":
-    case "SC_LANG":
-      return <StyledSCBody>{body}</StyledSCBody>;
-    default:
-      return <p>{body}</p>;
-  }
 }
