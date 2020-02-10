@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import styled from "styled-components/macro";
 import { copyToClipboard } from "../../../../helpers/common";
+import useFlashMessages from '../../../../hooks/useFlashMessages';
 import SpeachBubble from "../../../_miscellaneous/SpeachBubble";
-import Portal from "../../../_miscellaneous/Portal";
-import Flash from "../../../FlashMessages/Message";
 import Header from "../Header";
 
 const StyledContainer = styled(SpeachBubble)`
@@ -27,27 +26,22 @@ export default function SCLang({
   showUsername = false
 }) {
   const bodyRef = useRef();
-  const [copied, setCopied] = useState(false);
+  const { addMessage } = useFlashMessages();
 
   // Copy text to clipboard
   const onClick = useCallback(() => {
     try {
       copyToClipboard(bodyRef.current);
-      setCopied(true);
+      addMessage("Copied to clipboard")
     } catch(err) {
       console.error(err);
     }
-  }, [bodyRef, setCopied]);
+  }, [bodyRef, addMessage]);
 
   return (
     <StyledContainer onClick={onClick} direction={direction} color="black">
       <Header username={username} showUsername={showUsername} />
       <StyledBody ref={bodyRef}>{body}</StyledBody>
-      {copied && (
-        <Portal id="modal-root">
-          <Flash>Copied to clipboard</Flash>
-        </Portal>
-      )}
     </StyledContainer>
   );
 }
