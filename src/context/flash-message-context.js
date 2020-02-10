@@ -26,7 +26,8 @@ export function FlashMessageProvider({ children }) {
         setMessages([
            message,
            ...messages,
-        ])
+        ]);
+        return message;
      },
      [messages, setMessages, createMessage]
   )
@@ -36,6 +37,7 @@ export function FlashMessageProvider({ children }) {
         setMessages(
            messages.filter(message => message.id !== id)
         )
+        return id;
      },
      [messages, setMessages]
   )
