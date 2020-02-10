@@ -1,8 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import useInterval from "../../../hooks/useInterval";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { CSSTransition } from "react-transition-group";
 
 const StyledContainer = styled.li`
   background: rgba(255, 255, 0, 0.9);
@@ -23,18 +24,40 @@ const StyledIcon = styled(FontAwesomeIcon)`
 `;
 
 export default function Message({ message, onRemove }) {
-  const destroy = useCallback(onRemove.bind(null, message.id), [
-    onRemove,
-    message
-  ]);
+  const [hidden, setHidden] = useState(false);
+
+  const hide = useCallback(
+    function() {
+      setHidden(true);
+    },
+    [setHidden]
+  );
+
+  const destroy = useCallback(
+    function() {
+      onRemove(message.id);
+    },
+    [onRemove, message]
+  );
 
   // Self-destuct after one second
-  useInterval(destroy, 2000);
+  useInterval(hide, 2000);
 
   return (
-    <StyledContainer onClick={destroy}>
-      <StyledBody>{message.value}</StyledBody>
-      <StyledIcon icon={faTimes} />
-    </StyledContainer>
+    <CSSTransition
+      in={!hidden}
+      appear={true}
+      timeout={200}
+      classNames={"fade"}
+      unmountOnExit
+      onExited={destroy}
+    >
+      {() => (
+        <StyledContainer onClick={hide}>
+          <StyledBody>{message.value}</StyledBody>
+          <StyledIcon icon={faTimes} />
+        </StyledContainer>
+      )}
+    </CSSTransition>
   );
 }
