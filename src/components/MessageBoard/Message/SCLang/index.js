@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 import { copyToClipboard } from "../../../../helpers/common";
 import SpeachBubble from "../../../_miscellaneous/SpeachBubble";
 import Portal from "../../../_miscellaneous/Portal";
-import Flash from "../../../_miscellaneous/Flash";
+import Flash from "../../../FlashMessages/Message";
 import Header from "../Header";
 
 const StyledContainer = styled(SpeachBubble)`

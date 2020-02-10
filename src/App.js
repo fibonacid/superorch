@@ -4,6 +4,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import configureClient from "./config/apollo";
 import { AuthProvider } from "./context/auth-context";
 import { BreakpointProvider } from "./context/breakpoint-context";
+import { FlashMessageProvider } from "./context/flash-message-context";
 
 // Components
 import GlobalStyle, {
@@ -13,6 +14,7 @@ import GlobalStyle, {
 } from "./components/GlobalStyle";
 import MainNav from "./components/MainNav";
 import RootSwitch from "./components/RootSwitch";
+import FlashMessages from "./components/FlashMessages";
 
 const client = configureClient();
 
@@ -29,19 +31,22 @@ function App() {
   return (
     <BreakpointProvider queries={queries}>
       <ApolloProvider client={client}>
-        <GlobalStyle />
-        <AuthProvider>
-          <HashRouter>
-            <StyledWrapper>
-              <MainNav />
-              <StyledContainer>
-                <StyledInner>
-                  <RootSwitch />
-                </StyledInner>
-              </StyledContainer>
-            </StyledWrapper>
-          </HashRouter>
-        </AuthProvider>
+        <FlashMessageProvider>
+          <GlobalStyle />
+          <AuthProvider>
+            <HashRouter>
+              <StyledWrapper>
+                <MainNav />
+                <StyledContainer>
+                  <StyledInner>
+                    <RootSwitch />
+                  </StyledInner>
+                <FlashMessages/>
+                </StyledContainer>
+              </StyledWrapper>
+            </HashRouter>
+          </AuthProvider>
+        </FlashMessageProvider>
       </ApolloProvider>
     </BreakpointProvider>
   );
