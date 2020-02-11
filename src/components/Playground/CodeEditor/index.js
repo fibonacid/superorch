@@ -37,7 +37,6 @@ s.boot`;
 // -----------------------------------
 export default class CodeEditor extends Component {
   static contextType = SClangContext;
-  static onEvaluate = () => {};
 
   state = {
     editorState: EditorState.createEmpty(),
@@ -46,9 +45,9 @@ export default class CodeEditor extends Component {
 
   componentDidMount() {
     this.focus();
-
+    
     const codeEvaluationPlugin = createCodeEvaluationPlugin({
-      onEvaluate: this.context.evaluate
+      onEvaluate: this.onEvaluation.bind(this)
     });
     const decorators = [...codeEvaluationPlugin.decorators];
 
@@ -64,6 +63,10 @@ export default class CodeEditor extends Component {
         codeEvaluationPlugin
       ]
     });
+  }
+
+  onEvaluation = (text) => {
+    this.context.evaluate(text)
   }
 
   onChange = editorState => {
