@@ -4,8 +4,6 @@ import List from "./List";
 import { SClangContext } from "../../../context/sclang-context";
 import { Editor, EditorState, getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
 
-const { hasControlModifier } = KeyBindingUtil;
-
 const StyledWrapper = styled.div`
   flex: 0 1 25%;
   position: relative;
@@ -26,6 +24,11 @@ const StyledInner = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
+`;
+
+const StyledContainer = styled.div`
+  flex: 1;
+  cursor: text;
 `;
 
 class Console extends Component {
@@ -57,9 +60,15 @@ class Console extends Component {
 
   handleKeyCommand(command) {
     if (command === 'execute') {
-      console.log('execute !');
-      // Perform a request to save your contents, set
-      // a new `editorState`, etc.
+      const contentState = this.state.editorState.getCurrentContent();
+      const text = contentState.getPlainText();
+
+      // Evaluate input text.
+      this.context.evaluate(text);
+
+      // Clear content of editor.
+      const cleared = EditorState.createEmpty();
+      this.onChange(EditorState.moveFocusToEnd(cleared))
       return 'handled';
     }
     return 'not-handled';
@@ -69,18 +78,20 @@ class Console extends Component {
     const { logs } = this.context.state;
 
     return (
-      <StyledWrapper onClick={this.focus} className={this.props.className}>
+      <StyledWrapper className={this.props.className}>
         <StyledInner>
           <List logs={logs} />
-          <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-            handleKeyCommand={this.handleKeyCommand}
-            keyBindingFn={myKeyBindingFn}
-            ref={element => {
-              this.editor = element;
-            }}
-          />
+          <StyledContainer onClick={this.focus} >
+            <Editor
+              editorState={this.state.editorState}
+              onChange={this.onChange}
+              handleKeyCommand={this.handleKeyCommand}
+              keyBindingFn={myKeyBindingFn}
+              ref={element => {
+                this.editor = element;
+              }}
+            />
+          </StyledContainer>
         </StyledInner>
       </StyledWrapper>
     );
