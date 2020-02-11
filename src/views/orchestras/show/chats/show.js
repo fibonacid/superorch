@@ -45,6 +45,19 @@ const StyledIcon = styled(FontAwesomeIcon)`
 export default function OrchestraChatShowView() {
   const { orchestra: orchestraId, chat } = useParams();
   const [targetType, targetId] = chat.split("-");
+  const { evaluate } = useSClang();
+  const [userId] = useState(localStorage.getItem("userId"))
+
+  // Receive new messages from other members and render it to sound
+  const onNewMessage = useCallback(message => {
+    if (message.context === "SUPERCOLLIDER" && message.format === "SC_LANG") {
+      // If message didn't originate from the operating user:
+      if (message.from.user._id !== userId) {
+        // Render it to sound.
+        evaluate(message.body);
+      }
+    }
+  }, [evaluate, userId]);
 
   const {
     getTitle,
