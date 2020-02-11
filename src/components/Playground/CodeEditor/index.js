@@ -66,7 +66,10 @@ export default class CodeEditor extends Component {
   }
 
   onEvaluation = (text) => {
+    // Feed code to the supercollider interpreter
     this.context.evaluate(text)
+    // Send code to other users
+    this.props.onEvaluate(text);
   }
 
   onChange = editorState => {
