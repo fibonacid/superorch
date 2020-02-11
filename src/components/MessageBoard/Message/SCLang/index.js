@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from "react";
 import styled from "styled-components/macro";
 import { copyToClipboard } from "../../../../helpers/common";
-import useFlashMessages from '../../../../hooks/useFlashMessages';
+import useFlashMessages from "../../../../hooks/useFlashMessages";
 import SpeachBubble from "../../../_miscellaneous/SpeachBubble";
 import Header from "../Header";
 
@@ -26,17 +26,24 @@ export default function SCLang({
   showUsername = false
 }) {
   const bodyRef = useRef();
-  const { addMessage } = useFlashMessages();
+  const { dispatch } = useFlashMessages();
 
-  // Copy text to clipboard
+
   const onClick = useCallback(() => {
     try {
+      // Copy text to clipboard
       copyToClipboard(bodyRef.current);
-      addMessage("Copied to clipboard")
-    } catch(err) {
+      // Display flash message
+      dispatch({
+        type: "add",
+        message: {
+          value: "Copied to clipboard"
+        }
+      });
+    } catch (err) {
       console.error(err);
     }
-  }, [bodyRef, addMessage]);
+  }, [bodyRef, dispatch]);
 
   return (
     <StyledContainer onClick={onClick} direction={direction} color="black">

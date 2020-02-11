@@ -23,7 +23,7 @@ const StyledIcon = styled(FontAwesomeIcon)`
   margin-left: 5px;
 `;
 
-export default function Message({ message, onRemove }) {
+export default function Message({ message, dispatch }) {
   const [hidden, setHidden] = useState(false);
 
   const hide = useCallback(
@@ -35,9 +35,12 @@ export default function Message({ message, onRemove }) {
 
   const destroy = useCallback(
     function() {
-      onRemove(message.id);
+      dispatch({
+        type: "remove",
+        id: message.id
+      })
     },
-    [onRemove, message]
+    [message, dispatch]
   );
 
   // Self-destuct after one second

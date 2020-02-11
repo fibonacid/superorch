@@ -13,12 +13,12 @@ const StyledList = styled.ul`
 `;
 
 export default function FlashMessages() {
-  const { messages, removeMessage } = useFlashMessages();
+  const { state, dispatch } = useFlashMessages();
 
   return (
     <StyledList>
-      {messages.map((message, index) => (
-        <Message key={index} message={message} onRemove={removeMessage} />
+      {state.map((message, index) => (
+        <Message key={index} message={message} dispatch={dispatch} />
       ))}
     </StyledList>
   );
