@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components/macro";
 import List from "./List";
 import { SClangContext } from "../../../context/sclang-context";
-import { Editor, EditorState } from "draft-js";
+import { Editor, EditorState, getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
+
+const { hasControlModifier } = KeyBindingUtil;
 
 const StyledWrapper = styled.div`
   flex: 0 1 25%;
@@ -36,6 +38,7 @@ class Console extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.focus = this.focus.bind(this);
+    this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +55,16 @@ class Console extends Component {
     this.editor.focus();
   };
 
+  handleKeyCommand(command) {
+    if (command === 'execute') {
+      console.log('execute !');
+      // Perform a request to save your contents, set
+      // a new `editorState`, etc.
+      return 'handled';
+    }
+    return 'not-handled';
+  }
+
   render() {
     const { logs } = this.context.state;
 
@@ -62,6 +75,8 @@ class Console extends Component {
           <Editor
             editorState={this.state.editorState}
             onChange={this.onChange}
+            handleKeyCommand={this.handleKeyCommand}
+            keyBindingFn={myKeyBindingFn}
             ref={element => {
               this.editor = element;
             }}
@@ -73,3 +88,12 @@ class Console extends Component {
 }
 
 export default Console;
+
+
+function myKeyBindingFn(e) {
+  // Enter executes code, Shift+Enter doesn't.
+  if (e.keyCode === 13 && !e.shiftKey) {
+    return 'execute';
+  }
+  return getDefaultKeyBinding(e);
+}
