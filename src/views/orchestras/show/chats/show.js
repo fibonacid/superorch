@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import useBreakpoint from "../../../../hooks/useBreakpoint";
+import useSClang from "../../../../hooks/useSClang";
 import { getRequestMap } from "./_map";
-import { interpretWithSclang } from "../../../../helpers/electron";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import MessageBoard from "../../../../components/MessageBoard";
@@ -81,10 +81,9 @@ export default function OrchestraChatShowView() {
   );
 
   // Submit a subscription to receive more messages
-  const subscribeToNewMessages = useCallback(() =>
-    subscribeToMore(newMessageSubscription)
-  );
-  useEffect(subscribeToNewMessages, []);
+  useEffect(() => {
+    subscribeToMore(newMessageSubscription);
+  }, []);
 
   // Get function to send a new message
   const [sendMessage] = useMutation(
@@ -157,17 +156,4 @@ export default function OrchestraChatShowView() {
       </StyledContainer>
     </StyledWrapper>
   );
-}
-
-// Receive new messages from other members and render it to sound
-async function onNewMessage(message) {
-  if (message.context === "SUPERCOLLIDER" && message.format === "SC_LANG") {
-    try {
-      console.log('evaluating ', message.body)
-      const response = await interpretWithSclang(message.body);
-      console.log(response);
-    } catch(err) {
-      console.error(err);
-    }
-  }
 }
