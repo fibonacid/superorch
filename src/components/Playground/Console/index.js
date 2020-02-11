@@ -2,14 +2,19 @@ import React, { Component } from "react";
 import styled from "styled-components/macro";
 import List from "./List";
 import { SClangContext } from "../../../context/sclang-context";
-import { Editor, EditorState, getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
+import {
+  Editor,
+  EditorState,
+  getDefaultKeyBinding,
+  KeyBindingUtil
+} from "draft-js";
 
 const StyledWrapper = styled.div`
   flex: 0 1 25%;
   position: relative;
   background: black;
   padding: 10px;
-  color: rgb(0,255,0);
+  color: rgb(0, 255, 0);
   font-size: 12px;
   font-family: monospace;
 `;
@@ -59,19 +64,24 @@ class Console extends Component {
   };
 
   handleKeyCommand(command) {
-    if (command === 'execute') {
+    if (command === "execute") {
       const contentState = this.state.editorState.getCurrentContent();
       const text = contentState.getPlainText();
 
-      // Evaluate input text.
-      this.context.evaluate(text);
+      // Intercept special commands
+      if (text.replace(/\s+/g, "") === "clear") {
+        this.context.dispatch({ type: "clear_log" })
+      } else {
+        // Evaluate input text.
+        this.context.evaluate(text);
+      }
 
       // Clear content of editor.
       const cleared = EditorState.createEmpty();
-      this.onChange(EditorState.moveFocusToEnd(cleared))
-      return 'handled';
+      this.onChange(EditorState.moveFocusToEnd(cleared));
+      return "handled";
     }
-    return 'not-handled';
+    return "not-handled";
   }
 
   render() {
@@ -81,7 +91,7 @@ class Console extends Component {
       <StyledWrapper className={this.props.className}>
         <StyledInner>
           <List logs={logs} />
-          <StyledContainer onClick={this.focus} >
+          <StyledContainer onClick={this.focus}>
             <Editor
               editorState={this.state.editorState}
               onChange={this.onChange}
@@ -100,11 +110,10 @@ class Console extends Component {
 
 export default Console;
 
-
 function myKeyBindingFn(e) {
   // Enter executes code, Shift+Enter doesn't.
   if (e.keyCode === 13 && !e.shiftKey) {
-    return 'execute';
+    return "execute";
   }
   return getDefaultKeyBinding(e);
 }
