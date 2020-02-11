@@ -1,12 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components/macro";
-import useSclang from "../../../hooks/useSClang";
+import List from "./List";
+import { SClangContext } from "../../../context/sclang-context";
+import { Editor, EditorState } from "draft-js";
 
 const StyledWrapper = styled.div`
+  flex: 0 1 25%;
   position: relative;
   background: black;
   padding: 10px;
-  flex: 0 1 25%;
+  color: rgb(0,255,0);
+  font-size: 12px;
+  font-family: monospace;
 `;
 
 const StyledInner = styled.div`
@@ -16,45 +21,55 @@ const StyledInner = styled.div`
   right: 0;
   bottom: 0;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 `;
 
-const StyledContainer = styled.div`
-  padding: 10px 0 0 10px;
-  position: absolute;
-`;
+class Console extends Component {
+  static contextType = SClangContext;
 
-const StyledSpan = styled.span`
-  line-height: 1.2em;
-  display: block;
-  color: rgb(0, 255, 0);
-  font-size: 12px;
-  font-family: monospace;
-`;
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: EditorState.createEmpty()
+    };
+    this.onChange = this.onChange.bind(this);
+    this.focus = this.focus.bind(this);
+  }
 
-function Line({ line }) {
-  return (
-    <>
-      {line.type === "stdin" && <StyledSpan>> {line.value}</StyledSpan>}
-      {line.type === "stdout" && <StyledSpan>{line.value}</StyledSpan>}
-    </>
-  );
-}
+  componentDidMount() {
+    this.focus();
+  }
 
-function Console(props) {
-  const { state } = useSclang();
+  onChange = editorState => {
+    this.setState({
+      editorState
+    });
+  };
 
-  return (
-    <StyledWrapper className={props.className}>
-      <StyledInner>
-        <StyledContainer>
-          {state.logs.map((line, i) => (
-            <Line key={i} line={line} />
-          ))}
-          }
-        </StyledContainer>
-      </StyledInner>
-    </StyledWrapper>
-  );
+  focus = () => {
+    this.editor.focus();
+  };
+
+  render() {
+    const { logs } = this.context.state;
+
+    return (
+      <StyledWrapper onClick={this.focus} className={this.props.className}>
+        <StyledInner>
+          <List logs={logs} />
+          <Editor
+            editorState={this.state.editorState}
+            onChange={this.onChange}
+            ref={element => {
+              this.editor = element;
+            }}
+          />
+        </StyledInner>
+      </StyledWrapper>
+    );
+  }
 }
 
 export default Console;
