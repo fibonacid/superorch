@@ -67,17 +67,16 @@ class Console extends Component {
       const contentState = this.state.editorState.getCurrentContent();
       const text = contentState.getPlainText();
 
-      // Intercept special commands
-      if (text.replace(/\s+/g, "") === "clear") {
-        this.context.dispatch({ type: "clear_log" })
-      } else {
-        // Evaluate input text.
-        this.context.evaluate(text);
-      }
+      // Evaluate input text.
+      this.context.evaluate(text);
 
       // Clear content of editor.
       const cleared = EditorState.createEmpty();
       this.onChange(EditorState.moveFocusToEnd(cleared));
+      return "handled";
+    }
+    if (command === "clear") {
+      this.context.dispatch({ type: "clear_log" });
       return "handled";
     }
     return "not-handled";
@@ -110,9 +109,13 @@ class Console extends Component {
 export default Console;
 
 function myKeyBindingFn(e) {
-  // Enter executes code, Shift+Enter doesn't.
+  // ENTER executes code, SHIFT+ENTER doesn't.
   if (e.keyCode === 13 && !e.shiftKey) {
     return "execute";
+  }
+  // CMD+K clears the console.
+  if(e.keyCode === 75 && e.metaKey) {
+    return "clear";
   }
   return getDefaultKeyBinding(e);
 }
