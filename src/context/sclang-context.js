@@ -28,7 +28,7 @@ function reducer(state, action) {
 }
 
 const initialState = {
-  logs: [{ type: "stdout", value: "Welcome to SuperOrch"}]
+  logs: []
 }
 
 export function SClangProvider({ children }) {
