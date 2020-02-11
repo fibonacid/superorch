@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components/macro";
 import List from "./List";
 import { SClangContext } from "../../../context/sclang-context";
-import {
-  Editor,
-  EditorState,
-  getDefaultKeyBinding
-} from "draft-js";
+import { Editor, EditorState, getDefaultKeyBinding } from "draft-js";
 
 const StyledWrapper = styled.div`
   flex: 0 1 25%;
@@ -90,8 +86,12 @@ class Console extends Component {
 
     return (
       <StyledWrapper className={this.props.className}>
-        <StyledInner>
-          <List logs={logs} />
+        <StyledInner
+          ref={element => {
+            this.container = element;
+          }}
+        >
+          <List logs={logs} container={this.container} />
           <StyledContainer onClick={this.focus}>
             <Editor
               editorState={this.state.editorState}
@@ -117,7 +117,7 @@ function myKeyBindingFn(e) {
     return "execute";
   }
   // CMD+K clears the console.
-  if(e.keyCode === 75 && e.metaKey) {
+  if (e.keyCode === 75 && e.metaKey) {
     return "clear";
   }
   return getDefaultKeyBinding(e);

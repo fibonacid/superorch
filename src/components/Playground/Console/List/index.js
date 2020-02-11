@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components/macro";
 
 const StyledSpan = styled.span`
@@ -6,7 +6,15 @@ const StyledSpan = styled.span`
   display: block;
 `;
 
-function List({ logs }) {
+function List({ logs, container }) {
+
+  useEffect(function() {
+    if(container) {
+      const y = container.scrollHeight;
+      container.scroll(0,y);
+    }
+  }, [container, logs])
+  
   return (
     <div>
       {logs.map((line, index) => (
