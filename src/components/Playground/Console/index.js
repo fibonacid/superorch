@@ -5,8 +5,7 @@ import { SClangContext } from "../../../context/sclang-context";
 import {
   Editor,
   EditorState,
-  getDefaultKeyBinding,
-  KeyBindingUtil
+  getDefaultKeyBinding
 } from "draft-js";
 
 const StyledWrapper = styled.div`
