@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import { SCLogContext } from "../../../context/sclog-context";
+import useSclang from "../../../hooks/useSClang";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -41,13 +41,14 @@ function Line({ line }) {
 }
 
 function Console(props) {
-  const { lines } = useContext(SCLogContext);
+  const { log } = useSclang();
+  console.log(log);
 
   return (
     <StyledWrapper className={props.className}>
       <StyledInner>
         <StyledContainer>
-          {lines.map((line, i) => (
+          {log.map((line, i) => (
             <Line key={i} line={line} />
           ))}
           }

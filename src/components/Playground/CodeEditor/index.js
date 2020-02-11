@@ -3,8 +3,7 @@ import styled from "styled-components/macro";
 import Editor from "draft-js-plugins-editor";
 import { EditorState, CompositeDecorator, ContentState } from "draft-js";
 import { createCodeEvaluationPlugin } from "./code-evaluation-plugin";
-import { interpretWithSclang } from "../../../helpers/electron";
-import { SCLogContext } from "../../../context/sclog-context";
+import { SClangContext } from "../../../context/sclang-context";
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -37,38 +36,32 @@ s.boot`;
 // SuperCollider Editor
 // -----------------------------------
 export default class CodeEditor extends Component {
-  static contextType = SCLogContext;
+  static contextType = SClangContext;
   static onEvaluate = () => {};
 
-  constructor(props) {
-    super(props);
-
-    const codeEvaluationPlugin = createCodeEvaluationPlugin({
-      onEvaluate: this.handleEvaluate.bind(this)
-    });
-
-    const decorators = [...codeEvaluationPlugin.decorators];
-
-    this.state = {
-      editorState: EditorState.createWithContent(
-        ContentState.createFromText(text),
-        new CompositeDecorator(decorators)
-      ),
-      plugins: []
-    };
+  state = {
+    editorState: EditorState.createEmpty(),
+    plugins: []
   }
 
   componentDidMount() {
     this.focus();
 
+    const codeEvaluationPlugin = createCodeEvaluationPlugin({
+      onEvaluate: this.context.evaluate
+    });
+    const decorators = [...codeEvaluationPlugin.decorators];
+
     // CodeEvaluationPlugin needs to be loaded
     // after context has been attached to "this"
     this.setState({
+      editorState: EditorState.createWithContent(
+        ContentState.createFromText(text),
+        new CompositeDecorator(decorators)
+      ),
       plugins: [
         ...this.state.plugins,
-        createCodeEvaluationPlugin({
-          onEvaluate: this.handleEvaluate.bind(this)
-        })
+        codeEvaluationPlugin
       ]
     });
   }
@@ -82,33 +75,6 @@ export default class CodeEditor extends Component {
   focus = () => {
     this.editor.focus();
   };
-
-  async handleEvaluate(text) {
-    // Add input to the console
-    this.context.pushLine({
-      type: "stdin",
-      value: text
-    });
-    try {
-      // Send text to the server
-      this.props.onEvaluate(text);
-
-      // Send text to interpreter.
-      const result = await interpretWithSclang(text);
-
-      // Log response.
-      this.context.pushLine({
-        type: "stdout",
-        value: JSON.stringify(result)
-      });
-    } catch (err) {
-      // Log errors
-      this.context.pushLine({
-        type: "error",
-        value: err.message
-      });
-    }
-  }
 
   render() {
     return (
