@@ -3,7 +3,7 @@ import styled, {css} from "styled-components/macro";
 import { NavLink } from "react-router-dom";
 
 const activeStyle = {
-  background: "rgba(255,255,255,1)",
+  background: "rgba(245,245,245,1)",
   color: "black"
 }
 
@@ -17,7 +17,7 @@ const StyledLink = styled(NavLink)`
   cursor: pointer;
   border-radius: 8px;
   
-  background: rgba(255,255,255,0);
+  background: rgba(245,245,245,0);
   color: white;
   transition: background 0.2s ease-in;
 
