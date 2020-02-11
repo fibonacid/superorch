@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import useBreakpoint from "../../../../hooks/useBreakpoint";
 import { getRequestMap } from "./_map";
-import MessageBoard from "../../../../components/MessageBoard";
-import Playground from "../../../../components/Playground";
+import { interpretWithSclang } from "../../../../helpers/electron";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import MessageBoard from "../../../../components/MessageBoard";
+import Playground from "../../../../components/Playground";
 
 const StyledWrapper = styled.div`
   flex: 1;
@@ -42,13 +43,8 @@ const StyledIcon = styled(FontAwesomeIcon)`
 `;
 
 export default function OrchestraChatShowView() {
-  //const [userId] = useState(localStorage.getItem("userId"));
   const { orchestra: orchestraId, chat } = useParams();
   const [targetType, targetId] = chat.split("-");
-
-  const onNewMessage = useCallback(function(message) {
-    console.log("new message:", message);
-  }, []);
 
   const {
     getTitle,
@@ -142,4 +138,17 @@ export default function OrchestraChatShowView() {
       </StyledContainer>
     </StyledWrapper>
   );
+}
+
+// Receive new messages from other members and render it to sound
+async function onNewMessage(message) {
+  if (message.context === "SUPERCOLLIDER" && message.format === "SC_LANG") {
+    try {
+      console.log('evaluating ', message.body)
+      const response = await interpretWithSclang(message.body);
+      console.log(response);
+    } catch(err) {
+      console.error(err);
+    }
+  }
 }
