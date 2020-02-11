@@ -51,10 +51,6 @@ export function SClangProvider({ children }) {
     [dispatch]
   );
 
-  useEffect(() => {
-    console.log('evaluate re-rendered');
-  }, [evaluate])
-
   return (
     <SClangContext.Provider value={{ state, dispatch, evaluate }}>
       {children}

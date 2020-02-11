@@ -50,7 +50,6 @@ export default function OrchestraChatShowView() {
 
   // Receive new messages from other members and render it to sound
   const onNewMessage = useCallback(message => {
-    console.log("onNewMessage re-rendered");
     if (message.context === "SUPERCOLLIDER" && message.format === "SC_LANG") {
       // If message didn't originate from the operating user:
       if (message.from.user._id !== userId) {
