@@ -95,30 +95,36 @@ export default function OrchestraChatShowView() {
   // This callback gets execute when a user
   // wants to share a simple message through
   // the MessageBoard component's interface.
-  const onSend = useCallback(text => {
-    sendMessage({
-      variables: {
-        ...sendMessageMutation.variables,
-        format: "PLAIN_TEXT",
-        context: "CHAT",
-        body: text
-      }
-    });
-  }, []);
+  const onSend = useCallback(
+    text => {
+      sendMessage({
+        variables: {
+          ...sendMessageMutation.variables,
+          format: "PLAIN_TEXT",
+          context: "CHAT",
+          body: text
+        }
+      });
+    },
+    [sendMessageMutation.variables, sendMessage]
+  );
 
   // This callback gets execute when a user
   // wants to share a piece of supercollider
   // code through the CodeEditor component's intreface.
-  const onEvaluate = useCallback(text => {
-    sendMessage({
-      variables: {
-        ...sendMessageMutation.variables,
-        format: "SC_LANG",
-        context: "SUPERCOLLIDER",
-        body: text
-      }
-    });
-  }, []);
+  const onEvaluate = useCallback(
+    text => {
+      sendMessage({
+        variables: {
+          ...sendMessageMutation.variables,
+          format: "SC_LANG",
+          context: "SUPERCOLLIDER",
+          body: text
+        }
+      });
+    },
+    [sendMessageMutation.variables, sendMessage]
+  );
 
   // Parse data to be displayed
   const title = getTitle(targetData);
