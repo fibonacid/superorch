@@ -17,6 +17,11 @@ function reducer(state, action) {
           action.output
         ]
       }
+    case "clear_log":
+      return {
+        ...state,
+        logs: []
+      }
     default:
       return state;
   }
@@ -51,7 +56,7 @@ export function SClangProvider({ children }) {
   }, [evaluate])
 
   return (
-    <SClangContext.Provider value={{ state, evaluate }}>
+    <SClangContext.Provider value={{ state, dispatch, evaluate }}>
       {children}
     </SClangContext.Provider>
   );
