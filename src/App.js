@@ -5,6 +5,7 @@ import configureClient from "./config/apollo";
 import { AuthProvider } from "./context/auth-context";
 import { BreakpointProvider } from "./context/breakpoint-context";
 import { FlashMessageProvider } from "./context/flash-message-context";
+import { SClangProvider } from "./context/sclang-context";
 
 // Components
 import GlobalStyle, {
@@ -37,12 +38,14 @@ function App() {
             <HashRouter>
               <StyledWrapper>
                 <MainNav />
+                <SClangProvider>
                 <StyledContainer>
                   <StyledInner>
                     <RootSwitch />
                   </StyledInner>
                 <FlashMessages/>
                 </StyledContainer>
+                </SClangProvider>
               </StyledWrapper>
             </HashRouter>
           </AuthProvider>
