@@ -33,6 +33,9 @@ const StyledInner = styled.div`
 const StyledContainer = styled.div`
   flex: 1;
   cursor: text;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-top: 50px;
 `;
 
 class Console extends Component {
