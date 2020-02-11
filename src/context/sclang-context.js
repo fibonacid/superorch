@@ -2,42 +2,32 @@ import React, { createContext, useState, useCallback } from "react";
 import { interpretWithSclang } from "../helpers/electron";
 
 export const SClangContext = createContext({
-  log: [],
+  logs: [],
   evaluate: () => {}
 });
 
 export function SClangProvider({ children }) {
-  const [log, setLog] = useState([]);
-
-  function pushLog(object) {
-      setLog([...log, object]);
-  };
+  const [logs, setLogs] = useState([]);
 
   const evaluate = useCallback(
     async function(text) {
       try {
         console.log("evaluating ", text);
-        pushLog({
-          type: "stdin",
-          value: text
-        });
+        const input = { type: "stdin", value: text };
 
         const response = await interpretWithSclang(text);
-        console.log(response);
+        const output = { type: "stdout", value: JSON.stringify(response) }
 
-        pushLog({
-          type: "stdout",
-          value: JSON.stringify(response)
-        })
+        setLogs([...logs, input, output]);
       } catch (err) {
         console.error(err);
       }
     },
-    [log, pushLog]
+    [logs, setLogs]
   );
 
   return (
-    <SClangContext.Provider value={{ log, evaluate }}>
+    <SClangContext.Provider value={{ logs, evaluate }}>
       {children}
     </SClangContext.Provider>
   );
