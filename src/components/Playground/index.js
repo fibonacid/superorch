@@ -3,7 +3,7 @@ import styled from "styled-components/macro";
 import { useParams } from "react-router-dom";
 import CodeEditor from "./CodeEditor";
 import Console from "./Console";
-import { SCLogProvider } from "../../context/sclog-context";
+import { SClangProvider } from "../../context/sclang-context";
 
 const StyledWrapper = styled.div`
   flex: 2;
@@ -33,10 +33,10 @@ function Playground({ onEvaluate }) {
   return (
     <StyledWrapper>
       <StyledInner>
-        <SCLogProvider>
-          <StyledEditor key={params.orchestra} onEvaluate={onEvaluate}/>
+        <SClangProvider>
+          <StyledEditor key={params.orchestra} onEvaluate={onEvaluate} />
           <StyledConsole />
-        </SCLogProvider>
+        </SClangProvider>
       </StyledInner>
     </StyledWrapper>
   );
