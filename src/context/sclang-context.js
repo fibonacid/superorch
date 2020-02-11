@@ -1,4 +1,4 @@
-import React, { createContext, useState, useCallback } from "react";
+import React, { createContext, useReducer, useCallback, useEffect } from "react";
 import { interpretWithSclang } from "../helpers/electron";
 
 export const SClangContext = createContext({
@@ -6,11 +6,31 @@ export const SClangContext = createContext({
   evaluate: () => {}
 });
 
+function reducer(state, action) {
+  switch(action.type) {
+    case "add_log":
+      return {
+        ...state,
+        logs: [
+          ...state.logs,
+          action.input,
+          action.output
+        ]
+      }
+    default:
+      return state;
+  }
+}
+
+const initialState = {
+  logs: []
+}
+
 export function SClangProvider({ children }) {
-  const [logs, setLogs] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const evaluate = useCallback(
-    async function(text) {
+    async (text) => {
       try {
         console.log("evaluating ", text);
         const input = { type: "stdin", value: text };
@@ -18,16 +38,20 @@ export function SClangProvider({ children }) {
         const response = await interpretWithSclang(text);
         const output = { type: "stdout", value: JSON.stringify(response) }
 
-        setLogs([...logs, input, output]);
+        dispatch({ type: "add_log", input, output });
       } catch (err) {
         console.error(err);
       }
     },
-    [logs, setLogs]
+    [dispatch]
   );
 
+  useEffect(() => {
+    console.log('evaluate re-rendered');
+  }, [evaluate])
+
   return (
-    <SClangContext.Provider value={{ logs, evaluate }}>
+    <SClangContext.Provider value={{ state, evaluate }}>
       {children}
     </SClangContext.Provider>
   );

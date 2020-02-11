@@ -41,13 +41,13 @@ function Line({ line }) {
 }
 
 function Console(props) {
-  const { logs } = useSclang();
+  const { state } = useSclang();
 
   return (
     <StyledWrapper className={props.className}>
       <StyledInner>
         <StyledContainer>
-          {logs.map((line, i) => (
+          {state.logs.map((line, i) => (
             <Line key={i} line={line} />
           ))}
           }
