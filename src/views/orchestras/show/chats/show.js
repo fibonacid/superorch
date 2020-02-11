@@ -1,12 +1,12 @@
 import React, { useEffect, useCallback, useState } from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import useBreakpoint from '../../../../hooks/useBreakpoint';
+import useBreakpoint from "../../../../hooks/useBreakpoint";
 import { getRequestMap } from "./_map";
 import MessageBoard from "../../../../components/MessageBoard";
 import Playground from "../../../../components/Playground";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 const StyledWrapper = styled.div`
@@ -16,13 +16,13 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledHeader = styled.div`
-   padding: 5px 10px;
-   background: whitesmoke;
-   border-bottom: solid 1px lightgrey;
-   font-size: 18px;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
+  padding: 5px 10px;
+  background: whitesmoke;
+  border-bottom: solid 1px lightgrey;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledContainer = styled.div`
@@ -35,13 +35,20 @@ const StyledIcon = styled(FontAwesomeIcon)`
   cursor: pointer;
   margin-left: 5px;
   color: ${props => props.color};
-  &:hover { color: black }
+  &:hover {
+    color: black;
+  }
   transition: color 50ms ease-in;
 `;
 
 export default function OrchestraChatShowView() {
+  //const [userId] = useState(localStorage.getItem("userId"));
   const { orchestra: orchestraId, chat } = useParams();
   const [targetType, targetId] = chat.split("-");
+
+  const onNewMessage = useCallback(function(message) {
+    console.log("new message:", message);
+  }, []);
 
   const {
     getTitle,
@@ -50,7 +57,7 @@ export default function OrchestraChatShowView() {
     getMessagesQuery,
     sendMessageMutation,
     newMessageSubscription
-  } = getRequestMap(orchestraId, targetId, targetType);
+  } = getRequestMap(orchestraId, targetId, targetType, onNewMessage);
 
   // Get general data about the target of the chat.
   const { data: targetData } = useQuery(
@@ -110,14 +117,13 @@ export default function OrchestraChatShowView() {
 
   // Toggle visibility of message board
   const [chatVisible, setChatVisible] = useState(false);
-  const onChatClick = useCallback(
-    () => setChatVisible(!chatVisible),
-    [chatVisible]
-  );
+  const onChatClick = useCallback(() => setChatVisible(!chatVisible), [
+    chatVisible
+  ]);
 
   const breakpoints = useBreakpoint();
   const editorVisible = breakpoints.sm || !chatVisible;
-  
+
   return (
     <StyledWrapper>
       <StyledHeader>
@@ -130,7 +136,9 @@ export default function OrchestraChatShowView() {
       </StyledHeader>
       <StyledContainer>
         {editorVisible && <Playground onEvaluate={onEvaluate} />}
-        {chatVisible && <MessageBoard messages={messages || []} onSend={onSend} />}
+        {chatVisible && (
+          <MessageBoard messages={messages || []} onSend={onSend} />
+        )}
       </StyledContainer>
     </StyledWrapper>
   );

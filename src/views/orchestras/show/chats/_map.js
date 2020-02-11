@@ -14,7 +14,12 @@ const filters = {
   formats: ["PLAIN_TEXT", "JSON", "SC_RAW", "SC_LANG"]
 };
 
-export function getRequestMap(orchestraId, targetId, targetType) {
+export function getRequestMap(
+  orchestraId,
+  targetId,
+  targetType,
+  onNewMessage = () => {}
+) {
   switch (targetType) {
     case "channel":
       return {
@@ -66,6 +71,8 @@ export function getRequestMap(orchestraId, targetId, targetType) {
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData) return prev;
             const { newChannelMessage } = subscriptionData.data;
+            onNewMessage(newChannelMessage);
+
             return {
               channelMessages: [...prev.channelMessages, newChannelMessage]
             };
@@ -125,6 +132,8 @@ export function getRequestMap(orchestraId, targetId, targetType) {
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData) return prev;
             const { newPrivateMessage } = subscriptionData.data;
+            onNewMessage(newPrivateMessage);
+
             return {
               privateMessages: [...prev.privateMessages, newPrivateMessage]
             };
