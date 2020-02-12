@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useFormValidation from "../../../hooks/useFormValidation";
-import useLogin from "../../../hooks/useLogin";
 import { EMAIL_REGEX } from "../../../helpers/regex";
 import * as PrimaryForm from "../../_miscellaneous/PrimaryForm";
 
