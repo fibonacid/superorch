@@ -81,8 +81,9 @@ export default function OrchestraChatShowView() {
     getMessagesQuery.options
   );
 
-  const fetchMoreMessages = useCallback(() => {
-    fetchMore(moreMessagesQuery)
+  const fetchMoreMessages = useCallback(cursor => {
+    const query = moreMessagesQuery(cursor);
+    fetchMore(query)
   }, [moreMessagesQuery, fetchMore]);
 
   // Submit a subscription to receive more messages
