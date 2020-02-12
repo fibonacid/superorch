@@ -131,7 +131,8 @@ export default function OrchestraChatShowView() {
 
   // Parse data to be displayed
   const title = getTitle(targetData);
-  const messages = getMessages(messagesData);
+  const { edges } = getMessages(messagesData) || { edges: [] };
+  const messages = edges.map(edge => edge.node);
 
   // Toggle visibility of message board
   const [chatVisible, setChatVisible] = useState(false);
@@ -155,7 +156,7 @@ export default function OrchestraChatShowView() {
       <StyledContainer>
         {editorVisible && <Playground onEvaluate={onEvaluate} />}
         {chatVisible && (
-          <MessageBoard messages={messages || []} onSend={onSend} />
+          <MessageBoard messages={messages} onSend={onSend} />
         )}
       </StyledContainer>
     </StyledWrapper>
