@@ -90,7 +90,7 @@ exports.Query = {
   },
   channelMessages: async (
     _,
-    { orchestraId, channelId, filters },
+    { pagination, orchestraId, channelId, filters },
     { userId, loaders }
   ) => {
     try {
@@ -114,17 +114,41 @@ exports.Query = {
       }
 
       // Retrieve
-      const messages = await Message.find({
+      const query = {
         orchestra: orchestraId,
         targetId: channelId,
         targetType: "Channel",
-        context: { $in: filters.contexts },
-        format: { $in: filters.formats }
-      });
+      };
+           // If after property is specified
+      // use it as cursor.
+      if (pagination.after) {
+        query._id = {
+          $gt: pagination.after
+        };
+      }
+      if (pagination.filters) {
+        query.context = { $in: filters.contexts };
+        query.format = { $in: filters.formats };
+      }
 
-      return messages.map(message =>
-        transformChannelMessage(message.id, loaders)
-      );
+      // Find all messages sent to the user by
+      // the specified member
+      const messages = await Message.find(query)
+        .sort({ _id: 1 })
+        .limit(pagination.first);
+
+      const total = messages.length;
+      const cursor = messages[total - 1].id;
+
+      return {
+        edges: messages.map(message => ({
+          node: transformChannelMessage(message.id, loaders),
+          cursor
+        })),
+        pageInfo: {
+          hasNextPage: true
+        }
+      };
     } catch (err) {
       return err;
     }
