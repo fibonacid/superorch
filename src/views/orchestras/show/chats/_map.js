@@ -84,7 +84,6 @@ export function getRequestMap(
           updateQuery: (prev, { fetchMoreResult }) => {
             if(!fetchMoreResult) return prev;
             const { channelMessages } = fetchMoreResult;
-            console.log(channelMessages)
 
             return {
               channelMessages: {
