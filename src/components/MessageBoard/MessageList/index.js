@@ -18,7 +18,7 @@ const StyledInner = styled.div`
 
 const StyledList = styled.ul`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   margin-bottom: 50px;
 `;
 
