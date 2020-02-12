@@ -14,12 +14,15 @@ const filters = {
   formats: ["PLAIN_TEXT", "JSON", "SC_RAW", "SC_LANG"]
 };
 
+const maxMessages = 5;
+
 export function getRequestMap(
   orchestraId,
   targetId,
   targetType,
   onNewMessage = () => {}
 ) {
+  // eslint-disable-next-line default-case
   switch (targetType) {
     case "channel":
       return {
@@ -36,6 +39,9 @@ export function getRequestMap(
           document: GET_CHANNEL_MESSAGES_QUERY,
           options: {
             variables: {
+              pagination: {
+                first: maxMessages
+              },
               orchestraId,
               channelId: targetId,
               filters
@@ -53,6 +59,9 @@ export function getRequestMap(
               {
                 query: GET_CHANNEL_MESSAGES_QUERY,
                 variables: {
+                  pagination: {
+                    first: maxMessages
+                  },
                   orchestraId,
                   channelId: targetId,
                   filters
@@ -97,6 +106,9 @@ export function getRequestMap(
           document: GET_PRIVATE_MESSAGES_QUERY,
           options: {
             variables: {
+              pagination: {
+                first: maxMessages
+              },
               orchestraId,
               memberId: targetId,
               filters
@@ -114,6 +126,9 @@ export function getRequestMap(
               {
                 query: GET_PRIVATE_MESSAGES_QUERY,
                 variables: {
+                  pagination: {
+                    first: maxMessages
+                  },
                   orchestraId,
                   memberId: targetId,
                   filters
