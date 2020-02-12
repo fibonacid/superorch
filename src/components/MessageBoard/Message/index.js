@@ -10,16 +10,6 @@ const StyledContainer = styled.li`
   font-size: 14px;
 `;
 
-const StyledSCBody = styled.p`
-  font-family: monospace;
-  color: rgb(0, 255, 0);
-  font-size: 12px;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-`;
-
 export default function Message({ message }) {
   const [userId] = useState(localStorage.getItem("userId"));
   const isMe = message.from.user._id === userId;
@@ -41,7 +31,7 @@ export default function Message({ message }) {
   return (
     <StyledContainer direction={direction}>
       <Component
-        direction="right"
+        direction={direction}
         username={username}
         showUsername={showName}
         body={body}
