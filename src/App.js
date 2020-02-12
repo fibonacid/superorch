@@ -14,7 +14,7 @@ import GlobalStyle, {
   StyledInner
 } from "./components/GlobalStyle";
 import MainNav from "./components/MainNav";
-import RootSwitch from "./components/RootSwitch";
+import IndexView from "./views/index";
 import FlashMessages from "./components/FlashMessages";
 
 const client = configureClient();
@@ -41,7 +41,7 @@ function App() {
                 <SClangProvider>
                 <StyledContainer>
                   <StyledInner>
-                    <RootSwitch />
+                    <IndexView />
                   </StyledInner>
                 <FlashMessages/>
                 </StyledContainer>
