@@ -64,8 +64,9 @@ export default function OrchestraChatShowView() {
     getMessages,
     getTargetQuery,
     getMessagesQuery,
+    moreMessagesQuery,
     sendMessageMutation,
-    newMessageSubscription
+    newMessageSubscription,
   } = getRequestMap(orchestraId, targetId, targetType, onNewMessage);
 
   // Get general data about the target of the chat.
@@ -75,10 +76,14 @@ export default function OrchestraChatShowView() {
   );
 
   // Get messages relative to this chat target.
-  const { subscribeToMore, data: messagesData } = useQuery(
+  const { subscribeToMore, fetchMore, data: messagesData } = useQuery(
     getMessagesQuery.document,
     getMessagesQuery.options
   );
+
+  const fetchMoreMessages = useCallback(() => {
+    fetchMore(moreMessagesQuery)
+  }, [moreMessagesQuery, fetchMore]);
 
   // Submit a subscription to receive more messages
   // Note: this effect should be called only once,
@@ -156,7 +161,7 @@ export default function OrchestraChatShowView() {
       <StyledContainer>
         {editorVisible && <Playground onEvaluate={onEvaluate} />}
         {chatVisible && (
-          <MessageBoard messages={messages} onSend={onSend} />
+          <MessageBoard messages={messages} onSend={onSend} fetchMore={fetchMoreMessages}/>
         )}
       </StyledContainer>
     </StyledWrapper>
