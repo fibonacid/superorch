@@ -83,7 +83,18 @@ export function getRequestMap(
             onNewMessage(newChannelMessage);
 
             return {
-              channelMessages: [...prev.channelMessages, newChannelMessage]
+              channelMessages: {
+                edges: [
+                  {
+                    node: newChannelMessage,
+                    cursor: newChannelMessage._id,
+                    __typename: "ChannelMessageEdge"
+                  },
+                  ...prev.channelMessages.edges,
+                ],
+                pageInfo: prev.channelMessages.pageInfo,
+                __typename: "ChannelMessageConnection"
+              }
             };
           }
         },
@@ -150,7 +161,18 @@ export function getRequestMap(
             onNewMessage(newPrivateMessage);
 
             return {
-              privateMessages: [...prev.privateMessages, newPrivateMessage]
+              channelMessages: {
+                edges: [
+                  {
+                    node: newPrivateMessage,
+                    cursor: newPrivateMessage._id,
+                    __typename: "PrivateMessageEdge"
+                  },
+                  ...prev.privateMessages.edges,
+                ],
+                pageInfo: prev.privateMessages.pageInfo,
+                __typename: "PrivateMessageConnection"
+              }
             };
           }
         },
