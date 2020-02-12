@@ -1,12 +1,12 @@
 import React from "react";
-import { Redirect } from 'react-router-dom';
 
+import HomeView from "../views/home";
 import LoginView from "../views/login";
 import RegisterView from "../views/register";
 
 import AccountIndexView from "../views/account";
-import AccountProfileView from "../views/account/profile"
-import AccountSecurityView from "../views/account/security"
+import AccountProfileView from "../views/account/profile";
+import AccountSecurityView from "../views/account/security";
 
 import OrchestraIndexView from "../views/orchestras";
 import OrchestraCreateView from "../views/orchestras/create";
@@ -14,10 +14,15 @@ import OrchestraShowView from "../views/orchestras/show";
 import OrchestraEditView from "../views/orchestras/show/edit";
 import OrchestraInvitesView from "../views/orchestras/show/invites";
 import OrchestraDeleteView from "../views/orchestras/show/delete";
-import OrchestraChatIndexView from "../views/orchestras/show/chats"
-import OrchestraChatShowView from "../views/orchestras/show/chats/show"
+import OrchestraChatIndexView from "../views/orchestras/show/chats";
+import OrchestraChatShowView from "../views/orchestras/show/chats/show";
 
 const routes = [
+  {
+    path: "/",
+    exact: true,
+    component: HomeView
+  },
   {
     path: "/login",
     component: LoginView,
@@ -43,7 +48,8 @@ const routes = [
         path: "/account/security",
         component: AccountSecurityView
       },
-      { // fallback on profile view
+      {
+        // fallback on profile view
         path: "/account",
         component: AccountProfileView
       }
@@ -79,18 +85,18 @@ const routes = [
             routes: [
               {
                 path: "/orchestras/:orchestra/chats/:chat",
-                component: OrchestraChatShowView, 
+                component: OrchestraChatShowView
               }
             ]
           }
         ]
-      },
+      }
     ]
   },
   {
     path: "*",
-    component: () => <div>404</div>,
+    component: () => <div>404</div>
   }
-]
+];
 
 export default routes;
