@@ -13,16 +13,7 @@ const INITIAL_VALUES = {
 // Authentication Form
 // --------------------------
 
-function LoginForm(props) {
-  const [login, { loading, error: backendError, data }] = useLogin();
-
-  useEffect(() => {
-    if (data && props.onSuccess) {
-      // Call function from parent
-      props.onSuccess();
-    }
-  }, [data]);
-
+function LoginForm({ login }) {
   //
   // Rules for input validation
   //
@@ -56,43 +47,35 @@ function LoginForm(props) {
   } = useFormValidation(INITIAL_VALUES, validateAuth, authenticateUser);
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <PrimaryForm.Field>
-          <label htmlFor="email">Email</label>
-          <PrimaryForm.Input
-            type="text"
-            name="email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-          />
-          {errors.email && (
-            <PrimaryForm.Error>{errors.email}</PrimaryForm.Error>
-          )}
-        </PrimaryForm.Field>
-        <PrimaryForm.Field>
-          <label htmlFor="password">Password</label>
-          <PrimaryForm.Input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-          />
-          {errors.password && (
-            <PrimaryForm.Error>{errors.password}</PrimaryForm.Error>
-          )}
-        </PrimaryForm.Field>
-        {backendError && (
-          <PrimaryForm.Error>{backendError.message}</PrimaryForm.Error>
+    <form onSubmit={handleSubmit}>
+      <PrimaryForm.Field>
+        <label htmlFor="email">Email</label>
+        <PrimaryForm.Input
+          type="text"
+          name="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
+        />
+        {errors.email && <PrimaryForm.Error>{errors.email}</PrimaryForm.Error>}
+      </PrimaryForm.Field>
+      <PrimaryForm.Field>
+        <label htmlFor="password">Password</label>
+        <PrimaryForm.Input
+          type="password"
+          name="password"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
+        />
+        {errors.password && (
+          <PrimaryForm.Error>{errors.password}</PrimaryForm.Error>
         )}
-        <PrimaryForm.Button disabled={isSubmitting} type="submit">
-          Submit
-        </PrimaryForm.Button>
-      </form>
-      {loading && <span>Loading ...</span>}
-    </>
+      </PrimaryForm.Field>
+      <PrimaryForm.Button disabled={isSubmitting} type="submit">
+        Submit
+      </PrimaryForm.Button>
+    </form>
   );
 }
 
