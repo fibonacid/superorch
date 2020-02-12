@@ -72,13 +72,10 @@ exports.Query = {
         .sort({ _id: "desc" })
         .limit(pagination.first);
 
-      const total = messages.length;
-      const cursor = messages[total - 1].id;
-
       return {
         edges: messages.map(message => ({
           node: transformPrivateMessage(message.id, loaders),
-          cursor
+          cursor: message.id
         })),
         pageInfo: {
           hasNextPage: true
@@ -137,13 +134,10 @@ exports.Query = {
         .sort({ _id: "desc" })
         .limit(pagination.first);
 
-      const total = messages.length;
-      const cursor = messages[total - 1].id;
-
       return {
         edges: messages.map(message => ({
           node: transformChannelMessage(message.id, loaders),
-          cursor
+          cursor: message.id
         })),
         pageInfo: {
           hasNextPage: true
