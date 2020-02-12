@@ -69,7 +69,7 @@ exports.Query = {
       // Find all messages sent to the user by
       // the specified member
       const messages = await Message.find(query)
-        .sort({ _id: 1 })
+        .sort({ _id: "desc" })
         .limit(pagination.first);
 
       const total = messages.length;
@@ -134,7 +134,7 @@ exports.Query = {
       // Find all messages sent to the user by
       // the specified member
       const messages = await Message.find(query)
-        .sort({ _id: 1 })
+        .sort({ _id: "desc" })
         .limit(pagination.first);
 
       const total = messages.length;
