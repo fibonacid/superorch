@@ -48,21 +48,6 @@ export function getRequestMap(
             }
           }
         },
-        moreMessagesQuery: {
-          query: GET_CHANNEL_MESSAGES_QUERY,
-          variables: {
-            pagination: {
-              first: maxMessages
-            },
-            orchestraId,
-            channelId: targetId,
-            filters
-          },
-          updateQuery: (prev, { fetchMoreResult }) => {
-            console.log(prev, fetchMoreResult);
-            return prev;
-          }
-        },
         sendMessageMutation: {
           document: SEND_CHANNEL_MESSAGE_MUTATION,
           options: {
@@ -85,6 +70,34 @@ export function getRequestMap(
             ]
           }
         },
+        moreMessagesQuery: cursor =>({
+          query: GET_CHANNEL_MESSAGES_QUERY,
+          variables: {
+            pagination: {
+              first: maxMessages,
+              after: cursor
+            },
+            orchestraId,
+            channelId: targetId,
+            filters
+          },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            if(!fetchMoreResult) return prev;
+            const { channelMessages } = fetchMoreResult;
+            console.log(channelMessages)
+
+            return {
+              channelMessages: {
+                edges: [
+                  ...prev.channelMessages.edges,
+                  ...channelMessages.edges
+                ],
+                pageInfo: channelMessages.pageInfo,
+                __typename: "ChannelMessageConnection"
+              }
+            }
+          }
+        }),
         newMessageSubscription: {
           document: NEW_CHANNEL_MESSAGE_SUBSCRIPTION,
           variables: {
@@ -163,21 +176,33 @@ export function getRequestMap(
             ]
           }
         },
-        moreMessagesQuery: {
+        moreMessagesQuery: cursor => ({
           query: GET_PRIVATE_MESSAGES_QUERY,
           variables: {
             pagination: {
-              first: maxMessages
+              first: maxMessages,
+              after: cursor
             },
             orchestraId,
             memberId: targetId,
             filters
           },
           updateQuery: (prev, { fetchMoreResult }) => {
-            console.log(prev, fetchMoreResult);
-            return prev;
+            if(!fetchMoreResult) return prev;
+            const { privateMessages } = fetchMoreResult;
+
+            return {
+              privateMessages: {
+                edges: [
+                  ...prev.privateMessages.edges,
+                  ...privateMessages.edges
+                ],
+                pageInfo: privateMessages.pageInfo,
+                __typename: "PrivateMessageConnection"
+              }
+            }
           }
-        },
+        }),
         newMessageSubscription: {
           document: NEW_PRIVATE_MESSAGE_SUBSCRIPTION,
           variables: {
