@@ -57,7 +57,9 @@ exports.Query = {
       // If after property is specified
       // use it as cursor.
       if (pagination.after) {
-        query._id = pagination.after;
+        query._id = {
+          $gt: pagination.after
+        };
       }
       if (pagination.filters) {
         query.context = { $in: filters.contexts };
