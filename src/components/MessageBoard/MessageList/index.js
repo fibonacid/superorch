@@ -1,5 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import styled from 'styled-components/macro';
+import useEventListener from '../../../hooks/useEventListener';
+import useDebounce from '../../../hooks/useDebounce';
 import Message from "../Message";
 
 const StyledContainer = styled.div`
@@ -23,14 +25,27 @@ const StyledList = styled.ul`
 `;
 
 export default function MessageList({ messages }) {
-  const containerRef = useRef(null)
+  const containerRef = useRef();
+  const [scrollTop, setScrollTop] = useState();
 
-  useEffect(function() {
-    if(containerRef) {
-      const y = containerRef.current.scrollHeight;
-      containerRef.current.scroll(0,y);
-    }
-  }, [containerRef, messages])
+  const onScroll = useCallback(event => {
+    setScrollTop(event.target.scrollTop);
+  }, [setScrollTop])
+  
+  useEventListener("scroll", onScroll, containerRef.current);
+
+  const debounced = useDebounce(scrollTop, 20);
+
+  useEffect(() => {
+    console.log(debounced)
+  }, [debounced])
+
+  // useEffect(function() {
+  //   if(containerRef) {
+  //     const y = containerRef.current.scrollHeight;
+  //     containerRef.current.scroll(0,y);
+  //   }
+  // }, [containerRef, messages])
 
   return (
     <StyledContainer>
