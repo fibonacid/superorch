@@ -48,6 +48,21 @@ export function getRequestMap(
             }
           }
         },
+        moreMessagesQuery: {
+          query: GET_CHANNEL_MESSAGES_QUERY,
+          variables: {
+            pagination: {
+              first: maxMessages
+            },
+            orchestraId,
+            channelId: targetId,
+            filters
+          },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            console.log(prev, fetchMoreResult);
+            return prev;
+          }
+        },
         sendMessageMutation: {
           document: SEND_CHANNEL_MESSAGE_MUTATION,
           options: {
@@ -146,6 +161,21 @@ export function getRequestMap(
                 }
               }
             ]
+          }
+        },
+        moreMessagesQuery: {
+          query: GET_PRIVATE_MESSAGES_QUERY,
+          variables: {
+            pagination: {
+              first: maxMessages
+            },
+            orchestraId,
+            memberId: targetId,
+            filters
+          },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            console.log(prev, fetchMoreResult);
+            return prev;
           }
         },
         newMessageSubscription: {
