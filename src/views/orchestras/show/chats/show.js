@@ -81,8 +81,12 @@ export default function OrchestraChatShowView() {
   );
 
   // Submit a subscription to receive more messages
+  // Note: this effect should be called only once,
+  // otherwise there will be multiple concurrent
+  // subscriptions.
   useEffect(() => {
     subscribeToMore(newMessageSubscription);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Get function to send a new message
