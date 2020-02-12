@@ -58,7 +58,7 @@ exports.Query = {
       // use it as cursor.
       if (pagination.after) {
         query._id = {
-          $gt: pagination.after
+          $lt: pagination.after
         };
       }
       if (pagination.filters) {
@@ -120,7 +120,7 @@ exports.Query = {
       // use it as cursor.
       if (pagination.after) {
         query._id = {
-          $gt: pagination.after
+          $lt: pagination.after
         };
       }
       if (pagination.filters) {
