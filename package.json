@@ -1,7 +1,7 @@
 {
   "name": "superorch-server",
   "description": "graphql api for superorch applications",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "app.js",
   "repository": "git@github.com:lorenzorivosecchi/superorch-api.git",
   "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
