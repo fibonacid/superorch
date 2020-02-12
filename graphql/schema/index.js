@@ -1,6 +1,16 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+
+  type PageInfo {
+    hasNextPage: Boolean!
+  }
+
+  input PaginationInput {
+    first: Int!
+    after: String
+  }
+
   type Orchestra {
     _id: ID!
     name: String!
@@ -86,6 +96,16 @@ const typeDefs = gql`
     from: Member!
   }
 
+  type ChannelMessageConnection {
+    pageInfo: PageInfo!
+    edges: [ChannelMessageEdge!]!
+  }
+
+  type ChannelMessageEdge {
+    cursor: String!
+    node: ChannelMessage!
+  }
+
   type ChannelMessage {
     _id: ID!
     format: MessageFormat!
@@ -93,6 +113,16 @@ const typeDefs = gql`
     body: String!
     from: Member!
     to: Channel!
+  }
+
+  type PrivateMessageConnection {
+    pageInfo: PageInfo!
+    edges: [PrivateMessageEdge!]!
+  }
+
+  type PrivateMessageEdge {
+    cursor: String!
+    node: PrivateMessage!
   }
 
   type PrivateMessage {
@@ -126,15 +156,17 @@ const typeDefs = gql`
     invites: [Invite!]
     channel(orchestraId: String!, channelId: String!): Channel!
     privateMessages(
+      pagination: PaginationInput!
       orchestraId: String!,
       memberId: String!
       filters: MessageFilter
-    ): [PrivateMessage!]
+    ): PrivateMessageConnection
     channelMessages(
+      pagination: PaginationInput!
       orchestraId: String!
       channelId: String!
       filters: MessageFilter
-    ): [ChannelMessage!]
+    ): ChannelMessageConnection
   }
 
   # The mutation root type, used to define all mutations.
