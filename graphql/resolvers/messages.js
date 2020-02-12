@@ -16,7 +16,7 @@ const pubsub = new PubSub();
 exports.Query = {
   privateMessages: async (
     _,
-    { orchestraId, memberId, filters },
+    { pagination, orchestraId, memberId, filters },
     { userId, loaders }
   ) => {
     try {
@@ -43,9 +43,7 @@ exports.Query = {
 
       const memberIds = [member._doc._id, otherMember._doc._id];
 
-      // Find all messages sent to the user by
-      // the specified member
-      const messages = await Message.find({
+      const query = {
         orchestra: orchestraId,
         from: {
           $in: memberIds
@@ -53,14 +51,37 @@ exports.Query = {
         targetId: {
           $in: memberIds
         },
-        targetType: "Member",
-        context: { $in: filters.contexts },
-        format: { $in: filters.formats }
-      });
+        targetType: "Member"
+      };
 
-      return messages.map(message =>
-        transformPrivateMessage(message.id, loaders)
-      );
+      // If after property is specified
+      // use it as cursor.
+      if (pagination.after) {
+        query._id = pagination.after;
+      }
+      if (pagination.filters) {
+        query.context = { $in: filters.contexts };
+        query.format = { $in: filters.formats };
+      }
+
+      // Find all messages sent to the user by
+      // the specified member
+      const messages = await Message.find(query)
+        .sort({ _id: 1 })
+        .limit(pagination.first);
+
+      const total = messages.length;
+      const cursor = messages[total - 1].id;
+
+      return {
+        edges: messages.map(message => ({
+          node: transformPrivateMessage(message.id, loaders),
+          cursor
+        })),
+        pageInfo: {
+          hasNextPage: true
+        }
+      };
     } catch (err) {
       return err;
     }
