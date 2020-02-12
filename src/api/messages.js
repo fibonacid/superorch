@@ -30,8 +30,9 @@ export const CHANNEL_MESSAGE_DETAIL_FRAGMENT = gql`
 `;
 
 export const GET_CHANNEL_MESSAGES_QUERY = gql`
-  query getChannelMessages($orchestraId: String!, $channelId: String!) {
+  query getChannelMessages($pagination: PaginationInput!, $orchestraId: String!, $channelId: String!) {
     channelMessages(
+      pagination: $pagination
       orchestraId: $orchestraId
       channelId: $channelId
       filters: {
@@ -39,15 +40,24 @@ export const GET_CHANNEL_MESSAGES_QUERY = gql`
         formats: [PLAIN_TEXT, JSON, SC_RAW, SC_LANG]
       }
     ) {
-      ...ChannelMessageDetail
+      edges {
+        cursor
+        node {
+          ...ChannelMessageDetail
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
     }
   }
   ${CHANNEL_MESSAGE_DETAIL_FRAGMENT}
 `;
 
 export const GET_PRIVATE_MESSAGES_QUERY = gql`
-  query getPrivateMessages($orchestraId: String!, $memberId: String!) {
+  query getPrivateMessages($pagination: PaginationInput!, $orchestraId: String!, $memberId: String!) {
     privateMessages(
+      pagination: $pagination
       orchestraId: $orchestraId
       memberId: $memberId
       filters: {
@@ -55,7 +65,15 @@ export const GET_PRIVATE_MESSAGES_QUERY = gql`
         formats: [PLAIN_TEXT, JSON, SC_RAW, SC_LANG]
       }
     ) {
-      ...PrivateMessageDetail
+      edges {
+        cursor
+        node {
+          ...PrivateMessageDetail
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
     }
   }
   ${PRIVATE_MESSAGE_DETAIL_FRAGMENT}
