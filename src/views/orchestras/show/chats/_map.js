@@ -14,7 +14,7 @@ const filters = {
   formats: ["PLAIN_TEXT", "JSON", "SC_RAW", "SC_LANG"]
 };
 
-const maxMessages = 5;
+const maxMessages = 50;
 
 export function getRequestMap(
   orchestraId,
