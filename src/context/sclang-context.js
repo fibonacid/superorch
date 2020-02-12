@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useCallback, useEffect } from "react";
+import React, { createContext, useReducer, useCallback } from "react";
 import { interpretWithSclang } from "../helpers/electron";
 
 export const SClangContext = createContext({
