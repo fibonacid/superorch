@@ -46,18 +46,21 @@ export default function OrchestraChatShowView() {
   const { orchestra: orchestraId, chat } = useParams();
   const [targetType, targetId] = chat.split("-");
   const { evaluate } = useSClang();
-  const [userId] = useState(localStorage.getItem("userId"))
+  const [userId] = useState(localStorage.getItem("userId"));
 
   // Receive new messages from other members and render it to sound
-  const onNewMessage = useCallback(message => {
-    if (message.context === "SUPERCOLLIDER" && message.format === "SC_LANG") {
-      // If message didn't originate from the operating user:
-      if (message.from.user._id !== userId) {
-        // Render it to sound.
-        evaluate(message.body);
+  const onNewMessage = useCallback(
+    message => {
+      if (message.context === "SUPERCOLLIDER" && message.format === "SC_LANG") {
+        // If message didn't originate from the operating user:
+        if (message.from.user._id !== userId) {
+          // Render it to sound.
+          evaluate(message.body);
+        }
       }
-    }
-  }, [evaluate, userId]);
+    },
+    [evaluate, userId]
+  );
 
   const {
     getTitle,
@@ -66,7 +69,7 @@ export default function OrchestraChatShowView() {
     getMessagesQuery,
     moreMessagesQuery,
     sendMessageMutation,
-    newMessageSubscription,
+    newMessageSubscription
   } = getRequestMap(orchestraId, targetId, targetType, onNewMessage);
 
   // Get general data about the target of the chat.
@@ -76,15 +79,29 @@ export default function OrchestraChatShowView() {
   );
 
   // Get messages relative to this chat target.
-  const { subscribeToMore, fetchMore, data: messagesData } = useQuery(
-    getMessagesQuery.document,
-    getMessagesQuery.options
-  );
+  const {
+    subscribeToMore,
+    fetchMore,
+    loading,
+    data: messagesData,
+    networkStatus
+  } = useQuery(getMessagesQuery.document, {
+    ...getMessagesQuery.options,
+    notifyOnNetworkStatusChange: true
+  });
 
-  const fetchMoreMessages = useCallback(cursor => {
-    const query = moreMessagesQuery(cursor);
-    fetchMore(query)
-  }, [moreMessagesQuery, fetchMore]);
+  const [fetching, setFetching] = useState();
+  useEffect(() => {
+    setFetching(loading || networkStatus === 4);
+  }, [loading, networkStatus]);
+
+  const fetchMoreMessages = useCallback(
+    cursor => {
+      const query = moreMessagesQuery(cursor);
+      fetchMore(query);
+    },
+    [moreMessagesQuery, fetchMore]
+  );
 
   // Submit a subscription to receive more messages
   // Note: this effect should be called only once,
@@ -162,7 +179,12 @@ export default function OrchestraChatShowView() {
       <StyledContainer>
         {editorVisible && <Playground onEvaluate={onEvaluate} />}
         {chatVisible && (
-          <MessageBoard messages={messages} onSend={onSend} fetchMore={fetchMoreMessages}/>
+          <MessageBoard
+            messages={messages}
+            onSend={onSend}
+            fetchMore={fetchMoreMessages}
+            fetching={fetching}
+          />
         )}
       </StyledContainer>
     </StyledWrapper>
