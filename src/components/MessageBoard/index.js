@@ -11,8 +11,8 @@ const StyledContainer = styled.div`
   border-left: solid 1px lightgrey; 
 `;
 
-export default function MessageBoard({ className, messages, onSend, fetchMore }) {
-  const getMore = useCallback(() => {
+export default function MessageBoard({ className, messages, onSend, fetchMore, fetching }) {
+  const handle = useCallback(() => {
     if (messages?.length) {
       const oldest = messages[messages.length - 1];
       const cursor = oldest._id;
@@ -22,8 +22,7 @@ export default function MessageBoard({ className, messages, onSend, fetchMore })
 
   return (
     <StyledContainer className={className}>
-      <MessageList messages={messages} />
-      <button onClick={getMore}>FETCH MORE</button>
+      <MessageList messages={messages} fetchMore={handle} fetching={fetching}/>
       <InputBox onSend={onSend} />
     </StyledContainer>
   );
