@@ -26,14 +26,6 @@ export default function MessageList({ messages, fetching, fetchMore }) {
   const containerRef = useRef();
   const [height, setHeight] = useState();
 
-  useEffect(() => {
-    if (containerRef) {
-      const bottom = containerRef.current.scrollHeight;
-      containerRef.current.scroll(0, bottom);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // If user has scrolled up over a threshold
   // fetch more messages.
   const handleScroll = useCallback(
@@ -50,11 +42,11 @@ export default function MessageList({ messages, fetching, fetchMore }) {
   );
 
   //Save previous amount of messages.
-  const prevCountRef = useRef();
+  const prevMessagesRef = useRef([]);
   useEffect(() => {
-    prevCountRef.current = messages.length;
+    prevMessagesRef.current = messages;
   });
-  const prevCount = prevCountRef.current;
+  const prevMessages = prevMessagesRef.current;
 
   useEffect(() => {
     // If new messages were added since the last render
@@ -62,17 +54,35 @@ export default function MessageList({ messages, fetching, fetchMore }) {
     // and use it to set the scroll position.
     if (
       height &&
-      prevCount &&
+      prevMessages &&
       containerRef.current &&
       messages.length &&
-      messages.length !== prevCount
+      messages.length !== prevMessages.length
     ) {
-      // Reset scrollTop of container with difference between
-      // previous and current scrollHeight.
-      const currentHeight = containerRef.current.scrollHeight;
-      containerRef.current.scrollTop = currentHeight - height;
+      const lastMessage = messages[messages.length - 1];
+      const prevLastMessage = prevMessages[prevMessages.length - 1]
+
+      // If added messages are on the bottom of the list.
+      if (lastMessage !== prevLastMessage) {
+        // Reset scrollTop of container with difference between
+        // previous and current scrollHeight.
+        const currentHeight = containerRef.current.scrollHeight;
+        containerRef.current.scrollTop = currentHeight - height;
+      } else {
+        // Else, scroll to the bottom of the container.
+        const bottom = containerRef.current.scrollHeight;
+        containerRef.current.scroll(0, bottom);
+      }
     }
-  }, [containerRef, messages, prevCount, height]);
+  }, [containerRef, messages, prevMessages, height]);
+
+  useEffect(() => {
+    if (containerRef) {
+      const bottom = containerRef.current.scrollHeight;
+      containerRef.current.scroll(0, bottom);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <StyledContainer>
