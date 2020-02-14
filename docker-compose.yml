@@ -4,9 +4,10 @@ services:
   api:
     container_name: superorch-api
     restart: always
-    build: ./
+    build: ./api
     volumes:
-      - .:/usr/src/app
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - 5000:3000
     environment: 
