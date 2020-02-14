@@ -11,8 +11,8 @@ services:
     ports:
       - 5000:3000
     environment: 
-      PUBLISHED_PORT: 5000
-      TARGET_PORT: 3000
+      VIRTUAL_HOST: 'staging.superorch-api.local'
+      VIRTUAL_PORT: '5000'
     links:
       - database
     depends_on:

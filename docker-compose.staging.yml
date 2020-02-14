@@ -8,9 +8,8 @@ services:
     ports:
       - 5000
     environment: 
-      PUBLISHED_HOST: 'http://superorch-api.lorenzorivosecchi.com' 
-      PUBLISHED_PORT: 5000
-      TARGET_PORT: 5000
+      VIRTUAL_HOST: 'staging.superorch-api.local'
+      VIRTUAL_PORT: '5000'
     links:
       - database
     depends_on:

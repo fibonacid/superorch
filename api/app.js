@@ -18,9 +18,8 @@ const {
   MONGO_HOST,
   MONGO_PORT,
   MONGO_DB,
-  TARGET_PORT,
-  PUBLISHED_HOST = "http://localhost",
-  PUBLISHED_PORT
+  VIRTUAL_HOST = "localhost",
+  VIRTUAL_PORT = 5000
 } = process.env;
 
 const app = express();
@@ -78,8 +77,8 @@ const server = new ApolloServer({
     return err;
   },
   playground: {
-    endpoint: `http://${PUBLISHED_HOST}:${PUBLISHED_PORT}/graphql`,
-    subscriptionEndpoint: `ws://${PUBLISHED_HOST}:${PUBLISHED_PORT}/graphql`
+    endpoint: `http://${VIRTUAL_HOST}/graphql`,
+    subscriptionEndpoint: `ws://${VIRTUAL_HOST}/graphql`
   }
 });
 
@@ -109,12 +108,12 @@ mongoose
     console.log("Connected to database");
 
     // ⚠️ Pay attention to the fact that we are calling `listen` on the http server variable, and not on `app`.
-    httpServer.listen(TARGET_PORT, () => {
+    httpServer.listen(VIRTUAL_PORT, () => {
       console.log(
-        `🚀 Server ready at http://localhost:${TARGET_PORT}${server.graphqlPath}`
+        `🚀 Server ready at http://localhost:${VIRTUAL_PORT}${server.graphqlPath}`
       );
       console.log(
-        `🚀 Subscriptions ready at ws://localhost:${TARGET_PORT}${server.subscriptionsPath}`
+        `🚀 Subscriptions ready at ws://localhost:${VIRTUAL_PORT}${server.subscriptionsPath}`
       );
     });
   })
