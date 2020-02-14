@@ -6,16 +6,9 @@
 image: atlassian/default-image:2
 
 pipelines:
-   default:
-      - step:
-         name: Deploy to test
-         deployment: test
-         # trigger: manual  # Uncomment to make this a manual deployment.
-         script:
-            - echo "Deploying to test environment"
    branches:
       staging:
-        - step:
+         - step:
             name: Docker image build
             services:
                - docker
@@ -29,3 +22,27 @@ pipelines:
                - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
                # push the new Docker image to the Docker registry
                - docker push $IMAGE_NAME
+         - step:
+            name: Deploy to remote server
+            deployment: staging
+            script:
+               # Set name of the directory to which deploy.
+               - export DEPLOY_DIRECTORY="~/${BITBUCKET_REPO_SLUG}"
+               # Create the directory on the remote server.
+               - echo "mkdir -p ${DEPLOY_DIRECTORY}" | ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP
+               # Copy the docker-compose files to the deploy directory.
+               - scp ./docker-compose.* $REMOTE_SERVER_USER@$REMOTE_SERVER_IP:$DEPLOY_DIRECTORY
+               # Generate a file where to build deployment scripts
+               - cat deploy_scripts.sh >> deploy_pipeline.sh
+               # Replace BITBUCKET_REPO_SLUG placeholder with the actual value
+               - sed --in-place "s/%%BITBUCKET_REPO_SLUG%%/${BITBUCKET_REPO_SLUG}/" deploy_pipeline.sh
+               # Execute commands to update the remote application.
+               - cat deploy_pipeline.sh | ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP
+               # Generate a file where to build deployment scripts
+               - cat post_deploy_scripts.sh >> post_deploy_pipeline.sh
+               # Replace BITBUCKET_REPO_SLUG placeholder with the actual value
+               - sed --in-place "s/%%BITBUCKET_REPO_SLUG%%/${BITBUCKET_REPO_SLUG}/" post_deploy_pipeline.sh
+               # Replace BITBUCKET_DEPLOYMENT_ENVIRONMENT placeholder with the actual value
+               - sed --in-place "s/%%BITBUCKET_DEPLOYMENT_ENVIRONMENT%%/${BITBUCKET_DEPLOYMENT_ENVIRONMENT}/" post_deploy_pipeline.sh
+               # Execute deployment scripts to update the remote application.
+               - cat post_deploy_pipeline.sh | ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP
