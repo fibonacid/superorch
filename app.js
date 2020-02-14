@@ -14,7 +14,14 @@ const inviteLoader = require("./loaders/inviteLoader");
 const messageLoader = require("./loaders/messageLoader");
 const channelLoader = require("./loaders/channelLoader");
 
-const { MONGO_HOST, MONGO_PORT, MONGO_DB, TARGET_PORT, PUBLISHED_PORT } = process.env;
+const {
+  MONGO_HOST,
+  MONGO_PORT,
+  MONGO_DB,
+  TARGET_PORT,
+  PUBLISHED_HOST = "http://localhost",
+  PUBLISHED_PORT
+} = process.env;
 
 const app = express();
 
@@ -71,8 +78,8 @@ const server = new ApolloServer({
     return err;
   },
   playground: {
-    endpoint: `http://localhost:${PUBLISHED_PORT}/graphql`,
-    subscriptionEndpoint: `ws://localhost:${PUBLISHED_PORT}/graphql`
+    endpoint: `http://${PUBLISHED_HOST}:${PUBLISHED_PORT}/graphql`,
+    subscriptionEndpoint: `ws://${PUBLISHED_HOST}:${PUBLISHED_PORT}/graphql`
   }
 });
 
