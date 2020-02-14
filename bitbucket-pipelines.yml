@@ -6,6 +6,13 @@
 image: atlassian/default-image:2
 
 pipelines:
+   default:
+      - step:
+         name: Deploy to test
+         deployment: test
+         # trigger: manual  # Uncomment to make this a manual deployment.
+         script:
+           - echo "Deploying to test environment"
    branches:
       staging:
         - step:
