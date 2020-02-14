@@ -1,0 +1,37 @@
+version: "3.0"
+
+services:
+  nginx:
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+    image: "jwilder/nginx-proxy:latest"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_html:/usr/share/nginx/html
+      - nginx_auth:/etc/nginx/htpasswd
+
+  letsencrypt:
+    image: "jrcs/letsencrypt-nginx-proxy-companion:v1.12"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+    environment:
+      - "DEFAULT_EMAIL=lorenzorivosecchi3@lacolonia.studio"
+
+  whoami:
+    image: jwilder/whoami
+
+volumes:
+  nginx_certs:
+  nginx_vhost:
+  nginx_conf:
+  nginx_html:
+  nginx_auth:
