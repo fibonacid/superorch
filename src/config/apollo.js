@@ -4,12 +4,16 @@ import { ApolloLink, split } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
 import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
-import { getMainDefinition, toIdValue } from "apollo-utilities";
+import { getMainDefinition } from "apollo-utilities";
 import {
   InMemoryCache,
   IntrospectionFragmentMatcher
 } from "apollo-cache-inmemory";
 import introspectionQueryResultData from "./fragmentTypes.json";
+import {
+  API_ENDPOINT,
+  API_SUBSCRIPTION_ENDPOINT
+} from "./environment";
 
 //
 // Formats GraphQL errors
@@ -48,7 +52,7 @@ const httpLink = ApolloLink.from([
   errorlink,
   new HttpLink({
     credentials: "same-origin",
-    uri: "http://localhost:5000/graphql"
+    uri: API_ENDPOINT
   })
 ]);
 
@@ -56,7 +60,7 @@ const httpLink = ApolloLink.from([
 // Create Websocket link
 //
 const wsLink = new WebSocketLink({
-  uri: "ws://localhost:5000/graphql"
+  uri: API_SUBSCRIPTION_ENDPOINT
 });
 
 const subscriptionMiddleware = {
