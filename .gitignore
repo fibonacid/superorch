@@ -26,3 +26,6 @@ public/vendor/supercollider/osx/bundle
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# secrets
+.env
