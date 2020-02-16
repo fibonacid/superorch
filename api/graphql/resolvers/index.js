@@ -7,6 +7,7 @@ const messages = require("./messages");
 const channels = require("./channels");
 
 const rootResolver = {
+  User: users.User,
   Member: members.Member,
   Invite: invites.Invite,
   Query: {

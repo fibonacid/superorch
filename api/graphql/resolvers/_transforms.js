@@ -3,55 +3,12 @@ const { dateToString } = require("../../helpers/date");
 //
 // Transform User
 //
-async function transformUser(
-  userId,
-  { userLoader, orchestraLoader, memberLoader, inviteLoader }
-) {
+async function transformUser(userId, { userLoader }) {
   const user = await userLoader.load(userId.toString());
-
-  const createdOrchestras = await orchestraLoader.loadMany(
-    user._doc.createdOrchestras.map(id => id.toString())
-  );
-
-  const memberOf = await orchestraLoader.loadMany(
-    user._doc.memberOf.map(id => id.toString())
-  );
-
-  const sentInvites = await inviteLoader.loadMany(
-    user._doc.sentInvites.map(id => id.toString())
-  );
-
-  const receivedInvites = await inviteLoader.loadMany(
-    user._doc.receivedInvites.map(id => id.toString())
-  );
 
   return {
     ...user._doc,
-    birthdate: dateToString(user._doc.birthdate),
-    createdOrchestras: createdOrchestras.map(orchestra => ({
-      ...orchestra._doc,
-      members: memberLoader.loadMany(
-        orchestra._doc.members.map(id => id.toString())
-      )
-    })),
-    memberOf: memberOf.map(orchestra => ({
-      ...orchestra._doc,
-      members: memberLoader.loadMany(
-        orchestra._doc.members.map(id => id.toString())
-      )
-    })),
-    sentInvites: sentInvites.map(invite => ({
-      ...invite._doc,
-      subject: orchestraLoader.load(invite._doc.subject.toString()),
-      from: userLoader.load(invite._doc.from.toString()),
-      to: userLoader.load(invite._doc.to.toString())
-    })),
-    receivedInvites: receivedInvites.map(invite => ({
-      ...invite._doc,
-      subject: orchestraLoader.load(invite._doc.subject.toString()),
-      from: userLoader.load(invite._doc.from.toString()),
-      to: userLoader.load(invite._doc.to.toString())
-    }))
+    password: null
   };
 }
 

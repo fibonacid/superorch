@@ -1,28 +1,29 @@
 const User = require("../../models/users");
-const { PubSub } = require("apollo-server-express");
-const { transformUser } = require("./_transforms");
-
-const pubsub = new PubSub();
-
-const USER_JOINED = "USER_JOINED";
+const { transformUser, transformOrchestra } = require("./_transforms");
 
 module.exports = {
+  User: {
+    createdOrchestras: ({ createdOrchestras }, __, { loaders }) =>
+      createdOrchestras.map(orchestra =>
+        transformOrchestra(orchestra, loaders)
+      ),
+    memberOf: ({ memberOf }, __, { loaders }) =>
+      memberOf.map(orchestra => transformOrchestra(orchestra, loaders)),
+    sentInvites: ({ sentInvites }, __, { loaders }) =>
+      sentInvites.map(invite => transformInvite(invite, loaders)),
+    receivedInvites: ({ receivedInvites }, __, { loaders }) =>
+      receivedInvites.map(invite => transformInvite(invite, loaders))
+  },
+
   Query: {
     //
     // User
     //
     user: async (_, __, { loaders, userId, isAuth }) => {
-      if (!isAuth) {
+      if (!isAuth || !userId) {
         return new Error("Unauthenticated");
       }
-
-      const user = await User.findById(userId);
-
-      if (!user) {
-        return new Error("User doesn't exist");
-      }
-
-      return transformUser(user.id, loaders);
+      return transformUser(userId, loaders);
     }
   },
 
