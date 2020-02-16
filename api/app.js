@@ -19,7 +19,7 @@ const {
   MONGO_PORT,
   MONGO_DB,
   VIRTUAL_HOST = "localhost",
-  VIRTUAL_PORT = 5000
+  VIRTUAL_PORT
 } = process.env;
 
 const app = express();
@@ -107,13 +107,15 @@ mongoose
   .then(() => {
     console.log("Connected to database");
 
+    const domain = `${VIRTUAL_HOST}${VIRTUAL_PORT && `:${VIRTUAL_PORT}`}`
+
     // ⚠️ Pay attention to the fact that we are calling `listen` on the http server variable, and not on `app`.
     httpServer.listen(VIRTUAL_PORT, () => {
       console.log(
-        `🚀 Server ready at http://localhost:${VIRTUAL_PORT}${server.graphqlPath}`
+        `🚀 Server ready at http://${domain}${server.graphqlPath}`
       );
       console.log(
-        `🚀 Subscriptions ready at ws://localhost:${VIRTUAL_PORT}${server.subscriptionsPath}`
+        `🚀 Subscriptions ready at ws://${domain}${server.subscriptionsPath}`
       );
     });
   })
