@@ -13,6 +13,4 @@ RUN yarn install --frozen-lockfile
 # Bundle app source.
 COPY . .
 
-EXPOSE 3000
-
 CMD ["npm", "start"]
