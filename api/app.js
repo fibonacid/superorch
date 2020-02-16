@@ -22,6 +22,8 @@ const {
   VIRTUAL_PORT
 } = process.env;
 
+const SERVER_DOMAIN = `${VIRTUAL_HOST}${VIRTUAL_PORT && `:${VIRTUAL_PORT}`}`;
+
 const app = express();
 
 async function setupContext(token) {
@@ -77,8 +79,8 @@ const server = new ApolloServer({
     return err;
   },
   playground: {
-    endpoint: `http://${VIRTUAL_HOST}/graphql`,
-    subscriptionEndpoint: `ws://${VIRTUAL_HOST}/graphql`
+    endpoint: `http://${SERVER_DOMAIN}/graphql`,
+    subscriptionEndpoint: `ws://${SERVER_DOMAIN}/graphql`
   }
 });
 
@@ -107,15 +109,13 @@ mongoose
   .then(() => {
     console.log("Connected to database");
 
-    const domain = `${VIRTUAL_HOST}${VIRTUAL_PORT && `:${VIRTUAL_PORT}`}`
-
     // ⚠️ Pay attention to the fact that we are calling `listen` on the http server variable, and not on `app`.
     httpServer.listen(VIRTUAL_PORT, () => {
       console.log(
-        `🚀 Server ready at http://${domain}${server.graphqlPath}`
+        `🚀 Server ready at http://${SERVER_DOMAIN}${server.graphqlPath}`
       );
       console.log(
-        `🚀 Subscriptions ready at ws://${domain}${server.subscriptionsPath}`
+        `🚀 Subscriptions ready at ws://${SERVER_DOMAIN}${server.subscriptionsPath}`
       );
     });
   })
