@@ -1,23 +1,30 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
 const StyledContainer = styled.div`
-   display: flex;
-   justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const StyledUsername = styled.span`
-   color: blue;
-   font-size: 13px;
-   padding-bottom: 5px;
-   font-weight: bold;
+  color: ${props => props.color};
+  font-size: 13px;
+  padding-bottom: 5px;
+  font-weight: bold;
 `;
 
-export default function Header({ username, showUsername, clipboard = false, children }) {
-   return (
-      <StyledContainer>
-         {showUsername && <StyledUsername>{username}</StyledUsername>}
-         {children}
-      </StyledContainer>
-   )
+export default function Header({
+  username,
+  showUsername,
+  nameColor = "blue",
+  children
+}) {
+  return (
+    <StyledContainer>
+      {showUsername && (
+        <StyledUsername color={nameColor}>{username}</StyledUsername>
+      )}
+      {children}
+    </StyledContainer>
+  );
 }
