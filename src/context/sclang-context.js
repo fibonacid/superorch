@@ -7,21 +7,17 @@ export const SClangContext = createContext({
 });
 
 function reducer(state, action) {
-  switch(action.type) {
+  switch (action.type) {
     case "add_log":
       return {
         ...state,
-        logs: [
-          ...state.logs,
-          action.input,
-          action.output
-        ]
-      }
+        logs: [...state.logs, action.input, action.output]
+      };
     case "clear_log":
       return {
         ...state,
         logs: []
-      }
+      };
     default:
       return state;
   }
@@ -29,23 +25,23 @@ function reducer(state, action) {
 
 const initialState = {
   logs: []
-}
+};
 
 export function SClangProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const evaluate = useCallback(
-    async (text) => {
+    async text => {
+      const input = { type: "stdin", value: text };
       try {
         console.log("evaluating ", text);
-        const input = { type: "stdin", value: text };
-
         const response = await interpretWithSclang(text);
-        const output = { type: "stdout", value: JSON.stringify(response) }
+        const output = { type: "stdout", value: JSON.stringify(response) };
 
         dispatch({ type: "add_log", input, output });
       } catch (err) {
-        console.error(err);
+        const output = { type: "stdout", value: err.message };
+        dispatch({ type: "add_log", input, output });
       }
     },
     [dispatch]
