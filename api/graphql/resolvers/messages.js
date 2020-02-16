@@ -7,7 +7,7 @@ const {
   transformMessage,
   transformChannel,
   transformMember,
-} = require("./_transforms");
+} = require("../../helpers/transform");
 
 const NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
 const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";

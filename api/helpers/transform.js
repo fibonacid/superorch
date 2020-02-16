@@ -1,4 +1,4 @@
-const { dateToString } = require("../../helpers/date");
+const { dateToString } = require("./date");
 
 //
 // Transform User

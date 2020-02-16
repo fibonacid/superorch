@@ -1,5 +1,5 @@
 const { withFilter, PubSub } = require("apollo-server-express");
-const { transformInvite, transformOrchestra, transformMember } = require("./_transforms");
+const { transformInvite, transformOrchestra, transformMember } = require("../../helpers/transform");
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");

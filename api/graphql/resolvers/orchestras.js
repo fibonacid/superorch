@@ -2,7 +2,7 @@ const Orchestra = require("../../models/orchestras");
 const User = require("../../models/users");
 const Member = require("../../models/members");
 const Channel = require("../../models/channel");
-const { transformOrchestra, transformUser, transformMember, transformChannel } = require("./_transforms");
+const { transformOrchestra, transformUser, transformMember, transformChannel } = require("../../helpers/transform");
 
 module.exports = {
 

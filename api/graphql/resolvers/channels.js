@@ -4,7 +4,7 @@ const {
   transformChannel,
   transformOrchestra,
   transformMember
-} = require("./_transforms");
+} = require("../../helpers/transform");
 
 exports.Channel = {
   orchestra: ({ orchestra }, __, { loaders }) =>
