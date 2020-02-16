@@ -1,18 +1,3 @@
-export function getIpc() {
-  try {
-    //
-    // This should throw an error
-    // when application is runs on
-    // a regular browser.
-    //
-    const electron = window.require("electron");
-    return electron.ipcRenderer;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
-
 export function soundTest() {
   return interpretWithSclang("interpret_sclang", {
     message: `
@@ -30,6 +15,13 @@ export function interpretWithSclang(message) {
   if (typeof message !== "string") {
     throw new Error("Message must be a string");
   }
-  const ipc = getIpc();
-  return ipc.invoke("interpret_sclang", { message });
+  let ipcRenderer;
+  try {
+    ipcRenderer = window.require("electron").ipcRenderer;
+    return ipcRenderer.invoke("interpret_sclang", { message });
+  } catch (err) {
+    const message = "Can't reach sclang interpreter.";
+    console.warn(message);
+    throw new Error(message);
+  }
 }
