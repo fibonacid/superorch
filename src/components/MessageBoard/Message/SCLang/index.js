@@ -5,13 +5,15 @@ import useFlashMessages from "../../../../hooks/useFlashMessages";
 import SpeachBubble from "../../../_miscellaneous/SpeachBubble";
 import Header from "../Header";
 
+const textColor = `rgb(0, 255, 0)`;
+
 const StyledContainer = styled(SpeachBubble)`
   cursor: pointer;
 `;
 
 const StyledBody = styled.p`
   font-family: monospace;
-  color: rgb(0, 255, 0);
+  color: ${textColor};
   font-size: 12px;
   text-overflow: ellipsis;
   max-width: 100%;
@@ -47,7 +49,7 @@ export default function SCLang({
 
   return (
     <StyledContainer onClick={onClick} direction={direction} color="black">
-      <Header username={username} showUsername={showUsername} />
+      <Header username={username} showUsername={showUsername} nameColor={textColor}/>
       <StyledBody ref={bodyRef}>{body}</StyledBody>
     </StyledContainer>
   );
