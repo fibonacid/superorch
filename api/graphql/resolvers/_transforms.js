@@ -93,17 +93,8 @@ async function transformOrchestra(
 //
 // Transform Member
 //
-async function transformMember(
-  memberId,
-  { userLoader, orchestraLoader, memberLoader }
-) {
-  const member = await memberLoader.load(memberId.toString());
-
-  return {
-    ...member._doc,
-    user: userLoader.load(member._doc.user.toString()),
-    orchestra: orchestraLoader.load(member._doc.orchestra.toString())
-  };
+async function transformMember(memberId, { memberLoader }) {
+  return await memberLoader.load(memberId.toString());
 }
 
 //

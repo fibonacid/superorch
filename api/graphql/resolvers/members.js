@@ -1,6 +1,15 @@
 const Orchestra = require("../../models/orchestras");
 const Member = require("../../models/members");
-const { transformMember } = require("./_transforms");
+const { transformMember, transformUser, transformOrchestra } = require("./_transforms");
+
+exports.Member = {
+  user: ({ user }, __, { loaders }) => {
+    return transformUser(user, loaders);
+  },
+  orchestra: ({ orchestra }, __, { loaders }) => {
+    return transformOrchestra(orchestra, loaders);
+  }
+};
 
 exports.Query = {
   //
@@ -18,11 +27,7 @@ exports.Query = {
     return members.map(member => transformMember(member.id, loaders));
   },
 
-  member: async (
-    _,
-    { orchestraId, memberId },
-    { userId, isAuth, loaders }
-  ) => {
+  member: async (_, { orchestraId, memberId }, { userId, isAuth, loaders }) => {
     try {
       if (!isAuth) {
         throw new Error("Unauthenticated");
