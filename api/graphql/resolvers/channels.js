@@ -1,6 +1,17 @@
 const Member = require("../../models/members");
-const Channel = require('../../models/channel');
-const { transformChannel } = require('./_transforms');
+const Channel = require("../../models/channel");
+const {
+  transformChannel,
+  transformOrchestra,
+  transformMember
+} = require("./_transforms");
+
+exports.Channel = {
+  orchestra: ({ orchestra }, __, { loaders }) =>
+    transformOrchestra(orchestra, loaders),
+  members: ({ members }, __, { loaders }) =>
+    members.map(member => transformMember(member, loaders))
+};
 
 exports.Query = {
   channel: async (
@@ -14,21 +25,21 @@ exports.Query = {
       }
 
       const member = await Member.findOne({
-         orchestra: orchestraId,
-         user: userId
+        orchestra: orchestraId,
+        user: userId
       });
       if (!member) {
-         throw new Error("Member doesn't exist");
+        throw new Error("Member doesn't exist");
       }
 
       const channel = await Channel.findOne({
-         _id: channelId,
-         members: {
-            $in: [member]
-         }
+        _id: channelId,
+        members: {
+          $in: [member]
+        }
       });
       if (!channel) {
-         throw new Error("Channel doesn't exist");
+        throw new Error("Channel doesn't exist");
       }
 
       return transformChannel(channel.id, loaders);

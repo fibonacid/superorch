@@ -9,6 +9,7 @@ const channels = require("./channels");
 const rootResolver = {
   User: users.User,
   Member: members.Member,
+  Channel: channels.Channel,
   Invite: invites.Invite,
   Query: {
     ...auth.Query,
