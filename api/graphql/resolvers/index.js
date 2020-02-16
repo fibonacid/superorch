@@ -8,6 +8,7 @@ const channels = require("./channels");
 
 const rootResolver = {
   User: users.User,
+  Orchestra: orchestras.Orchestra,
   Member: members.Member,
   Channel: channels.Channel,
   Invite: invites.Invite,

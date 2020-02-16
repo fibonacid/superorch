@@ -2,9 +2,26 @@ const Orchestra = require("../../models/orchestras");
 const User = require("../../models/users");
 const Member = require("../../models/members");
 const Channel = require("../../models/channel");
-const { transformOrchestra } = require("./_transforms");
+const { transformOrchestra, transformUser, transformMember, transformChannel } = require("./_transforms");
 
 module.exports = {
+
+  Orchestra: {
+    owner: ({ owner }, __, { loaders }) => (
+       transformUser(owner, loaders)
+    ),
+    members: ({ members }, __, { loaders }) => (
+      members.map(member => 
+        transformMember(member, loaders)  
+      )
+    ),
+    channels: ({ channels }, __, { loaders }) => (
+      channels.map(channel => 
+        transformChannel(channel, loaders)
+      )
+    )
+  },
+
   Query: {
     //
     // Orchestras
@@ -75,7 +92,7 @@ module.exports = {
         name: "public",
         orchestra: orchestra.id,
         members: orchestra.members
-      })
+      });
       orchestra.channels.push(public);
 
       const result = await orchestra.save();
