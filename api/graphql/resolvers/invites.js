@@ -1,5 +1,5 @@
 const { withFilter, PubSub } = require("apollo-server-express");
-const { transformInvite, transformMember } = require("./_transforms");
+const { transformInvite, transformOrchestra, transformMember } = require("./_transforms");
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
@@ -10,6 +10,18 @@ const pubsub = new PubSub();
 
 const NEW_INVITE = "NEW_INVITE";
 const NEW_MEMBER = "NEW_MEMBER";
+
+exports.Invite = {
+  subject: ({ subject }, __, { loaders }) => (
+    transformOrchestra(subject, loaders)
+  ),
+  from: ({ from }, __, { loaders }) => (
+    transformMember(from, loaders)
+  ),
+  to: ({ to }, __, { loaders }) => (
+    transformMember(to, loaders)
+  )
+}
 
 exports.Query = {
   //

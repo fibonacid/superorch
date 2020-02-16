@@ -100,18 +100,8 @@ async function transformMember(memberId, { memberLoader }) {
 //
 // Transform Invite
 //
-async function transformInvite(
-  inviteId,
-  { inviteLoader, userLoader, orchestraLoader }
-) {
-  const invite = await inviteLoader.load(inviteId.toString());
-
-  return {
-    ...invite._doc,
-    subject: orchestraLoader.load(invite._doc.subject.toString()),
-    from: userLoader.load(invite._doc.from.toString()),
-    to: userLoader.load(invite._doc.to.toString())
-  };
+async function transformInvite(inviteId, { inviteLoader }) {
+  return await inviteLoader.load(inviteId.toString());
 }
 
 //
