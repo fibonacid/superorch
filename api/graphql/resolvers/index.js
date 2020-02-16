@@ -12,6 +12,8 @@ const rootResolver = {
   Member: members.Member,
   Channel: channels.Channel,
   Invite: invites.Invite,
+  PrivateMessage: messages.PrivateMessage,
+  ChannelMessage: messages.ChannelMessage,
   Query: {
     ...auth.Query,
     ...users.Query,

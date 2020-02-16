@@ -4,14 +4,33 @@ const Channel = require("../../models/channel");
 const Message = require("../../models/message");
 const Member = require("../../models/members");
 const {
-  transformChannelMessage,
-  transformPrivateMessage
+  transformMessage,
+  transformChannel,
+  transformMember,
 } = require("./_transforms");
 
 const NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
 const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
 
 const pubsub = new PubSub();
+
+exports.ChannelMessage = {
+  from: ({ from }, __, { loaders }) => (
+    transformMember(from, loaders)
+  ),
+  to: ({ to }, __, { loaders }) => (
+    transformChannel(to, loaders)
+  )
+}
+
+exports.PrivateMessage = {
+  from: ({ from }, __, { loaders }) => (
+    transformMember(from, loaders)
+  ),
+  to: ({ to }, __, { loaders }) => (
+    transformMember(to, loaders)
+  )
+}
 
 exports.Query = {
   privateMessages: async (
@@ -74,7 +93,7 @@ exports.Query = {
 
       return {
         edges: messages.map(message => ({
-          node: transformPrivateMessage(message.id, loaders),
+          node: transformMessage(message.id, loaders),
           cursor: message.id
         })),
         pageInfo: {
@@ -136,7 +155,7 @@ exports.Query = {
 
       return {
         edges: messages.map(message => ({
-          node: transformChannelMessage(message.id, loaders),
+          node: transformMessage(message.id, loaders),
           cursor: message.id
         })),
         pageInfo: {
@@ -184,10 +203,10 @@ exports.Mutation = {
 
       // Send a NEW_MEMBER message
       pubsub.publish(NEW_PRIVATE_MESSAGE, {
-        newPrivateMessage: await transformPrivateMessage(message.id, loaders)
+        newPrivateMessage: await transformMessage(message.id, loaders)
       });
 
-      return transformPrivateMessage(message.id, loaders);
+      return transformMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
@@ -230,10 +249,10 @@ exports.Mutation = {
 
       // Send a NEW_MEMBER message
       pubsub.publish(NEW_CHANNEL_MESSAGE, {
-        newChannelMessage: await transformChannelMessage(message.id, loaders)
+        newChannelMessage: await transformMessage(message.id, loaders)
       });
 
-      return transformChannelMessage(message.id, loaders);
+      return transformMessage(message.id, loaders);
     } catch (err) {
       return err;
     }
