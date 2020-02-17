@@ -114,9 +114,15 @@ ipcMain.on('restart_app', () => {
 
 const sc = require("supercolliderjs");
 
+const options = {
+  echo: true,
+  debug: true,
+  sclang: path.join(__dirname, './vendor/supercollider/osx/MacOS/sclang')
+}
+
 async function bootSuperCollider() {
   try {
-    const lang = await sc.lang.boot({ echo: true, debug: true });
+    const lang = await sc.lang.boot(options);
 
     ipcMain.handle("interpret_sclang", async (_, args) => {
       try {
