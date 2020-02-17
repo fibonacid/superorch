@@ -2,6 +2,10 @@
   "name": "superorch-app",
   "version": "0.2.1",
   "description": "An desktop client for superorch",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lorenzorivosecchi/superorch"
+  },
   "author": "Lorenzo Rivosecchi",
   "homepage": "./",
   "main": "public/electron.js",
