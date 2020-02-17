@@ -1,5 +1,6 @@
 {
   "name": "superorch-client",
+  "version": "0.2.1",
   "description": "An desktop client for superorch",
   "author": "Lorenzo Rivosecchi",
   "homepage": "./",
