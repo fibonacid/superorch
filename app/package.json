@@ -1,5 +1,5 @@
 {
-  "name": "superorch-client",
+  "name": "superorch-app",
   "version": "0.2.1",
   "description": "An desktop client for superorch",
   "author": "Lorenzo Rivosecchi",
@@ -13,7 +13,8 @@
     "react-eject": "react-scripts eject",
     "electron-start": "nodemon --watch public/*.js --exec \"electron .\"",
     "electron-build": "electron-builder",
-    "build": "yarn run react-build && yarn run electron-build",
+    "build": "yarn run react-build && yarn run electron-build --publish never",
+    "deploy": "yarn run react-build && yarn run electron-build --publish always",
     "start": "concurrently \"cross-env BROWSER=none yarn run react-start\" \"wait-on http://localhost:3000 && yarn run electron-start\""
   },
   "dependencies": {
@@ -71,24 +72,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "build": {
-    "appId": "lorenzorivosecchi.superorch",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    },
-    "mac": {
-      "icon": "assets/favicon.icns"
-    },
-    "win": {
-      "icon": "assets/favicon.ico"
-    },
-    "linux": {
-      "icon": "assets/favicon.png"
-    }
   }
 }

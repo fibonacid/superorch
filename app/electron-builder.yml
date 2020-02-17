@@ -1,0 +1,14 @@
+appId: lorenzorivosecchi.superorch,
+files:
+  - build/**/*,
+  - node_modules/**/*
+directories:
+  buildResources: assets
+mac:
+  icon: assets/favicon.icns
+win:
+  icon: assets/favicon.ico
+linux:
+  icon: assets/favicon.png
+publish:
+  provider: github

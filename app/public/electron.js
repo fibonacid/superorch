@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, autoUpdater } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 
@@ -60,6 +60,17 @@ async function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+
+  win.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
+
+  autoUpdater.on('update-available', () => {
+    win.webContents.send('update_available');
+  });
+  autoUpdater.on('update-downloaded', () => {
+    win.webContents.send('update_downloaded');
+  });
 }
 
 // This method will be called when Electron has finished
@@ -87,6 +98,10 @@ app.on("activate", () => {
   if (win === null) {
     createWindow();
   }
+});
+
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
 });
 
 // Handle the errors
