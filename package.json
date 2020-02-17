@@ -1,7 +1,6 @@
 {
   "name": "superorch-server",
-  "version": "0.2.0",
-  "main": "app.js",
+  "version": "0.2.1",
   "repository": "git@github.com:lorenzorivosecchi/superorch-api.git",
   "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
   "license": "MIT",
