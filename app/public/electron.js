@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, autoUpdater } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
+const { fixPathForAsarUnpack } = require("electron-util");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -115,7 +116,9 @@ ipcMain.on("restart_app", () => {
 const sc = require("supercolliderjs");
 
 function vendor(filepath) {
-  return path.join(__dirname, "../vendor" + filepath);
+  return fixPathForAsarUnpack(
+    path.join(__dirname, "../vendor" + filepath)
+  );
 }
 
 const options = {
@@ -142,4 +145,3 @@ async function bootSuperCollider() {
 }
 
 bootSuperCollider();
-cd 
