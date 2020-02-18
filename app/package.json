@@ -37,6 +37,7 @@
     "draft-js-plugins-editor": "^3.0.0",
     "draftjs-utils": "^0.10.2",
     "electron-is-dev": "^1.1.0",
+    "electron-util": "^0.14.0",
     "graphql": "^14.5.8",
     "gsap": "^3.1.1",
     "react": "^16.12.0",
