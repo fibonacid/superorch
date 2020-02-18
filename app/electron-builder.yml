@@ -4,7 +4,8 @@ files:
   - node_modules/**/*
   - vendor/**/*
 asarUnpack:
-  - vendor/supercollider/**/*
+  - vendor/supercollider
+  - node_modules/@supercollider
 directories:
   buildResources: assets
 mac:
