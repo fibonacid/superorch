@@ -61,15 +61,15 @@ async function createWindow() {
     win = null;
   });
 
-  win.once('ready-to-show', () => {
+  win.once("ready-to-show", () => {
     autoUpdater.checkForUpdatesAndNotify();
   });
 
-  autoUpdater.on('update-available', () => {
-    win.webContents.send('update_available');
+  autoUpdater.on("update-available", () => {
+    win.webContents.send("update_available");
   });
-  autoUpdater.on('update-downloaded', () => {
-    win.webContents.send('update_downloaded');
+  autoUpdater.on("update-downloaded", () => {
+    win.webContents.send("update_downloaded");
   });
 }
 
@@ -100,7 +100,7 @@ app.on("activate", () => {
   }
 });
 
-ipcMain.on('restart_app', () => {
+ipcMain.on("restart_app", () => {
   autoUpdater.quitAndInstall();
 });
 
@@ -114,11 +114,15 @@ ipcMain.on('restart_app', () => {
 
 const sc = require("supercolliderjs");
 
+function vendor(filepath) {
+  return path.join(__dirname, "../vendor" + filepath);
+}
+
 const options = {
   echo: true,
   debug: true,
-  sclang: path.join(__dirname, './vendor/supercollider/osx/MacOS/sclang')
-}
+  sclang: vendor("/supercollider/osx/MacOS/sclang")
+};
 
 async function bootSuperCollider() {
   try {
@@ -132,9 +136,10 @@ async function bootSuperCollider() {
         return error;
       }
     });
-  } catch(err) {
+  } catch (err) {
     console.error(err);
   }
 }
 
 bootSuperCollider();
+cd 
