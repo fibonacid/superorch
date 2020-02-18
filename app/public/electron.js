@@ -117,14 +117,14 @@ const sc = require("supercolliderjs");
 
 function vendor(filepath) {
   return fixPathForAsarUnpack(
-    path.join(__dirname, "../vendor" + filepath)
+    path.join(__dirname, "../vendor/mac", filepath)
   );
 }
 
 const options = {
   echo: true,
   debug: true,
-  sclang: vendor("/supercollider/osx/sclang.sh")
+  sclang: vendor("./sclang.sh")
 };
 
 async function bootSuperCollider() {

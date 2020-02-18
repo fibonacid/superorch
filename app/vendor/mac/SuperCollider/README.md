@@ -1,11 +1,11 @@
 [SuperCollider](https://supercollider.github.io) is included by manually putting a prebuilt version into `app/vendor/supercollider`
 
 ```sh
-public/vendor
+vendor
 └── supercollider
     └── osx
         ├── README.md
-        ├── bundle
+        ├── SuperCollider
         │   ├── Frameworks
         │   ├── Info.plist
         │   ├── MacOS

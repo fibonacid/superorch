@@ -1,15 +1,16 @@
-appId: lorenzorivosecchi.superorch,
+appId: lorenzorivosecchi.superorch
 files:
   - build/**/*,
   - node_modules/**/*
-  - vendor/**/*
-asarUnpack:
-  - vendor/supercollider
-  - node_modules/@supercollider
 directories:
   buildResources: assets
 mac:
   icon: assets/favicon.icns
+  files:
+    - vendor/mac/**/*
+  asarUnpack:
+    - vendor/mac
+    - node_modules/@supercollider
 win:
   icon: assets/favicon.ico
 linux:

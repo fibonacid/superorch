@@ -11,7 +11,8 @@
 /dist
 
 # vendor
-vendor/supercollider/osx/bundle
+vendor/mac/SuperCollider/*
+!vendor/mac/SuperCollider/README.md
 
 # misc
 .DS_Store
