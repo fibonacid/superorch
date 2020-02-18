@@ -11,9 +11,8 @@
 /dist
 
 # vendor
-public/vendor/supercollider/osx
-!public/vendor/supercollider/osx/README.md
-/public/vendor/**/*.dylib
+vendor/supercollider/osx/**/*
+!vendor/supercollider/osx/README.md
 
 # misc
 .DS_Store

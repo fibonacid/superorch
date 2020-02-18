@@ -2,6 +2,7 @@ appId: lorenzorivosecchi.superorch,
 files:
   - build/**/*,
   - node_modules/**/*
+  - vendor/**/*
 directories:
   buildResources: assets
 mac:
