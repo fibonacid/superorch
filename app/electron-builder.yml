@@ -10,7 +10,7 @@ mac:
     - vendor/mac/**/*
   asarUnpack:
     - vendor/mac
-    - node_modules/@supercollider
+    - node_modules
 win:
   icon: assets/favicon.ico
 linux:
