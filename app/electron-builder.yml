@@ -5,15 +5,15 @@ files:
 directories:
   buildResources: assets
 mac:
-  icon: assets/favicon.icns
+  icon: public/assets/favicon.icns
   files:
     - vendor/mac/**/*
   asarUnpack:
     - vendor/mac
     - node_modules
 win:
-  icon: assets/favicon.ico
+  icon: public/assets/favicon.ico
 linux:
-  icon: assets/favicon.png
+  icon: public/assets/favicon.png
 publish:
   provider: github
