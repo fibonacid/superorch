@@ -53,3 +53,4 @@ fetch(API_ENPOINT, {
         );
       }
     });
+  });
