@@ -1,13 +1,12 @@
 {
-  "name": "superorch-server",
-  "description": "graphql api for superorch applications",
-  "version": "0.2.0",
+  "name": "superorch-api",
+  "description": "A graphql API used by SuperOrch apps",
+  "version": "1.0.0",
   "main": "app.js",
   "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prestart": "if [ ! -d node_modules ]; then yarn; fi",
-    "start": "nodemon app.js"
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "apollo-server-express": "^2.9.15",

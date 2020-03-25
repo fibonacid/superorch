@@ -1,5 +1,10 @@
 const { withFilter, PubSub } = require("apollo-server-express");
-const { transformInvite, transformOrchestra, transformUser, transformMember } = require("../../helpers/transform");
+const {
+  transformInvite,
+  transformOrchestra,
+  transformUser,
+  transformMember
+} = require("../../helpers/transform");
 const Invite = require("../../models/invites");
 const User = require("../../models/users");
 const Orchestra = require("../../models/orchestras");
@@ -12,16 +17,11 @@ const NEW_INVITE = "NEW_INVITE";
 const NEW_MEMBER = "NEW_MEMBER";
 
 exports.Invite = {
-  subject: ({ subject }, __, { loaders }) => (
-    transformOrchestra(subject, loaders)
-  ),
-  from: ({ from }, __, { loaders }) => (
-    transformUser(from, loaders)
-  ),
-  to: ({ to }, __, { loaders }) => (
-    transformUser(to, loaders)
-  )
-}
+  subject: ({ subject }, __, { loaders }) =>
+    transformOrchestra(subject, loaders),
+  from: ({ from }, __, { loaders }) => transformUser(from, loaders),
+  to: ({ to }, __, { loaders }) => transformUser(to, loaders)
+};
 
 exports.Query = {
   //
@@ -156,7 +156,7 @@ exports.Mutation = {
     const channel = await Channel.findOne({
       orchestra: orchestra._doc._id,
       name: "public"
-    })
+    });
     channel.members.push(member);
     await channel.save();
 

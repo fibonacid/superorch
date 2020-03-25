@@ -41,11 +41,11 @@ export default class CodeEditor extends Component {
   state = {
     editorState: EditorState.createEmpty(),
     plugins: []
-  }
+  };
 
   componentDidMount() {
     this.focus();
-    
+
     const codeEvaluationPlugin = createCodeEvaluationPlugin({
       onEvaluate: this.onEvaluation.bind(this)
     });
@@ -58,19 +58,16 @@ export default class CodeEditor extends Component {
         ContentState.createFromText(text),
         new CompositeDecorator(decorators)
       ),
-      plugins: [
-        ...this.state.plugins,
-        codeEvaluationPlugin
-      ]
+      plugins: [...this.state.plugins, codeEvaluationPlugin]
     });
   }
 
-  onEvaluation = (text) => {
+  onEvaluation = text => {
     // Feed code to the supercollider interpreter
-    this.context.evaluate(text)
+    this.context.evaluate(text);
     // Send code to other users
     this.props.onEvaluate(text);
-  }
+  };
 
   onChange = editorState => {
     this.setState({

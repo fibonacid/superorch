@@ -82,9 +82,11 @@ function OrchestraEditView() {
           {data && <div>Success</div>}
           {error && <span>{error.message}</span>}
         </StyledStatus>
-        <BackgroundLink to={`/orchestras/${orchestraId}/delete`}>Delete Orchestra</BackgroundLink>
+        <BackgroundLink to={`/orchestras/${orchestraId}/delete`}>
+          Delete Orchestra
+        </BackgroundLink>
       </StyledWrapper>
-      <GoBackLink rootpath={"/orchestras/"+params.orchestra}/>
+      <GoBackLink rootpath={"/orchestras/" + params.orchestra} />
     </StyledContainer>
   );
 }

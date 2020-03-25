@@ -6,7 +6,7 @@ const Member = require("../../models/members");
 const {
   transformMessage,
   transformChannel,
-  transformMember,
+  transformMember
 } = require("../../helpers/transform");
 
 const NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
@@ -15,22 +15,14 @@ const NEW_CHANNEL_MESSAGE = "NEW_CHANNEL_MESSAGE";
 const pubsub = new PubSub();
 
 exports.ChannelMessage = {
-  from: ({ from }, __, { loaders }) => (
-    transformMember(from, loaders)
-  ),
-  to: ({ to }, __, { loaders }) => (
-    transformChannel(to, loaders)
-  )
-}
+  from: ({ from }, __, { loaders }) => transformMember(from, loaders),
+  to: ({ to }, __, { loaders }) => transformChannel(to, loaders)
+};
 
 exports.PrivateMessage = {
-  from: ({ from }, __, { loaders }) => (
-    transformMember(from, loaders)
-  ),
-  to: ({ to }, __, { loaders }) => (
-    transformMember(to, loaders)
-  )
-}
+  from: ({ from }, __, { loaders }) => transformMember(from, loaders),
+  to: ({ to }, __, { loaders }) => transformMember(to, loaders)
+};
 
 exports.Query = {
   privateMessages: async (
@@ -133,9 +125,9 @@ exports.Query = {
       const query = {
         orchestra: orchestraId,
         targetId: channelId,
-        targetType: "Channel",
+        targetType: "Channel"
       };
-           // If after property is specified
+      // If after property is specified
       // use it as cursor.
       if (pagination.after) {
         query._id = {

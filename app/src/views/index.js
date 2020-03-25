@@ -1,14 +1,14 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Switch, useLocation } from "react-router-dom";
 import routes from "../config/routes";
-import RouteWithSubRoutes from '../components/_miscellaneous/RouteWithSubRoutes';
-import { SClangProvider } from '../context/sclang-context';
+import RouteWithSubRoutes from "../components/_miscellaneous/RouteWithSubRoutes";
+import { SClangProvider } from "../context/sclang-context";
 
 export default function RootSwitch() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location.pathname)
+    console.log(location.pathname);
   }, [location.pathname]);
 
   return (
@@ -19,5 +19,5 @@ export default function RootSwitch() {
         ))}
       </Switch>
     </SClangProvider>
-  )
+  );
 }

@@ -1,6 +1,10 @@
 const Orchestra = require("../../models/orchestras");
 const Member = require("../../models/members");
-const { transformMember, transformUser, transformOrchestra } = require("../../helpers/transform");
+const {
+  transformMember,
+  transformUser,
+  transformOrchestra
+} = require("../../helpers/transform");
 
 exports.Member = {
   user: ({ user }, __, { loaders }) => {

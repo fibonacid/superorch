@@ -1,13 +1,13 @@
 import { gql } from "apollo-boost";
-import {CHANNEL_DETAIL_FRAGMENT} from './channels';
-import {MEMBER_DETAIL_FRAGMENT} from './members';
+import { CHANNEL_DETAIL_FRAGMENT } from "./channels";
+import { MEMBER_DETAIL_FRAGMENT } from "./members";
 
 export const ORCHESTRA_DETAIL_FRAGMENT = gql`
-   fragment OrchestraDetail on Orchestra {
-      _id
-      __typename
-      name
-   }
+  fragment OrchestraDetail on Orchestra {
+    _id
+    __typename
+    name
+  }
 `;
 
 export const GET_ORCHESTRAS_QUERY = gql`
@@ -15,10 +15,10 @@ export const GET_ORCHESTRAS_QUERY = gql`
     orchestras {
       ...OrchestraDetail
       members {
-         ...MemberDetail
+        ...MemberDetail
       }
       channels {
-         ...ChannelDetail
+        ...ChannelDetail
       }
     }
   }
@@ -28,29 +28,29 @@ export const GET_ORCHESTRAS_QUERY = gql`
 `;
 
 export const GET_ORCHESTRA_QUERY = gql`
-   query getOrchestra($orchestraId: String!) {
-      orchestra(orchestraId: $orchestraId) {
-         ...OrchestraDetail
-         members {
-            ...MemberDetail
-         }
-         channels {
-            ...ChannelDetail
-         }
+  query getOrchestra($orchestraId: String!) {
+    orchestra(orchestraId: $orchestraId) {
+      ...OrchestraDetail
+      members {
+        ...MemberDetail
       }
-   }
-   ${ORCHESTRA_DETAIL_FRAGMENT}
-   ${MEMBER_DETAIL_FRAGMENT}
-   ${CHANNEL_DETAIL_FRAGMENT}
+      channels {
+        ...ChannelDetail
+      }
+    }
+  }
+  ${ORCHESTRA_DETAIL_FRAGMENT}
+  ${MEMBER_DETAIL_FRAGMENT}
+  ${CHANNEL_DETAIL_FRAGMENT}
 `;
 
 export const CREATE_ORCHESTRA_MUTATION = gql`
-   mutation createOrchestra($name: String!) {
-      createOrchestra(name: $name) {
-         ...OrchestraDetail
-      }
-   }
-   ${ORCHESTRA_DETAIL_FRAGMENT}
+  mutation createOrchestra($name: String!) {
+    createOrchestra(name: $name) {
+      ...OrchestraDetail
+    }
+  }
+  ${ORCHESTRA_DETAIL_FRAGMENT}
 `;
 
 export const UPDATE_ORCHESTRA_MUTATION = gql`

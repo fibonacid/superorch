@@ -1,5 +1,8 @@
 const User = require("../../models/users");
-const { transformUser, transformOrchestra } = require("../../helpers/transform");
+const {
+  transformUser,
+  transformOrchestra
+} = require("../../helpers/transform");
 
 module.exports = {
   User: {

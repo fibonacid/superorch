@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/react-hooks";
 import { REGISTER_QUERY } from "../api/auth";
-import useAuth from './useAuth';
+import useAuth from "./useAuth";
 
 export default function useRegister() {
   const context = useAuth();

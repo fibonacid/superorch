@@ -1,11 +1,11 @@
 import React from "react";
-import styled, {css} from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
 import { NavLink } from "react-router-dom";
 
 const activeStyle = {
   background: "rgba(245,245,245,1)",
   color: "black"
-}
+};
 
 const StyledLink = styled(NavLink)`
   width: 40px;
@@ -16,12 +16,14 @@ const StyledLink = styled(NavLink)`
   border: solid 1px white;
   cursor: pointer;
   border-radius: 8px;
-  
-  background: rgba(245,245,245,0);
+
+  background: rgba(245, 245, 245, 0);
   color: white;
   transition: background 0.2s ease-in;
 
-  &:hover { ${css(activeStyle)} }
+  &:hover {
+    ${css(activeStyle)}
+  }
 
   &:not(:first-of-type) {
     margin-top: 10px;

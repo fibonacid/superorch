@@ -1,32 +1,32 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const USER_DETAIL_FRAGMENT = gql`
-   fragment UserDetail on User {
-      _id
-      __typename
-      name
-   }
+  fragment UserDetail on User {
+    _id
+    __typename
+    name
+  }
 `;
 
 export const USER_PROFILE_FRAGMENT = gql`
-   fragment UserProfile on User {
-      firstName
-      lastName
-      city
-      birthdate
-      bio
-   }
-`
+  fragment UserProfile on User {
+    firstName
+    lastName
+    city
+    birthdate
+    bio
+  }
+`;
 
 export const GET_USER_QUERY = gql`
-   query getUser {
-      user {
-         ...UserDetail
-         ...UserProfile
-      }
-   }
-   ${USER_DETAIL_FRAGMENT}
-   ${USER_PROFILE_FRAGMENT}
+  query getUser {
+    user {
+      ...UserDetail
+      ...UserProfile
+    }
+  }
+  ${USER_DETAIL_FRAGMENT}
+  ${USER_PROFILE_FRAGMENT}
 `;
 
 export const UPDATE_USER_MUTATION = gql`

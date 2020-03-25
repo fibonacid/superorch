@@ -3,25 +3,27 @@ import reset from "styled-reset";
 import normalize from "styled-normalize";
 
 const transitions = css`
-    .fade {
-        &-enter,&-appear {
-          opacity: 0;
-        }
-
-        &-enter-active,&-appear-active {
-          opacity: 1;
-          transition: opacity 200ms;
-        }
-
-        &-exit {
-          opacity: 1;
-        }
-
-        &-exit-active {
-          opacity: 0;
-          transition: opacity 200ms;
-        }
+  .fade {
+    &-enter,
+    &-appear {
+      opacity: 0;
     }
+
+    &-enter-active,
+    &-appear-active {
+      opacity: 1;
+      transition: opacity 200ms;
+    }
+
+    &-exit {
+      opacity: 1;
+    }
+
+    &-exit-active {
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+  }
 `;
 
 const GlobalStyle = createGlobalStyle`

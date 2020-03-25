@@ -1,12 +1,31 @@
 {
-  "name": "superorch-server",
-  "version": "0.2.1",
-  "repository": "git@github.com:lorenzorivosecchi/superorch-api.git",
+  "name": "superorch",
+  "version": "0.1.0",
+  "description": "A chat where people can play electronic music together",
+  "repository": "git@bitbucket.org:lorenzorivosecchi/superorch.git",
   "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
   "license": "MIT",
+  "private": false,
   "devDependencies": {
-    "husky": "^3.1.0",
-    "prettier": "^1.19.1",
-    "pretty-quick": "^2.0.1"
+    "husky": "^4.2.3",
+    "prettier": "1.19.1",
+    "pretty-quick": "^2.0.1",
+    "conventional-changelog-cli": "^2.0.31",
+    "standard-changelog": "^2.0.21",
+    "standard-version": "^7.0.1",
+    "uuidv4": "^6.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "scripts": {
+    "init": "npm run standard-changelog:init && npm run changelog:init",
+    "release": "npm run changelog && npm run standard-version",
+    "changelog:init": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "standard-changelog:init": "standard-changelog --first-release",
+    "standard-version": "standard-version"
   }
 }

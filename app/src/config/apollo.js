@@ -10,10 +10,7 @@ import {
   IntrospectionFragmentMatcher
 } from "apollo-cache-inmemory";
 import introspectionQueryResultData from "./fragmentTypes.json";
-import {
-  API_ENDPOINT,
-  API_SUBSCRIPTION_ENDPOINT
-} from "./environment";
+import { API_ENDPOINT, API_SUBSCRIPTION_ENDPOINT } from "./environment";
 
 //
 // Formats GraphQL errors

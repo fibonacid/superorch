@@ -7,7 +7,7 @@ const StyledContainer = styled.li`
   display: flex;
   justify-content: space-between;
   &:not(:last-of-type) {
-     border-bottom: solid 1px lightgrey;
+    border-bottom: solid 1px lightgrey;
   }
   a {
     color: black;
@@ -18,7 +18,9 @@ const StyledContainer = styled.li`
 function ListItem({ url, children }) {
   return (
     <StyledContainer>
-      <NavLink to={url} activeStyle={{ fontWeight: "bold" }}>{children}</NavLink>
+      <NavLink to={url} activeStyle={{ fontWeight: "bold" }}>
+        {children}
+      </NavLink>
     </StyledContainer>
   );
 }

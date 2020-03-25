@@ -39,12 +39,12 @@ function App() {
               <StyledWrapper>
                 <MainNav />
                 <SClangProvider>
-                <StyledContainer>
-                  <StyledInner>
-                    <IndexView />
-                  </StyledInner>
-                <FlashMessages/>
-                </StyledContainer>
+                  <StyledContainer>
+                    <StyledInner>
+                      <IndexView />
+                    </StyledInner>
+                    <FlashMessages />
+                  </StyledContainer>
                 </SClangProvider>
               </StyledWrapper>
             </HashRouter>

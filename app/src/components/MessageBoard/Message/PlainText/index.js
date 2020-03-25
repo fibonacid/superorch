@@ -1,6 +1,6 @@
 import React from "react";
 import SpeachBubble from "../../../_miscellaneous/SpeachBubble";
-import Header from '../Header';
+import Header from "../Header";
 
 export default function PlainText({
   direction = "right",

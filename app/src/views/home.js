@@ -14,19 +14,19 @@ export default function HomeView() {
   });
 
   useEffect(() => {
-     if (data) {
-        // If user belongs to at least one orchestra:
-        if (data.orchestras.length > 0) {
-            // Redirect to first orchestra in the list and focus on the "public" channel.
-            const [ orchestra ] = data.orchestras;
-            const { channels } = orchestra;
-            const { _id: channelId } = channels.find(c => c.name === "public");
-            history.push(`/orchestras/${orchestra._id}/chats/channel-${channelId}`);
-        } else {
-           // Else, redirect to orchestra create view.
-           history.push(`/orchestras/create`);
-        }
-     }
+    if (data) {
+      // If user belongs to at least one orchestra:
+      if (data.orchestras.length > 0) {
+        // Redirect to first orchestra in the list and focus on the "public" channel.
+        const [orchestra] = data.orchestras;
+        const { channels } = orchestra;
+        const { _id: channelId } = channels.find(c => c.name === "public");
+        history.push(`/orchestras/${orchestra._id}/chats/channel-${channelId}`);
+      } else {
+        // Else, redirect to orchestra create view.
+        history.push(`/orchestras/create`);
+      }
+    }
   }, [data, history]);
 
   if (!token) {

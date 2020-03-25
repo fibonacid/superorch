@@ -44,15 +44,12 @@ fetch(API_ENPOINT, {
     const filepath = path.join(__dirname, "./src/config/fragmentTypes.json");
     const data = JSON.stringify(result.data, 0, 2);
 
-    fs.writeFile(
-      filepath,
-      data,
-      err => {
-        if (err) {
-          console.error("Error writing fragmentTypes file", err);
-        } else {
-          console.log(`\n${data}\n\nFragment types successfully extracted.\n${filepath}\n`);
-        }
+    fs.writeFile(filepath, data, err => {
+      if (err) {
+        console.error("Error writing fragmentTypes file", err);
+      } else {
+        console.log(
+          `\n${data}\n\nFragment types successfully extracted.\n${filepath}\n`
+        );
       }
-    );
-  });
+    });

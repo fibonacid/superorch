@@ -1,13 +1,9 @@
 {
   "name": "superorch-app",
-  "version": "0.2.1",
-  "description": "An desktop client for superorch",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lorenzorivosecchi/superorch"
-  },
-  "author": "Lorenzo Rivosecchi",
-  "homepage": "./",
+  "version": "1.0.0",
+  "description": "A Desktop client for SuperOrch",
+  "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
+  "license": "MIT",
   "main": "public/electron.js",
   "scripts": {
     "fetch-schema": "node fetch-schema.js",

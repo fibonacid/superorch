@@ -14,7 +14,6 @@ vendor
         └── sclang.sh
 ```
 
-
 Where the outer `sclang` is a script that launches the actual `sclang` binary:
 
 ```

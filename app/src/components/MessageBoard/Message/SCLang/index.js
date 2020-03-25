@@ -30,7 +30,6 @@ export default function SCLang({
   const bodyRef = useRef();
   const { dispatch } = useFlashMessages();
 
-
   const onClick = useCallback(() => {
     try {
       // Copy text to clipboard
@@ -49,7 +48,11 @@ export default function SCLang({
 
   return (
     <StyledContainer onClick={onClick} direction={direction} color="black">
-      <Header username={username} showUsername={showUsername} nameColor={textColor}/>
+      <Header
+        username={username}
+        showUsername={showUsername}
+        nameColor={textColor}
+      />
       <StyledBody ref={bodyRef}>{body}</StyledBody>
     </StyledContainer>
   );

@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/react-hooks";
 import { LOGIN_QUERY } from "../api/auth";
-import useAuth from './useAuth';
+import useAuth from "./useAuth";
 
 export default function useLogin() {
   const context = useAuth();

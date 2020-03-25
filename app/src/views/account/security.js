@@ -1,5 +1,5 @@
 import React from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -9,7 +9,5 @@ const StyledContainer = styled.div`
 `;
 
 export default function AccountSecurityView() {
-  return (
-   <StyledContainer>Setup username and password</StyledContainer>
-  );
+  return <StyledContainer>Setup username and password</StyledContainer>;
 }

@@ -1,17 +1,33 @@
-# SuperOrch
+# SUPERORCH
 
-A chat-like app to play music with others using SuperCollider.
+A chat where people can play electronic music together
 
 ## Installation
-TODO
 
-## Usage
-TODO
+Create API with docker:
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+```
+docker-compose up
+```
 
-Please make sure to update tests as appropriate.
+You can verify that the service is working by going to http://localhost:5000/graphql
 
-## License
-[GNU](https://choosealicense.com/licenses/gpl-3.0)
+Move inside app directory:
+
+```
+cd app
+```
+
+Install dependencies:
+
+```
+yarn install
+```
+
+Finally launch application:
+
+```
+yarn start
+```
+
+After a few seconds a desktop app should pop up.

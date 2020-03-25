@@ -38,7 +38,7 @@ export default function Message({ message, dispatch }) {
       dispatch({
         type: "remove",
         id: message.id
-      })
+      });
     },
     [message, dispatch]
   );

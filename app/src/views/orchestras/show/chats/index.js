@@ -1,6 +1,6 @@
 import React from "react";
-import {Switch} from 'react-router-dom';
-import RouteWithSubRoutes from '../../../../components/_miscellaneous/RouteWithSubRoutes';
+import { Switch } from "react-router-dom";
+import RouteWithSubRoutes from "../../../../components/_miscellaneous/RouteWithSubRoutes";
 
 function OrchestraChatIndexView({ routes }) {
   return (

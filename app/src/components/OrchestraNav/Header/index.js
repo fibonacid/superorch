@@ -21,7 +21,9 @@ const StyledIcon = styled(FontAwesomeIcon)`
   margin-left: 5px;
   cursor: pointer;
   color: ${props => props.color};
-  &:hover { color: black }
+  &:hover {
+    color: black;
+  }
   transition: color 50ms ease-in;
 `;
 

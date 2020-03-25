@@ -14,15 +14,7 @@ const inviteLoader = require("./loaders/inviteLoader");
 const messageLoader = require("./loaders/messageLoader");
 const channelLoader = require("./loaders/channelLoader");
 
-const {
-  MONGO_HOST,
-  MONGO_PORT,
-  MONGO_DB,
-  VIRTUAL_HOST = "localhost",
-  VIRTUAL_PORT
-} = process.env;
-
-const SERVER_DOMAIN = `${VIRTUAL_HOST}${VIRTUAL_PORT && `:${VIRTUAL_PORT}`}`;
+const { MONGO_HOST, MONGO_PORT, PUBLISHED_HOST } = process.env;
 
 const app = express();
 
@@ -79,8 +71,8 @@ const server = new ApolloServer({
     return err;
   },
   playground: {
-    endpoint: `http://${SERVER_DOMAIN}/graphql`,
-    subscriptionEndpoint: `ws://${SERVER_DOMAIN}/graphql`
+    endpoint: `http://${PUBLISHED_HOST}/graphql`,
+    subscriptionEndpoint: `ws://${PUBLISHED_HOST}/graphql`
   }
 });
 
@@ -102,7 +94,7 @@ mongoose.set("useFindAndModify", false);
 //
 
 mongoose
-  .connect(`mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}`, {
+  .connect(`mongodb://${MONGO_HOST}:${MONGO_PORT}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -110,12 +102,10 @@ mongoose
     console.log("Connected to database");
 
     // ⚠️ Pay attention to the fact that we are calling `listen` on the http server variable, and not on `app`.
-    httpServer.listen(VIRTUAL_PORT, () => {
+    httpServer.listen(5000, () => {
+      console.log(`🚀 Server ready at http://localhost${server.graphqlPath}`);
       console.log(
-        `🚀 Server ready at http://${SERVER_DOMAIN}${server.graphqlPath}`
-      );
-      console.log(
-        `🚀 Subscriptions ready at ws://${SERVER_DOMAIN}${server.subscriptionsPath}`
+        `🚀 Subscriptions ready at ws://localhost${server.subscriptionsPath}`
       );
     });
   })

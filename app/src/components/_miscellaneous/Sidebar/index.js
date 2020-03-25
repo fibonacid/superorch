@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components/macro'
+import React from "react";
+import styled from "styled-components/macro";
 
 const StyledContainer = styled.div`
   background: whitesmoke;
@@ -8,9 +8,5 @@ const StyledContainer = styled.div`
 `;
 
 export default function Sidebar(props) {
-   return (
-      <StyledContainer>
-         {props.children}
-      </StyledContainer>
-   )
+  return <StyledContainer>{props.children}</StyledContainer>;
 }

@@ -1,7 +1,6 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-
   type PageInfo {
     hasNextPage: Boolean!
   }
@@ -157,7 +156,7 @@ const typeDefs = gql`
     channel(orchestraId: String!, channelId: String!): Channel!
     privateMessages(
       pagination: PaginationInput!
-      orchestraId: String!,
+      orchestraId: String!
       memberId: String!
       filters: MessageFilter
     ): PrivateMessageConnection
@@ -199,8 +198,8 @@ const typeDefs = gql`
     newInvite: Invite!
     newMember(orchestraId: String!): Member!
     newPrivateMessage(
-      orchestraId: String!,
-      memberId: String!,
+      orchestraId: String!
+      memberId: String!
       filters: MessageFilter
     ): PrivateMessage!
     newChannelMessage(

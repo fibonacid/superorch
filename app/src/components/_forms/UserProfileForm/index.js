@@ -17,7 +17,7 @@ function UserProfileForm({ cachedValues, onSuccess }) {
   const [updateUser, { loading, error: backendError }] = useMutation(
     UPDATE_USER_MUTATION,
     {
-      onCompleted: onSuccess,
+      onCompleted: onSuccess
     }
   );
 

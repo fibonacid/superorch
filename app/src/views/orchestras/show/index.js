@@ -29,7 +29,7 @@ function OrchestraShowView({ routes }) {
         <Switch>
           {routes.map((route, i) => (
             <Route key={i} {...route}>
-              <Modal children={<route.component/>}/>
+              <Modal children={<route.component />} />
             </Route>
           ))}
         </Switch>

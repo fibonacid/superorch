@@ -122,17 +122,13 @@ function vendor(filepath) {
 
 const options = {
   echo: true,
-  debug: true,
-  sclang: vendor("./mac/SuperCollider/MacOS/sclang")
+  debug: true
 };
 
-async function bootSuperCollider() {
-  try {
-    const lang = await sc.lang.boot(options);
+if (!isDev) {
+  options.sclang = vendor("./mac/SuperCollider/MacOS/sclang");
+}
 
-    ipcMain.handle("interpret_sclang", async (_, args) => {
-      try {
-        const result = await lang.interpret(args.message);
         return result;
       } catch (error) {
         return error;

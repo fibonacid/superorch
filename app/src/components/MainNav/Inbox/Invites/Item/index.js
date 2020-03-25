@@ -4,7 +4,7 @@ import {
   GET_INVITES_QUERY,
   ACCEPT_INVITE_MUTATION,
   DENY_INVITE_MUTATION
-} from "../../../../../api/invites"
+} from "../../../../../api/invites";
 import { GET_ORCHESTRAS_QUERY } from "../../../../../api/orchestras";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -22,9 +22,7 @@ function Item({ invite }) {
     variables: {
       inviteId: invite._id
     },
-    refetchQueries: [
-      { query: GET_INVITES_QUERY },
-    ]
+    refetchQueries: [{ query: GET_INVITES_QUERY }]
   });
 
   const [acceptInvite] = useMutation(ACCEPT_INVITE_MUTATION, {
@@ -33,7 +31,7 @@ function Item({ invite }) {
     },
     refetchQueries: [
       { query: GET_ORCHESTRAS_QUERY },
-      { query: GET_INVITES_QUERY },
+      { query: GET_INVITES_QUERY }
     ]
   });
 

@@ -1,8 +1,8 @@
-const validateToken = require('../helpers/auth');
+const validateToken = require("../helpers/auth");
 
 module.exports = (req, res, next) => {
-  res.locals = {}; 
-  
+  res.locals = {};
+
   const authHeader = req.get("Authorization");
   if (!authHeader) {
     res.locals.isAuth = false;

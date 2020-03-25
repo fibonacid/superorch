@@ -60,7 +60,7 @@ export default function MessageList({ messages, fetching, fetchMore }) {
       messages.length !== prevMessages.length
     ) {
       const lastMessage = messages[messages.length - 1];
-      const prevLastMessage = prevMessages[prevMessages.length - 1]
+      const prevLastMessage = prevMessages[prevMessages.length - 1];
 
       // If added messages are on the bottom of the list.
       if (lastMessage !== prevLastMessage) {

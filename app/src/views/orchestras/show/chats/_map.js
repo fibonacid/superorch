@@ -70,7 +70,7 @@ export function getRequestMap(
             ]
           }
         },
-        moreMessagesQuery: cursor =>({
+        moreMessagesQuery: cursor => ({
           query: GET_CHANNEL_MESSAGES_QUERY,
           variables: {
             pagination: {
@@ -82,7 +82,7 @@ export function getRequestMap(
             filters
           },
           updateQuery: (prev, { fetchMoreResult }) => {
-            if(!fetchMoreResult) return prev;
+            if (!fetchMoreResult) return prev;
             const { channelMessages } = fetchMoreResult;
 
             return {
@@ -94,7 +94,7 @@ export function getRequestMap(
                 pageInfo: channelMessages.pageInfo,
                 __typename: "ChannelMessageConnection"
               }
-            }
+            };
           }
         }),
         newMessageSubscription: {
@@ -117,7 +117,7 @@ export function getRequestMap(
                     cursor: newChannelMessage._id,
                     __typename: "ChannelMessageEdge"
                   },
-                  ...prev.channelMessages.edges,
+                  ...prev.channelMessages.edges
                 ],
                 pageInfo: prev.channelMessages.pageInfo,
                 __typename: "ChannelMessageConnection"
@@ -187,7 +187,7 @@ export function getRequestMap(
             filters
           },
           updateQuery: (prev, { fetchMoreResult }) => {
-            if(!fetchMoreResult) return prev;
+            if (!fetchMoreResult) return prev;
             const { privateMessages } = fetchMoreResult;
 
             return {
@@ -199,7 +199,7 @@ export function getRequestMap(
                 pageInfo: privateMessages.pageInfo,
                 __typename: "PrivateMessageConnection"
               }
-            }
+            };
           }
         }),
         newMessageSubscription: {
@@ -222,7 +222,7 @@ export function getRequestMap(
                     cursor: newPrivateMessage._id,
                     __typename: "PrivateMessageEdge"
                   },
-                  ...prev.privateMessages.edges,
+                  ...prev.privateMessages.edges
                 ],
                 pageInfo: prev.privateMessages.pageInfo,
                 __typename: "PrivateMessageConnection"

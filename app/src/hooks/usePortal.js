@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from "react";
 
 // https://www.jayfreestone.com/writing/react-portals-with-hooks/
 
@@ -7,19 +7,19 @@ import { useRef, useEffect } from 'react';
  * @returns {HTMLElement}
  */
 function createRootElement(id) {
-  const rootContainer = document.createElement('div');
-  rootContainer.setAttribute('id', id);
+  const rootContainer = document.createElement("div");
+  rootContainer.setAttribute("id", id);
   return rootContainer;
 }
 
 /**
  * Appends element as last child of body.
- * @param {HTMLElement} rootElem 
+ * @param {HTMLElement} rootElem
  */
 function addRootElement(rootElem) {
   document.body.insertBefore(
     rootElem,
-    document.body.lastElementChild.nextElementSibling,
+    document.body.lastElementChild.nextElementSibling
   );
 }
 
@@ -71,7 +71,7 @@ function usePortal(id) {
    */
   function getRootElem() {
     if (!rootElemRef.current) {
-      rootElemRef.current = document.createElement('div');
+      rootElemRef.current = document.createElement("div");
     }
     return rootElemRef.current;
   }
