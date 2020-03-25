@@ -15,7 +15,6 @@ const messageLoader = require("./loaders/messageLoader");
 const channelLoader = require("./loaders/channelLoader");
 
 const { MONGO_HOST, MONGO_PORT, PUBLISHED_HOST } = process.env;
-console.log(process.env);
 
 const app = express();
 
