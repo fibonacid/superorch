@@ -1,6 +1,6 @@
 {
-  "name": "superorch-server",
-  "description": "graphql api for superorch applications",
+  "name": "superorch-api",
+  "description": "A graphql API used by SuperOrch apps",
   "version": "1.0.0",
   "main": "app.js",
   "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
