@@ -1,6 +1,6 @@
 {
   "name": "superorch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A chat where people can play electronic music together",
   "repository": "git@bitbucket.org:lorenzorivosecchi/superorch.git",
   "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
