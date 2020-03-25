@@ -122,9 +122,12 @@ function vendor(filepath) {
 
 const options = {
   echo: true,
-  debug: true,
-  sclang: vendor("./mac/SuperCollider/MacOS/sclang")
+  debug: true
 };
+
+if (!isDev) {
+  options.sclang = vendor("./mac/SuperCollider/MacOS/sclang");
+}
 
 async function bootSuperCollider() {
   try {
