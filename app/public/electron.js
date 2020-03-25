@@ -129,6 +129,13 @@ if (!isDev) {
   options.sclang = vendor("./mac/SuperCollider/MacOS/sclang");
 }
 
+async function bootSuperCollider() {
+  try {
+    const lang = await sc.lang.boot(options);
+
+    ipcMain.handle("interpret_sclang", async (_, args) => {
+      try {
+        const result = await lang.interpret(args.message);
         return result;
       } catch (error) {
         return error;
