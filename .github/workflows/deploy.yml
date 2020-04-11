@@ -50,7 +50,7 @@ jobs:
           registry: eu.gcr.io
           username: ${{ steps.gcloud.outputs.username }}
           password: ${{ steps.gcloud.outputs.password }}
-          context: api
+          workdir: api
           dockerfile: Dockerfile.production
           snapshot: true
 
