@@ -83,6 +83,9 @@ jobs:
             # Move into the app directory
             cd ~/apps/superorch
 
+            # Pull latest image
+            docker image pull eu.gcr.io/lorenzorivosecchi/superorch_api
+
             # Deploy services on Docker Swarm
             docker stack deploy -c docker-compose.production.yml superorch
 
