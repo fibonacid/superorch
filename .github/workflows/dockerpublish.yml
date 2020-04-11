@@ -13,11 +13,6 @@ on:
   # Run tests for any PRs.
   pull_request:
 
-env:
-  # TODO: Change variable to your image's name.
-  IMAGE_NAME: superorch
-  GCR_HOST: eu.gcr.io
-
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
@@ -65,7 +60,7 @@ jobs:
           password: ${{ steps.gcloud.outputs.password }}
           registry: eu.gcr.io
           run: |
-            IMAGE_ID=$GCR_HOST/${{ github.repository }}/$IMAGE_NAME
+            IMAGE_ID=eu.gcr.io/lorenzorivosecchi/superorch
 
             # Change all uppercase to lowercase
             IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
