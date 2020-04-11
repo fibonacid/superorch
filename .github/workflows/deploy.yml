@@ -48,3 +48,29 @@ jobs:
           username: ${{ steps.gcloud.outputs.username }}
           password: ${{ steps.gcloud.outputs.password }}
           dockerfile: api/Dockerfile.production
+
+      - name: Copy file via scp
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USERNAME: ${{ secrets.DEPLOY_USER }}
+          KEY: ${{ secrets.DEPLOY_SSHKEY }}
+        with:
+          source: "docker-compose.production.yml"
+          target: "apps/superorch"
+
+      - name: Executing remote command
+        uses: appleboy/ssh-action@master
+        with:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USERNAME: ${{ secrets.DEPLOY_USER }}
+          KEY: ${{ secrets.DEPLOY_SSHKEY }}
+          script: |
+            # Move into the app directory
+            cd ~/apps/superorch;
+
+            # Deploy services on Docker Swarm
+            docker stack deploy -c docker-compose.production.yml superorch_production ;
+
+            # Remove dangling images
+            docker system prune -f
