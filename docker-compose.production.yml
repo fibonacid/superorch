@@ -4,40 +4,40 @@ services:
   api:
     image: eu.gcr.io/lorenzorivosecchi/superorch_api
     environment:
-      MONGO_HOST: api-db
+      MONGO_HOST: superorch_db
       MONGO_PORT: 27017
       PUBLISHED_HOST: "superorch-api.lorenzorivosecchi.com"
     depends_on:
-      - api-db
+      - db
     deploy:
       labels:
         # Explicitly tell Traefik to expose this container
         - "traefik.enable=true"
         # Get the routes from http
-        - "traefik.http.routers.superorch-api_staging.rule=Host(`superorch-api.lorenzorivosecchi.com`)"
-        - "traefik.http.routers.superorch-api_staging.entrypoints=web"
+        - "traefik.http.routers.superorch-api.rule=Host(`superorch-api.lorenzorivosecchi.com`)"
+        - "traefik.http.routers.superorch-api.entrypoints=web"
         # Redirect these routes to https
         - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-        - "traefik.http.routers.superorch-api_staging.middlewares=redirect-to-https"
+        - "traefik.http.routers.superorch-api.middlewares=redirect-to-https"
         # Get the routes from https
-        - "traefik.http.routers.superorch-api_staging-secure.rule=Host(`superorch-api.lorenzorivosecchi.com`)"
-        - "traefik.http.routers.superorch-api_staging-secure.entrypoints=websecure"
-        - "traefik.http.routers.superorch-api_staging-secure.tls=true"
-        - "traefik.http.routers.superorch-api_staging-secure.tls.certresolver=myresolver"
+        - "traefik.http.routers.superorch-api-secure.rule=Host(`superorch-api.lorenzorivosecchi.com`)"
+        - "traefik.http.routers.superorch-api-secure.entrypoints=websecure"
+        - "traefik.http.routers.superorch-api-secure.tls=true"
+        - "traefik.http.routers.superorch-api-secure.tls.certresolver=myresolver"
         # Specify the port to use for communication
-        - "traefik.http.services.superorch-api_staging.loaapi-dbalancer.server.port=5000"
+        - "traefik.http.services.superorch-api.loadbalancer.server.port=5000"
     networks:
       - lorenzo-proxy-net
 
-  api-db:
+  db:
     image: mongo
     volumes:
-      - api-db-data
+      - db-data
     networks:
       - lorenzo-proxy-net
 
 volumes:
-  api-db-data:
+  db-data:
 
 networks:
   lorenzo-proxy-net:

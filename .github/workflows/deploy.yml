@@ -79,10 +79,10 @@ jobs:
           KEY: ${{ secrets.DEPLOY_SSHKEY }}
           script: |
             # Move into the app directory
-            cd ~/apps/superorch;
+            cd ~/apps/superorch
 
             # Deploy services on Docker Swarm
-            docker stack deploy -c docker-compose.production.yml superorch_production ;
+            docker stack deploy -c docker-compose.production.yml superorch
 
             # Remove dangling images
             docker system prune -f
