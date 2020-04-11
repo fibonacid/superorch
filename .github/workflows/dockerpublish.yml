@@ -6,13 +6,6 @@ on:
     branches:
       - master
 
-    # Publish `v1.2.3` tags as releases.
-    tags:
-      - v*
-
-  # Run tests for any PRs.
-  pull_request:
-
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
@@ -41,11 +34,6 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-      - uses: actions/checkout@v2
-
-      # - name: Build image
-      #   run: docker build . --file api/Dockerfile.production --tag image
-
       - name: Login to gcloud registry
         id: gcloud
         uses: elgohr/gcloud-login-action@master
@@ -55,8 +43,8 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: lorenzorivosecchi/superorch
+          name: lorenzorivosecchi/superorch_api
+          registry: eu.gcr.io
           username: ${{ steps.gcloud.outputs.username }}
           password: ${{ steps.gcloud.outputs.password }}
-          registry: eu.gcr.io
           dockerfile: api/Dockerfile.production
