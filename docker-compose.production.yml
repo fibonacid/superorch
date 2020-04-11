@@ -32,7 +32,7 @@ services:
   db:
     image: mongo
     volumes:
-      - db-data
+      - db-data:/data/db
     networks:
       - lorenzo-proxy-net
 
