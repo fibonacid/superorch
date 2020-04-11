@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+  api:
+    image: eu.gcr.io/lorenzorivosecchi/superorch_api
+    environment:
+      MONGO_HOST: api-db
+      MONGO_PORT: 27017
+      PUBLISHED_HOST: "superorch-api.lorenzorivosecchi.com"
+    depends_on:
+      - api-db
+    deploy:
+      labels:
+        # Explicitly tell Traefik to expose this container
+        - "traefik.enable=true"
+        # Get the routes from http
+        - "traefik.http.routers.superorch-api_staging.rule=Host(`superorch-api.lorenzorivosecchi.com`)"
+        - "traefik.http.routers.superorch-api_staging.entrypoints=web"
+        # Redirect these routes to https
+        - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+        - "traefik.http.routers.superorch-api_staging.middlewares=redirect-to-https"
+        # Get the routes from https
+        - "traefik.http.routers.superorch-api_staging-secure.rule=Host(`superorch-api.lorenzorivosecchi.com`)"
+        - "traefik.http.routers.superorch-api_staging-secure.entrypoints=websecure"
+        - "traefik.http.routers.superorch-api_staging-secure.tls=true"
+        - "traefik.http.routers.superorch-api_staging-secure.tls.certresolver=myresolver"
+        # Specify the port to use for communication
+        - "traefik.http.services.superorch-api_staging.loaapi-dbalancer.server.port=5000"
+    networks:
+      - lacolonia-proxy-net
+
+  api-db:
+    image: mongo
+    volumes:
+      - api-db-data
+    networks:
+      - lacolonia-proxy-net
+
+volumes:
+  api-db-data:
+
+networks:
+  lacolonia-proxy-net:
+    external: true
