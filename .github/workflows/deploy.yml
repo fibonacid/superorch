@@ -49,6 +49,13 @@ jobs:
           password: ${{ steps.gcloud.outputs.password }}
           dockerfile: api/Dockerfile.production
 
+  deploy:
+    needs: push
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
       - name: Copy file via scp
         uses: appleboy/scp-action@master
         env:
