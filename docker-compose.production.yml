@@ -6,7 +6,8 @@ services:
     environment:
       MONGO_HOST: superorch_db
       MONGO_PORT: 27017
-      PUBLISHED_HOST: "superorch-api.lorenzorivosecchi.com"
+      ENDPOINT: "https://superorch-api.lorenzorivosecchi.com"
+      SUBSCRIPTION_ENDPOINT: "ws://superorch-api.lorenzorivosecchi.com"
     depends_on:
       - db
     deploy:

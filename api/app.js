@@ -14,7 +14,7 @@ const inviteLoader = require("./loaders/inviteLoader");
 const messageLoader = require("./loaders/messageLoader");
 const channelLoader = require("./loaders/channelLoader");
 
-const { MONGO_HOST, MONGO_PORT, PUBLISHED_HOST } = process.env;
+const { MONGO_HOST, MONGO_PORT, ENDPOINT, SUBSCRIPTION_ENDPOINT } = process.env;
 
 const app = express();
 
@@ -71,12 +71,10 @@ const server = new ApolloServer({
     return err;
   },
   playground: {
-    endpoint: `http://${PUBLISHED_HOST}/graphql`,
-    subscriptionEndpoint: `ws://${PUBLISHED_HOST}/graphql`
+    endpoint: ENDPOINT,
+    subscriptionEndpoint: SUBSCRIPTION_ENDPOINT
   }
 });
-
-//app.use("/graphql", isAuth);
 
 server.applyMiddleware({ app, cors: true });
 
@@ -103,9 +101,11 @@ mongoose
 
     // ⚠️ Pay attention to the fact that we are calling `listen` on the http server variable, and not on `app`.
     httpServer.listen(5000, () => {
-      console.log(`🚀 Server ready at http://localhost${server.graphqlPath}`);
       console.log(
-        `🚀 Subscriptions ready at ws://localhost${server.subscriptionsPath}`
+        `🚀 Server ready at http://localhost:5000${server.graphqlPath}`
+      );
+      console.log(
+        `🚀 Subscriptions ready at ws://localhost:5000${server.subscriptionsPath}`
       );
     });
   })
