@@ -27,18 +27,18 @@ services:
         # Specify the port to use for communication
         - "traefik.http.services.superorch-api_staging.loaapi-dbalancer.server.port=5000"
     networks:
-      - lacolonia-proxy-net
+      - lorenzo-proxy-net
 
   api-db:
     image: mongo
     volumes:
       - api-db-data
     networks:
-      - lacolonia-proxy-net
+      - lorenzo-proxy-net
 
 volumes:
   api-db-data:
 
 networks:
-  lacolonia-proxy-net:
+  lorenzo-proxy-net:
     external: true
