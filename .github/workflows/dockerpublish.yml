@@ -63,7 +63,7 @@ jobs:
           name: myDocker/repository
           username: ${{ steps.gcloud.outputs.username }}
           password: ${{ steps.gcloud.outputs.password }}
-          registry: gcr.io, us.gcr.io, eu.gcr.io or asia.gcr.io
+          registry: $GCR_HOST
           run: |
             IMAGE_ID=$GCR_HOST/${{ github.repository }}/$IMAGE_NAME
 
