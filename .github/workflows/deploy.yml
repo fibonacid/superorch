@@ -34,10 +34,13 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Login to gcloud registry
         id: gcloud
         uses: elgohr/gcloud-login-action@master
         with:
+          # base64
           account_key: ${{ secrets.GCLOUD_KEY }}
 
       - name: Publish to Registry
@@ -56,6 +59,8 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Copy file via scp
         uses: appleboy/scp-action@master
         env:
