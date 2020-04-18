@@ -1,10 +1,5 @@
 version: "3.7"
 
-x-variables:
-  - &api-db-port 27017
-  - &api-db-username root
-  - &api-db-password ${MONGO_PASSWORD}
-
 services:
   api:
     build: ./api
@@ -22,13 +17,11 @@ services:
 
   api-db:
     image: mongo
+    command: "mongod --auth"
     volumes:
       - api-db-data:/data/db
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: *api-db-username
-      MONGO_INITDB_ROOT_PASSWORD: *api-db-password
     restart: always
 
 volumes:

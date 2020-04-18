@@ -4,12 +4,6 @@ A chat where people can play electronic music together
 
 ## Development
 
-Store Mongo DB password inside a `.env` file:
-
-```shell
-MONGO_PASSWORD=yourpassword
-```
-
 Create API with docker:
 
 ```shell
