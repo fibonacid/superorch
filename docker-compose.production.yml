@@ -9,7 +9,9 @@ services:
       ENDPOINT: "https://superorch-api.lorenzorivosecchi.com/graphql"
       SUBSCRIPTION_ENDPOINT: "ws://superorch-api.lorenzorivosecchi.com/graphql"
     depends_on:
-      - db
+      - api-db
+    networks:
+      - lorenzo-proxy-net
     deploy:
       labels:
         # Explicitly tell Traefik to expose this container
@@ -27,19 +29,18 @@ services:
         - "traefik.http.routers.superorch-api-secure.tls.certresolver=myresolver"
         # Specify the port to use for communication
         - "traefik.http.services.superorch-api.loadbalancer.server.port=5000"
-    networks:
-      - lorenzo-proxy-net
 
-  db:
+  api-db:
     image: mongo
     volumes:
-      - db-data:/data/db
+      - api-db-data:/data/db
     networks:
       - lorenzo-proxy-net
 
 volumes:
-  db-data:
+  api-db-data:
 
 networks:
   lorenzo-proxy-net:
     external: true
+

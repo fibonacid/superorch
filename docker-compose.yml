@@ -15,13 +15,13 @@ services:
     depends_on:
       - db
 
-  db:
+  api-db:
     image: mongo
     volumes:
-      - db-data:/data/db
+      - api-db-data:/data/db
     ports:
       - "27017:27017"
     restart: always
 
 volumes:
-  db-data:
+  api-db-data:
