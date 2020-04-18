@@ -40,3 +40,19 @@ Every time a commit is pushed to the master branch the [deploy.yml](https://gith
 - Test the api Build
 - Push a docker image on the Google Container Registry.
 - Launch a script on the remote server to roll the update.
+
+Before pushing, make sure to have the following variables in the repository settings:
+
+- DEPLOY_HOST - IP address of your remote server
+- DEPLOY_USER - User of the remote server
+- DEPLOY_SSHKEY - Private Key used for SSH
+- GCLOUD_KEY - Access token of Google Container Registry (JSON format)
+
+Copy to contents of your local secrets folder on your remote server.
+The folder should contain a file called `api-db-password.txt`. If you don't have it, create it and paste a secure password.
+
+Then, copy the file on your remote server:
+
+```shell
+scp -r secrets <user>@<host>:/path/to/app/directory
+```
