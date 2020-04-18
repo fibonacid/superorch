@@ -1,8 +1,8 @@
 version: "3.7"
 
 x-variables:
-  - &api-db-user root
   - &api-db-port 27017
+  - &api-db-username root
   - &api-db-password ${MONGO_PASSWORD}
 
 services:
@@ -27,7 +27,8 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_PASSWORD: *api-db-password
+      MONGO_INITDB_ROOT_USERNAME: *api-db-username
+      MONGO_INITDB_ROOT_PASSWORD: *api-db-password
     restart: always
 
 volumes:
