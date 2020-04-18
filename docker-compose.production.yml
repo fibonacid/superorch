@@ -1,0 +1,59 @@
+version: "3.7"
+
+x-variables:
+  - &api-db-user root
+  - &api-db-port 27017
+
+services:
+  api:
+    image: eu.gcr.io/lorenzorivosecchi/superorch_api
+    environment:
+      MONGO_USER: *api-db-user
+      MONGO_PORT: *api-db-port
+      MONGO_HOST: superorch_db
+      ENDPOINT: "https://superorch-api.lorenzorivosecchi.com/graphql"
+      SUBSCRIPTION_ENDPOINT: "ws://superorch-api.lorenzorivosecchi.com/graphql"
+    depends_on:
+      - api-db
+    networks:
+      - lorenzo-proxy-net
+    deploy:
+      labels:
+        # Explicitly tell Traefik to expose this container
+        - "traefik.enable=true"
+        # Get the routes from http
+        - "traefik.http.routers.superorch-api.rule=Host(`superorch-api.lorenzorivosecchi.com`)"
+        - "traefik.http.routers.superorch-api.entrypoints=web"
+        # Redirect these routes to https
+        - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+        - "traefik.http.routers.superorch-api.middlewares=redirect-to-https"
+        # Get the routes from https
+        - "traefik.http.routers.superorch-api-secure.rule=Host(`superorch-api.lorenzorivosecchi.com`)"
+        - "traefik.http.routers.superorch-api-secure.entrypoints=websecure"
+        - "traefik.http.routers.superorch-api-secure.tls=true"
+        - "traefik.http.routers.superorch-api-secure.tls.certresolver=myresolver"
+        # Specify the port to use for communication
+        - "traefik.http.services.superorch-api.loadbalancer.server.port=5000"
+
+  api-db:
+    image: mongo
+    volumes:
+      - api-db-data:/data/db
+    networks:
+      - lorenzo-proxy-net
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: *api-db-user
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/api-db-password
+    secrets:
+      - api-db-password
+
+volumes:
+  api-db-data:
+
+networks:
+  lorenzo-proxy-net:
+    external: true
+
+secrets:
+  api-db-password:
+    file: ./secrets/api-db-password.txt

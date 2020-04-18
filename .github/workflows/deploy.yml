@@ -1,0 +1,93 @@
+name: Docker
+
+on:
+  push:
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - master
+
+jobs:
+  # Run tests.
+  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests
+        run: |
+          if [ -f docker-compose.test.yml ]; then
+            docker-compose --file docker-compose.test.yml build
+            docker-compose --file docker-compose.test.yml run sut
+          else
+            docker build . --file api/Dockerfile.production
+          fi
+
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  push:
+    # Ensure test job passes before pushing image.
+    needs: test
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to gcloud registry
+        id: gcloud
+        uses: elgohr/gcloud-login-action@master
+        with:
+          # base64
+          account_key: ${{ secrets.GCLOUD_KEY }}
+
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: lorenzorivosecchi/superorch_api
+          registry: eu.gcr.io
+          username: ${{ steps.gcloud.outputs.username }}
+          password: ${{ steps.gcloud.outputs.password }}
+          workdir: api
+          dockerfile: Dockerfile.production
+          snapshot: true
+
+  deploy:
+    needs: push
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Copy file via scp
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USERNAME: ${{ secrets.DEPLOY_USER }}
+          KEY: ${{ secrets.DEPLOY_SSHKEY }}
+        with:
+          source: "docker-compose.production.yml"
+          target: "apps/superorch"
+
+      - name: Executing remote command
+        uses: appleboy/ssh-action@master
+        with:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          USERNAME: ${{ secrets.DEPLOY_USER }}
+          KEY: ${{ secrets.DEPLOY_SSHKEY }}
+          script: |
+            # Move into the app directory
+            cd ~/apps/superorch
+
+            # Pull latest image
+            docker image pull eu.gcr.io/lorenzorivosecchi/superorch_api
+
+            # Deploy services on Docker Swarm
+            docker stack deploy -c docker-compose.production.yml superorch
+
+            # Remove dangling images
+            docker system prune -f
