@@ -1,11 +1,16 @@
 version: "3.7"
 
+x-variables:
+  - &api-db-user root
+  - &api-db-port 27017
+
 services:
   api:
     image: eu.gcr.io/lorenzorivosecchi/superorch_api
     environment:
+      MONGO_USER: *api-db-user
+      MONGO_PORT: *api-db-port
       MONGO_HOST: superorch_db
-      MONGO_PORT: 27017
       ENDPOINT: "https://superorch-api.lorenzorivosecchi.com/graphql"
       SUBSCRIPTION_ENDPOINT: "ws://superorch-api.lorenzorivosecchi.com/graphql"
     depends_on:
@@ -36,6 +41,11 @@ services:
       - api-db-data:/data/db
     networks:
       - lorenzo-proxy-net
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: *api-db-user
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/api-db-password
+    secrets:
+      - api-db-password
 
 volumes:
   api-db-data:
@@ -44,3 +54,6 @@ networks:
   lorenzo-proxy-net:
     external: true
 
+secrets:
+  api-db-password:
+    file: ./secrets/api-db-password.txt
