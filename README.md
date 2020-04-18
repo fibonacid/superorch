@@ -31,3 +31,12 @@ yarn start
 ```
 
 After a few seconds a desktop app should pop up.
+
+## Deploy
+
+Deployments are handled with Github Actions.
+Every time a commit is pushed to the master branch the [deploy.yml]() workflow will:
+
+- Test the api Build
+- Push a docker image on the Google Container Registry.
+- Launch a script on the remote server to roll the update.
