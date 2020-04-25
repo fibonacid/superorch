@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A Desktop client for SuperOrch",
   "author": "Lorenzo Rivosecchi <lorenzorivosecchi3@gmail.com>",
+  "repository": "git@github.com:lorenzorivosecchi/superorch.git",
   "license": "MIT",
   "main": "public/electron.js",
   "scripts": {
