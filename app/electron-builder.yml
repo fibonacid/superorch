@@ -1,6 +1,6 @@
 appId: lorenzorivosecchi.superorch
 files:
-  - build/**/*,
+  - build/**/*
   - node_modules/**/*
 directories:
   buildResources: assets
