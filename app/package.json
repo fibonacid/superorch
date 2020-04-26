@@ -6,6 +6,7 @@
   "repository": "git@github.com:lorenzorivosecchi/superorch.git",
   "license": "MIT",
   "main": "public/electron.js",
+  "homepage": "./",
   "scripts": {
     "fetch-schema": "node fetch-schema.js",
     "react-start": "react-scripts start",
@@ -13,7 +14,7 @@
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
     "electron-start": "nodemon --watch public/*.js --exec \"electron .\"",
-    "electron-build": "electron-builder",
+    "electron-build": "electron-builder -c.mac.identity=null",
     "build": "yarn run react-build && yarn run electron-build --publish never",
     "deploy": "yarn run react-build && yarn run electron-build --publish always",
     "start": "concurrently \"cross-env BROWSER=none yarn run react-start\" \"wait-on http://localhost:3000 && yarn run electron-start\""
