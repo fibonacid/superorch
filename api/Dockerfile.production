@@ -1,5 +1,8 @@
 FROM node:10
 
+ARG MONGO_PASSWORD_ARG
+ENV MONGO_PASSWORD MONGO_PASSWORD_ARG
+
 WORKDIR /usr/src/app
 COPY package.json .
 COPY yarn.lock .
