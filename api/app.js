@@ -14,7 +14,14 @@ const inviteLoader = require("./loaders/inviteLoader");
 const messageLoader = require("./loaders/messageLoader");
 const channelLoader = require("./loaders/channelLoader");
 
-const { MONGO_HOST, MONGO_PORT, ENDPOINT, SUBSCRIPTION_ENDPOINT } = process.env;
+const {
+  MONGO_HOST,
+  MONGO_PORT,
+  MONGO_PASSWORD,
+  MONGO_USER,
+  ENDPOINT,
+  SUBSCRIPTION_ENDPOINT
+} = process.env;
 
 const app = express();
 
@@ -92,10 +99,16 @@ mongoose.set("useFindAndModify", false);
 //
 
 mongoose
-  .connect(`mongodb://${MONGO_HOST}:${MONGO_PORT}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(
+    `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}?authSource=admin`,
+    {
+      user: MONGO_USER,
+      pass: MONGO_PASSWORD,
+      keepAlive: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+  )
   .then(() => {
     console.log("Connected to database");
 
