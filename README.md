@@ -47,9 +47,10 @@ Before pushing, make sure to have the following variables in the repository sett
 - DEPLOY_USER - User of the remote server
 - DEPLOY_SSHKEY - Private Key used for SSH
 - GCLOUD_KEY - Access token of Google Container Registry (JSON format)
+- MONGO_PASSWORD - Password for api database.
 
 Copy to contents of your local secrets folder on your remote server.
-The folder should contain a file called `api-db-password.txt`. If you don't have it, create it and paste a secure password.
+The folder should contain a file called `api-db-password.txt`. If you don't have it, create it and paste a secure password (same as MONGO_PASSWORD).
 
 Then, copy the file on your remote server:
 
